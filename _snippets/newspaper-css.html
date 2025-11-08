@@ -1,0 +1,18 @@
+<!-- Subtle paper texture overlay -->
+<style>
+.texture-paper {
+  position: relative;
+}
+.texture-paper::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none; mix-blend-mode: multiply; opacity: .25;
+  background-image: image-set(
+    url("/_exports/news/newspaper-53.avif") type("image/avif"),
+    url("/_exports/news/newspaper-53.webp") type("image/webp"),
+    url("/_exports/news/newspaper-53.jpg") type("image/jpeg")
+  );
+  background-size: cover;
+}
+</style>
+<!-- Usage: <section class="texture-paper">...</section> -->
