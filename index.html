@@ -4,308 +4,478 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>i wuz just bored</title>
-  <meta name="description" content="Cinematic, dark-mode microsite: particles, textures, motion.">
+  <meta name="description" content="Data stories from the edge of attention.">
 
-  <!-- Favicon - sparkle emoji -->
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg: #000;
-      --fg: #fff;
-      --muted: #9aa3ad;
-      --glow: 0 0 32px rgba(140,160,255,.25);
-      --pad: clamp(16px, 3vw, 40px);
-      --max: 1400px;
+    /* ═══════════════════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════════════════ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    /* Reset */
-    *,*::before,*::after{ box-sizing:border-box; }
-    html,body{ height:100%; background:#000; }
-    body{
-      margin:0; color:var(--fg);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    :root {
+      --bg: #000000;
+      --fg: #ffffff;
+      --fg-muted: #a1a8b5;
+      --accent: #6366f1;
+      --glow: 0 0 40px rgba(99, 102, 241, 0.15);
+      --pad: clamp(20px, 4vw, 60px);
+      --max-width: 1400px;
+      
+      /* Mobile-first spacing */
+      --space-xs: clamp(8px, 2vw, 16px);
+      --space-sm: clamp(16px, 3vw, 24px);
+      --space-md: clamp(24px, 4vw, 40px);
+      --space-lg: clamp(40px, 6vw, 80px);
+      --space-xl: clamp(60px, 10vw, 140px);
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      overflow-x:hidden;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Stage - REMOVED isolation:isolate which was blocking backgrounds */
-    .stage{
-      position:relative;
-      min-height:100svh;
-      background:transparent;
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    /* Layer: stars (true image, behind everything) */
-    .bg{
-      position:fixed;
-      inset:0;
-      z-index:1;
-      overflow:hidden;
+    /* ═══════════════════════════════════════════════════════
+       BACKGROUND LAYERS
+       ═══════════════════════════════════════════════════════ */
+    
+    /* Stars - deepest layer */
+    .bg-stars {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
     }
-    .bg picture, .bg img{ width:100%; height:100%; display:block; }
-    .bg img{
-      object-fit:cover;
-      filter:brightness(.95) contrast(1.05) saturate(1.05);
-      transform:translateZ(0);
+    
+    .bg-stars picture,
+    .bg-stars img {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-
-    /* Mid-layer: red grit noise (subtle) */
-    .noise{
-      position:fixed;
-      inset:0;
-      z-index:2;
-      pointer-events:none;
-      mix-blend-mode:screen;
-      opacity:.12;
-      background-position:center;
-      background-size:1000px;
-      background-repeat:repeat;
-      filter:contrast(1.1) saturate(1.1);
+    
+    .bg-stars img {
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.85) contrast(1.1) saturate(1.05);
+      transform: translateZ(0);
     }
 
-    /* Top texture: newsprint (very subtle) */
-    .paper{
-      position:fixed;
-      inset:0;
-      z-index:3;
-      pointer-events:none;
-      mix-blend-mode:overlay;
-      opacity:.10;
-      background-position:center;
-      background-size:1200px;
-      background-repeat:repeat;
+    /* Grit texture - red noise */
+    .bg-grit {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.08;
+      background-position: center;
+      background-size: 1200px;
+      background-repeat: repeat;
+      filter: contrast(1.15) saturate(1.1);
     }
 
-    /* Content grid */
-    .wrap{
-      max-width:var(--max);
-      margin-inline:auto;
-      padding: calc(6rem + var(--pad)) var(--pad) var(--pad);
-      position:relative;
-      z-index:5;
+    /* Paper texture - newsprint overlay */
+    .bg-paper {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      opacity: 0.06;
+      background-position: center;
+      background-size: 1400px;
+      background-repeat: repeat;
     }
 
-    header{
-      position:fixed;
-      inset:0 auto auto 0;
-      height:64px;
-      display:flex;
-      align-items:center;
-      gap:24px;
-      padding:0 var(--pad);
-      width:100%;
-      z-index:100;
-      background:linear-gradient(#000 60%, transparent);
-      backdrop-filter:saturate(120%) blur(0.5px);
-    }
-    .brand{
-      letter-spacing:.24em;
-      text-transform:uppercase;
-      font: 600 12px/1 Inter, system-ui;
-      color:#c7d2fe;
-      opacity:.85;
-    }
-    nav{
-      margin-left:auto;
-      display:flex; gap:24px;
-      font: 600 13px/1 Inter, system-ui;
-    }
-    nav a{
-      color:#cbd5e1; text-decoration:none;
-      opacity:.85;
-    }
-    nav a:hover{ opacity:1; }
-
-    .hero{
-      padding-top: min(26svh, 22rem);
-      padding-bottom: 24svh;
-    }
-    h1{
-      font-family: "Space Grotesk", Inter, system-ui;
-      font-weight:800;
-      letter-spacing:-.02em;
-      line-height:1.02;
-      font-size: clamp(2.6rem, 6.2vw, 5.2rem);
-      margin: 0 0 1rem 0;
-      text-shadow: var(--glow);
-    }
-    .lede{
-      max-width: 70ch;
-      color:var(--muted);
-      font-size: clamp(1rem, 1.5vw, 1.125rem);
-      line-height:1.6;
-      margin:0 0 2rem 0;
+    /* Vignette for depth */
+    .bg-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.3) 100%
+      );
     }
 
-    .btn{
-      appearance:none;
-      border:0;
-      color:#fff;
-      font-weight:700;
-      padding:12px 20px;
-      border-radius:10px;
-      background: linear-gradient(90deg, #68DBFF 0%, #6366F1 60%, #A855F7 100%);
-      box-shadow: 0 10px 30px rgba(99,102,241,.25);
-      cursor:pointer;
-      transition: transform .2s ease, box-shadow .2s ease;
+    /* ═══════════════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════════════ */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: var(--space-md) var(--pad);
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.6) 60%,
+        transparent 100%
+      );
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
     }
-    .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(99,102,241,.35); }
 
-    /* Sections for scroll testing */
-    section{
-      padding: 18svh var(--pad);
-      border-top: 1px solid rgba(255,255,255,.04);
-      position:relative;
-      z-index:5;
+    .brand {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: clamp(11px, 2vw, 13px);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
-    .kicker{
-      font: 700 11px/1 Inter, system-ui;
-      letter-spacing:.24em;
-      color:#a5b4fc;
-      text-transform:uppercase;
-      margin-bottom:1rem;
-    }
-    h2{
-      font: 800 clamp(1.4rem, 3vw, 2.2rem)/1.1 "Space Grotesk", Inter, system-ui;
-      margin:0 0 .5rem 0;
-    }
-    .muted{ color:var(--muted); max-width: 70ch; }
 
-    /* Reduced motion respect */
-    @media (prefers-reduced-motion: reduce){
-      .noise, .paper { animation:none !important; }
+    /* ═══════════════════════════════════════════════════════
+       MAIN STAGE
+       ═══════════════════════════════════════════════════════ */
+    main {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      padding: calc(80px + var(--space-xl)) var(--pad) var(--space-xl);
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════════════════════════ */
+    .hero {
+      min-height: calc(100vh - 160px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-xl) 0;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 8vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-md);
+      color: #ffffff;
+      text-shadow: 
+        0 0 60px rgba(99, 102, 241, 0.2),
+        0 2px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      line-height: 1.5;
+      font-weight: 400;
+      color: var(--fg-muted);
+      max-width: 65ch;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CONTENT SECTIONS
+       ═══════════════════════════════════════════════════════ */
+    .section {
+      padding: var(--space-xl) 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .section-kicker {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(10px, 1.8vw, 11px);
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #8b93ff;
+      margin-bottom: var(--space-sm);
+      opacity: 0.85;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-md);
+      color: #ffffff;
+    }
+
+    .section-body {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.7;
+      color: var(--fg-muted);
+      max-width: 75ch;
+    }
+
+    .section-body p + p {
+      margin-top: var(--space-sm);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CANVAS AREA (for future data stories)
+       ═══════════════════════════════════════════════════════ */
+    .canvas {
+      margin-top: var(--space-xl);
+      padding: var(--space-xl) 0;
+    }
+
+    .canvas-item {
+      margin-bottom: var(--space-xl);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .canvas-item.revealed {
+      animation: revealUp 0.8s ease forwards;
+    }
+
+    @keyframes revealUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE OPTIMIZATIONS
+       ═══════════════════════════════════════════════════════ */
+    
+    /* Touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      html {
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      .bg-stars img {
+        filter: brightness(0.9) contrast(1.08);
+      }
+    }
+
+    /* Small mobile */
+    @media (max-width: 480px) {
+      .hero-title {
+        letter-spacing: -0.02em;
+      }
+      
+      .section-body {
+        font-size: 1rem;
+      }
+    }
+
+    /* Tablet & up */
+    @media (min-width: 768px) {
+      .hero {
+        min-height: calc(100vh - 120px);
+      }
+    }
+
+    /* Desktop & up */
+    @media (min-width: 1200px) {
+      .hero-subtitle {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .bg-stars,
+      .bg-grit,
+      .bg-paper,
+      .bg-vignette {
+        display: none;
+      }
+      
+      body {
+        background: white;
+        color: black;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Fixed header -->
-  <header>
-    <div class="brand">i wuz just bored</div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <!-- Background: stars via <picture> so AVIF/WebP fallbacks work -->
-  <div class="bg" aria-hidden="true">
+  <!-- ═══════════════════════════════════════════════════════
+       BACKGROUND LAYERS
+       ═══════════════════════════════════════════════════════ -->
+  <div class="bg-stars" aria-hidden="true">
     <picture>
       <source srcset="exports/hero/hero-stars-1920.avif" type="image/avif" />
       <source srcset="exports/hero/hero-stars-1920.webp" type="image/webp" />
-      <img src="exports/hero/hero-stars-1920.jpg" alt="Starfield background">
+      <img src="exports/hero/hero-stars-1920.jpg" alt="" />
     </picture>
   </div>
+  
+  <div class="bg-grit" aria-hidden="true" style="background-image:url('exports/grit/grit-red-2048.jpg');"></div>
+  <div class="bg-paper" aria-hidden="true" style="background-image:url('exports/news/newspaper-53.jpg');"></div>
+  <div class="bg-vignette" aria-hidden="true"></div>
 
-  <!-- Mid / top texture layers -->
-  <div class="noise" aria-hidden="true"
-       style="background-image:url('exports/grit/grit-red-2048.jpg');"></div>
-  <div class="paper" aria-hidden="true"
-       style="background-image:url('exports/news/newspaper-53.jpg');"></div>
+  <!-- ═══════════════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════════════ -->
+  <header>
+    <div class="brand">i wuz just bored</div>
+  </header>
 
-  <!-- Main content -->
-  <main class="stage" id="home">
-    <div class="wrap hero">
-      <h1 class="reveal">Slip the Atmosphere.</h1>
-      <p class="lede reveal">
-        A language built to move: motion with purpose, particles and
-        texture stories. Trust nothing. See details. Make obvious.
-        Repeat slowly.
-      </p>
-      <button class="btn reveal" onclick="document.querySelector('#about').scrollIntoView({behavior:'smooth'})">
-        Enter Orbit
-      </button>
+  <!-- ═══════════════════════════════════════════════════════
+       MAIN STAGE
+       ═══════════════════════════════════════════════════════ -->
+  <main>
+    <div class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <h1 class="hero-title reveal">Live from NYC.</h1>
+        <p class="hero-subtitle reveal">
+          Data stories from the edge of attention. When boredom meets obsession, 
+          the questions get interesting. No manifesto. No roadmap. Just signal.
+        </p>
+      </section>
+
+      <!-- Canvas for future data stories -->
+      <div class="canvas">
+        <div class="section">
+          <div class="section-kicker">Canvas</div>
+          <h2 class="section-title reveal">Analysis. Visualization. Narrative.</h2>
+          <div class="section-body reveal">
+            <p>This space is a canvas for one-off sleek analyses straight from the data pipeline. 
+            Each piece stands alone—a snapshot, a pattern, a question worth asking.</p>
+            <p>When there's something to write about, it links to Substack. 
+            When the data speaks for itself, it lives here. Pure signal, zero noise.</p>
+          </div>
+        </div>
+
+        <!-- Future data story items go here -->
+        <!-- Example structure:
+        <div class="canvas-item">
+          <div class="section-kicker">Data Story · Nov 2025</div>
+          <h3 class="section-title">Your Story Title</h3>
+          <div class="section-body">
+            <p>Story content...</p>
+          </div>
+        </div>
+        -->
+      </div>
     </div>
-
-    <section id="about">
-      <div class="kicker">About</div>
-      <h2 class="reveal">Motion as a first-class design system.</h2>
-      <p class="muted reveal">Subtle forces, confident pace. We choreograph light, grit, and paper to create tactile digital spaces that feel inevitable.</p>
-    </section>
-
-    <section id="projects">
-      <div class="kicker">Projects</div>
-      <h2 class="reveal">Cinematic microsites, data stories, product pages.</h2>
-      <p class="muted reveal">Builds that read like film: clean typography, layered textures, and the quiet confidence of frame-perfect motion.</p>
-    </section>
-
-    <section id="contact">
-      <div class="kicker">Contact</div>
-      <h2 class="reveal">Say hello. We'll make it move.</h2>
-      <p class="muted reveal">DM, signal flare, or just open an issue in the repo. We'll see it.</p>
-    </section>
   </main>
 
-  <!-- GSAP (animation) -->
+  <!-- ═══════════════════════════════════════════════════════
+       GSAP ANIMATION
+       ═══════════════════════════════════════════════════════ -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // Fade/translate in key elements on load
-    gsap.utils.toArray(".reveal").forEach((el, i) => {
-      gsap.from(el, {
-        autoAlpha: 0,
-        y: 20,
-        duration: 1.0,
-        delay: 0.15 * i,
-        ease: "power2.out"
-      });
-    });
-
-    // Gentle star shimmer (breathing)
-    gsap.to(".bg picture img", {
-      opacity: 0.92,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    });
-
-    // Subtle mouse parallax on the star layer
-    const starImg = document.querySelector(".bg picture img");
-    let targetX = 0, targetY = 0, curX = 0, curY = 0;
-
-    window.addEventListener("mousemove", (e) => {
-      const nx = (e.clientX / window.innerWidth - 0.5);
-      const ny = (e.clientY / window.innerHeight - 0.5);
-      targetX = nx * 20;
-      targetY = ny * 20;
-    });
-
-    gsap.ticker.add(() => {
-      curX += (targetX - curX) * 0.06;
-      curY += (targetY - curY) * 0.06;
-      gsap.set(starImg, { x: curX, y: curY });
-    });
-
-    // Scroll reveals for sections
-    gsap.utils.toArray("section .reveal").forEach((el) => {
-      gsap.from(el, {
-        scrollTrigger:{
-          trigger: el,
-          start: "top 90%",
-          toggleActions: "play none none reverse"
-        },
-        autoAlpha: 0,
-        y: 24,
-        duration: 0.9,
-        ease: "power2.out"
-      });
-    });
-
-    // Respect reduced motion preferences
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce){
+    // Respect reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
       gsap.globalTimeline.timeScale(0);
     }
+
+    // Reveal animation for hero elements
+    gsap.utils.toArray('.reveal').forEach((el, i) => {
+      gsap.from(el, {
+        autoAlpha: 0,
+        y: 30,
+        duration: 1.2,
+        delay: 0.2 * i,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    });
+
+    // Gentle star shimmer (breathing effect)
+    const starImg = document.querySelector('.bg-stars img');
+    if (starImg && !prefersReducedMotion) {
+      gsap.to(starImg, {
+        opacity: 0.88,
+        duration: 5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+    }
+
+    // Subtle mouse parallax on stars
+    if (!prefersReducedMotion) {
+      let targetX = 0, targetY = 0, curX = 0, curY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        const nx = (e.clientX / window.innerWidth - 0.5);
+        const ny = (e.clientY / window.innerHeight - 0.5);
+        targetX = nx * 15;
+        targetY = ny * 15;
+      });
+
+      gsap.ticker.add(() => {
+        curX += (targetX - curX) * 0.05;
+        curY += (targetY - curY) * 0.05;
+        gsap.set(starImg, { x: curX, y: curY });
+      });
+    }
+
+    // Canvas item reveals
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.canvas-item').forEach(item => {
+      observer.observe(item);
+    });
   </script>
 </body>
 </html>
