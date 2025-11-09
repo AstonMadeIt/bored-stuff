@@ -27,9 +27,8 @@
     :root {
       --bg: #000000;
       --fg: #ffffff;
-      --fg-muted: #a1a8b5;
+      --fg-muted: #c5cad4;
       --accent: #6366f1;
-      --glow: 0 0 40px rgba(99, 102, 241, 0.15);
       --pad: clamp(20px, 4vw, 60px);
       --max-width: 1400px;
       
@@ -121,7 +120,7 @@
         ellipse at center,
         transparent 0%,
         transparent 50%,
-        rgba(0, 0, 0, 0.3) 100%
+        rgba(0, 0, 0, 0.4) 100%
       );
     }
 
@@ -137,12 +136,12 @@
       padding: var(--space-md) var(--pad);
       background: linear-gradient(
         180deg,
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(0, 0, 0, 0.6) 60%,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.7) 60%,
         transparent 100%
       );
-      backdrop-filter: blur(8px) saturate(120%);
-      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
     }
 
     .brand {
@@ -151,8 +150,10 @@
       font-size: clamp(11px, 2vw, 13px);
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.9);
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      color: rgba(255, 255, 255, 0.95);
+      text-shadow: 
+        0 2px 12px rgba(0, 0, 0, 0.8),
+        0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -179,6 +180,25 @@
       flex-direction: column;
       justify-content: center;
       padding: var(--space-xl) 0;
+      position: relative;
+    }
+
+    /* Backdrop for text readability */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      left: -40px;
+      right: -40px;
+      bottom: -40px;
+      background: radial-gradient(
+        ellipse 120% 100% at 30% 50%,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+      );
+      z-index: -1;
+      pointer-events: none;
     }
 
     .hero-title {
@@ -190,8 +210,9 @@
       margin-bottom: var(--space-md);
       color: #ffffff;
       text-shadow: 
-        0 0 60px rgba(99, 102, 241, 0.2),
-        0 2px 20px rgba(0, 0, 0, 0.6);
+        0 0 80px rgba(99, 102, 241, 0.3),
+        0 4px 24px rgba(0, 0, 0, 0.9),
+        0 8px 40px rgba(0, 0, 0, 0.7);
     }
 
     .hero-subtitle {
@@ -201,6 +222,9 @@
       color: var(--fg-muted);
       max-width: 65ch;
       margin-bottom: var(--space-lg);
+      text-shadow: 
+        0 2px 16px rgba(0, 0, 0, 0.9),
+        0 4px 30px rgba(0, 0, 0, 0.7);
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -209,6 +233,20 @@
     .section {
       padding: var(--space-xl) 0;
       border-top: 1px solid rgba(255, 255, 255, 0.04);
+      position: relative;
+    }
+
+    /* Backdrop for sections */
+    .section::before {
+      content: '';
+      position: absolute;
+      inset: -20px -40px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      z-index: -1;
+      opacity: 0.8;
     }
 
     .section-kicker {
@@ -217,9 +255,10 @@
       font-weight: 700;
       letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: #8b93ff;
+      color: #a5b0ff;
       margin-bottom: var(--space-sm);
-      opacity: 0.85;
+      opacity: 0.9;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 
     .section-title {
@@ -230,6 +269,9 @@
       letter-spacing: -0.02em;
       margin-bottom: var(--space-md);
       color: #ffffff;
+      text-shadow: 
+        0 2px 16px rgba(0, 0, 0, 0.8),
+        0 4px 24px rgba(0, 0, 0, 0.6);
     }
 
     .section-body {
@@ -237,6 +279,7 @@
       line-height: 1.7;
       color: var(--fg-muted);
       max-width: 75ch;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
     }
 
     .section-body p + p {
@@ -253,6 +296,12 @@
 
     .canvas-item {
       margin-bottom: var(--space-xl);
+      padding: var(--space-lg);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
       opacity: 0;
       transform: translateY(30px);
     }
@@ -289,8 +338,8 @@
         letter-spacing: -0.02em;
       }
       
-      .section-body {
-        font-size: 1rem;
+      .section::before {
+        inset: -20px -20px;
       }
     }
 
