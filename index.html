@@ -6,8 +6,8 @@
   <title>i wuz just bored</title>
   <meta name="description" content="Cinematic, dark-mode microsite: particles, textures, motion.">
 
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <!-- Favicon - sparkle emoji -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,19 +35,18 @@
       overflow-x:hidden;
     }
 
-    /* Stage */
+    /* Stage - REMOVED isolation:isolate which was blocking backgrounds */
     .stage{
       position:relative;
       min-height:100svh;
-      isolation:isolate; /* let mix-blends play nice */
-      background:#000;
+      background:transparent;
     }
 
     /* Layer: stars (true image, behind everything) */
     .bg{
       position:fixed;
       inset:0;
-      z-index:-3;
+      z-index:1;
       overflow:hidden;
     }
     .bg picture, .bg img{ width:100%; height:100%; display:block; }
@@ -61,12 +60,12 @@
     .noise{
       position:fixed;
       inset:0;
-      z-index:-2;
+      z-index:2;
       pointer-events:none;
-      mix-blend-mode:screen;       /* red grit lifts highlights */
-      opacity:.12;                 /* tuned subtle */
+      mix-blend-mode:screen;
+      opacity:.12;
       background-position:center;
-      background-size:1000px;      /* large, so you see the grain structure */
+      background-size:1000px;
       background-repeat:repeat;
       filter:contrast(1.1) saturate(1.1);
     }
@@ -75,7 +74,7 @@
     .paper{
       position:fixed;
       inset:0;
-      z-index:-1;
+      z-index:3;
       pointer-events:none;
       mix-blend-mode:overlay;
       opacity:.10;
@@ -89,6 +88,8 @@
       max-width:var(--max);
       margin-inline:auto;
       padding: calc(6rem + var(--pad)) var(--pad) var(--pad);
+      position:relative;
+      z-index:5;
     }
 
     header{
@@ -100,7 +101,7 @@
       gap:24px;
       padding:0 var(--pad);
       width:100%;
-      z-index:10;
+      z-index:100;
       background:linear-gradient(#000 60%, transparent);
       backdrop-filter:saturate(120%) blur(0.5px);
     }
@@ -161,6 +162,8 @@
     section{
       padding: 18svh var(--pad);
       border-top: 1px solid rgba(255,255,255,.04);
+      position:relative;
+      z-index:5;
     }
     .kicker{
       font: 700 11px/1 Inter, system-ui;
@@ -179,8 +182,6 @@
     @media (prefers-reduced-motion: reduce){
       .noise, .paper { animation:none !important; }
     }
-
-    /* Small helper when images fail: keep background black (already true) */
   </style>
 </head>
 <body>
@@ -197,7 +198,6 @@
   <!-- Background: stars via <picture> so AVIF/WebP fallbacks work -->
   <div class="bg" aria-hidden="true">
     <picture>
-      <!-- Using your actual exported files from /exports/hero/ -->
       <source srcset="exports/hero/hero-stars-1920.avif" type="image/avif" />
       <source srcset="exports/hero/hero-stars-1920.webp" type="image/webp" />
       <img src="exports/hero/hero-stars-1920.jpg" alt="Starfield background">
@@ -276,12 +276,11 @@
     window.addEventListener("mousemove", (e) => {
       const nx = (e.clientX / window.innerWidth - 0.5);
       const ny = (e.clientY / window.innerHeight - 0.5);
-      targetX = nx * 20; // px shift
+      targetX = nx * 20;
       targetY = ny * 20;
     });
 
     gsap.ticker.add(() => {
-      // small lerp for smoothness
       curX += (targetX - curX) * 0.06;
       curY += (targetY - curY) * 0.06;
       gsap.set(starImg, { x: curX, y: curY });
