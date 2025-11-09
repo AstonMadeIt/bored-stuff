@@ -197,10 +197,10 @@
   <!-- Background: stars via <picture> so AVIF/WebP fallbacks work -->
   <div class="bg" aria-hidden="true">
     <picture>
-      <!-- If you exported AVIF/WebP, these will be used. Otherwise the JPG fallback loads. -->
-      <source srcset="exports/hero/hero-stars.avif" type="image/avif" />
-      <source srcset="exports/hero/hero-stars.webp" type="image/webp" />
-      <img src="exports/hero/hero-stars-2048.jpg" alt="Starfield background">
+      <!-- Using your actual exported files from /exports/hero/ -->
+      <source srcset="exports/hero/hero-stars-1920.avif" type="image/avif" />
+      <source srcset="exports/hero/hero-stars-1920.webp" type="image/webp" />
+      <img src="exports/hero/hero-stars-1920.jpg" alt="Starfield background">
     </picture>
   </div>
 
@@ -208,7 +208,7 @@
   <div class="noise" aria-hidden="true"
        style="background-image:url('exports/grit/grit-red-2048.jpg');"></div>
   <div class="paper" aria-hidden="true"
-       style="background-image:url('exports/news/newspaper-2048.jpg');"></div>
+       style="background-image:url('exports/news/newspaper-53.jpg');"></div>
 
   <!-- Main content -->
   <main class="stage" id="home">
@@ -238,8 +238,8 @@
 
     <section id="contact">
       <div class="kicker">Contact</div>
-      <h2 class="reveal">Say hello. We’ll make it move.</h2>
-      <p class="muted reveal">DM, signal flare, or just open an issue in the repo. We’ll see it.</p>
+      <h2 class="reveal">Say hello. We'll make it move.</h2>
+      <p class="muted reveal">DM, signal flare, or just open an issue in the repo. We'll see it.</p>
     </section>
   </main>
 
