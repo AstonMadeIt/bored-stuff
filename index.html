@@ -9,7 +9,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
   
@@ -18,164 +18,325 @@
       --bg: #000; --fg: #fff; --fg-muted: #d1d5db;
       --story-bg: #fff; --story-ink: #0a0a0a; --story-sub: #60636a;
       --pad: clamp(16px, 4vw, 60px); --max-width: 1400px;
-      --space-xs: clamp(8px, 2vw, 16px); --space-sm: clamp(12px, 3vw, 24px);
-      --space-md: clamp(20px, 4vw, 40px); --space-lg: clamp(32px, 6vw, 80px);
+      --content-width: 65ch;
+      --space-xs: clamp(8px, 2vw, 16px); 
+      --space-sm: clamp(12px, 3vw, 24px);
+      --space-md: clamp(20px, 4vw, 40px); 
+      --space-lg: clamp(32px, 6vw, 80px);
       --space-xl: clamp(48px, 10vw, 140px);
+      --space-2xl: clamp(80px, 15vw, 200px);
     }
     
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
     
     html {
-      font-size: 16px; scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased; text-size-adjust: 100%;
+      font-size: 16px; 
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased; 
+      text-size-adjust: 100%;
     }
     
     body {
-      background: var(--bg); color: var(--fg);
+      background: var(--bg); 
+      color: var(--fg);
       font-family: 'Space Grotesk', -apple-system, sans-serif;
-      line-height: 1.6; overflow-x: hidden; min-height: 100vh;
+      line-height: 1.6; 
+      overflow-x: hidden; 
+      min-height: 100vh;
     }
     
     /* Backgrounds */
-    .bg-stars { position: fixed; inset: 0; z-index: 1; }
-    .bg-stars picture, .bg-stars img { width: 100%; height: 100%; display: block; }
-    .bg-stars img { object-fit: cover; filter: brightness(0.85) contrast(1.1); }
+    .bg-stars { 
+      position: fixed; 
+      inset: 0; 
+      z-index: 1; 
+    }
+    .bg-stars picture, .bg-stars img { 
+      width: 100%; 
+      height: 100%; 
+      display: block; 
+    }
+    .bg-stars img { 
+      object-fit: cover; 
+      filter: brightness(0.85) contrast(1.1); 
+    }
     .bg-grit {
-      position: fixed; inset: 0; z-index: 2; pointer-events: none;
-      mix-blend-mode: screen; opacity: 0.08; background-size: 1200px; background-repeat: repeat;
+      position: fixed; 
+      inset: 0; 
+      z-index: 2; 
+      pointer-events: none;
+      mix-blend-mode: screen; 
+      opacity: 0.08; 
+      background-size: 1200px; 
+      background-repeat: repeat;
     }
     .bg-paper {
-      position: fixed; inset: 0; z-index: 3; pointer-events: none;
-      mix-blend-mode: overlay; opacity: 0.06; background-size: 1400px; background-repeat: repeat;
+      position: fixed; 
+      inset: 0; 
+      z-index: 3; 
+      pointer-events: none;
+      mix-blend-mode: overlay; 
+      opacity: 0.06; 
+      background-size: 1400px; 
+      background-repeat: repeat;
     }
     .bg-vignette {
-      position: fixed; inset: 0; z-index: 4; pointer-events: none;
+      position: fixed; 
+      inset: 0; 
+      z-index: 4; 
+      pointer-events: none;
       background: radial-gradient(ellipse, transparent 0%, transparent 50%, rgba(0,0,0,0.4) 100%);
     }
     
     /* Header */
     header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      z-index: 100;
       padding: clamp(20px, 5vw, 32px) var(--pad);
       background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
       backdrop-filter: blur(12px);
     }
     .brand {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif; 
+      font-weight: 700;
       font-size: clamp(14px, 3.5vw, 20px);
-      letter-spacing: 0.28em; text-transform: uppercase;
+      letter-spacing: 0.28em; 
+      text-transform: uppercase;
       color: rgba(255,255,255,0.95);
       text-shadow: 0 2px 12px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.5);
     }
     
     /* Main */
     main {
-      position: relative; z-index: 10; min-height: 100vh;
-      padding: calc(80px + var(--space-lg)) var(--pad) var(--space-lg);
+      position: relative; 
+      z-index: 10; 
+      min-height: 100vh;
+      padding: calc(80px + var(--space-lg)) var(--pad) var(--space-xl);
     }
-    .container { max-width: var(--max-width); margin: 0 auto; }
+    .container { 
+      max-width: var(--max-width); 
+      margin: 0 auto; 
+    }
     
     /* Hero */
     .hero {
-      min-height: clamp(400px, 70vh, 600px); display: flex;
-      flex-direction: column; justify-content: center;
-      padding: var(--space-lg) 0; position: relative;
+      min-height: clamp(500px, 80vh, 700px); 
+      display: flex;
+      flex-direction: column; 
+      justify-content: center;
+      padding: var(--space-xl) 0; 
+      position: relative;
+      margin-bottom: var(--space-2xl);
     }
     .hero::before {
-      content: ''; position: absolute; inset: -20px; z-index: -1;
-      background: radial-gradient(ellipse 120% 100% at 30% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+      content: ''; 
+      position: absolute; 
+      inset: -40px; 
+      z-index: -1;
+      background: radial-gradient(
+        ellipse 100% 100% at 50% 50%,
+        rgba(0,0,0,0.9) 0%,
+        rgba(0,0,0,0.6) 40%,
+        transparent 100%
+      );
     }
     .hero-title {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 800;
-      font-size: clamp(2rem, 10vw, 6.5rem); line-height: 0.95;
-      letter-spacing: -0.03em; margin-bottom: var(--space-sm);
-      text-shadow: 0 0 80px rgba(99,102,241,0.3), 0 4px 24px rgba(0,0,0,0.9);
+      font-family: 'Space Grotesk', sans-serif; 
+      font-weight: 800;
+      font-size: clamp(2.2rem, 11vw, 7rem); 
+      line-height: 0.95;
+      letter-spacing: -0.03em; 
+      margin-bottom: var(--space-md);
+      max-width: var(--content-width);
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      text-shadow: 
+        0 0 80px rgba(99,102,241,0.3), 
+        0 4px 24px rgba(0,0,0,0.9),
+        0 8px 40px rgba(0,0,0,0.7);
     }
     .hero-subtitle {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(0.95rem, 3.5vw, 1.35rem); line-height: 1.5;
-      font-weight: 400; color: var(--fg-muted); max-width: 65ch;
+      font-size: clamp(1rem, 3.8vw, 1.45rem); 
+      line-height: 1.5;
+      font-weight: 400; 
+      color: var(--fg-muted); 
+      max-width: var(--content-width);
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
       text-shadow: 0 2px 16px rgba(0,0,0,0.9);
     }
     
     /* Story Cards */
     .story-card {
-      padding: clamp(32px, 6vw, 60px) clamp(24px, 5vw, 50px);
-      margin: var(--space-lg) 0; background: var(--story-bg);
-      border-radius: clamp(16px, 4vw, 24px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      padding: clamp(40px, 7vw, 70px) clamp(32px, 6vw, 60px);
+      margin: 0 0 calc(var(--space-xl) * 1.5) 0;
+      background: var(--story-bg);
+      border-radius: clamp(20px, 4vw, 28px);
+      box-shadow: 
+        0 30px 90px rgba(0,0,0,0.5),
+        0 10px 30px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .story-card + .story-card {
+      margin-top: calc(var(--space-xl) * 1.5);
     }
     .story-header {
       border-bottom: 1.5px solid var(--story-ink);
-      padding-bottom: var(--space-md); margin-bottom: var(--space-md);
+      padding-bottom: var(--space-md); 
+      margin-bottom: var(--space-lg);
+      max-width: var(--content-width);
+      margin-left: auto;
+      margin-right: auto;
     }
     .story-kicker {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(10px, 2.2vw, 12px); font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--story-sub); margin-bottom: clamp(10px, 2vw, 12px);
+      font-size: clamp(10px, 2.2vw, 12px); 
+      font-weight: 700;
+      letter-spacing: 0.14em; 
+      text-transform: uppercase;
+      color: var(--story-sub); 
+      margin-bottom: clamp(10px, 2vw, 12px);
     }
     .story-title {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: clamp(1.85rem, 7vw, 4rem); line-height: 1.02;
-      letter-spacing: -0.02em; margin-bottom: var(--space-sm);
+      font-family: 'Space Grotesk', sans-serif; 
+      font-weight: 700;
+      font-size: clamp(2rem, 7vw, 4.5rem); 
+      line-height: 1.02;
+      letter-spacing: -0.02em; 
+      margin-bottom: var(--space-sm);
       color: var(--story-ink);
     }
     .story-subtitle {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(0.9rem, 3vw, 1.05rem); line-height: 1.55;
-      font-weight: 500; color: var(--story-sub);
+      font-size: clamp(0.95rem, 3vw, 1.1rem); 
+      line-height: 1.55;
+      font-weight: 400;
+      color: var(--story-sub);
       margin-bottom: var(--space-sm);
     }
     .story-byline {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-      color: #8a8d93; margin-top: 10px;
+      font-weight: 300;
+      color: #8a8d93; 
+      margin-top: 10px;
     }
     .story-lede {
       font-family: 'Space Grotesk', sans-serif;
-      color: #2b2e33; font-size: clamp(1rem, 3.5vw, 1.15rem);
-      line-height: 1.7; font-weight: 500; margin: var(--space-md) 0 var(--space-lg) 0;
+      color: #2b2e33; 
+      font-size: clamp(1.05rem, 3.5vw, 1.2rem);
+      line-height: 1.7; 
+      font-weight: 400;
+      margin: var(--space-lg) auto var(--space-xl) auto;
+      max-width: var(--content-width);
     }
     .story-chart {
-      width: 100%; height: clamp(800px, 120vw, 1200px);
-      margin: var(--space-md) 0; min-height: 800px;
+      width: 100%; 
+      height: auto;
+      min-height: clamp(600px, 80vh, 900px);
+      max-height: 1000px;
+      margin: var(--space-xl) 0;
     }
     .story-notes {
-      background: #f6f7f8; border-left: 3px solid var(--story-ink);
-      padding: clamp(14px, 3vw, 18px); margin: var(--space-md) 0;
+      background: #f6f7f8; 
+      border-left: 3px solid var(--story-ink);
+      padding: clamp(16px, 3vw, 20px); 
+      margin: var(--space-lg) auto var(--space-md) auto;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(0.8rem, 2.5vw, 0.85rem);
-      line-height: 1.55; color: #444; border-radius: 4px;
+      font-size: clamp(0.8rem, 2.5vw, 0.88rem);
+      line-height: 1.6; 
+      color: #444; 
+      border-radius: 6px;
+      max-width: var(--content-width);
     }
-    .story-notes strong { color: var(--story-ink); }
+    .story-notes strong { 
+      color: var(--story-ink); 
+      font-weight: 600;
+    }
     .story-source {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(0.75rem, 2.2vw, 0.8rem);
-      font-style: italic; color: #8a8d93; margin-top: var(--space-sm);
+      font-size: clamp(0.75rem, 2.2vw, 0.82rem);
+      font-style: italic; 
+      font-weight: 300;
+      color: #8a8d93; 
+      margin: var(--space-sm) auto 0 auto;
+      max-width: var(--content-width);
     }
     
     /* Interactive controls */
     .metric-toggles {
-      display: flex; flex-wrap: wrap; gap: 8px; margin: var(--space-md) 0;
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+      margin: var(--space-lg) auto;
+      max-width: var(--content-width);
     }
     .metric-btn {
       font-family: 'Space Grotesk', sans-serif;
-      padding: 10px 16px; border-radius: 20px;
-      font-size: clamp(0.75rem, 2.5vw, 0.9rem);
-      font-weight: 600; border: none; cursor: pointer;
-      transition: all 0.2s; background: #e5e7eb; color: #4b5563;
+      padding: 12px 20px; 
+      border-radius: 24px;
+      font-size: clamp(0.78rem, 2.5vw, 0.92rem);
+      font-weight: 600; 
+      border: none; 
+      cursor: pointer;
+      background: #e5e7eb; 
+      color: #4b5563;
+      position: relative;
+      overflow: hidden;
+    }
+    .metric-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.2);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    .metric-btn:hover::before {
+      transform: translateX(0);
+    }
+    .metric-btn:not(.active):hover {
+      background: #d1d5db;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     .metric-btn.active {
-      color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      color: white; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     
+    /* Responsive */
     @media (max-width: 768px) {
-      .story-chart { height: clamp(750px, 130vw, 1000px); }
+      .story-chart { 
+        min-height: clamp(550px, 90vh, 800px);
+      }
     }
+    
     @media (max-width: 480px) {
-      .story-card { padding: var(--space-md) clamp(20px, 4vw, 24px); }
-      .story-chart { height: 700px; }
+      .story-card { 
+        padding: var(--space-lg) clamp(20px, 5vw, 28px);
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0;
+      }
+      .story-chart { 
+        min-height: 500px;
+      }
+      main {
+        padding-left: clamp(16px, 4vw, 20px);
+        padding-right: clamp(16px, 4vw, 20px);
+      }
     }
   </style>
 </head>
@@ -196,14 +357,14 @@
   <main>
     <div class="container">
       <section class="hero">
-        <h1 class="hero-title">When Boredom Strikes...Data Bites...</h1>
+        <h1 class="hero-title">When Boredom Strikes...Data Bites.</h1>
         <p class="hero-subtitle">
           Data stories from the edge of attention. When boredom meets obsession, 
           the questions get interesting. No manifesto. No roadmap. Just signal.
         </p>
       </section>
       
-      <!-- STORY 1: Intimacy Recession (OG multi-panel) -->
+      <!-- STORY 1: Intimacy Recession -->
       <article class="story-card">
         <div class="story-header">
           <div class="story-kicker">DATA DABS</div>
@@ -263,6 +424,7 @@
     </div>
   </main>
   
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script>
     // Star shimmer
@@ -282,8 +444,8 @@
       }
     }
     
-    // Chart 1: Intimacy Recession (OG multi-panel with 3 subplots)
-    const intimacyData = {"data":[{"hovertemplate":"%{y:.0f} times/year<extra></extra>","line":{"color":"#FF3333","width":4},"marker":{"color":"#FF3333","size":8},"mode":"lines+markers","name":"Sexual frequency","x":[2000,2002,2004,2006,2008,2010,2012,2014,2016,2018,2021,2022,2024],"y":[66.98,67.70,64.02,61.05,63.82,59.00,78.18,58.33,55.38,58.60,50.13,54.34,49.53],"type":"scatter","xaxis":"x","yaxis":"y"},{"hovertemplate":"%{y:.0f}M<extra></extra>","line":{"color":"#0066CC","dash":"dot","width":4},"marker":{"color":"#0066CC","size":8,"symbol":"diamond"},"mode":"lines+markers","name":"SSRI prescriptions","x":[2000,2002,2004,2006,2008,2010,2012,2014,2016,2018,2020,2022],"y":[164,180,196,215,232,264,286,308,330,352,380,408],"type":"scatter","xaxis":"x","yaxis":"y2"},{"fill":"tozeroy","fillcolor":"rgba(0, 102, 204, 0.1)","hovertemplate":"%{y:.1f}%<extra></extra>","line":{"color":"#0066CC","width":4},"marker":{"color":"#0066CC","size":8},"mode":"lines+markers","name":"Marriage rate","showlegend":false,"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022],"y":[48.76,48.28,48.02,47.86,47.72,47.54,47.50,47.80,47.75,47.62,48.04,48.02],"type":"scatter","xaxis":"x2","yaxis":"y3"},{"fill":"tozeroy","fillcolor":"rgba(0, 0, 0, 0.1)","hovertemplate":"%{y:.1f} hours<extra></extra>","line":{"color":"#000000","width":4},"marker":{"color":"#000000","size":8},"mode":"lines+markers","name":"Screen time","showlegend":false,"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[2.7,3.2,3.8,4.5,5.2,5.9,6.8,7.4,8.1,8.5,10.2,10.5,10.8],"type":"scatter","xaxis":"x3","yaxis":"y4"}],"layout":{"xaxis":{"anchor":"y","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(0,0,0,.25)","ticks":"outside","ticklen":5,"tickcolor":"#000","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false},"yaxis":{"anchor":"x","domain":[0.7666666666666666,0.9999999999999999],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12,"color":"#FF3333"},"text":"<b>Times per year</b>"},"tickfont":{"color":"#FF3333"},"range":[40,85]},"yaxis2":{"anchor":"x","overlaying":"y","side":"right","showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12,"color":"#0066CC"},"text":"<b>Millions of prescriptions</b>"},"tickfont":{"color":"#0066CC"},"range":[150,420]},"xaxis2":{"anchor":"y3","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(0,0,0,.25)","ticks":"outside","ticklen":5,"tickcolor":"#000","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false},"yaxis3":{"anchor":"x2","domain":[0.3833333333333333,0.6166666666666666],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12},"text":"<b>Percent married</b>"},"range":[47,49]},"xaxis3":{"anchor":"y4","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(0,0,0,.25)","ticks":"outside","ticklen":5,"tickcolor":"#000","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false},"yaxis4":{"anchor":"x3","domain":[0.0,0.2333333333333333],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12},"text":"<b>Hours per day</b>"},"range":[0,12]},"annotations":[{"font":{"color":"#000","size":14},"showarrow":false,"text":"<b>Sexual frequency has declined as SSRI prescriptions doubled</b>","x":0,"xanchor":"left","xref":"paper","y":0.9999999999999999,"yanchor":"bottom","yref":"paper"},{"font":{"color":"#000","size":14},"showarrow":false,"text":"<b>Marriage rates have remained relatively stable</b>","x":0,"xanchor":"left","xref":"paper","y":0.6166666666666666,"yanchor":"bottom","yref":"paper"},{"font":{"color":"#000","size":14},"showarrow":false,"text":"<b>Daily screen time has quadrupled since 2010</b>","x":0,"xanchor":"left","xref":"paper","y":0.2333333333333333,"yanchor":"bottom","yref":"paper"}],"font":{"family":"Space Grotesk, sans-serif","size":11,"color":"#0a0a0a"},"legend":{"orientation":"h","yanchor":"top","y":0.99,"xanchor":"left","x":0.01,"bgcolor":"rgba(255,255,255,0.8)","bordercolor":"#000","borderwidth":1},"margin":{"l":70,"r":70,"t":40,"b":40},"height":window.innerWidth<480?700:(window.innerWidth<768?900:1200),"plot_bgcolor":"#fff","paper_bgcolor":"#fff","showlegend":true,"hoverlabel":{"font":{"size":13,"family":"Space Grotesk, sans-serif"},"bgcolor":"#fff","bordercolor":"rgba(0,0,0,.10)"},"hovermode":"x unified"}};
+    // Chart 1: Intimacy Recession (OG multi-panel)
+    const intimacyData = {"data":[{"hovertemplate":"%{y:.0f} times/year<extra></extra>","line":{"color":"#FF3333","width":4},"marker":{"color":"#FF3333","size":8},"mode":"lines+markers","name":"Sexual frequency","x":[2000,2002,2004,2006,2008,2010,2012,2014,2016,2018,2021,2022,2024],"y":[66.98,67.70,64.02,61.05,63.82,59.00,78.18,58.33,55.38,58.60,50.13,54.34,49.53],"type":"scatter","xaxis":"x","yaxis":"y"},{"hovertemplate":"%{y:.0f}M<extra></extra>","line":{"color":"#0066CC","dash":"dot","width":4},"marker":{"color":"#0066CC","size":8,"symbol":"diamond"},"mode":"lines+markers","name":"SSRI prescriptions","x":[2000,2002,2004,2006,2008,2010,2012,2014,2016,2018,2020,2022],"y":[164,180,196,215,232,264,286,308,330,352,380,408],"type":"scatter","xaxis":"x","yaxis":"y2"},{"fill":"tozeroy","fillcolor":"rgba(0, 102, 204, 0.1)","hovertemplate":"%{y:.1f}%<extra></extra>","line":{"color":"#0066CC","width":4},"marker":{"color":"#0066CC","size":8},"mode":"lines+markers","name":"Marriage rate","showlegend":false,"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022],"y":[48.76,48.28,48.02,47.86,47.72,47.54,47.50,47.80,47.75,47.62,48.04,48.02],"type":"scatter","xaxis":"x2","yaxis":"y3"},{"fill":"tozeroy","fillcolor":"rgba(0, 0, 0, 0.1)","hovertemplate":"%{y:.1f} hours<extra></extra>","line":{"color":"#000000","width":4},"marker":{"color":"#000000","size":8},"mode":"lines+markers","name":"Screen time","showlegend":false,"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[2.7,3.2,3.8,4.5,5.2,5.9,6.8,7.4,8.1,8.5,10.2,10.5,10.8],"type":"scatter","xaxis":"x3","yaxis":"y4"}],"layout":{"xaxis":{"anchor":"y","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(0,0,0,.25)","ticks":"outside","ticklen":5,"tickcolor":"#000","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false},"yaxis":{"anchor":"x","domain":[0.7666666666666666,0.9999999999999999],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12,"color":"#FF3333"},"text":"<b>Times per year</b>"},"tickfont":{"color":"#FF3333"},"range":[40,85]},"yaxis2":{"anchor":"x","overlaying":"y","side":"right","showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12,"color":"#0066CC"},"text":"<b>Millions of prescriptions</b>"},"tickfont":{"color":"#0066CC"},"range":[150,420]},"xaxis2":{"anchor":"y3","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(0,0,0,.25)","ticks":"outside","ticklen":5,"tickcolor":"#000","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false},"yaxis3":{"anchor":"x2","domain":[0.3833333333333333,0.6166666666666666],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12},"text":"<b>Percent married</b>"},"range":[47,49]},"xaxis3":{"anchor":"y4","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(0,0,0,.25)","ticks":"outside","ticklen":5,"tickcolor":"#000","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false},"yaxis4":{"anchor":"x3","domain":[0.0,0.2333333333333333],"showgrid":true,"gridcolor":"rgba(0,0,0,.06)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12},"text":"<b>Hours per day</b>"},"range":[0,12]},"annotations":[{"font":{"color":"#000","size":14},"showarrow":false,"text":"<b>Sexual frequency has declined as SSRI prescriptions doubled</b>","x":0,"xanchor":"left","xref":"paper","y":0.9999999999999999,"yanchor":"bottom","yref":"paper"},{"font":{"color":"#000","size":14},"showarrow":false,"text":"<b>Marriage rates have remained relatively stable</b>","x":0,"xanchor":"left","xref":"paper","y":0.6166666666666666,"yanchor":"bottom","yref":"paper"},{"font":{"color":"#000","size":14},"showarrow":false,"text":"<b>Daily screen time has quadrupled since 2010</b>","x":0,"xanchor":"left","xref":"paper","y":0.2333333333333333,"yanchor":"bottom","yref":"paper"}],"font":{"family":"Space Grotesk, sans-serif","size":11,"color":"#0a0a0a"},"legend":{"orientation":"h","yanchor":"top","y":0.99,"xanchor":"left","x":0.01,"bgcolor":"rgba(255,255,255,0.8)","bordercolor":"#000","borderwidth":1},"margin":{"l":70,"r":70,"t":40,"b":40},"height":window.innerWidth<480?600:(window.innerWidth<768?750:950),"plot_bgcolor":"#fff","paper_bgcolor":"#fff","showlegend":true,"hoverlabel":{"font":{"size":13,"family":"Space Grotesk, sans-serif"},"bgcolor":"#fff","bordercolor":"rgba(0,0,0,.10)"},"hovermode":"x unified"}};
     
     Plotly.newPlot('intimacy-chart', intimacyData.data, intimacyData.layout, {responsive:true, displayModeBar:false});
     
@@ -349,7 +511,7 @@
         xaxis: {showgrid:true, gridcolor:'rgba(0,0,0,.06)', tickangle:-45},
         yaxis: {title:'Index (0-100)', range:[0,100]},
         margin: {l:60, r:40, t:40, b:80},
-        height: window.innerWidth<480?700:(window.innerWidth<768?900:1200),
+        height: window.innerWidth<480?550:(window.innerWidth<768?700:850),
         plot_bgcolor: '#fff', paper_bgcolor: '#fff',
         font: {family:'Space Grotesk, sans-serif', size:11},
         legend: {x:0.02, y:0.98}
@@ -361,9 +523,10 @@
     updateAnxietyChart();
     
     window.addEventListener('resize', () => {
-      const h = window.innerWidth<480?700:(window.innerWidth<768?900:1200);
-      Plotly.relayout('intimacy-chart', {height: h});
-      updateAnxietyChart();
+      const h1 = window.innerWidth<480?600:(window.innerWidth<768?750:950);
+      const h2 = window.innerWidth<480?550:(window.innerWidth<768?700:850);
+      Plotly.relayout('intimacy-chart', {height: h1});
+      Plotly.relayout('anxiety-chart', {height: h2});
     });
   </script>
 </body>
