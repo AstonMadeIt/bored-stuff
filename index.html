@@ -12,7 +12,10 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700&display=swap" rel="stylesheet">
+
+  <!-- Plotly for charts -->
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 
   <style>
     /* ═══════════════════════════════════════════════════════
@@ -61,7 +64,6 @@
        BACKGROUND LAYERS
        ═══════════════════════════════════════════════════════ */
     
-    /* Stars - deepest layer */
     .bg-stars {
       position: fixed;
       inset: 0;
@@ -83,7 +85,6 @@
       transform: translateZ(0);
     }
 
-    /* Grit texture - red noise */
     .bg-grit {
       position: fixed;
       inset: 0;
@@ -97,7 +98,6 @@
       filter: contrast(1.15) saturate(1.1);
     }
 
-    /* Paper texture - newsprint overlay */
     .bg-paper {
       position: fixed;
       inset: 0;
@@ -110,7 +110,6 @@
       background-repeat: repeat;
     }
 
-    /* Vignette for depth */
     .bg-vignette {
       position: fixed;
       inset: 0;
@@ -183,7 +182,6 @@
       position: relative;
     }
 
-    /* Backdrop for text readability */
     .hero::before {
       content: '';
       position: absolute;
@@ -228,116 +226,125 @@
     }
 
     /* ═══════════════════════════════════════════════════════
-       CONTENT SECTIONS
+       DATA STORY CARDS
        ═══════════════════════════════════════════════════════ */
-    .section {
-      padding: var(--space-xl) var(--space-md);
-      margin: var(--space-lg) 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-      position: relative;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+    .story-card {
+      padding: var(--space-xl) var(--space-lg);
+      margin: var(--space-xl) 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
 
-    .section-kicker {
+    .story-header {
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .story-kicker {
       font-family: 'Inter', sans-serif;
-      font-size: clamp(10px, 1.8vw, 11px);
+      font-size: clamp(10px, 1.8vw, 12px);
       font-weight: 700;
-      letter-spacing: 0.24em;
+      letter-spacing: 0.20em;
       text-transform: uppercase;
-      color: #a5b0ff;
+      color: #ff6b6b;
       margin-bottom: var(--space-sm);
-      opacity: 0.9;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 
-    .section-title {
-      font-family: 'Space Grotesk', 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: clamp(1.75rem, 4vw, 3rem);
-      line-height: 1.1;
+    .story-title {
+      font-family: 'Bodoni Moda', 'Space Grotesk', ui-serif, Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.05;
       letter-spacing: -0.02em;
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
       color: #ffffff;
       text-shadow: 
-        0 2px 16px rgba(0, 0, 0, 0.8),
-        0 4px 24px rgba(0, 0, 0, 0.6);
+        0 2px 20px rgba(0, 0, 0, 0.9),
+        0 4px 30px rgba(0, 0, 0, 0.7);
     }
 
-    .section-body {
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      line-height: 1.7;
-      color: var(--fg-muted);
-      max-width: 75ch;
+    .story-subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      line-height: 1.55;
+      font-weight: 500;
+      color: #b8bdc7;
+      margin-bottom: var(--space-sm);
       text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
     }
 
-    .section-body p + p {
-      margin-top: var(--space-sm);
+    .story-byline {
+      font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+      color: #8a8d93;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .story-lede {
+      color: #e5e7eb;
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      line-height: 1.7;
+      font-weight: 500;
+      margin: var(--space-lg) 0;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
+    }
+
+    .story-chart {
+      width: 100%;
+      height: 1200px;
+      margin: var(--space-lg) 0;
+    }
+
+    .story-notes {
+      background: rgba(0, 0, 0, 0.5);
+      border-left: 3px solid #ff6b6b;
+      padding: var(--space-md);
+      margin: var(--space-lg) 0;
+      font-size: clamp(0.8rem, 1.6vw, 0.9rem);
+      line-height: 1.6;
+      color: #b8bdc7;
+      border-radius: 8px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .story-notes strong {
+      color: #ffffff;
+    }
+
+    .story-source {
+      font-size: clamp(0.75rem, 1.4vw, 0.85rem);
+      font-style: italic;
+      color: #8a8d93;
+      margin-top: var(--space-md);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 
     /* ═══════════════════════════════════════════════════════
-       CANVAS AREA (for future data stories)
-       ═══════════════════════════════════════════════════════ */
-    .canvas {
-      margin-top: var(--space-xl);
-      padding: var(--space-xl) 0;
-    }
-
-    .canvas-item {
-      margin-bottom: var(--space-xl);
-      padding: var(--space-lg);
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
-    }
-
-    /* ═══════════════════════════════════════════════════════
-       RESPONSIVE OPTIMIZATIONS
+       RESPONSIVE
        ═══════════════════════════════════════════════════════ */
     
-    /* Touch devices */
-    @media (hover: none) and (pointer: coarse) {
-      html {
-        -webkit-tap-highlight-color: transparent;
-      }
-      
-      .bg-stars img {
-        filter: brightness(0.9) contrast(1.08);
+    @media (max-width: 768px) {
+      .story-chart {
+        height: 1000px;
       }
     }
 
-    /* Small mobile */
     @media (max-width: 480px) {
-      .hero-title {
-        letter-spacing: -0.02em;
+      .story-card {
+        padding: var(--space-lg) var(--space-md);
       }
       
-      .section {
-        padding: var(--space-lg) var(--space-sm);
+      .story-chart {
+        height: 900px;
       }
     }
 
-    /* Tablet & up */
-    @media (min-width: 768px) {
-      .hero {
-        min-height: calc(100vh - 120px);
-      }
-    }
-
-    /* Desktop & up */
-    @media (min-width: 1200px) {
-      .hero-subtitle {
-        font-size: 1.4rem;
-      }
-    }
-
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
@@ -349,27 +356,10 @@
         transition-duration: 0.01ms !important;
       }
     }
-
-    /* Print styles */
-    @media print {
-      .bg-stars,
-      .bg-grit,
-      .bg-paper,
-      .bg-vignette {
-        display: none;
-      }
-      
-      body {
-        background: white;
-        color: black;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- ═══════════════════════════════════════════════════════
-       BACKGROUND LAYERS
-       ═══════════════════════════════════════════════════════ -->
+  <!-- BACKGROUND LAYERS -->
   <div class="bg-stars" aria-hidden="true">
     <picture>
       <source srcset="exports/hero/hero-stars-1920.avif" type="image/avif" />
@@ -382,16 +372,12 @@
   <div class="bg-paper" aria-hidden="true" style="background-image:url('exports/news/newspaper-53.jpg');"></div>
   <div class="bg-vignette" aria-hidden="true"></div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       HEADER
-       ═══════════════════════════════════════════════════════ -->
+  <!-- HEADER -->
   <header>
     <div class="brand">i wuz just bored</div>
   </header>
 
-  <!-- ═══════════════════════════════════════════════════════
-       MAIN STAGE
-       ═══════════════════════════════════════════════════════ -->
+  <!-- MAIN STAGE -->
   <main>
     <div class="container">
       <!-- Hero -->
@@ -403,46 +389,50 @@
         </p>
       </section>
 
-      <!-- Canvas for future data stories -->
-      <div class="canvas">
-        <div class="section">
-          <div class="section-kicker">Canvas</div>
-          <h2 class="section-title">Analysis. Visualization. Narrative.</h2>
-          <div class="section-body">
-            <p>This space is a canvas for one-off sleek analyses straight from the data pipeline. 
-            Each piece stands alone—a snapshot, a pattern, a question worth asking.</p>
-            <p>When there's something to write about, it links to Substack. 
-            When the data speaks for itself, it lives here. Pure signal, zero noise.</p>
+      <!-- DATA STORY: The Intimacy Recession -->
+      <article class="story-card">
+        <div class="story-header">
+          <div class="story-kicker">Data Dabs</div>
+          <h2 class="story-title">The Intimacy Recession</h2>
+          <div class="story-subtitle">
+            How declining sexual frequency, rising pharmaceutical use, and increasing screen time 
+            tell the story of American isolation
+          </div>
+          <div class="story-byline">
+            Analysis based on GSS, Census Bureau, and Express Scripts data
           </div>
         </div>
 
-        <!-- Future data story items go here -->
-        <!-- Example structure:
-        <div class="canvas-item">
-          <div class="section-kicker">Data Story · Nov 2025</div>
-          <h3 class="section-title">Your Story Title</h3>
-          <div class="section-body">
-            <p>Story content...</p>
-          </div>
+        <div class="story-lede">
+          Between 2000 and 2022, average sexual frequency among American adults ages 18–64 
+          declined from approximately 62 times per year to 41 times per year — a 34% decrease. 
+          During the same period, SSRI prescriptions more than doubled, from 164 million to 408 million annually.
         </div>
-        -->
-      </div>
+
+        <div id="intimacy-chart" class="story-chart"></div>
+
+        <div class="story-notes">
+          <strong>About the data:</strong> Sexual frequency data comes from the General Social Survey (GSS),
+          conducted by NORC at the University of Chicago. SSRI prescription data: Express Scripts Drug Trend Reports.
+          Marriage data via U.S. Census API on 2025-10-26. Screen time estimates from
+          Nielsen Total Audience Reports and Pew Research Center surveys.
+        </div>
+
+        <div class="story-source">
+          <strong>Methodology:</strong> Python · Pandas · Plotly. Pipelines unchanged; this build applies typography and chart cosmetics only.
+        </div>
+      </article>
+
     </div>
   </main>
 
-  <!-- ═══════════════════════════════════════════════════════
-       GSAP ANIMATION (SIMPLIFIED)
-       ═══════════════════════════════════════════════════════ -->
+  <!-- GSAP ANIMATION -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script>
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Respect reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Gentle star shimmer (breathing effect)
+    // Star shimmer
     const starImg = document.querySelector('.bg-stars img');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
     if (starImg && !prefersReducedMotion) {
       gsap.to(starImg, {
         opacity: 0.88,
@@ -451,10 +441,8 @@
         yoyo: true,
         ease: 'sine.inOut'
       });
-    }
 
-    // Subtle mouse parallax on stars
-    if (!prefersReducedMotion) {
+      // Mouse parallax
       let targetX = 0, targetY = 0, curX = 0, curY = 0;
 
       window.addEventListener('mousemove', (e) => {
@@ -470,6 +458,11 @@
         gsap.set(starImg, { x: curX, y: curY });
       });
     }
+
+    // Plotly chart data
+    var chartData = {"data":[{"hovertemplate":"%{y:.0f} times/year<extra></extra>","line":{"color":"#FF3333","width":4},"marker":{"color":"#FF3333","size":8},"mode":"lines+markers","name":"Sexual frequency","x":[2000,2002,2004,2006,2008,2010,2012,2014,2016,2018,2021,2022,2024],"y":[66.98,67.70,64.02,61.05,63.82,59.00,78.18,58.33,55.38,58.60,50.13,54.34,49.53],"type":"scatter","xaxis":"x","yaxis":"y"},{"hovertemplate":"%{y:.0f}M<extra></extra>","line":{"color":"#0066CC","dash":"dot","width":4},"marker":{"color":"#0066CC","size":8,"symbol":"diamond"},"mode":"lines+markers","name":"SSRI prescriptions","x":[2000,2002,2004,2006,2008,2010,2012,2014,2016,2018,2020,2022],"y":[164,180,196,215,232,264,286,308,330,352,380,408],"type":"scatter","xaxis":"x","yaxis":"y2"},{"fill":"tozeroy","fillcolor":"rgba(0, 102, 204, 0.1)","hovertemplate":"%{y:.1f}%<extra></extra>","line":{"color":"#0066CC","width":4},"marker":{"color":"#0066CC","size":8},"mode":"lines+markers","name":"Marriage rate","showlegend":false,"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2021,2022],"y":[48.76,48.28,48.02,47.86,47.72,47.54,47.50,47.80,47.75,47.62,48.04,48.02],"type":"scatter","xaxis":"x2","yaxis":"y3"},{"fill":"tozeroy","fillcolor":"rgba(0, 0, 0, 0.1)","hovertemplate":"%{y:.1f} hours<extra></extra>","line":{"color":"#FFFFFF","width":4},"marker":{"color":"#FFFFFF","size":8},"mode":"lines+markers","name":"Screen time","showlegend":false,"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"y":[2.7,3.2,3.8,4.5,5.2,5.9,6.8,7.4,8.1,8.5,10.2,10.5,10.8],"type":"scatter","xaxis":"x3","yaxis":"y4"}],"layout":{"xaxis":{"anchor":"y","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(255,255,255,.08)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(255,255,255,.25)","ticks":"outside","ticklen":5,"tickcolor":"#fff","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false,"tickfont":{"color":"#ffffff"}},"yaxis":{"anchor":"x","domain":[0.77,1.0],"showgrid":true,"gridcolor":"rgba(255,255,255,.08)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12,"color":"#FF3333"},"text":"<b>Times per year</b>"},"tickfont":{"color":"#FF3333"},"range":[40,85]},"yaxis2":{"anchor":"x","overlaying":"y","side":"right","showgrid":true,"gridcolor":"rgba(255,255,255,.08)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12,"color":"#0066CC"},"text":"<b>Millions of prescriptions</b>"},"tickfont":{"color":"#0066CC"},"range":[150,420]},"xaxis2":{"anchor":"y3","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(255,255,255,.08)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(255,255,255,.25)","ticks":"outside","ticklen":5,"tickcolor":"#fff","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false,"tickfont":{"color":"#ffffff"}},"yaxis3":{"anchor":"x2","domain":[0.38,0.62],"showgrid":true,"gridcolor":"rgba(255,255,255,.08)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12,"color":"#ffffff"},"text":"<b>Percent married</b>"},"range":[47,49],"tickfont":{"color":"#ffffff"}},"xaxis3":{"anchor":"y4","domain":[0.0,0.94],"showgrid":true,"gridcolor":"rgba(255,255,255,.08)","gridwidth":0.5,"showline":true,"linewidth":1,"linecolor":"rgba(255,255,255,.25)","ticks":"outside","ticklen":5,"tickcolor":"#fff","type":"linear","dtick":2,"range":[1999,2025],"zeroline":false,"tickfont":{"color":"#ffffff"}},"yaxis4":{"anchor":"x3","domain":[0.0,0.23],"showgrid":true,"gridcolor":"rgba(255,255,255,.08)","gridwidth":0.5,"showline":false,"zeroline":false,"title":{"font":{"size":12,"color":"#ffffff"},"text":"<b>Hours per day</b>"},"range":[0,12],"tickfont":{"color":"#ffffff"}},"annotations":[{"font":{"color":"#ffffff","size":14},"showarrow":false,"text":"<b>Sexual frequency has declined as SSRI prescriptions doubled</b>","x":0,"xanchor":"left","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{"color":"#ffffff","size":14},"showarrow":false,"text":"<b>Marriage rates have remained relatively stable</b>","x":0,"xanchor":"left","xref":"paper","y":0.62,"yanchor":"bottom","yref":"paper"},{"font":{"color":"#ffffff","size":14},"showarrow":false,"text":"<b>Daily screen time has quadrupled since 2010</b>","x":0,"xanchor":"left","xref":"paper","y":0.23,"yanchor":"bottom","yref":"paper"}],"font":{"family":"Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif","size":11,"color":"#ffffff"},"legend":{"orientation":"h","yanchor":"top","y":0.99,"xanchor":"left","x":0.01,"bgcolor":"rgba(0,0,0,0.8)","bordercolor":"rgba(255,255,255,0.2)","borderwidth":1,"font":{"color":"#ffffff"}},"margin":{"l":70,"r":70,"t":40,"b":40},"height":1200,"plot_bgcolor":"rgba(0,0,0,0.3)","paper_bgcolor":"transparent","showlegend":true,"hoverlabel":{"font":{"size":13,"family":"Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif","color":"#000000"},"bgcolor":"#ffffff","bordercolor":"rgba(0,0,0,.10)"},"hovermode":"x unified"}};
+    
+    Plotly.newPlot('intimacy-chart', chartData.data, chartData.layout, {responsive:true, displayModeBar:false});
   </script>
 </body>
 </html>
