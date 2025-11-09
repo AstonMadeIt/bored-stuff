@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>i wuz just bored</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- Preload key visuals for performance -->
+  <link rel="preload" as="image" href="_exports/hero/hero-stars-2048.jpg" type="image/jpeg" />
+  <link rel="preload" as="image" href="_exports/grit/grit-red-2048.jpg" type="image/jpeg" />
+  <link rel="preload" as="image" href="_exports/news/newspaper-2048.jpg" type="image/jpeg" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', 'Space Grotesk', sans-serif;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background: #000;
+    }
+
+    .bg picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.8);
+    }
+
+    .bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("_exports/grit/grit-red-2048.jpg") center/1000px repeat;
+      mix-blend-mode: screen;
+      opacity: 0.1;
+    }
+
+    .paper {
+      position: absolute;
+      inset: 0;
+      background: url("_exports/news/newspaper-2048.jpg") center/1200px repeat;
+      mix-blend-mode: overlay;
+      opacity: 0.08;
+      z-index: -2;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 0 10%;
+    }
+
+    h1 {
+      font-size: 5vw;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin: 0 0 0.5em;
+      filter: blur(0px);
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      line-height: 1.5;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1.5em;
+      padding: 0.75em 1.5em;
+      border-radius: 6px;
+      background: radial-gradient(circle at top left, #64f4ff, #0048ff);
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg">
+    <picture>
+      <source srcset="_exports/hero/hero-stars.avif" type="image/avif">
+      <source srcset="_exports/hero/hero-stars.webp" type="image/webp">
+      <img src="_exports/hero/hero-stars-2048.jpg" alt="Starfield background">
+    </picture>
+  </div>
+  <div class="paper"></div>
+
+  <div class="content">
+    <h1>Slip the Atmosphere.</h1>
+    <p>A language built to move: motion with purpose, particles and texture stories. Trust nothing. See details. Make obvious. Repeat slowly.</p>
+    <a href="#" class="btn">Enter Orbit</a>
+  </div>
+
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script>
+    gsap.timeline({defaults:{ease:"power3.out", duration:1}})
+      .to("h1",{opacity:1, y:0})
+      .to("p",{opacity:1, y:0},"-=0.6")
+      .to(".btn",{opacity:1, y:0},"-=0.4");
+  </script>
+</body>
+</html>
