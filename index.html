@@ -435,13 +435,9 @@
       max-width: 100%;
       height: auto;
       display: block;
+      image-rendering: auto; /* High-quality scaling */
       image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
-      -ms-interpolation-mode: nearest-neighbor;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      transform: translateZ(0);
-      -webkit-transform: translateZ(0);
+      -ms-interpolation-mode: bicubic; /* High quality for IE/Edge */
     }
     
     @media (max-width: 768px) {
