@@ -16,21 +16,21 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 
   <style>
     :root{
-      --bg:#000; --fg:#fff; --fg-muted:#d1d5db;
-      --story-bg:#fff; --story-ink:#0a0a0a; --story-sub:#60636a;
-      --accent:#6366f1; --accent-hover:#818cf8;
+      --bg:#faf9f7; --fg:#2a2826; --fg-muted:#7a7876;
+      --story-bg:#fff; --story-ink:#1a1816; --story-sub:#5a5856;
+      --accent:#ff6b9d; --accent-hover:#ff8fb3;
       --pad:clamp(16px,4vw,60px); --max-width:1400px; --content-width:65ch;
       --space-xs:clamp(8px,2vw,16px); --space-sm:clamp(12px,3vw,24px);
       --space-md:clamp(20px,4vw,40px); --space-lg:clamp(32px,6vw,80px);
       --space-xl:clamp(48px,10vw,140px); --space-2xl:clamp(80px,15vw,200px);
 
-      /* Distinct series colors */
-      --c-tradwife:#f97316; --c-measles:#dc2626; --c-unemployment:#2563eb;
-      --c-eggs:#0ea5e9; --c-gold:#d97706; --c-beef:#7c2d12;
+      /* Distinct series colors - desaturated */
+      --c-tradwife:#e89b78; --c-measles:#d47c7c; --c-unemployment:#7a9bc4;
+      --c-eggs:#7ac4d8; --c-gold:#c4a478; --c-beef:#9c6c5c;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
@@ -46,6 +46,17 @@
       line-height:1.6; overflow-x:hidden; min-height:100vh;
       padding-bottom:env(safe-area-inset-bottom, 0);
       cursor: none; /* Custom cursor */
+      /* Film grain effect */
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="1.5" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23grain)" opacity="0.15"/></svg>');
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: multiply;
     }
 
     /* ===== CUSTOM CURSOR ===== */
@@ -58,11 +69,13 @@
       pointer-events: none;
       z-index: 9999;
       transition: transform 0.15s ease, opacity 0.15s ease;
-      mix-blend-mode: difference;
+      mix-blend-mode: multiply;
+      opacity: 0.6;
     }
     #custom-cursor.hover {
       transform: scale(2);
       border-color: var(--accent-hover);
+      opacity: 0.8;
     }
 
     /* ===== LOADER ===== */
@@ -125,16 +138,16 @@
       position:fixed; inset:0; pointer-events:none; 
     }
     .bg-grit{ 
-      z-index:2; mix-blend-mode:screen; opacity:.08; 
-      background-size:1200px; background-repeat:repeat; 
+      z-index:2; mix-blend-mode:overlay; opacity:.12; 
+      background-size:800px; background-repeat:repeat; 
     }
     .bg-paper{ 
-      z-index:3; mix-blend-mode:overlay; opacity:.06; 
-      background-size:1400px; background-repeat:repeat; 
+      z-index:3; mix-blend-mode:multiply; opacity:.04; 
+      background-size:1000px; background-repeat:repeat; 
     }
     .bg-vignette{ 
       z-index:4; 
-      background:radial-gradient(ellipse,transparent 0%,transparent 50%,rgba(0,0,0,.4) 100%); 
+      background:radial-gradient(ellipse,transparent 0%,transparent 60%,rgba(250,240,235,.3) 100%); 
     }
 
     /* ===== PROGRESS BAR ===== */
@@ -150,26 +163,242 @@
       will-change: transform;
     }
 
-    /* ===== HEADER ===== */
+    /* ===== HEADER - APPLE-LEVEL EXECUTION ===== */
     header{
-      position:fixed; top:0; left:0; right:0; z-index:100;
-      padding:max(20px, env(safe-area-inset-top)) var(--pad) 20px var(--pad);
-      background:linear-gradient(180deg, rgba(0,0,0,.95) 0%, rgba(0,0,0,.7) 60%, transparent 100%);
-      backdrop-filter:blur(12px);
-      transition: background 0.3s ease;
+      position:fixed; 
+      top:0; 
+      left:0; 
+      right:0; 
+      z-index:100;
+      padding:max(16px, env(safe-area-inset-top)) var(--pad) 16px var(--pad);
+      background:#fff;
+      transition: box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      /* Pastel gradient accent bar */
+      box-shadow: inset 0 -3px 0 0 transparent;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        #ffd166 0%,
+        #ff8fab 25%, 
+        #ffb5e8 50%, 
+        #b4d4ff 75%, 
+        #c4a5ff 100%
+      );
+      opacity: 0.6;
     }
     header.scrolled {
-      background:rgba(0,0,0,.98);
-      box-shadow: 0 4px 24px rgba(0,0,0,.4);
+      box-shadow: 
+        0 2px 8px rgba(0,0,0,.04),
+        0 1px 2px rgba(0,0,0,.02);
     }
+    
     .brand{
-      font-weight:700; font-size:clamp(14px,3.5vw,20px);
-      letter-spacing:.28em; text-transform:uppercase; color:rgba(255,255,255,.95);
-      text-shadow:0 2px 12px rgba(0,0,0,.8), 0 4px 20px rgba(0,0,0,.5);
-      transition: letter-spacing 0.3s ease;
+      font-weight: 700; 
+      font-size: clamp(14px, 3vw, 18px);
+      letter-spacing: 0.05em; 
+      text-transform: uppercase; 
+      color: #1d1d1f; /* Apple's near-black */
+      transition: opacity 0.2s ease;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     .brand:hover {
-      letter-spacing:.32em;
+      opacity: 0.7;
+    }
+    
+    /* ===== HEADER CONTROLS ===== */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* ===== MUSIC TOGGLE BUTTON ===== */
+    .music-toggle {
+      background: rgba(255, 107, 157, 0.06);
+      border: 1px solid rgba(255, 107, 157, 0.12);
+      border-radius: 18px;
+      padding: 6px 14px;
+      font-size: clamp(10px, 2.2vw, 11px);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #1d1d1f;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .music-toggle:hover {
+      background: rgba(255, 107, 157, 0.12);
+      border-color: rgba(255, 107, 157, 0.2);
+      transform: translateY(-1px);
+    }
+    .music-toggle:active {
+      transform: translateY(0);
+      transition-duration: 0.1s;
+    }
+    .music-toggle.active {
+      background: rgba(255, 107, 157, 0.15);
+      border-color: rgba(255, 107, 157, 0.25);
+      color: var(--accent);
+    }
+    
+    /* ===== VOLUME SLIDER ===== */
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .volume-control.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 70px;
+      height: 3px;
+      background: rgba(255, 107, 157, 0.12);
+      outline: none;
+      border-radius: 1.5px;
+      cursor: pointer;
+    }
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(255, 107, 157, 0.3);
+    }
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    .volume-slider::-webkit-slider-thumb:active {
+      transform: scale(1.05);
+    }
+    .volume-slider::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(255, 107, 157, 0.3);
+    }
+    .volume-slider::-moz-range-thumb:hover {
+      transform: scale(1.15);
+    }
+    .volume-slider::-moz-range-thumb:active {
+      transform: scale(1.05);
+    }
+    .volume-icon {
+      font-size: 13px;
+      line-height: 1;
+      opacity: 0.7;
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        padding: max(12px, env(safe-area-inset-top)) 20px 12px 20px;
+      }
+      .brand {
+        font-size: 13px;
+        letter-spacing: 0.03em;
+      }
+      .header-controls {
+        gap: 10px;
+      }
+      .music-toggle {
+        padding: 5px 12px;
+        font-size: 10px;
+      }
+      .volume-slider {
+        width: 50px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .brand {
+        font-size: 12px;
+      }
+      .music-toggle-text {
+        display: none; /* Just show icon on very small screens */
+      }
+      .header-controls {
+        gap: 8px;
+      }
+    }
+    .music-toggle-icon {
+      width: 14px;
+      height: 14px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .music-toggle-icon::before,
+    .music-toggle-icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+      transition: all 0.3s ease;
+    }
+    /* Speaker icon */
+    .music-toggle-icon::before {
+      width: 4px;
+      height: 8px;
+      border-radius: 1px 0 0 1px;
+    }
+    .music-toggle-icon::after {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 4px 0 4px 5px;
+      border-color: transparent transparent transparent currentColor;
+      left: 4px;
+    }
+    /* Sound waves */
+    .music-toggle.active .music-toggle-icon {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    
+    @media (max-width: 768px) {
+      .music-toggle {
+        padding: 6px 12px;
+        font-size: 10px;
+        gap: 6px;
+      }
+      .music-toggle-icon {
+        width: 12px;
+        height: 12px;
+      }
     }
 
     /* ===== MAIN ===== */
@@ -186,55 +415,30 @@
       padding:var(--space-xl) 0; position:relative; 
       margin-bottom:var(--space-2xl);
     }
-    .hero::before{
-      content:''; position:absolute; inset:-40px; z-index:-1;
-      background:radial-gradient(ellipse 100% 100% at 50% 50%, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 40%, transparent 100%);
-    }
 
-    /* ===== HOLOGRAPHIC TITLE ===== */
+    /* ===== HERO TITLE - REFINED AESTHETIC ===== */
     .hero-title{
-      font-weight:800; font-size:clamp(2.5rem,11vw,7.5rem); 
-      line-height:.95; letter-spacing:-.03em;
-      margin-bottom:var(--space-md); max-width:var(--content-width); 
-      margin-inline:auto; text-align:center;
+      font-weight:600; 
+      font-size:clamp(2.8rem,10vw,7rem); 
+      line-height:1.05; 
+      letter-spacing:-.02em;
+      margin-bottom:var(--space-md); 
+      max-width:var(--content-width); 
+      margin-inline:auto; 
+      text-align:center;
       opacity: 0;
       transform: translateY(30px);
       position: relative;
+      color: var(--fg);
+      text-shadow: 
+        1px 1px 0 rgba(255,107,157,0.08),
+        2px 2px 0 rgba(255,107,157,0.05),
+        0 0 30px rgba(255,255,255,0.4);
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
     }
     .hero-title .holo {
       position: relative;
       display: inline-block;
-      animation: holographic 3s ease-in-out infinite;
-    }
-    @keyframes holographic {
-      0%, 100% {
-        text-shadow: 
-          0 0 10px rgba(99,102,241,0.8),
-          2px 2px 0 rgba(255,0,255,0.3),
-          -2px -2px 0 rgba(0,255,255,0.3),
-          0 0 80px rgba(99,102,241,.3);
-      }
-      25% {
-        text-shadow: 
-          0 0 20px rgba(99,102,241,1),
-          3px 3px 0 rgba(255,0,255,0.5),
-          -3px -3px 0 rgba(0,255,255,0.5),
-          0 0 100px rgba(99,102,241,.5);
-      }
-      50% {
-        text-shadow: 
-          0 0 15px rgba(99,102,241,0.9),
-          -2px 2px 0 rgba(0,255,255,0.4),
-          2px -2px 0 rgba(255,0,255,0.4),
-          0 0 90px rgba(99,102,241,.4);
-      }
-      75% {
-        text-shadow: 
-          0 0 25px rgba(99,102,241,1),
-          4px -2px 0 rgba(255,0,255,0.6),
-          -4px 2px 0 rgba(0,255,255,0.6),
-          0 0 110px rgba(99,102,241,.6);
-      }
     }
 
     .hero-subtitle{
@@ -246,30 +450,34 @@
       transform: translateY(20px);
     }
 
-    /* ===== VOICE MOMENT WITH SHADER EFFECT ===== */
+    /* ===== VOICE MOMENT WITH SOFT PASTEL EFFECT ===== */
     .voice-moment {
       max-width: var(--content-width);
       margin: var(--space-2xl) auto;
       padding: var(--space-lg) var(--space-md);
-      background: rgba(99, 102, 241, 0.05);
-      border-left: 4px solid var(--accent);
-      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(255,107,157,0.04) 0%, rgba(255,143,179,0.06) 100%);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
       position: relative;
       opacity: 0;
       transform: translateY(20px);
       overflow: hidden;
+      box-shadow: 
+        0 4px 20px rgba(255,107,157,0.08),
+        0 1px 3px rgba(0,0,0,0.02);
     }
     .voice-moment::before {
       content: '';
       position: absolute;
       inset: 0;
       background: 
-        linear-gradient(45deg, transparent 30%, rgba(99,102,241,0.1) 50%, transparent 70%);
+        linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
       background-size: 200% 200%;
-      animation: liquidMorph 4s ease-in-out infinite;
+      animation: shimmer 8s ease-in-out infinite;
       pointer-events: none;
+      opacity: 0.3;
     }
-    @keyframes liquidMorph {
+    @keyframes shimmer {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
@@ -279,7 +487,7 @@
       top: -20px;
       left: 20px;
       font-size: 2rem;
-      filter: grayscale(0.3);
+      filter: saturate(0.6) brightness(1.1);
     }
     .voice-label {
       font-size: 0.75rem;
@@ -310,18 +518,23 @@
       padding:clamp(40px,7vw,70px) clamp(32px,6vw,60px);
       margin:0 0 calc(var(--space-xl)*1.5) 0; 
       background:var(--story-bg);
-      border-radius:clamp(20px,4vw,28px);
-      box-shadow:0 30px 90px rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.3), 
-                 inset 0 1px 0 rgba(255,255,255,.8);
+      border-radius:clamp(16px,3vw,24px);
+      box-shadow:
+        0 8px 32px rgba(255,107,157,.06),
+        0 2px 8px rgba(0,0,0,.02),
+        inset 0 1px 0 rgba(255,255,255,.9);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                   box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       opacity: 0;
       transform: translateY(40px);
+      border: 1px solid rgba(255,107,157,.08);
     }
     .story-card:hover {
-      transform: translateY(-8px);
-      box-shadow:0 40px 100px rgba(0,0,0,.6), 0 20px 40px rgba(0,0,0,.4), 
-                 inset 0 1px 0 rgba(255,255,255,.9);
+      transform: translateY(-4px);
+      box-shadow:
+        0 12px 48px rgba(255,107,157,.12),
+        0 4px 12px rgba(0,0,0,.03),
+        inset 0 1px 0 rgba(255,255,255,1);
     }
     
     .story-header{
@@ -405,14 +618,14 @@
       width: 56px;
       height: 56px;
       border-radius: 50%;
-      background: rgba(99, 102, 241, 0.95);
+      background: rgba(255, 107, 157, 0.85);
       border: none;
       cursor: pointer;
       z-index: 150;
       opacity: 0;
       pointer-events: none;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 107, 157, 0.2);
     }
     .back-to-top.visible {
       opacity: 1;
@@ -420,8 +633,8 @@
     }
     .back-to-top:hover {
       transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
-      background: rgba(129, 140, 248, 0.95);
+      box-shadow: 0 8px 32px rgba(255, 107, 157, 0.3);
+      background: rgba(255, 143, 179, 0.9);
     }
     .back-to-top:active {
       transform: translateY(-2px) scale(1.02);
@@ -512,7 +725,17 @@
 
   <!-- Header -->
   <header>
-    <div class="brand">i wuz just bored</div>
+    <div class="brand">I WUZ JUST BORED</div>
+    <div class="header-controls">
+      <div class="volume-control" id="volume-control">
+        <span class="volume-icon">🔊</span>
+        <input type="range" min="0" max="100" value="40" class="volume-slider" id="volume-slider" aria-label="Volume control">
+      </div>
+      <button class="music-toggle" id="music-toggle" aria-label="Toggle ambient music" aria-pressed="false">
+        <span class="music-toggle-icon"></span>
+        <span class="music-toggle-text">Music Off</span>
+      </button>
+    </div>
   </header>
 
   <!-- Back to Top Button -->
@@ -659,34 +882,208 @@
       }
     }, 200);
 
-    // ===== SOUND DESIGN =====
-    let ambientSound, clickSound, hoverSound;
+    // ===== SOUND DESIGN - BASS HOUSE + LAZY BELLS =====
+    // 140 BPM, chest-heavy, abstract, minimal
+    // Harry Potter bells found in the Room of Requirement
+    let ambientSynth, bells, bass808, subBass, clickSynth, reverb, delay, audioStarted = false, musicEnabled = false;
+    let bellLoop, bassLoop, subBassLoop;
+    
     function initSounds() {
-      // Ambient background (using a sine wave tone as placeholder)
-      // In production, use actual audio files
-      ambientSound = new Howl({
-        src: ['data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='], // silence
-        loop: true,
-        volume: 0.1
-      });
+      // MASSIVE reverb (Hogwarts Great Hall)
+      reverb = new Tone.Reverb({
+        decay: 12,
+        preDelay: 0.02,
+        wet: 0.8
+      }).toDestination();
       
-      clickSound = new Howl({
-        src: ['data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='],
-        volume: 0.3
-      });
+      // Long delay (lazy, spacey)
+      delay = new Tone.FeedbackDelay("8n.", 0.6).connect(reverb);
       
-      hoverSound = new Howl({
-        src: ['data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='],
-        volume: 0.2
-      });
+      // LAZY BELLS (music box from Dumbledore's office)
+      bells = new Tone.Synth({
+        oscillator: { type: "sine" },
+        envelope: {
+          attack: 0.05,
+          decay: 2,
+          sustain: 0.3,
+          release: 4
+        },
+        volume: -32 // Very quiet, ethereal
+      }).connect(delay);
       
-      // Start ambient after user interaction
-      document.addEventListener('click', () => {
-        if (!ambientSound.playing()) {
-          ambientSound.play();
-        }
-      }, { once: true });
+      // SUB-BASS (you FEEL this, don't hear it - 40-60Hz range)
+      subBass = new Tone.Synth({
+        oscillator: { type: "sine" },
+        envelope: {
+          attack: 0.01,
+          decay: 0.5,
+          sustain: 0.7,
+          release: 1
+        },
+        volume: -12 // Louder than everything else (chest-heavy)
+      }).toDestination();
+      
+      // 808 Bass (bass house punch)
+      bass808 = new Tone.MembraneSynth({
+        pitchDecay: 0.1,
+        octaves: 3,
+        oscillator: { type: "sine" },
+        envelope: {
+          attack: 0.001,
+          decay: 0.4,
+          sustain: 0.05,
+          release: 1
+        },
+        volume: -18
+      }).toDestination();
+      
+      // Minimal ambient pad (barely there)
+      ambientSynth = new Tone.Synth({
+        oscillator: { type: "triangle" },
+        envelope: {
+          attack: 6,
+          decay: 4,
+          sustain: 0.5,
+          release: 8
+        },
+        volume: -28
+      }).connect(reverb);
+      
+      // UI click (delicate)
+      clickSynth = new Tone.Synth({
+        oscillator: { type: "sine" },
+        envelope: {
+          attack: 0.001,
+          decay: 0.2,
+          sustain: 0,
+          release: 0.4
+        },
+        volume: -35
+      }).connect(delay);
+      
+      // Master volume - WAY DOWN
+      Tone.getDestination().volume.value = -22;
     }
+    
+    // Bass house + lazy bells
+    function startAmbientSoundscape() {
+      // LAZY BELL MELODY (abstract, spacey, found in attic)
+      // Pentatonic scale for that mystical vibe
+      const bellMelody = [
+        "E5", null, "G5", null, "A5", null, "E5", null,
+        "D5", null, "A4", null, "E5", null, null, null,
+        "G5", null, "A5", null, "B5", null, "A5", null,
+        "G5", null, "E5", null, "D5", null, null, null
+      ];
+      
+      let bellIndex = 0;
+      
+      // Bell loop (plays every quarter note, but sparse)
+      bellLoop = new Tone.Loop((time) => {
+        const note = bellMelody[bellIndex];
+        if (note) {
+          bells.triggerAttackRelease(note, "2n", time);
+        }
+        bellIndex = (bellIndex + 1) % bellMelody.length;
+      }, "4n"); // Quarter notes at 140 BPM
+      
+      // SUB-BASS (chest-heavy, on 1 and 3)
+      subBassLoop = new Tone.Loop((time) => {
+        subBass.triggerAttackRelease("C1", "4n", time); // 32.7Hz
+      }, "2n"); // Every half note
+      
+      // 808 BASS (minimal bass house pattern)
+      bassLoop = new Tone.Loop((time) => {
+        bass808.triggerAttackRelease("C1", "8n", time);
+        bass808.triggerAttackRelease("C1", "16n", time + 0.375); // Syncopation
+      }, "1n");
+      
+      // AMBIENT PAD (barely audible, just air)
+      const padLoop = new Tone.Loop((time) => {
+        ambientSynth.triggerAttackRelease("C2", "1m", time); // Whole note, super long
+      }, "1m");
+      
+      bellLoop.start(0);
+      subBassLoop.start("1m"); // Start after 1 measure
+      bassLoop.start("2m"); // Stagger the bass
+      padLoop.start(0);
+      
+      // House tempo: 140 BPM
+      Tone.getTransport().bpm.value = 140;
+      Tone.getTransport().start();
+      
+      musicEnabled = true;
+    }
+    
+    function stopAmbientSoundscape() {
+      if (bellLoop) bellLoop.stop();
+      if (subBassLoop) subBassLoop.stop();
+      if (bassLoop) bassLoop.stop();
+      Tone.getTransport().stop();
+      musicEnabled = false;
+    }
+    
+    // UI sounds (delicate, bell-like)
+    function playClick() {
+      if (audioStarted) {
+        bells.triggerAttackRelease("A5", "32n", "+0.02");
+      }
+    }
+    
+    function playHover() {
+      if (audioStarted) {
+        bells.triggerAttackRelease("E5", "64n", "+0.01");
+      }
+    }
+    
+    // ===== MUSIC TOGGLE BUTTON =====
+    const musicToggle = document.getElementById('music-toggle');
+    const musicToggleText = musicToggle.querySelector('.music-toggle-text');
+    const volumeControl = document.getElementById('volume-control');
+    const volumeSlider = document.getElementById('volume-slider');
+    
+    // Volume control
+    volumeSlider.addEventListener('input', (e) => {
+      const volume = e.target.value;
+      // Convert 0-100 to dB (-60 to -10)
+      const volumeDb = -60 + (volume / 100) * 50;
+      Tone.getDestination().volume.value = volumeDb;
+    });
+    
+    musicToggle.addEventListener('click', async () => {
+      // Initialize audio on first interaction
+      if (!audioStarted) {
+        await Tone.start();
+        initSounds();
+        audioStarted = true;
+        console.log('🎵 Audio system initialized');
+      }
+      
+      // Toggle music
+      if (musicEnabled) {
+        stopAmbientSoundscape();
+        musicToggle.classList.remove('active');
+        musicToggle.setAttribute('aria-pressed', 'false');
+        musicToggleText.textContent = 'Music Off';
+        volumeControl.classList.remove('visible');
+        console.log('🔇 Ambient soundscape stopped');
+      } else {
+        startAmbientSoundscape();
+        musicToggle.classList.add('active');
+        musicToggle.setAttribute('aria-pressed', 'true');
+        musicToggleText.textContent = 'Music On';
+        volumeControl.classList.add('visible');
+        console.log('🎵 Ambient soundscape activated - bass house mode');
+        
+        // Set initial volume from slider
+        const volume = volumeSlider.value;
+        const volumeDb = -60 + (volume / 100) * 50;
+        Tone.getDestination().volume.value = volumeDb;
+      }
+      
+      // Play click sound
+      playClick();
+    });
 
     // ===== CUSTOM CURSOR =====
     const cursor = document.getElementById('custom-cursor');
@@ -712,20 +1109,24 @@
     interactiveElements.forEach(el => {
       el.addEventListener('mouseenter', () => {
         cursor.classList.add('hover');
-        if (hoverSound) hoverSound.play();
+        playHover();
       });
       el.addEventListener('mouseleave', () => {
         cursor.classList.remove('hover');
       });
       el.addEventListener('click', () => {
-        if (clickSound) clickSound.play();
+        playClick();
       });
     });
 
-    // ===== THREE.JS PARTICLE FIELD =====
+    // ===== THREE.JS PARTICLE FIELD - OPTIMIZED =====
     let scene, camera, renderer, particles;
     
     function initThree() {
+      // Only init Three.js on desktop for performance
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) return; // Skip Three.js on mobile for fast load
+      
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.position.z = 50;
@@ -733,14 +1134,14 @@
       renderer = new THREE.WebGLRenderer({ 
         canvas: document.getElementById('three-bg'),
         alpha: true,
-        antialias: true
+        antialias: false // Disabled for performance
       });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Cap pixel ratio
 
-      // Create particles
+      // Create particles - Desktop only, optimized count
       const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 2000;
+      const particlesCount = 800; // Reduced from 2000
       const posArray = new Float32Array(particlesCount * 3);
 
       for(let i = 0; i < particlesCount * 3; i++) {
@@ -750,28 +1151,36 @@
       particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
       const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.8,
-        color: 0x6366f1,
+        size: 1.0,
+        color: 0xff6b9d, // Pink accent
         transparent: true,
-        opacity: 0.6,
-        blending: THREE.AdditiveBlending
+        opacity: 0.15,
+        blending: THREE.NormalBlending
       });
 
       particles = new THREE.Points(particlesGeometry, particlesMaterial);
       scene.add(particles);
 
-      // Animation loop
+      // Animation loop - optimized
+      let frame = 0;
       function animate() {
         requestAnimationFrame(animate);
         
-        particles.rotation.y += 0.0003;
-        particles.rotation.x += 0.0002;
+        // Reduce update frequency
+        if (frame % 2 !== 0) {
+          frame++;
+          return;
+        }
         
-        // Mouse interaction
-        particles.rotation.y = mouseX * 0.00005;
-        particles.rotation.x = mouseY * 0.00005;
+        particles.rotation.y += 0.0002;
+        particles.rotation.x += 0.0001;
+        
+        // Subtle mouse interaction
+        particles.rotation.y += mouseX * 0.00003;
+        particles.rotation.x += mouseY * 0.00003;
 
         renderer.render(scene, camera);
+        frame++;
       }
       animate();
 
