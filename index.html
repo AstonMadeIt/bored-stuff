@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>i wuz bored + here we are ...</title>
+  <title>i wuz just bored — $100K Edition</title>
 
   <!-- Favicon & Fonts -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
@@ -416,7 +416,38 @@
       margin-bottom:var(--space-2xl);
     }
 
-    /* ===== HERO TITLE - REFINED AESTHETIC ===== */
+    /* ===== NYT MEMO IMAGE ===== */
+    .nyt-memo-image {
+      max-width: 900px;
+      margin: var(--space-xl) auto var(--space-2xl) auto;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 
+        0 4px 20px rgba(0,0,0,.08),
+        0 2px 8px rgba(0,0,0,.04);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    
+    .nyt-memo-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      image-rendering: crisp-edges;
+    }
+    
+    @media (max-width: 768px) {
+      .nyt-memo-image {
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+      }
+    }
+
+    /* ===== HERO TITLE ===== */
     .hero-title{
       font-weight:600; 
       font-size:clamp(2.8rem,10vw,7rem); 
@@ -697,42 +728,7 @@
         margin: var(--space-xl) auto;
       }
     }
-  
-/* === Artifact Card (NYT) === */
-.artifact-card{
-  width:min(92vw, 820px);
-  margin:var(--space-2xl) auto;
-  background:linear-gradient(180deg,#fff,#fff8fb);
-  border:1px solid rgba(17,19,21,.06);
-  border-radius:18px;
-  box-shadow:
-    0 12px 40px rgba(255,107,157,.08),
-    0 4px 16px rgba(17,19,21,.04),
-    inset 0 1px 0 rgba(255,255,255,.9);
-  overflow:hidden;
-  opacity:0; transform:translateY(36px);
-  position:relative;
-  text-align:center;
-}
-.artifact-card::after{
-  content:"";
-  position:absolute; inset:0; pointer-events:none;
-  opacity:.18; mix-blend-mode:multiply;
-  background-image:
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity=".45"/></svg>');
-  background-size:240px 240px;
-}
-.artifact-media{ background:linear-gradient(180deg,#fff,#fff5f8); }
-.magnify-wrap{ position:relative; overflow:hidden; perspective:800px; cursor:zoom-in; }
-.artifact-img{ display:block; width:100%; max-width:520px; margin:0 auto; height:auto;
-  transform-origin:center; transition:transform .6s cubic-bezier(.16,1,.3,1), filter .4s ease; filter:grayscale(.08) contrast(1.03);}
-.magnify-wrap:hover .artifact-img{ transform:scale(1.03) rotateX(.6deg) rotateY(.4deg); filter:grayscale(.15) contrast(1.06); }
-.magnify-wrap::before{ content:""; position:absolute; inset:-12%;
-  background:radial-gradient(320px 320px at var(--mx,50%) var(--my,50%), rgba(255,255,255,.45), rgba(255,255,255,0) 55%);
-  opacity:0; transition:opacity .35s ease; mix-blend-mode:soft-light; pointer-events:none;}
-.magnify-wrap:hover::before{ opacity:.85; }
-.artifact-media figcaption{ color:#7a7d83; text-align:center; font-size:.85rem; padding:10px 12px 14px; }
-</style>
+  </style>
 </head>
 <body>
 
@@ -755,17 +751,7 @@
 
   <!-- Backgrounds -->
   <div class="bg-grit" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22><filter id=%22n%22><feTurbulence baseFrequency=%22.9%22 numOctaves=%224%22 /><feColorMatrix values=%220 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 1 0%22/></filter><rect width=%22100%%22 height=%22100%%22 filter=%22url(%23n)%22/></svg>');"></div>
-  <div class="bg-paper" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 widt
-      <!-- NYT Artifact (centered) -->
-      <article class="artifact-card" aria-label="NYT artifact">
-        <div class="artifact-media">
-          <figure class="magnify-wrap" id="nyt-fig">
-            <img src="img/nyt-1992-clinton-expectations.jpg" alt="NYT headline: Clinton, After Raising Hopes, Tries to Lower Expectations (Nov 8, 1992)" class="artifact-img" loading="lazy" decoding="async">
-          </figure>
-          <figcaption><em>The New York Times</em> • Nov 8, 1992 • Political Memo by Michael Kelly</figcaption>
-        </div>
-      </article>
-h=%22400%22 height=%22400%22><filter id=%22p%22><feTurbulence baseFrequency=%22.04%22 numOctaves=%223%22 seed=%2215%22/><feDisplacementMap in=%22SourceGraphic%22 scale=%2210%22/></filter><rect width=%22100%%22 height=%22100%%22 fill=%22%23fff%22 filter=%22url(%23p)%22 opacity=%22.4%22/></svg>');"></div>
+  <div class="bg-paper" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22><filter id=%22p%22><feTurbulence baseFrequency=%22.04%22 numOctaves=%223%22 seed=%2215%22/><feDisplacementMap in=%22SourceGraphic%22 scale=%2210%22/></filter><rect width=%22100%%22 height=%22100%%22 fill=%22%23fff%22 filter=%22url(%23p)%22 opacity=%22.4%22/></svg>');"></div>
   <div class="bg-vignette"></div>
 
   <!-- Header -->
@@ -809,6 +795,11 @@ h=%22400%22 height=%22400%22><filter id=%22p%22><feTurbulence baseFrequency=%22.
           the questions get interesting. No manifesto. No roadmap. Just signal.
         </p>
       </section>
+
+      <!-- NYT Political Memo -->
+      <article class="nyt-memo-image">
+        <img src="nyt-1992-clinton-expectations.jpg" alt="Political memo from the archives" loading="lazy">
+      </article>
 
       <!-- Voice Moment 1 -->
       <div class="voice-moment">
@@ -1245,15 +1236,20 @@ h=%22400%22 height=%22400%22><filter id=%22p%22><feTurbulence baseFrequency=%22.
       gsap.to('.hero-title', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 });
       gsap.to('.hero-subtitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.6 });
 
-      
-      // Artifact card reveal
-      if (document.querySelector('.artifact-card')) {
-        gsap.to('.artifact-card', {
-          opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
-          scrollTrigger: { trigger: '.artifact-card', start: 'top 85%' }
-        });
-      }
-// Story cards scroll reveal
+      // NYT Memo image entrance
+      gsap.to('.nyt-memo-image', {
+        scrollTrigger: {
+          trigger: '.nyt-memo-image',
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+
+      // Story cards scroll reveal
       gsap.utils.toArray('.story-card').forEach(card => {
         gsap.to(card, {
           scrollTrigger: {
@@ -1349,30 +1345,11 @@ h=%22400%22 height=%22400%22><filter id=%22p%22><feTurbulence baseFrequency=%22.
     function initExperience() {
       initThree();
       initGSAP();
-      initArtifactEffects();
       initSounds();
       initCharts();
     }
 
-    
-    // ===== Artifact Effects =====
-    function initArtifactEffects(){
-      const wrap = document.getElementById('nyt-fig');
-      if(!wrap) return;
-      const setVars = (e) => {
-        const rect = wrap.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        wrap.style.setProperty('--mx', x + '%');
-        wrap.style.setProperty('--my', y + '%');
-      };
-      wrap.addEventListener('mousemove', setVars);
-      wrap.addEventListener('touchmove', (e) => {
-        const t = e.touches && e.touches[0]; if(!t) return;
-        setVars({ clientX: t.clientX, clientY: t.clientY });
-      }, {passive:true});
-    }
-// ===== CHARTS =====
+    // ===== CHARTS =====
     function initCharts() {
       // Story 1: Intimacy Recession
       const intimacyData = {"data":[
