@@ -1197,77 +1197,110 @@ class MicrositeApp {
   cleanup() {
     try { this.modules.audio?.cleanup?.(); } catch {}
     try { this.modules.cursor?.cleanup?.(); } catch {}
-    try { this.modules.three?.cleanup?.(); } catch {}
-    try { this.modules.anim?.cleanup?.(); } catch {}
-  }
-}
 
-// ===== BOOTSTRAP =====
-const boot = () => { window.app = new MicrositeApp(); window.app.init(); };
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', boot);
-} else {
-  boot();
-}
-
+// ===============================================================
+// TIKTOK EMBED - FAANG-GRADE IMPLEMENTATION
+// Zero scroll, bulletproof containment, optimal resource timing
+// ===============================================================
 (() => {
+  // Check motion preferences once at module load
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Select all TikTok embed containers
   const cards = Array.from(document.querySelectorAll('.ttk'));
+  
   for (const card of cards) {
+    // Extract video ID from data attribute
     const url = card.dataset.tiktokUrl || '';
     const vid = (url.match(/video\/(\d+)/) || [])[1];
-    if (!vid) continue;
+    if (!vid) continue; // Skip if no valid video ID
 
-    // Poster
+    // Get DOM references
     const posterBtn = card.querySelector('.ttk__poster');
     const posterImg = card.querySelector('.ttk__poster-img');
+    
+    // Set poster image from data attribute
     posterImg.src = card.dataset.poster || '';
+    posterImg.alt = card.dataset.title || 'TikTok video preview';
 
+    // Hydration state tracking
     let hydrated = false;
-    const LOOP_DURATION_MS = 0; // set e.g. 60000 to “refresh loop” every 60s (off by default)
 
+    /**
+     * Hydrate function - replaces poster with live iframe
+     * Only executes once per card
+     */
     const hydrate = () => {
       if (hydrated) return;
       hydrated = true;
 
+      // Create frame wrapper
       const frame = document.createElement('div');
       frame.className = 'ttk__frame';
 
+      // Create iframe with optimal settings
       const iframe = document.createElement('iframe');
-      iframe.loading = 'lazy';           // saves bytes offscreen
-      iframe.title = 'TikTok video';     // accessibility / SEO friendly
-      iframe.src =
-        `https://www.tiktok.com/embed/v2/video/${vid}?lang=en-US&autoplay=1&controls=1&muted=1`;
-      iframe.allow =
-        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      
+      // Performance optimization: lazy load offscreen iframes
+      iframe.loading = 'lazy';
+      
+      // Accessibility
+      iframe.title = card.dataset.title || 'TikTok video';
+      
+      // TikTok embed URL with optimal parameters
+      // autoplay=1: Start playing immediately after interaction
+      // controls=1: Show video controls
+      // muted=1: Start muted (required for autoplay in most browsers)
+      iframe.src = `https://www.tiktok.com/embed/v2/video/${vid}?lang=en-US&autoplay=1&controls=1&muted=1`;
+      
+      // Feature policy for security and performance
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.allowFullscreen = true;
-      iframe.scrolling = 'no';
+      
+      // CRITICAL: Prevent scroll via deprecated attribute (belt-and-suspenders approach)
+      iframe.setAttribute('scrolling', 'no');
+      
+      // Modern sandbox attribute for security
+      iframe.sandbox = 'allow-scripts allow-same-origin allow-presentation';
 
+      // Assemble DOM
       frame.appendChild(iframe);
       posterBtn.replaceWith(frame);
 
-      if (LOOP_DURATION_MS > 0) {
-        setInterval(() => {
-          const clone = iframe.cloneNode(false);
-          clone.src = iframe.src; // quiet reload
-          iframe.replaceWith(clone);
-        }, LOOP_DURATION_MS);
-      }
+      // Optional: Add error handling for failed loads
+      iframe.addEventListener('error', () => {
+        console.warn('TikTok embed failed to load:', vid);
+      }, { once: true });
     };
 
+    // Event listener: Click-to-activate
     posterBtn.addEventListener('click', hydrate, { passive: true });
 
+    // Auto-hydrate on scroll proximity (unless motion reduced)
     if (!prefersReduced) {
-      const io = new IntersectionObserver((entries) => {
-        for (const e of entries) if (e.isIntersecting) { hydrate(); io.disconnect(); }
-      }, { rootMargin: '120px 0px' });
+      // OPTIMIZED: Tighter rootMargin for just-in-time loading
+      // 50px = loads right before entering viewport
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              hydrate();
+              io.disconnect(); // Clean up observer after hydration
+            }
+          }
+        },
+        { 
+          rootMargin: '50px 0px', // CHANGED from 120px - more conservative
+          threshold: 0 
+        }
+      );
       io.observe(card);
     }
   }
 })();
 
-// As a last-resort safety, never leave the loader up on hard errors.
+// Safety net: Force hide loader on critical errors
 window.addEventListener('error', () => {
   document.getElementById('loader')?.classList.add('hidden');
-});
+}, { passive: true });
