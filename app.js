@@ -1101,60 +1101,78 @@ class UIController {
 // ===== MAIN APPLICATION =====
 class MicrositeApp {
   constructor() {
-    this.loader = new LoaderManager();
-    this.audio = new AudioEngine();
-    this.cursor = new CursorManager(this.audio);
-    this.three = new ThreeBackground();
-    this.animations = new AnimationController();
-    this.charts = new ChartManager();
-    this.ui = new UIController(this.audio);
+    // keep constructor light so no ReferenceErrors block init()
+    this.loaderEl = document.getElementById('loader');
+    this.modules = {};
   }
 
   async init() {
     try {
-      this.loader.start();
+      // start loader (fallback if LoaderManager missing)
+      if (typeof LoaderManager !== 'undefined') {
+        this.modules.loader = new LoaderManager();
+        this.modules.loader.start();
+      } else {
+        this.loaderEl?.classList.remove('hidden'); // ensure visible
+      }
 
-      // Wait for all libraries to load
-      const deps = new DependencyManager();
-      await deps.waitForDependencies();
+      // Wait for libs (only if your DependencyManager exists)
+      if (typeof DependencyManager !== 'undefined') {
+        const deps = new DependencyManager();
+        await deps.waitForDependencies();
+      }
 
-      // Initialize all modules
-      this.three.init();
-      this.animations.init();
-      this.charts.init();
-      this.cursor.init();
-      this.ui.init();
+      // Init modules only if available to avoid hard crashes
+      if (typeof ThreeBackground !== 'undefined') {
+        this.modules.three = new ThreeBackground(); this.modules.three.init();
+      }
+      if (typeof AnimationController !== 'undefined') {
+        this.modules.anim = new AnimationController(); this.modules.anim.init();
+      }
+      if (typeof ChartManager !== 'undefined') {
+        this.modules.charts = new ChartManager(); this.modules.charts.init();
+      }
+      if (typeof CursorManager !== 'undefined' && typeof AudioEngine !== 'undefined') {
+        this.modules.audio = new AudioEngine();
+        this.modules.cursor = new CursorManager(this.modules.audio); this.modules.cursor.init();
+      }
+      if (typeof UIController !== 'undefined') {
+        this.modules.ui = new UIController(this.modules.audio); this.modules.ui.init();
+      }
 
-      this.loader.complete();
-    } catch (error) {
-      console.error('Failed to initialize app:', error);
-      this.loader.complete(); // Still hide loader even on error
+      // done
+      this.complete();
+    } catch (err) {
+      console.error('Failed to initialize app:', err);
+      this.complete(); // still hide loader
+    }
+  }
+
+  complete() {
+    if (this.modules.loader && typeof this.modules.loader.complete === 'function') {
+      this.modules.loader.complete();
+    } else {
+      this.loaderEl?.classList.add('hidden');
     }
   }
 
   cleanup() {
-    this.audio.cleanup();
-    this.cursor.cleanup();
-    this.three.cleanup();
-    this.animations.cleanup();
+    try { this.modules.audio?.cleanup?.(); } catch {}
+    try { this.modules.cursor?.cleanup?.(); } catch {}
+    try { this.modules.three?.cleanup?.(); } catch {}
+    try { this.modules.anim?.cleanup?.(); } catch {}
   }
 }
 
 // ===== BOOTSTRAP =====
-// Wait for DOM to be ready
+const boot = () => { window.app = new MicrositeApp(); window.app.init(); };
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    window.app = new MicrositeApp();
-    window.app.init();
-  });
+  document.addEventListener('DOMContentLoaded', boot);
 } else {
-  window.app = new MicrositeApp();
-  window.app.init();
+  boot();
 }
 
-// Cleanup on page unload
-window.addEventListener('beforeunload', () => {
-  if (window.app) {
-    window.app.cleanup();
-  }
+// As a last-resort safety, never leave the loader up on hard errors.
+window.addEventListener('error', () => {
+  document.getElementById('loader')?.classList.add('hidden');
 });
