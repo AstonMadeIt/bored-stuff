@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>File Loading Test</title>
+  <style>
+    body { 
+      font-family: system-ui; 
+      padding: 40px; 
+      background: #0d1117;
+      color: #e6edf3;
+    }
+    .status { 
+      background: #161b22; 
+      padding: 20px; 
+      border-radius: 8px;
+      margin: 20px 0;
+      border-left: 4px solid #58a6ff;
+    }
+    .success { border-left-color: #3fb950; }
+    .error { border-left-color: #f85149; }
+    code {
+      background: #0d1117;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SF Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 File Loading Diagnostic</h1>
+  
+  <div class="status">
+    <strong>Current URL:</strong><br>
+    <code id="current-url"></code>
+  </div>
+
+  <div class="status">
+    <strong>Expected Files:</strong>
+    <ul>
+      <li>✅ index.html (this page)</li>
+      <li id="css-check">⏳ Checking styles.css...</li>
+      <li id="js-check">⏳ Checking app.js...</li>
+    </ul>
+  </div>
+
+  <div class="status">
+    <strong>Console Output:</strong><br>
+    <pre id="console-output" style="max-height: 300px; overflow: auto;"></pre>
+  </div>
+
+  <script>
+    // Show current URL
+    document.getElementById('current-url').textContent = window.location.href;
+
+    // Console capture
+    const consoleOutput = document.getElementById('console-output');
+    const originalLog = console.log;
+    const originalError = console.error;
+    
+    console.log = (...args) => {
+      consoleOutput.textContent += '📝 ' + args.join(' ') + '\n';
+      originalLog.apply(console, args);
+    };
+    
+    console.error = (...args) => {
+      consoleOutput.textContent += '❌ ' + args.join(' ') + '\n';
+      originalError.apply(console, args);
+    };
+
+    // Check CSS
+    fetch('styles.css', { method: 'HEAD' })
+      .then(res => {
+        const cssCheck = document.getElementById('css-check');
+        if (res.ok) {
+          cssCheck.textContent = '✅ styles.css exists';
+          cssCheck.parentElement.classList.add('success');
+          console.log('styles.css found - size:', res.headers.get('content-length'), 'bytes');
+        } else {
+          cssCheck.textContent = '❌ styles.css NOT found (404)';
+          cssCheck.parentElement.classList.add('error');
+          console.error('styles.css returned:', res.status);
+        }
+      })
+      .catch(err => {
+        document.getElementById('css-check').textContent = '❌ Error checking styles.css';
+        console.error('CSS check error:', err);
+      });
+
+    // Check JS
+    fetch('app.js', { method: 'HEAD' })
+      .then(res => {
+        const jsCheck = document.getElementById('js-check');
+        if (res.ok) {
+          jsCheck.textContent = '✅ app.js exists';
+          jsCheck.parentElement.classList.add('success');
+          console.log('app.js found - size:', res.headers.get('content-length'), 'bytes');
+        } else {
+          jsCheck.textContent = '❌ app.js NOT found (404)';
+          jsCheck.parentElement.classList.add('error');
+          console.error('app.js returned:', res.status);
+        }
+      })
+      .catch(err => {
+        document.getElementById('js-check').textContent = '❌ Error checking app.js';
+        console.error('JS check error:', err);
+      });
+
+    // Check for old files
+    const oldFiles = ['app-optimized.js', 'styles-optimized.css', 'index-optimized.html'];
+    
+    console.log('\n🔍 Checking for old files that should be deleted:');
+    oldFiles.forEach(file => {
+      fetch(file, { method: 'HEAD' })
+        .then(res => {
+          if (res.ok) {
+            console.error('⚠️ OLD FILE STILL EXISTS:', file);
+          } else {
+            console.log('✅ Old file cleaned up:', file);
+          }
+        });
+    });
+
+    // Performance info
+    window.addEventListener('load', () => {
+      const perf = performance.getEntriesByType('navigation')[0];
+      console.log('\n📊 Performance:');
+      console.log('DOM load:', Math.round(perf.domContentLoadedEventEnd), 'ms');
+      console.log('Full load:', Math.round(perf.loadEventEnd), 'ms');
+    });
+  </script>
+</body>
+</html>
