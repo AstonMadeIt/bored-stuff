@@ -524,7 +524,7 @@ class AnimationController {
     this.scrollTriggers.forEach(trigger => {
       if (trigger && trigger.kill) trigger.kill();
     });
-    if (ScrollTrigger) {
+    if (window.ScrollTrigger) {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     }
   }
@@ -1218,98 +1218,72 @@ setTimeout(() => {
 // Zero scroll, bulletproof containment, optimal resource timing
 // ===============================================================
 (() => {
-  // Check motion preferences once at module load
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  // Select all TikTok embed containers
   const cards = Array.from(document.querySelectorAll('.ttk'));
-  
+
   for (const card of cards) {
-    // Extract video ID from data attribute
     const url = card.dataset.tiktokUrl || '';
     const vid = (url.match(/video\/(\d+)/) || [])[1];
-    if (!vid) continue; // Skip if no valid video ID
+    if (!vid) continue;
 
-    // Get DOM references
     const posterBtn = card.querySelector('.ttk__poster');
     const posterImg = card.querySelector('.ttk__poster-img');
-    
-    // Set poster image from data attribute
     posterImg.src = card.dataset.poster || '';
     posterImg.alt = card.dataset.title || 'TikTok video preview';
 
-    // Hydration state tracking
     let hydrated = false;
-
-    /**
-     * Hydrate function - replaces poster with live iframe
-     * Only executes once per card
-     */
     const hydrate = () => {
       if (hydrated) return;
       hydrated = true;
 
-      // Create frame wrapper
       const frame = document.createElement('div');
       frame.className = 'ttk__frame';
 
-      // Create iframe with optimal settings
       const iframe = document.createElement('iframe');
-      
-      // Performance optimization: lazy load offscreen iframes
-      iframe.loading = 'lazy';
-      
-      // Accessibility
-      iframe.title = card.dataset.title || 'TikTok video';
-      
-      // TikTok embed URL with optimal parameters
+      // After iframe creation:
+      iframe.loading = 'lazy';            // saves bytes offscreen
+      iframe.title = card.dataset.title || 'TikTok video'; // a11y
       iframe.src = `https://www.tiktok.com/embed/v2/video/${vid}?lang=en-US&autoplay=1&controls=1&muted=1`;
-      
-      // Feature policy for security and performance
       iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.allowFullscreen = true;
-      
-      // CRITICAL: Prevent scroll via deprecated attribute (belt-and-suspenders)
       iframe.setAttribute('scrolling', 'no');
-      
-      // Modern sandbox attribute for security
       iframe.sandbox = 'allow-scripts allow-same-origin allow-presentation';
 
-      // Assemble DOM
       frame.appendChild(iframe);
       posterBtn.replaceWith(frame);
 
-      // Optional: Add error handling for failed loads
       iframe.addEventListener('error', () => {
         console.warn('TikTok embed failed to load:', vid);
       }, { once: true });
     };
 
-    // Event listener: Click-to-activate
     posterBtn.addEventListener('click', hydrate, { passive: true });
 
-    // Auto-hydrate on scroll proximity (unless motion reduced)
     if (!prefersReduced) {
-      // OPTIMIZED: Tighter rootMargin for just-in-time loading
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (e.isIntersecting) {
-              hydrate();
-              io.disconnect(); // Clean up observer after hydration
-            }
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            hydrate();
+            io.disconnect();
           }
-        },
-        { 
-          rootMargin: '50px 0px', // CHANGED from 120px - more conservative
-          threshold: 0 
         }
-      );
+      }, { rootMargin: '50px 0px', threshold: 0 });
       io.observe(card);
     }
   }
 })();
+
+// Safety net: Force hide loader on critical errors
+window.addEventListener('error', () => {
+  document.getElementById('loader')?.classList.add('hidden');
+});
+
+// Boot the app once DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  const app = new MicrositeApp();
+  app.init();
+});
 
 // Safety net: Force hide loader on critical errors
 window.addEventListener('error', () => {
