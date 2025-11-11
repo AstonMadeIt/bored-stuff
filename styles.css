@@ -778,6 +778,23 @@
   .voice-moment::before { display: none; } /* disable shimmer sweep */
 }
 
+/* TikTok embed (scoped) */
+.press-card .ttk { max-width: 420px; margin: 0 auto 12px; }
+.ttk, .ttk__poster, .ttk__frame {
+  position: relative; width: 100%; aspect-ratio: 9/16; border-radius: 18px; overflow: hidden;
+}
+.ttk__poster { padding: 0; border: 0; cursor: pointer; background:#000; }
+.ttk__poster-img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.ttk__play {
+  position: absolute; inset: auto auto 12px 12px; width: 44px; height: 44px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; color: #111; font-size: 18px; box-shadow: 0 6px 20px rgba(0,0,0,.18);
+}
+/* Ensure iframe never creates inner scrollbars */
+.ttk__frame > iframe { display: block; width: 100%; height: 100%; border: 0; }
+@media (max-width: 480px){ .press-card .ttk { max-width: 360px; } }
+
+
 /* --- TikTok press-card styles (official embed.js) --- */
 .press-card--video .press-link { 
   align-items: start; 
