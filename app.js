@@ -1210,6 +1210,63 @@ if (document.readyState === 'loading') {
   boot();
 }
 
+(() => {
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cards = Array.from(document.querySelectorAll('.ttk'));
+  for (const card of cards) {
+    const url = card.dataset.tiktokUrl || '';
+    const vid = (url.match(/video\/(\d+)/) || [])[1];
+    if (!vid) continue;
+
+    // Poster
+    const posterBtn = card.querySelector('.ttk__poster');
+    const posterImg = card.querySelector('.ttk__poster-img');
+    posterImg.src = card.dataset.poster || '';
+
+    let hydrated = false;
+    const LOOP_DURATION_MS = 0; // set e.g. 60000 to “refresh loop” every 60s (off by default)
+
+    const hydrate = () => {
+      if (hydrated) return;
+      hydrated = true;
+
+      const frame = document.createElement('div');
+      frame.className = 'ttk__frame';
+
+      const iframe = document.createElement('iframe');
+      iframe.loading = 'lazy';           // saves bytes offscreen
+      iframe.title = 'TikTok video';     // accessibility / SEO friendly
+      iframe.src =
+        `https://www.tiktok.com/embed/v2/video/${vid}?lang=en-US&autoplay=1&controls=1&muted=1`;
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      iframe.scrolling = 'no';
+
+      frame.appendChild(iframe);
+      posterBtn.replaceWith(frame);
+
+      if (LOOP_DURATION_MS > 0) {
+        setInterval(() => {
+          const clone = iframe.cloneNode(false);
+          clone.src = iframe.src; // quiet reload
+          iframe.replaceWith(clone);
+        }, LOOP_DURATION_MS);
+      }
+    };
+
+    posterBtn.addEventListener('click', hydrate, { passive: true });
+
+    if (!prefersReduced) {
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) { hydrate(); io.disconnect(); }
+      }, { rootMargin: '120px 0px' });
+      io.observe(card);
+    }
+  }
+})();
+
 // As a last-resort safety, never leave the loader up on hard errors.
 window.addEventListener('error', () => {
   document.getElementById('loader')?.classList.add('hidden');
