@@ -1,3 +1,13 @@
+// ===== EMERGENCY LOADER TIMEOUT =====
+// Kill loader after 5s no matter what (prevents infinite hang)
+setTimeout(() => {
+  const loader = document.getElementById('loader');
+  if (loader && !loader.classList.contains('hidden')) {
+    console.warn('⚠️ Loader timeout - forcing hide');
+    loader.classList.add('hidden');
+  }
+}, 5000);
+
 // ===== DEPENDENCY CHECKER =====
 // Ensures all libraries loaded before init
 class DependencyManager {
