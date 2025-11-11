@@ -64,7 +64,8 @@ class AudioEngine {
     this.effects = {};
   }
 
-  init() {
+  // Initialize synths/effects - ONLY called after Tone.start()
+  initAudio() {
     try {
       this.effects.reverb = new Tone.Reverb({ 
         decay: 12, preDelay: 0.02, wet: 0.8 
@@ -100,15 +101,16 @@ class AudioEngine {
 
       Tone.getDestination().volume.value = -22;
     } catch (error) {
-      console.error('Audio init failed:', error);
+      console.error('Audio initialization failed:', error);
     }
   }
 
   async start() {
+    // First click: start audio context and init everything
     if (!this.audioStarted) {
       try {
         await Tone.start();
-        this.init();
+        this.initAudio();
         this.audioStarted = true;
       } catch (error) {
         console.error('Failed to start audio context:', error);
@@ -116,11 +118,13 @@ class AudioEngine {
       }
     }
 
+    // Toggle music on/off
     if (this.musicEnabled) {
       this.stop();
       return;
     }
 
+    // Start the music
     try {
       const bellMelody = ["E5", null, "G5", null, "A5", null, "E5", null, 
                           "D5", null, "A4", null, "E5", null, null, null, 
