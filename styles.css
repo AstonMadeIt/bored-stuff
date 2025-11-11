@@ -770,3 +770,9 @@
       .press-link{grid-template-columns:1fr}
       .press-cta{justify-content:flex-start}
     }
+
+    @media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .loader { display: none !important; }
+  .voice-moment::before { display: none; } /* disable shimmer sweep */
+}
