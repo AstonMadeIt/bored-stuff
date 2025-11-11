@@ -1046,8 +1046,26 @@ class UIController {
   if (!videoId) return;
 
   const hydrate = () => {
-    if (el.dataset.hydrated === '1') return;
-    el.dataset.hydrated = '1';
+  if (el.dataset.hydrated === '1') return;
+  el.dataset.hydrated = '1';
+
+  // Build the v2 iframe directly (no embed.js)
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.tiktok.com/embed/v2/video/${videoId}?lang=en-US&autoplay=0&controls=1`;
+  iframe.setAttribute('allow',
+    'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+  iframe.setAttribute('referrerpolicy', 'origin');   // helps avoid token 403s
+  iframe.setAttribute('loading', 'lazy');
+  iframe.setAttribute('title', 'TikTok video');
+  iframe.style.position = 'absolute';
+  iframe.style.inset = '0';
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.border = '0';
+
+  el.innerHTML = '';
+  el.appendChild(iframe);
+};  
 
     // Official blockquote pattern TikTok's script looks for
     const bq = document.createElement('blockquote');
@@ -1065,18 +1083,6 @@ class UIController {
     // Swap skeleton for embed
     el.innerHTML = '';
     el.appendChild(bq);
-
-    // Load embed runtime once
-    if (!document.querySelector('script[data-tiktok-embed]')) {
-      const s = document.createElement('script');
-      s.src = 'https://www.tiktok.com/embed.js';
-      s.async = true;
-      s.setAttribute('data-tiktok-embed', 'true');
-      document.body.appendChild(s);
-    } else if (window.tiktokEmbed && typeof window.tiktokEmbed.load === 'function') {
-      window.tiktokEmbed.load();
-    }
-  };
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!('IntersectionObserver' in window)) {
