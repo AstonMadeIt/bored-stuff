@@ -1,13 +1,3 @@
-// ===== EMERGENCY LOADER TIMEOUT =====
-// Kill loader after 5s no matter what (prevents infinite hang)
-setTimeout(() => {
-  const loader = document.getElementById('loader');
-  if (loader && !loader.classList.contains('hidden')) {
-    console.warn('⚠️ Loader timeout - forcing hide');
-    loader.classList.add('hidden');
-  }
-}, 5000);
-
 // ===== DEPENDENCY CHECKER =====
 // Ensures all libraries loaded before init
 class DependencyManager {
@@ -1207,6 +1197,21 @@ class MicrositeApp {
   cleanup() {
     try { this.modules.audio?.cleanup?.(); } catch {}
     try { this.modules.cursor?.cleanup?.(); } catch {}
+    try { this.modules.three?.cleanup?.(); } catch {}
+    try { this.modules.anim?.cleanup?.(); } catch {}
+  }
+}
+
+
+// ===== EMERGENCY LOADER TIMEOUT =====
+// Kill loader after 5s no matter what (prevents infinite hang)
+setTimeout(() => {
+  const loader = document.getElementById('loader');
+  if (loader && !loader.classList.contains('hidden')) {
+    console.warn('⚠️ Loader timeout - forcing hide');
+    loader.classList.add('hidden');
+  }
+}, 5000);
 
 // ===============================================================
 // TIKTOK EMBED - FAANG-GRADE IMPLEMENTATION
@@ -1258,9 +1263,6 @@ class MicrositeApp {
       iframe.title = card.dataset.title || 'TikTok video';
       
       // TikTok embed URL with optimal parameters
-      // autoplay=1: Start playing immediately after interaction
-      // controls=1: Show video controls
-      // muted=1: Start muted (required for autoplay in most browsers)
       iframe.src = `https://www.tiktok.com/embed/v2/video/${vid}?lang=en-US&autoplay=1&controls=1&muted=1`;
       
       // Feature policy for security and performance
@@ -1268,7 +1270,7 @@ class MicrositeApp {
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.allowFullscreen = true;
       
-      // CRITICAL: Prevent scroll via deprecated attribute (belt-and-suspenders approach)
+      // CRITICAL: Prevent scroll via deprecated attribute (belt-and-suspenders)
       iframe.setAttribute('scrolling', 'no');
       
       // Modern sandbox attribute for security
@@ -1290,7 +1292,6 @@ class MicrositeApp {
     // Auto-hydrate on scroll proximity (unless motion reduced)
     if (!prefersReduced) {
       // OPTIMIZED: Tighter rootMargin for just-in-time loading
-      // 50px = loads right before entering viewport
       const io = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
