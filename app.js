@@ -1038,60 +1038,57 @@ class UIController {
 // === Lazy TikTok embed (direct iframe with v2 → v1 fallback) ===
 ;(() => {
   const el = document.querySelector('#tiktok-card');
-  if (!el) return;
+  if (!el) return;  // this 'return' is legal because we're inside an IIFE
 
   const url = el.getAttribute('data-tiktok-url') || '';
   const m = url.match(/video\/(\d+)/);
   const videoId = m ? m[1] : null;
   if (!videoId) return;
 
-  const buildIframe = (src) => {
-    const iframe = document.createElement('iframe');
-    iframe.src = src;
-    iframe.setAttribute('title', 'TikTok video');
-    iframe.setAttribute('loading', 'lazy');
-    iframe.setAttribute('allowfullscreen', 'true');
+  const hydrate = () => {
+    if (el.dataset.hydrated === '1') return;
+    el.dataset.hydrated = '1';
+
+    // try v2
+    let iframe = document.createElement('iframe');
+    iframe.src = `https://www.tiktok.com/embed/v2/video/${videoId}?lang=en-US&autoplay=0&controls=1`;
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
     iframe.setAttribute('referrerpolicy', 'origin');
-    iframe.setAttribute(
-      'allow',
-      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-    );
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('title', 'TikTok video');
     iframe.style.position = 'absolute';
     iframe.style.inset = '0';
     iframe.style.width = '100%';
     iframe.style.height = '100%';
     iframe.style.border = '0';
-    return iframe;
-  };
 
-  const hydrate = () => {
-    if (el.dataset.hydrated === '1') return;
-    el.dataset.hydrated = '1';
-
-    // Try v2 first
-    const v2 = `https://www.tiktok.com/embed/v2/video/${videoId}?lang=en-US&autoplay=0&controls=1`;
-    const iframe = buildIframe(v2);
-
-    // If v2 404s, fall back to player/v1
-    iframe.onerror = () => {
-      const v1 = `https://www.tiktok.com/player/v1/${videoId}?lang=en-US&autoplay=false&controls=true`;
-      const fallback = buildIframe(v1);
-      el.innerHTML = '';
-      el.appendChild(fallback);
-    };
-
-    // swap skeleton → iframe
+    // swap skeleton
     el.innerHTML = '';
     el.appendChild(iframe);
+
+    // fallback to v1 if v2 404s
+    iframe.addEventListener('error', () => {
+      el.innerHTML = '';
+      const iframeV1 = document.createElement('iframe');
+      iframeV1.src = `https://www.tiktok.com/embed/v1/video/${videoId}?lang=en-US&autoplay=0&controls=1`;
+      iframeV1.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframeV1.setAttribute('referrerpolicy', 'origin');
+      iframeV1.setAttribute('loading', 'lazy');
+      iframeV1.setAttribute('title', 'TikTok video');
+      iframeV1.style.position = 'absolute';
+      iframeV1.style.inset = '0';
+      iframeV1.style.width = '100%';
+      iframeV1.style.height = '100%';
+      iframeV1.style.border = '0';
+      el.appendChild(iframeV1);
+    });
   };
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   if (!('IntersectionObserver' in window)) {
     hydrate();
     return;
   }
-
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (e.isIntersecting || prefersReduced) {
@@ -1100,9 +1097,8 @@ class UIController {
       }
     });
   }, { rootMargin: '200px 0px', threshold: 0.01 });
-
   io.observe(el);
-})();
+})();  // <— make sure this line exists
 
     // Official blockquote pattern TikTok's script looks for
     const bq = document.createElement('blockquote');
