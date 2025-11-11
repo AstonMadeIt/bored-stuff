@@ -292,43 +292,49 @@
   }
 
   // ===========================
-  // Initialize Everything
-  // ===========================
-  function init() {
-    // Wait for DOM ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-      return;
-    }
-
-    // Set up TikTok embeds
-    setupLazyLoading();
-
-    // Monitor performance in development
-    if (window.location.hostname === 'localhost') {
-      monitorPerformance();
-    }
-
-    // Handle browser back/forward navigation
-    window.addEventListener('pageshow', (event) => {
-      if (event.persisted) {
-        // Page was restored from cache
-        setupLazyLoading();
-      }
-    });
+// Initialize Everything
+// ===========================
+function init() {
+  // Wait for DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+    return;
   }
 
-  // Start the app
-  init();
+  // Hide loader immediately when init runs
+  const loader = document.getElementById('loader');
+  if (loader) {
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 300); // Small delay for smooth effect
+  }
 
-  // Export for testing/debugging
-  window.TikTokEmbed = TikTokEmbed;
+  // Set up TikTok embeds
+  setupLazyLoading();
 
-})();
+  // Monitor performance in development
+  if (window.location.hostname === 'localhost') {
+    monitorPerformance();
+  }
+
+  // Handle browser back/forward navigation
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      // Page was restored from cache
+      setupLazyLoading();
+    }
+  });
+}
+
+// Start the app
+init();
+
+// Export for testing/debugging
+window.TikTokEmbed = TikTokEmbed;
+
+})(); // <-- Main IIFE closes here
 
 // ===========================
 // Additional App Functionality
 // (Charts, animations, etc. from original app.js)
-// ===========================
-
-// ... rest of your original app.js code for charts, Three.js, etc. goes here ...
+// =========================== $
