@@ -90,35 +90,25 @@
         </p>
       </section>
 
-      <!-- === TikTok press card (lazy) === -->
+      <!-- === TikTok press card (SDK-free) === -->
 <section class="press" aria-label="Press">
   <article class="press-card press-card--video">
     <div class="press-toprule" aria-hidden="true"></div>
 
-    <!-- Lazy video container -->
-    <div
-      class="press-video"
-      id="tiktok-card"
-      data-tiktok-url="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
-      aria-label="TikTok video from @neuroquantumlab">
-      <div class="press-video-skeleton" aria-hidden="true">
-        <div class="skeleton-thumb"></div>
-        <div class="skeleton-lines">
-          <span></span><span></span><span></span>
-        </div>
-      </div>
-      <noscript>
-        <blockquote class="tiktok-embed"
-          cite="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
-          data-video-id="7549600251598966046"
-          style="max-width:605px;min-width:325px;">
-          <a href="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046">View on TikTok</a>
-        </blockquote>
-        <script async src="https://www.tiktok.com/embed.js"></script>
-      </noscript>
+    <!-- NEW embed (poster-first, no inner scroll) -->
+    <div class="ttk"
+         data-tiktok-url="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
+         data-title="Dating × Politics"
+         data-sub="This got spicy real fast…"
+         data-cta="Watch →"
+         data-poster="img/tiktok-poster.jpg">
+      <button class="ttk__poster" type="button" aria-label="Play TikTok">
+        <img class="ttk__poster-img" alt="TikTok preview" loading="lazy" decoding="async">
+        <span class="ttk__play" aria-hidden="true">▶</span>
+      </button>
     </div>
 
-    <!-- Card copy matching your Press pattern -->
+    <!-- Card copy (unchanged) -->
     <a class="press-link"
        href="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
        target="_blank" rel="noopener noreferrer"
@@ -126,9 +116,7 @@
       <div>
         <div class="press-kicker">TikTok</div>
         <h2 class="press-headline">Dating x Politics</h2>
-        <p class="press-dek">
-          This got spicy real fast ...
-        </p>
+        <p class="press-dek">This got spicy real fast ...</p>
         <div class="press-meta">
           <span>@neuroquantumlab</span>
           <span class="press-dot" aria-hidden="true"></span>
@@ -137,15 +125,12 @@
       </div>
       <div class="press-cta" aria-hidden="true">
         Watch
-        <svg viewBox="0 0 24 24" focusable="false">
-          <path d="M5 12h14M13 5l7 7-7 7"/>
-        </svg>
+        <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </div>
     </a>
   </article>
 </section>
 <!-- === /TikTok press card === -->
-
 
       <!-- Voice Moment 2 -->
       <div class="voice-moment">
