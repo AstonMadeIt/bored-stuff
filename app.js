@@ -524,7 +524,7 @@ class AnimationController {
     this.scrollTriggers.forEach(trigger => {
       if (trigger && trigger.kill) trigger.kill();
     });
-    if (window.ScrollTrigger) {
+    if (ScrollTrigger) {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     }
   }
@@ -1202,36 +1202,30 @@ class MicrositeApp {
   }
 }
 
+// ===== BOOTSTRAP =====
+const boot = () => { window.app = new MicrositeApp(); window.app.init(); };
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
 
-// ===== EMERGENCY LOADER TIMEOUT =====
-// Kill loader after 5s no matter what (prevents infinite hang)
-setTimeout(() => {
-  const loader = document.getElementById('loader');
-  if (loader && !loader.classList.contains('hidden')) {
-    console.warn('⚠️ Loader timeout - forcing hide');
-    loader.classList.add('hidden');
-  }
-}, 5000);
-
-// ===============================================================
-// TIKTOK EMBED - FAANG-GRADE IMPLEMENTATION
-// Zero scroll, bulletproof containment, optimal resource timing
-// ===============================================================
 (() => {
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cards = Array.from(document.querySelectorAll('.ttk'));
-
   for (const card of cards) {
     const url = card.dataset.tiktokUrl || '';
     const vid = (url.match(/video\/(\d+)/) || [])[1];
     if (!vid) continue;
 
+    // Poster
     const posterBtn = card.querySelector('.ttk__poster');
     const posterImg = card.querySelector('.ttk__poster-img');
     posterImg.src = card.dataset.poster || '';
-    posterImg.alt = card.dataset.title || 'TikTok video preview';
 
     let hydrated = false;
+    const LOOP_DURATION_MS = 0; // set e.g. 60000 to “refresh loop” every 60s (off by default)
+
     const hydrate = () => {
       if (hydrated) return;
       hydrated = true;
@@ -1240,52 +1234,40 @@ setTimeout(() => {
       frame.className = 'ttk__frame';
 
       const iframe = document.createElement('iframe');
-      // After iframe creation:
-      iframe.loading = 'lazy';            // saves bytes offscreen
-      iframe.title = card.dataset.title || 'TikTok video'; // a11y
-      iframe.src = `https://www.tiktok.com/embed/v2/video/${vid}?lang=en-US&autoplay=1&controls=1&muted=1`;
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.loading = 'lazy';           // saves bytes offscreen
+      iframe.title = 'TikTok video';     // accessibility / SEO friendly
+      iframe.src =
+        `https://www.tiktok.com/embed/v2/video/${vid}?lang=en-US&autoplay=1&controls=1&muted=1`;
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.allowFullscreen = true;
-      iframe.setAttribute('scrolling', 'no');
-      iframe.sandbox = 'allow-scripts allow-same-origin allow-presentation';
+      iframe.scrolling = 'no';
 
       frame.appendChild(iframe);
       posterBtn.replaceWith(frame);
 
-      iframe.addEventListener('error', () => {
-        console.warn('TikTok embed failed to load:', vid);
-      }, { once: true });
+      if (LOOP_DURATION_MS > 0) {
+        setInterval(() => {
+          const clone = iframe.cloneNode(false);
+          clone.src = iframe.src; // quiet reload
+          iframe.replaceWith(clone);
+        }, LOOP_DURATION_MS);
+      }
     };
 
     posterBtn.addEventListener('click', hydrate, { passive: true });
 
     if (!prefersReduced) {
       const io = new IntersectionObserver((entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            hydrate();
-            io.disconnect();
-          }
-        }
-      }, { rootMargin: '50px 0px', threshold: 0 });
+        for (const e of entries) if (e.isIntersecting) { hydrate(); io.disconnect(); }
+      }, { rootMargin: '120px 0px' });
       io.observe(card);
     }
   }
 })();
 
-// Safety net: Force hide loader on critical errors
+// As a last-resort safety, never leave the loader up on hard errors.
 window.addEventListener('error', () => {
   document.getElementById('loader')?.classList.add('hidden');
 });
-
-// Boot the app once DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  const app = new MicrositeApp();
-  app.init();
-});
-
-// Safety net: Force hide loader on critical errors
-window.addEventListener('error', () => {
-  document.getElementById('loader')?.classList.add('hidden');
-}, { passive: true });

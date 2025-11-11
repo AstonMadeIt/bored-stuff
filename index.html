@@ -5,17 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>data ... yum ...</title>
 
-  <!-- CRITICAL RESOURCE HINTS - Staff-level optimization -->
-  <link rel="dns-prefetch" href="https://www.tiktok.com">
-  <link rel="dns-prefetch" href="https://cdn.plot.ly">
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://www.tiktok.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <!-- Favicon & Fonts -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Critical CSS stays inline for FCP optimization -->
@@ -97,17 +90,17 @@
         </p>
       </section>
 
-      <!-- === TikTok press card (FAANG-OPTIMIZED: zero scroll risk) === -->
+      <!-- === TikTok press card (SDK-free) === -->
 <section class="press" aria-label="Press">
   <article class="press-card press-card--video">
     <div class="press-toprule" aria-hidden="true"></div>
 
-    <!-- OPTIMIZED: Modern embed with bulletproof containment -->
+    <!-- NEW embed (poster-first, no inner scroll) -->
     <div class="ttk"
          data-tiktok-url="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
          data-title="Dating × Politics"
          data-sub="This got spicy real fast…"
-         data-cta="Watch ↑"
+         data-cta="Watch →"
          data-poster="img/tiktok-poster.jpg">
       <button class="ttk__poster" type="button" aria-label="Play TikTok">
         <img class="ttk__poster-img" alt="TikTok preview" loading="lazy" decoding="async">
@@ -116,7 +109,7 @@
     </div>
 
     <!-- Card copy (unchanged) -->
-    <a class="ttk__link"
+    <a class="press-link"
        href="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
        target="_blank" rel="noopener noreferrer"
        aria-label="Open TikTok post in a new tab">
