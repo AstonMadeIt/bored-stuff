@@ -1037,7 +1037,7 @@ class UIController {
 
 
 // === Lazy TikTok embed (poster-first, a11y, reduced-motion aware) ===
-(() => {
+;(() => {
   const el = document.querySelector('#tiktok-card');
   if (!el) return;
 
