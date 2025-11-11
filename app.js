@@ -1117,53 +1117,6 @@ class UIController {
           }
         });
       }, {
-        threshold: 0.3,
-        rootMargin: '-100px 0px -100px 0px'
-      });
-
-      observer.observe(el);
-    }, 1000);
-  };
-
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!('IntersectionObserver' in window)) {
-    hydrate();
-    return;
-  }
-
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting || prefersReduced) {
-        hydrate();
-        io.disconnect();
-        break;
-      }
-    }
-  }, { rootMargin: '200px 0px 200px 0px', threshold: 0.01 });
-
-  io.observe(el);
-})();
-
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!('IntersectionObserver' in window)) {
-    hydrate();
-    return;
-  }
-
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting || prefersReduced) {
-        hydrate();
-        io.disconnect();
-        break;
-      }
-    }
-  }, { rootMargin: '200px 0px 200px 0px', threshold: 0.01 });
-
-  io.observe(el);
-})();
 
 // ===== MAIN APPLICATION =====
 class MicrositeApp {
