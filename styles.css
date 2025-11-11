@@ -778,24 +778,49 @@
   .voice-moment::before { display: none; } /* disable shimmer sweep */
 }
 
-/* --- TikTok press-card styles (live for all users) --- */
+/* --- TikTok press-card styles (official embed.js) --- */
 .press-card--video .press-link { 
   align-items: start; 
-  grid-template-columns: 1fr; /* Stack vertically for better TikTok presentation */
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
 .press-video {
   position: relative;
-  aspect-ratio: 9 / 16; /* 👈 TikTok vertical ratio */
   width: 100%;
-  max-width: 400px; /* 👈 Narrower for mobile-first content */
+  max-width: 325px;
+  min-height: 578px;
   margin: clamp(16px, 3vw, 20px) auto 0;
   border-radius: clamp(12px, 2vw, 16px);
   overflow: hidden;
   border: 1px solid rgba(0,0,0,.08);
   box-shadow: 0 8px 32px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.03);
   background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* TikTok blockquote embed */
+.press-video .tiktok-embed {
+  margin: 0 !important;
+  max-width: 325px !important;
+  min-width: 325px !important;
+  border: none !important;
+}
+
+/* Override TikTok's iframe styles */
+.press-video iframe {
+  max-width: 325px !important;
+  width: 325px !important;
+  height: 578px !important;
+  border: none !important;
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+}
+
+.press-video iframe::-webkit-scrollbar {
+  display: none !important;
 }
 
 /* Skeleton while loading */
@@ -806,11 +831,12 @@
   place-items: center;
   padding: 16px;
   background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.35));
+  z-index: 1;
 }
 
 .skeleton-thumb {
   width: 92%; 
-  aspect-ratio: 9 / 16; /* 👈 Match TikTok ratio */
+  aspect-ratio: 9 / 16;
   border-radius: 12px;
   background: linear-gradient(90deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
   background-size: 200% 100%;
@@ -839,25 +865,23 @@
 .skeleton-lines span:nth-child(2) { width: 45%; }
 .skeleton-lines span:nth-child(3) { width: 55%; }
 
-/* TikTok embed iframe */
-.press-video iframe { 
-  position: absolute; 
-  inset: 0; 
-  width: 100%; 
-  height: 100%; 
-}
-
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .press-video {
     max-width: 100%;
-    max-height: 600px; /* Prevent it from being too tall on mobile */
+  }
+  .press-video .tiktok-embed,
+  .press-video iframe {
+    max-width: 100% !important;
+    width: 100% !important;
   }
 }
 
-/* Motion safeguard for the skeleton shimmer only */
+/* Motion safeguard */
 @media (prefers-reduced-motion: reduce) {
-  .skeleton-thumb, .skeleton-lines span { animation: none !important; }
+  .skeleton-thumb, .skeleton-lines span { 
+    animation: none !important; 
+  }
 }
 
 /* Optional shimmer keyframes if missing */
