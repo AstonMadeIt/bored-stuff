@@ -1031,11 +1031,10 @@ class UIController {
   const slider = document.getElementById('volume-slider');
   if (!slider) return;
   slider.addEventListener('input', (e) => {
-    this.audio.setVolume(e.target.value);   // <— was this.audioEngine
+    this.audioEngine.setVolume(e.target.value);   // <— was this.audioEngine
   });
+ }
 }
-
-
 // === Lazy TikTok embed (poster-first, a11y, reduced-motion aware) ===
 ;(() => {
   const el = document.querySelector('#tiktok-card');
