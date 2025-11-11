@@ -246,13 +246,19 @@ class CursorManager {
     elements.forEach(el => {
       el.addEventListener('mouseenter', () => {
         this.cursor.classList.add('hover');
-        this.audioEngine.playHover();
+        // Only play sound if audio is actually started
+        if (this.audioEngine?.audioStarted) {
+          this.audioEngine.playHover();
+        }
       });
       el.addEventListener('mouseleave', () => {
         this.cursor.classList.remove('hover');
       });
       el.addEventListener('click', () => {
-        this.audioEngine.playClick();
+        // Only play sound if audio is actually started
+        if (this.audioEngine?.audioStarted) {
+          this.audioEngine.playClick();
+        }
       });
     });
   }
