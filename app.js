@@ -1035,106 +1035,58 @@ class UIController {
   });
  }
 }
-// === Lazy TikTok embed (direct iframe with v2 → v1 fallback) ===
+// === Lazy TikTok embed (poster-first, a11y, reduced-motion aware) ===
 ;(() => {
   const el = document.querySelector('#tiktok-card');
-  if (!el) return;  // this 'return' is legal because we're inside an IIFE
+  if (!el) return;
 
   const url = el.getAttribute('data-tiktok-url') || '';
   const m = url.match(/video\/(\d+)/);
-  const videoId = m ? m[1] : null;
+  const videoId = m && m[1];
   if (!videoId) return;
 
   const hydrate = () => {
     if (el.dataset.hydrated === '1') return;
     el.dataset.hydrated = '1';
 
-    // try v2
-    let iframe = document.createElement('iframe');
+    // Build TikTok v2 iframe directly (no embed.js)
+    const iframe = document.createElement('iframe');
     iframe.src = `https://www.tiktok.com/embed/v2/video/${videoId}?lang=en-US&autoplay=0&controls=1`;
-    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-    iframe.setAttribute('referrerpolicy', 'origin');
-    iframe.setAttribute('loading', 'lazy');
-    iframe.setAttribute('title', 'TikTok video');
+    iframe.allow =
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.referrerPolicy = 'origin';
+    iframe.loading = 'lazy';
+    iframe.title = 'TikTok video';
     iframe.style.position = 'absolute';
     iframe.style.inset = '0';
     iframe.style.width = '100%';
     iframe.style.height = '100%';
     iframe.style.border = '0';
 
-    // swap skeleton
     el.innerHTML = '';
     el.appendChild(iframe);
-
-    // fallback to v1 if v2 404s
-    iframe.addEventListener('error', () => {
-      el.innerHTML = '';
-      const iframeV1 = document.createElement('iframe');
-      iframeV1.src = `https://www.tiktok.com/embed/v1/video/${videoId}?lang=en-US&autoplay=0&controls=1`;
-      iframeV1.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-      iframeV1.setAttribute('referrerpolicy', 'origin');
-      iframeV1.setAttribute('loading', 'lazy');
-      iframeV1.setAttribute('title', 'TikTok video');
-      iframeV1.style.position = 'absolute';
-      iframeV1.style.inset = '0';
-      iframeV1.style.width = '100%';
-      iframeV1.style.height = '100%';
-      iframeV1.style.border = '0';
-      el.appendChild(iframeV1);
-    });
   };
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   if (!('IntersectionObserver' in window)) {
-    hydrate();
-    return;
-  }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting || prefersReduced) {
-        hydrate();
-        io.disconnect();
-      }
-    });
-  }, { rootMargin: '200px 0px', threshold: 0.01 });
-  io.observe(el);
-})();  // <— make sure this line exists
-
-    // Official blockquote pattern TikTok's script looks for
-    const bq = document.createElement('blockquote');
-    bq.className = 'tiktok-embed';
-    bq.setAttribute('cite', url);
-    bq.setAttribute('data-video-id', videoId);
-    bq.style.maxWidth = '605px';
-    bq.style.minWidth = '325px';
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.textContent = 'View on TikTok';
-    bq.appendChild(a);
-
-    // Swap skeleton for embed
-    el.innerHTML = '';
-    el.appendChild(bq);
-
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!('IntersectionObserver' in window)) {
-    // Old browsers: just hydrate
     hydrate();
     return;
   }
 
   const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
+    for (const e of entries) {
       if (e.isIntersecting || prefersReduced) {
         hydrate();
         io.disconnect();
+        break;
       }
-    });
+    }
   }, { rootMargin: '200px 0px 200px 0px', threshold: 0.01 });
 
   io.observe(el);
 })();
+
 
 // ===== MAIN APPLICATION =====
 class MicrositeApp {
