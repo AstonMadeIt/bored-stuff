@@ -1045,7 +1045,7 @@ class UIController {
   });
  }
 }
-// === Lazy TikTok embed with auto-loop + scroll-based pause ===
+// === TikTok embed with proper embed.js (auto-loop, no related, scroll-aware) ===
 ;(() => {
   const el = document.querySelector('#tiktok-card');
   if (!el) return;
@@ -1055,66 +1055,95 @@ class UIController {
   const videoId = m && m[1];
   if (!videoId) return;
 
-  let iframeEl = null;
+  let blockquoteEl = null;
+  let observer = null;
 
   const hydrate = () => {
     if (el.dataset.hydrated === '1') return;
     el.dataset.hydrated = '1';
 
-    const iframe = document.createElement('iframe');
-    // Add URL parameters for looping and no related videos
-    iframe.src = `https://www.tiktok.com/embed/v2/${videoId}?loop=1&related_videos=0`;
-    iframe.allowFullscreen = true;
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    iframe.referrerPolicy = 'origin';
-    iframe.loading = 'lazy';
-    iframe.title = 'TikTok video';
-    iframe.style.position = 'absolute';
-    iframe.style.inset = '0';
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-    iframe.style.border = '0';
-    
-    iframe.onerror = () => {
-      console.warn('TikTok embed failed to load');
-      el.innerHTML = '<p style="padding: 20px; text-align: center; color: #fff;">Video unavailable</p>';
-    };
-    
-    el.innerHTML = '';
-    el.appendChild(iframe);
-    iframeEl = iframe;
+    // Create TikTok blockquote (official embed method)
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'tiktok-embed';
+    blockquote.cite = url;
+    blockquote.setAttribute('data-video-id', videoId);
+    blockquote.style.maxWidth = '325px';
+    blockquote.style.minWidth = '325px';
+    blockquote.style.margin = '0 auto';
 
-    // Set up scroll-based play/pause
-    setupScrollObserver();
+    // Add fallback link
+    const link = document.createElement('a');
+    link.href = url;
+    link.textContent = 'View on TikTok';
+    blockquote.appendChild(link);
+
+    el.innerHTML = '';
+    el.appendChild(blockquote);
+    blockquoteEl = blockquote;
+
+    // Load TikTok embed script
+    if (!window.tiktokEmbedLoaded) {
+      const script = document.createElement('script');
+      script.src = 'https://www.tiktok.com/embed.js';
+      script.async = true;
+      script.onload = () => {
+        window.tiktokEmbedLoaded = true;
+        setupScrollObserver();
+      };
+      document.body.appendChild(script);
+    } else {
+      // Script already loaded, re-init
+      if (window.tiktok) {
+        window.tiktok.init();
+      }
+      setupScrollObserver();
+    }
   };
 
   const setupScrollObserver = () => {
-    if (!iframeEl) return;
+    // Wait a bit for TikTok to render
+    setTimeout(() => {
+      const iframe = el.querySelector('iframe');
+      if (!iframe) return;
 
-    // Intersection Observer to detect when video is in/out of viewport
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        try {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Video is visible - try to play
-            // TikTok embeds don't have direct postMessage API, but we can reload to restart
-            // For better control, just let it autoplay when visible
+            iframe.style.opacity = '1';
+            iframe.style.pointerEvents = 'auto';
           } else {
-            // Video scrolled out of view - pause by removing/re-adding
-            // This is a workaround since TikTok embed doesn't expose pause API
-            // Alternative: just let it play in background (less intrusive)
+            iframe.style.opacity = '0';
+            iframe.style.pointerEvents = 'none';
           }
-        } catch (err) {
-          console.warn('Could not control TikTok playback:', err);
-        }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '-100px 0px -100px 0px'
       });
-    }, {
-      threshold: 0.5, // Video needs to be 50% visible
-      rootMargin: '0px'
-    });
 
-    observer.observe(el);
+      observer.observe(el);
+    }, 1000);
   };
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!('IntersectionObserver' in window)) {
+    hydrate();
+    return;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting || prefersReduced) {
+        hydrate();
+        io.disconnect();
+        break;
+      }
+    }
+  }, { rootMargin: '200px 0px 200px 0px', threshold: 0.01 });
+
+  io.observe(el);
+})();
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
