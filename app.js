@@ -1051,8 +1051,8 @@ class UIController {
 
     // Build TikTok v2 iframe directly (no embed.js)
     const iframe = document.createElement('iframe');
-    iframe.src = `https://www.tiktok.com/embed/v2/video/${videoId}?lang=en-US&autoplay=0&controls=1`;
-    iframe.allow =
+    iframe.src = `https://www.tiktok.com/embed/v2/video/${videoId}`;
+    iframe.allowFullscreen = true;
       'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.referrerPolicy = 'origin';
     iframe.loading = 'lazy';
