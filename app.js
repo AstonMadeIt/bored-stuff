@@ -1038,14 +1038,15 @@ class UIController {
   }
 
   initVolumeControl() {
-  const slider = document.getElementById('volume-slider');
-  if (!slider) return;
-  slider.addEventListener('input', (e) => {
-    this.audioEngine.setVolume(e.target.value);   // <— was this.audioEngine
-  });
- }
+    const slider = document.getElementById('volume-slider');
+    if (!slider) return;
+    slider.addEventListener('input', (e) => {
+      this.audioEngine.setVolume(e.target.value);
+    });
+  }
 }
-// === TikTok embed with proper embed.js (auto-loop, no related, scroll-aware) ===
+
+// ===== TikTok embed with proper embed.js (auto-loop, no related, scroll-aware) =====
 ;(() => {
   const el = document.querySelector('#tiktok-card');
   if (!el) return;
@@ -1117,6 +1118,23 @@ class UIController {
           }
         });
       }, {
+        threshold: 0.5
+      });
+      
+      observer.observe(iframe);
+    }, 1000);
+  };
+
+  // Initial hydration on scroll
+  const mainObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      hydrate();
+      mainObserver.disconnect();
+    }
+  }, { rootMargin: '200px' });
+
+  mainObserver.observe(el);
+})();
 
 // ===== MAIN APPLICATION =====
 class MicrositeApp {
