@@ -764,15 +764,73 @@
     }
     .press-cta svg{width:24px; height:24px; stroke:currentColor; stroke-width:2; fill:none}
     .press-link:hover .press-headline{opacity:.9; transform: translateY(-1px)}
-    .press-link:hover .press-cta{opacity:1}
+    .press-link:hover .press-cta { opacity: 1; }
 
-    @media (max-width:640px){
-      .press-link{grid-template-columns:1fr}
-      .press-cta{justify-content:flex-start}
-    }
+@media (max-width:640px){
+  .press-link { grid-template-columns:1fr }
+  .press-cta { justify-content:flex-start }
+}
 
-    @media (prefers-reduced-motion: reduce) {
+/* --- Reduced-motion global rules --- */
+@media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
   .loader { display: none !important; }
   .voice-moment::before { display: none; } /* disable shimmer sweep */
 }
+
+/* --- TikTok press-card styles (live for all users) --- */
+.press-card--video .press-link { align-items: start; }
+
+.press-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 900px;
+  margin: clamp(16px, 3vw, 20px) auto 0;
+  border-radius: clamp(12px, 2vw, 16px);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.03);
+  background: #000;
+}
+
+/* Skeleton while loading */
+.press-video-skeleton {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.35));
+}
+
+.skeleton-thumb {
+  width: 92%; aspect-ratio: 16/9; border-radius: 12px;
+  background: linear-gradient(90deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 8px 22px rgba(0,0,0,.35);
+}
+.skeleton-lines { position: absolute; bottom: 10%; left: 6%; right: 6%; display: grid; gap: 8px; }
+.skeleton-lines span {
+  height: 10px; border-radius: 6px;
+  background: linear-gradient(90deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+.skeleton-lines span:nth-child(1){ width: 70%; }
+.skeleton-lines span:nth-child(2){ width: 45%; }
+.skeleton-lines span:nth-child(3){ width: 55%; }
+
+/* TikTok embed */
+.press-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Motion safeguard for the skeleton shimmer only */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-thumb, .skeleton-lines span { animation: none !important; }
+}
+
+/* Optional shimmer keyframes if missing */
+@keyframes shimmer {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+
