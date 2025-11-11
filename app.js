@@ -1028,12 +1028,75 @@ class UIController {
   }
 
   initVolumeControl() {
-    const slider = document.getElementById('volume-slider');
-    slider.addEventListener('input', (e) => {
-      this.audioEngine.setVolume(e.target.value);
-    });
-  }
+  const slider = document.getElementById('volume-slider');
+  if (!slider) return;
+  slider.addEventListener('input', (e) => {
+    this.audio.setVolume(e.target.value);   // <— was this.audioEngine
+  });
 }
+
+
+// === Lazy TikTok embed (poster-first, a11y, reduced-motion aware) ===
+(() => {
+  const el = document.querySelector('#tiktok-card');
+  if (!el) return;
+
+  const url = el.getAttribute('data-tiktok-url') || '';
+  const m = url.match(/video\/(\d+)/);
+  const videoId = m ? m[1] : null;
+  if (!videoId) return;
+
+  const hydrate = () => {
+    if (el.dataset.hydrated === '1') return;
+    el.dataset.hydrated = '1';
+
+    // Official blockquote pattern TikTok's script looks for
+    const bq = document.createElement('blockquote');
+    bq.className = 'tiktok-embed';
+    bq.setAttribute('cite', url);
+    bq.setAttribute('data-video-id', videoId);
+    bq.style.maxWidth = '605px';
+    bq.style.minWidth = '325px';
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.textContent = 'View on TikTok';
+    bq.appendChild(a);
+
+    // Swap skeleton for embed
+    el.innerHTML = '';
+    el.appendChild(bq);
+
+    // Load embed runtime once
+    if (!document.querySelector('script[data-tiktok-embed]')) {
+      const s = document.createElement('script');
+      s.src = 'https://www.tiktok.com/embed.js';
+      s.async = true;
+      s.setAttribute('data-tiktok-embed', 'true');
+      document.body.appendChild(s);
+    } else if (window.tiktokEmbed && typeof window.tiktokEmbed.load === 'function') {
+      window.tiktokEmbed.load();
+    }
+  };
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!('IntersectionObserver' in window)) {
+    // Old browsers: just hydrate
+    hydrate();
+    return;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting || prefersReduced) {
+        hydrate();
+        io.disconnect();
+      }
+    });
+  }, { rootMargin: '200px 0px 200px 0px', threshold: 0.01 });
+
+  io.observe(el);
+})();
 
 // ===== MAIN APPLICATION =====
 class MicrositeApp {
@@ -1081,12 +1144,12 @@ class MicrositeApp {
 // Wait for DOM to be ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    const app = new MicrositeApp();
-    app.init();
+    window.app = new MicrositeApp();
+    window.app.init();
   });
 } else {
-  const app = new MicrositeApp();
-  app.init();
+  window.app = new MicrositeApp();
+  window.app.init();
 }
 
 // Cleanup on page unload
