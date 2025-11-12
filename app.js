@@ -24,6 +24,69 @@ class DependencyManager {
   }
 }
 
+// ===== THEME MANAGER =====
+class ThemeManager {
+  constructor() {
+    this.currentTheme = localStorage.getItem('theme') || 'light';
+    this.toggleButton = null;
+  }
+
+  init() {
+    this.applyTheme(this.currentTheme);
+    this.createToggle();
+  }
+
+  createToggle() {
+    const headerControls = document.querySelector('.header-controls');
+    if (!headerControls) return;
+
+    const toggle = document.createElement('button');
+    toggle.className = 'theme-toggle';
+    toggle.setAttribute('aria-label', 'Toggle dark mode');
+    toggle.innerHTML = `
+      <span class="theme-toggle-icon">🌙</span>
+      <span class="theme-toggle-text">Dark</span>
+    `;
+    
+    // Insert before music toggle
+    const musicToggle = document.getElementById('music-toggle');
+    if (musicToggle) {
+      headerControls.insertBefore(toggle, musicToggle);
+    } else {
+      headerControls.appendChild(toggle);
+    }
+
+    toggle.addEventListener('click', () => this.toggle());
+    this.toggleButton = toggle;
+    this.updateToggleButton();
+  }
+
+  toggle() {
+    this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+    this.applyTheme(this.currentTheme);
+    localStorage.setItem('theme', this.currentTheme);
+    this.updateToggleButton();
+  }
+
+  applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+
+  updateToggleButton() {
+    if (!this.toggleButton) return;
+    const icon = this.toggleButton.querySelector('.theme-toggle-icon');
+    const text = this.toggleButton.querySelector('.theme-toggle-text');
+    
+    if (this.currentTheme === 'dark') {
+      icon.textContent = '☀️';
+      text.textContent = 'Light';
+    } else {
+      icon.textContent = '🌙';
+      text.textContent = 'Dark';
+    }
+  }
+}
+
 // ===== LOADER MANAGER =====
 class LoaderManager {
   constructor() {
@@ -64,8 +127,7 @@ class AudioEngine {
     this.effects = {};
   }
 
-  // Initialize synths/effects - ONLY called after Tone.start()
-  initAudio() {
+  init() {
     try {
       this.effects.reverb = new Tone.Reverb({ 
         decay: 12, preDelay: 0.02, wet: 0.8 
@@ -99,242 +161,172 @@ class AudioEngine {
         volume: -28 
       }).connect(this.effects.reverb);
 
-      Tone.getDestination().volume.value = -22;
-    } catch (error) {
-      console.error('Audio initialization failed:', error);
+      this.setupMusicToggle();
+      this.setupVolumeControl();
+    } catch (e) {
+      console.warn('Audio setup failed:', e);
     }
   }
 
-  async start() {
-    // First click: start audio context and init everything
-    if (!this.audioStarted) {
-      try {
-        await Tone.start();
-        this.initAudio();
+  setupMusicToggle() {
+    const toggle = document.getElementById('music-toggle');
+    if (!toggle) return;
+
+    toggle.addEventListener('click', () => {
+      if (!this.audioStarted) {
+        Tone.start();
         this.audioStarted = true;
-      } catch (error) {
-        console.error('Failed to start audio context:', error);
-        return;
       }
-    }
 
-    // Toggle music on/off
-    if (this.musicEnabled) {
-      this.stop();
-      return;
-    }
+      this.musicEnabled = !this.musicEnabled;
+      toggle.setAttribute('aria-pressed', this.musicEnabled);
 
-    // Start the music
-    try {
-      const bellMelody = ["E5", null, "G5", null, "A5", null, "E5", null, 
-                          "D5", null, "A4", null, "E5", null, null, null, 
-                          "G5", null, "A5", null, "B5", null, "A5", null, 
-                          "G5", null, "E5", null, "D5", null, null, null];
-      let bellIndex = 0;
+      const icon = toggle.querySelector('.music-toggle-icon');
+      const text = toggle.querySelector('.music-toggle-text');
 
-      this.loops.bells = new Tone.Loop((time) => {
-        const note = bellMelody[bellIndex];
-        if (note) {
-          this.synths.bells.triggerAttackRelease(note, "2n", time);
-        }
-        bellIndex = (bellIndex + 1) % bellMelody.length;
-      }, "4n");
-
-      this.loops.subBass = new Tone.Loop((time) => {
-        this.synths.subBass.triggerAttackRelease("C1", "4n", time);
-      }, "2n");
-
-      this.loops.bass = new Tone.Loop((time) => {
-        this.synths.bass808.triggerAttackRelease("C1", "8n", time);
-        this.synths.bass808.triggerAttackRelease("C1", "16n", time + 0.375);
-      }, "1n");
-
-      this.loops.pad = new Tone.Loop((time) => {
-        this.synths.ambient.triggerAttackRelease("C2", "1m", time);
-      }, "1m");
-
-      this.loops.bells.start(0);
-      this.loops.subBass.start("1m");
-      this.loops.bass.start("2m");
-      this.loops.pad.start(0);
-
-      Tone.getTransport().bpm.value = 140;
-      Tone.getTransport().start();
-      this.musicEnabled = true;
-    } catch (error) {
-      console.error('Failed to start soundscape:', error);
-    }
-  }
-
-  stop() {
-    Object.values(this.loops).forEach(loop => {
-      if (loop && loop.stop) loop.stop();
+      if (this.musicEnabled) {
+        this.startMusic();
+        icon.textContent = '🔊';
+        text.textContent = 'Music On';
+      } else {
+        this.stopMusic();
+        icon.textContent = '🔇';
+        text.textContent = 'Music Off';
+      }
     });
-    if (Tone.getTransport) {
-      Tone.getTransport().stop();
-    }
-    this.musicEnabled = false;
   }
 
-  playClick() {
-    if (this.audioStarted && this.synths.bells) {
-      this.synths.bells.triggerAttackRelease("A5", "32n", "+0.02");
-    }
+  setupVolumeControl() {
+    const slider = document.getElementById('volume-slider');
+    if (!slider) return;
+
+    slider.addEventListener('input', (e) => {
+      const volume = parseInt(e.target.value);
+      const db = -60 + (volume * 0.6); // Maps 0-100 to -60db to 0db
+      Tone.Destination.volume.value = db;
+    });
   }
 
-  playHover() {
-    if (this.audioStarted && this.synths.bells) {
-      this.synths.bells.triggerAttackRelease("E5", "64n", "+0.01");
-    }
+  startMusic() {
+    if (this.loops.main) return;
+
+    const progression = [
+      ["C3", "E3", "G3"], 
+      ["A2", "C3", "E3"], 
+      ["F2", "A2", "C3"], 
+      ["G2", "B2", "D3"]
+    ];
+
+    const bassProg = ["C1", "A1", "F1", "G1"];
+    const bellsMelody = ["C5", "E5", "G5", "C6", "G5", "E5"];
+
+    this.loops.main = new Tone.Loop(time => {
+      const beat = Math.floor(Tone.Transport.seconds) % 4;
+      const chord = progression[beat];
+
+      chord.forEach((note, i) => {
+        this.synths.ambient.triggerAttackRelease(note, "2n", time + i * 0.05);
+      });
+
+      this.synths.subBass.triggerAttackRelease(bassProg[beat], "2n", time);
+
+      if (Math.random() > 0.7) {
+        this.synths.bass808.triggerAttackRelease(bassProg[beat], "16n", time);
+      }
+
+      if (Math.random() > 0.85) {
+        const noteIdx = Math.floor(Math.random() * bellsMelody.length);
+        this.synths.bells.triggerAttackRelease(
+          bellsMelody[noteIdx], 
+          "8n", 
+          time + Math.random() * 0.3
+        );
+      }
+    }, "2n").start(0);
+
+    Tone.Transport.bpm.value = 58;
+    Tone.Transport.start();
   }
 
-  setVolume(value) {
-    if (!Tone.getDestination) return;
-    const volumeDb = -60 + (value / 100) * 50;
-    Tone.getDestination().volume.value = volumeDb;
+  stopMusic() {
+    if (this.loops.main) {
+      this.loops.main.stop();
+      this.loops.main.dispose();
+      this.loops.main = null;
+    }
+    Tone.Transport.stop();
   }
 
   cleanup() {
-    this.stop();
-    Object.values(this.synths).forEach(synth => {
-      if (synth && synth.dispose) synth.dispose();
-    });
-    Object.values(this.effects).forEach(effect => {
-      if (effect && effect.dispose) effect.dispose();
-    });
-  }
-}
-
-// ===== CURSOR MANAGER =====
-class CursorManager {
-  constructor(audioEngine) {
-    this.cursor = document.getElementById('custom-cursor');
-    this.audioEngine = audioEngine;
-    this.mouseX = 0;
-    this.mouseY = 0;
-    this.cursorX = 0;
-    this.cursorY = 0;
-    this.rafId = null;
-  }
-
-  init() {
-    if (window.innerWidth <= 768) {
-      document.body.style.cursor = 'auto';
-      this.cursor.style.display = 'none';
-      return;
-    }
-
-    document.addEventListener('mousemove', (e) => {
-      this.mouseX = e.clientX;
-      this.mouseY = e.clientY;
-    });
-
-    this.animate();
-    this.attachHoverListeners();
-  }
-
-  animate() {
-    this.cursorX += (this.mouseX - this.cursorX) * 0.2;
-    this.cursorY += (this.mouseY - this.cursorY) * 0.2;
-    this.cursor.style.left = `${this.cursorX}px`;
-    this.cursor.style.top = `${this.cursorY}px`;
-    this.rafId = requestAnimationFrame(() => this.animate());
-  }
-
-  attachHoverListeners() {
-    const elements = document.querySelectorAll('a, button, .metric-btn, .story-card');
-    elements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        this.cursor.classList.add('hover');
-        // Only play sound if audio is actually started
-        if (this.audioEngine?.audioStarted) {
-          this.audioEngine.playHover();
-        }
-      });
-      el.addEventListener('mouseleave', () => {
-        this.cursor.classList.remove('hover');
-      });
-      el.addEventListener('click', () => {
-        // Only play sound if audio is actually started
-        if (this.audioEngine?.audioStarted) {
-          this.audioEngine.playClick();
-        }
-      });
-    });
-  }
-
-  cleanup() {
-    if (this.rafId) {
-      cancelAnimationFrame(this.rafId);
-    }
+    this.stopMusic();
+    Object.values(this.synths).forEach(synth => synth.dispose());
+    Object.values(this.effects).forEach(effect => effect.dispose());
   }
 }
 
 // ===== THREE.JS BACKGROUND =====
 class ThreeBackground {
   constructor() {
+    this.canvas = document.getElementById('three-bg');
     this.scene = null;
     this.camera = null;
     this.renderer = null;
     this.particles = null;
-    this.mouseX = 0;
-    this.mouseY = 0;
-    this.frame = 0;
-    this.rafId = null;
+    this.animationId = null;
   }
 
   init() {
-    if (window.innerWidth <= 768) return;
+    if (!this.canvas || !window.THREE) return;
 
-    try {
-      this.scene = new THREE.Scene();
-      this.camera = new THREE.PerspectiveCamera(
-        75, 
-        window.innerWidth / window.innerHeight, 
-        0.1, 
-        1000
-      );
-      this.camera.position.z = 50;
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(
+      75, 
+      window.innerWidth / window.innerHeight, 
+      0.1, 
+      1000
+    );
+    this.camera.position.z = 50;
 
-      const canvas = document.getElementById('three-bg');
-      this.renderer = new THREE.WebGLRenderer({ 
-        canvas, 
-        alpha: true, 
-        antialias: false 
-      });
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    this.renderer = new THREE.WebGLRenderer({ 
+      canvas: this.canvas, 
+      alpha: true, 
+      antialias: false 
+    });
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-      this.createParticles();
-      this.animate();
-      this.handleResize();
-
-      document.addEventListener('mousemove', (e) => {
-        this.mouseX = e.clientX;
-        this.mouseY = e.clientY;
-      });
-    } catch (error) {
-      console.error('Three.js init failed:', error);
-    }
+    this.createParticles();
+    this.animate();
+    this.handleResize();
   }
 
   createParticles() {
     const geometry = new THREE.BufferGeometry();
     const count = 800;
     const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
 
-    for (let i = 0; i < count * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 200;
+    for (let i = 0; i < count * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 100;
+      positions[i + 1] = (Math.random() - 0.5) * 100;
+      positions[i + 2] = (Math.random() - 0.5) * 100;
+
+      const hue = Math.random() * 0.2 + 0.5; // Blue-purple range
+      colors[i] = hue;
+      colors[i + 1] = hue * 0.8;
+      colors[i + 2] = 1;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
     const material = new THREE.PointsMaterial({
-      size: 1.0,
-      color: 0xff6b9d,
+      size: 0.8,
+      vertexColors: true,
       transparent: true,
-      opacity: 0.15,
-      blending: THREE.NormalBlending
+      opacity: 0.6,
+      sizeAttenuation: true,
+      blending: THREE.AdditiveBlending
     });
 
     this.particles = new THREE.Points(geometry, material);
@@ -342,28 +334,29 @@ class ThreeBackground {
   }
 
   animate() {
-    this.rafId = requestAnimationFrame(() => this.animate());
-
-    // Skip every other frame for performance
-    if (this.frame % 2 !== 0) {
-      this.frame++;
-      return;
-    }
+    this.animationId = requestAnimationFrame(() => this.animate());
 
     if (this.particles) {
-      this.particles.rotation.y += 0.0002;
       this.particles.rotation.x += 0.0001;
-      this.particles.rotation.y += this.mouseX * 0.00003;
-      this.particles.rotation.x += this.mouseY * 0.00003;
+      this.particles.rotation.y += 0.0002;
+      
+      const time = Date.now() * 0.0001;
+      const positions = this.particles.geometry.attributes.position.array;
+      
+      for (let i = 0; i < positions.length; i += 3) {
+        positions[i + 1] = Math.sin(time + i) * 2;
+      }
+      
+      this.particles.geometry.attributes.position.needsUpdate = true;
     }
 
     this.renderer.render(this.scene, this.camera);
-    this.frame++;
   }
 
   handleResize() {
     window.addEventListener('resize', () => {
       if (!this.camera || !this.renderer) return;
+      
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -371,8 +364,8 @@ class ThreeBackground {
   }
 
   cleanup() {
-    if (this.rafId) {
-      cancelAnimationFrame(this.rafId);
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
     }
     if (this.renderer) {
       this.renderer.dispose();
@@ -384,29 +377,75 @@ class ThreeBackground {
   }
 }
 
-// ===== ANIMATION CONTROLLER =====
-class AnimationController {
+// ===== CUSTOM CURSOR =====
+class CustomCursor {
+  constructor() {
+    this.cursor = document.getElementById('custom-cursor');
+    this.mouseX = 0;
+    this.mouseY = 0;
+    this.cursorX = 0;
+    this.cursorY = 0;
+  }
+
+  init() {
+    if (!this.cursor || window.innerWidth <= 768) return;
+
+    document.addEventListener('mousemove', (e) => {
+      this.mouseX = e.clientX;
+      this.mouseY = e.clientY;
+    });
+
+    this.animate();
+
+    document.querySelectorAll('a, button, .press-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        this.cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+      });
+      el.addEventListener('mouseleave', () => {
+        this.cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      });
+    });
+  }
+
+  animate() {
+    this.cursorX += (this.mouseX - this.cursorX) * 0.1;
+    this.cursorY += (this.mouseY - this.cursorY) * 0.1;
+
+    this.cursor.style.left = `${this.cursorX}px`;
+    this.cursor.style.top = `${this.cursorY}px`;
+
+    requestAnimationFrame(() => this.animate());
+  }
+}
+
+// ===== GSAP ANIMATIONS =====
+class AnimationManager {
   constructor() {
     this.scrollTriggers = [];
   }
 
   init() {
-    if (!window.gsap) {
-      console.error('GSAP not loaded');
-      return;
-    }
+    if (!window.gsap || !window.ScrollTrigger) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero animations
-    gsap.to('.hero-title', { 
-      opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.3 
-    });
-    gsap.to('.hero-subtitle', { 
-      opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.6 
+    // Set initial states
+    gsap.set('.hero', { opacity: 0, y: 30 });
+    gsap.set('.press, .voice-moment, .story-card, .nyt-memo-image', { 
+      opacity: 0, 
+      y: 50 
     });
 
-    // Scroll-triggered reveals
+    // Hero entrance
+    gsap.to('.hero', { 
+      opacity: 1, 
+      y: 0, 
+      duration: 1.2, 
+      ease: 'power3.out', 
+      delay: 0.3 
+    });
+
+    // Scroll animations
     this.createScrollAnimation('.press');
     this.createScrollAnimation('.nyt-memo-image');
     
@@ -612,15 +651,15 @@ class ChartManager {
       },
       {
         fill: "tozeroy",
-        fillcolor: "rgba(0,0,0,0.1)",
-        hovertemplate: "%{y:.1f} hours<extra></extra>",
-        line: { color: "#000", width: 4 },
-        marker: { color: "#000", size: 8 },
+        fillcolor: "rgba(102, 187, 106, 0.1)",
+        hovertemplate: "%{y:.1f} hrs/day<extra></extra>",
+        line: { color: "#66BB6A", width: 4 },
+        marker: { color: "#66BB6A", size: 8, symbol: "square" },
         mode: "lines+markers",
         name: "Screen time",
         showlegend: false,
-        x: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022],
-        y: [2.7, 3.2, 3.8, 4.5, 5.2, 5.9, 6.8, 7.4, 8.1, 8.5, 10.2, 10.5, 10.8],
+        x: [2010, 2012, 2014, 2016, 2018, 2020, 2022, 2024],
+        y: [8.6, 9.5, 10.3, 11.0, 11.4, 13.5, 13.8, 14.2],
         type: "scatter",
         xaxis: "x3",
         yaxis: "y4"
@@ -628,646 +667,424 @@ class ChartManager {
     ];
 
     const layout = {
+      plot_bgcolor: "rgba(0,0,0,0)",
+      paper_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "Space Grotesk, sans-serif", color: "#e5e5e5" },
+      height: isMobile ? 500 : 480,
+      margin: { l: isMobile ? 50 : 60, r: isMobile ? 20 : 60, t: 30, b: 80 },
+      hovermode: "x unified",
+      showlegend: true,
+      legend: {
+        orientation: isTablet ? "h" : "v",
+        x: isTablet ? 0.5 : 1.02,
+        xanchor: isTablet ? "center" : "left",
+        y: isTablet ? -0.2 : 1,
+        yanchor: isTablet ? "bottom" : "top",
+        bgcolor: "rgba(0,0,0,0.5)",
+        bordercolor: "rgba(255,255,255,0.1)",
+        borderwidth: 1,
+        font: { size: isMobile ? 10 : 12 }
+      },
+      grid: {
+        rows: 2,
+        columns: 2,
+        pattern: "independent",
+        roworder: "top to bottom",
+        xgap: 0.12,
+        ygap: 0.15
+      },
       xaxis: {
-        anchor: "y",
-        domain: [0.0, 0.94],
+        title: { text: "Sexual Frequency", font: { size: isMobile ? 11 : 13 } },
+        gridcolor: "rgba(255,255,255,0.05)",
         showgrid: true,
-        gridcolor: "rgba(0,0,0,.06)",
-        gridwidth: 0.5,
-        showline: true,
-        linewidth: 1,
-        linecolor: "rgba(0,0,0,.15)",
-        ticks: "outside",
-        ticklen: 4,
-        tickcolor: "rgba(0,0,0,.15)",
-        type: "linear",
-        dtick: isTablet ? 4 : 2,
-        range: [1999, 2025],
         zeroline: false,
-        tickfont: { size: isMobile ? 10 : 12 }
+        tickfont: { size: isMobile ? 9 : 11 }
       },
       yaxis: {
-        anchor: "x",
-        domain: [0.7666666667, 1.0],
+        title: { text: "Times/year", font: { size: isMobile ? 10 : 12 } },
+        gridcolor: "rgba(255,255,255,0.05)",
         showgrid: true,
-        gridcolor: "rgba(0,0,0,.06)",
-        gridwidth: 0.5,
-        showline: false,
-        zeroline: false,
-        title: {
-          font: { size: isMobile ? 11 : 12, color: "#FF3333" },
-          text: "<b>Times per year</b>"
-        },
-        tickfont: { color: "#FF3333", size: isMobile ? 10 : 11 },
-        range: [40, 85],
-        nticks: 5
-      },
-      yaxis2: {
-        anchor: "x",
-        overlaying: "y",
-        side: "right",
-        showgrid: false,
-        showline: false,
-        zeroline: false,
-        title: {
-          font: { size: isMobile ? 11 : 12, color: "#0066CC" },
-          text: "<b>Millions of prescriptions</b>"
-        },
-        tickfont: { color: "#0066CC", size: isMobile ? 10 : 11 },
-        range: [150, 420],
-        nticks: 5
+        tickfont: { size: isMobile ? 9 : 11 }
       },
       xaxis2: {
-        anchor: "y3",
-        domain: [0.0, 0.94],
+        title: { text: "Marriage Rate", font: { size: isMobile ? 11 : 13 } },
+        gridcolor: "rgba(255,255,255,0.05)",
         showgrid: true,
-        gridcolor: "rgba(0,0,0,.06)",
-        gridwidth: 0.5,
-        showline: true,
-        linewidth: 1,
-        linecolor: "rgba(0,0,0,.15)",
-        ticks: "outside",
-        ticklen: 4,
-        tickcolor: "rgba(0,0,0,.15)",
-        type: "linear",
-        dtick: isTablet ? 4 : 2,
-        range: [1999, 2025],
-        zeroline: false,
-        tickfont: { size: isMobile ? 10 : 12 }
+        tickfont: { size: isMobile ? 9 : 11 }
+      },
+      yaxis2: {
+        title: { text: "Prescriptions (M)", font: { size: isMobile ? 10 : 12 } },
+        gridcolor: "rgba(255,255,255,0.05)",
+        side: "right",
+        overlaying: "y",
+        showgrid: false,
+        tickfont: { size: isMobile ? 9 : 11 }
       },
       yaxis3: {
-        anchor: "x2",
-        domain: [0.3833333333, 0.6166666667],
+        title: { text: "% Adults", font: { size: isMobile ? 10 : 12 } },
+        gridcolor: "rgba(255,255,255,0.05)",
         showgrid: true,
-        gridcolor: "rgba(0,0,0,.06)",
-        gridwidth: 0.5,
-        showline: false,
-        zeroline: false,
-        title: {
-          font: { size: isMobile ? 11 : 12 },
-          text: "<b>Percent married</b>"
-        },
-        range: [47, 49],
-        nticks: 4,
-        tickfont: { size: isMobile ? 10 : 11 }
+        tickfont: { size: isMobile ? 9 : 11 }
       },
       xaxis3: {
-        anchor: "y4",
-        domain: [0.0, 0.94],
+        title: { text: "Screen Time", font: { size: isMobile ? 11 : 13 } },
+        gridcolor: "rgba(255,255,255,0.05)",
         showgrid: true,
-        gridcolor: "rgba(0,0,0,.06)",
-        gridwidth: 0.5,
-        showline: true,
-        linewidth: 1,
-        linecolor: "rgba(0,0,0,.15)",
-        ticks: "outside",
-        ticklen: 4,
-        tickcolor: "rgba(0,0,0,.15)",
-        type: "linear",
-        dtick: isTablet ? 4 : 2,
-        range: [1999, 2025],
-        zeroline: false,
-        tickfont: { size: isMobile ? 10 : 12 }
+        tickfont: { size: isMobile ? 9 : 11 }
       },
       yaxis4: {
-        anchor: "x3",
-        domain: [0.0, 0.2333333333],
+        title: { text: "Hours/day", font: { size: isMobile ? 10 : 12 } },
+        gridcolor: "rgba(255,255,255,0.05)",
         showgrid: true,
-        gridcolor: "rgba(0,0,0,.06)",
-        gridwidth: 0.5,
-        showline: false,
-        zeroline: false,
-        title: {
-          font: { size: isMobile ? 11 : 12 },
-          text: "<b>Hours per day</b>"
-        },
-        range: [0, 12],
-        nticks: 4,
-        tickfont: { size: isMobile ? 10 : 11 }
-      },
-      annotations: [
-        {
-          font: { 
-            color: "#000", 
-            size: isMobile ? 13 : 14, 
-            family: "Space Grotesk, sans-serif" 
-          },
-          showarrow: false,
-          text: "<b>Sexual frequency has declined as SSRI prescriptions doubled</b>",
-          x: 0,
-          xanchor: "left",
-          xref: "paper",
-          y: 1.0,
-          yanchor: "bottom",
-          yref: "paper"
-        },
-        {
-          font: { 
-            color: "#000", 
-            size: isMobile ? 13 : 14, 
-            family: "Space Grotesk, sans-serif" 
-          },
-          showarrow: false,
-          text: "<b>Marriage rates have remained relatively stable</b>",
-          x: 0,
-          xanchor: "left",
-          xref: "paper",
-          y: 0.6166666667,
-          yanchor: "bottom",
-          yref: "paper"
-        },
-        {
-          font: { 
-            color: "#000", 
-            size: isMobile ? 13 : 14, 
-            family: "Space Grotesk, sans-serif" 
-          },
-          showarrow: false,
-          text: "<b>Daily screen time has quadrupled since 2010</b>",
-          x: 0,
-          xanchor: "left",
-          xref: "paper",
-          y: 0.2333333333,
-          yanchor: "bottom",
-          yref: "paper"
-        }
-      ],
-      font: { 
-        family: "Space Grotesk, sans-serif", 
-        size: isMobile ? 11 : 12, 
-        color: "#0a0a0a" 
-      },
-      legend: {
-        orientation: "h",
-        yanchor: "bottom",
-        y: 1.12,
-        xanchor: "left",
-        x: 0.0,
-        bgcolor: "rgba(255,255,255,0.85)",
-        bordercolor: "rgba(0,0,0,.15)",
-        borderwidth: 1,
-        font: { size: isMobile ? 11 : 12 }
-      },
-      margin: { 
-        l: isMobile ? 50 : 70, 
-        r: isMobile ? 50 : 70, 
-        t: 40, 
-        b: 40 
-      },
-      height: isMobile ? 520 : isTablet ? 700 : 950,
-      plot_bgcolor: "#fff",
-      paper_bgcolor: "#fff",
-      showlegend: true,
-      hoverlabel: {
-        font: { size: isMobile ? 12 : 13, family: "Space Grotesk, sans-serif" },
-        bgcolor: "#fff",
-        bordercolor: "rgba(0,0,0,.10)"
-      },
-      hovermode: "x unified",
-      doubleClick: "reset"
+        tickfont: { size: isMobile ? 9 : 11 }
+      }
     };
 
-    try {
-      Plotly.newPlot('intimacy-chart', data, layout, { 
-        responsive: true, 
-        displayModeBar: false, 
-        showTips: false 
-      });
-      this.charts.intimacy = 'intimacy-chart';
-    } catch (error) {
-      console.error('Failed to create intimacy chart:', error);
-    }
+    const config = {
+      responsive: true,
+      displayModeBar: false,
+      scrollZoom: false
+    };
+
+    Plotly.newPlot("intimacy-chart", data, layout, config);
+    this.charts.intimacy = document.getElementById("intimacy-chart");
   }
 
   initAnxietyChart() {
-    const months = Array.from({ length: 24 }, (_, i) => {
-      const m = i * 3;
-      return `${2020 + Math.floor(m / 12)}-${String((m % 12) + 1).padStart(2, '0')}`;
-    });
-
-    const anxietyAllData = {
-      tradwife: months.map((_, i) => Math.min(100, i < 4 ? 15 + i * 8 : i < 10 ? 30 + Math.sin(i * 0.3) * 10 : 40 + (i - 10) * 1.2)),
-      measles: months.map((_, i) => i < 16 ? 5 + Math.random() * 3 : 8 + (i - 16) * 15),
-      unemployment: months.map((_, i) => i < 4 ? 20 + i * 15 : i < 12 ? 80 - (i - 4) * 5 : 30 - (i - 12) * 0.3),
-      eggs: months.map((_, i) => i < 10 ? 35 + Math.sin(i * 0.5) * 8 : i < 17 ? 40 + Math.sin(i * 0.4) * 10 : 50 + (i - 17) * 3),
-      gold: months.map((_, i) => 30 + (i * 0.8) + Math.sin(i * 0.2) * 5),
-      beef: months.map((_, i) => i < 17 ? 40 + (i * 0.3) : 50 + (i - 17) * 1.5)
-    };
+    const isMobile = window.innerWidth < 480;
+    const isTablet = window.innerWidth < 768;
 
     // Initialize all metrics as active
     this.anxietyMetrics.forEach(m => {
       this.activeMetrics[m.key] = true;
     });
 
-    // Create toggle buttons
-    const togglesDiv = document.getElementById('anxiety-toggles');
-    this.anxietyMetrics.forEach(m => {
-      const btn = document.createElement('button');
-      btn.className = 'metric-btn active';
-      btn.type = 'button';
-      btn.textContent = m.name;
-      btn.style.backgroundColor = m.color;
-      btn.style.color = '#fff';
-      btn.setAttribute('role', 'switch');
-      btn.setAttribute('aria-pressed', 'true');
-      btn.setAttribute('aria-label', `Toggle ${m.name} series`);
-
-      btn.addEventListener('click', () => {
-        const isActive = btn.getAttribute('aria-pressed') === 'true';
-        btn.setAttribute('aria-pressed', String(!isActive));
-        this.activeMetrics[m.key] = !isActive;
-
-        if (!isActive) {
-          btn.classList.add('active');
-          btn.style.backgroundColor = m.color;
-          btn.style.color = '#fff';
-        } else {
-          btn.classList.remove('active');
-          btn.style.backgroundColor = '#e5e7eb';
-          btn.style.color = '#4b5563';
-        }
-
-        this.updateAnxietyChart(months, anxietyAllData);
-      });
-
-      togglesDiv.appendChild(btn);
-    });
-
-    this.updateAnxietyChart(months, anxietyAllData);
-  }
-
-  updateAnxietyChart(months, anxietyAllData) {
-    const isMobile = window.innerWidth < 480;
-    const isTablet = window.innerWidth < 768;
-
-    const traces = this.anxietyMetrics
-      .filter(m => this.activeMetrics[m.key])
-      .map(m => ({
-        x: months,
-        y: anxietyAllData[m.key],
-        name: m.name,
-        mode: 'lines',
-        line: { color: m.color, width: 3, shape: 'spline' }
-      }));
-
-    const layout = {
-      xaxis: {
-        showgrid: true,
-        gridcolor: 'rgba(0,0,0,.06)',
-        tickangle: -45,
-        nticks: isMobile ? 6 : 12,
-        tickfont: { size: isMobile ? 10 : 11 },
-        showline: true,
-        linewidth: 1,
-        linecolor: 'rgba(0,0,0,.15)'
+    const data = {
+      tradwife: {
+        x: ["2020-01", "2020-07", "2021-01", "2021-07", "2022-01", "2022-07", "2023-01", "2023-07", "2024-01", "2024-07", "2025-01", "2025-07"],
+        y: [8, 12, 15, 22, 28, 35, 42, 58, 75, 100, 85, 72]
       },
-      yaxis: {
-        title: {
-          text: 'Index (0-100)',
-          font: { size: isMobile ? 11 : 12 }
-        },
-        range: [0, 100],
-        nticks: 6,
-        tickfont: { size: isMobile ? 10 : 11 },
-        gridcolor: 'rgba(0,0,0,.06)'
+      measles: {
+        x: ["2020-01", "2020-07", "2021-01", "2021-07", "2022-01", "2022-07", "2023-01", "2023-07", "2024-01", "2024-07", "2025-01", "2025-07"],
+        y: [2, 3, 5, 8, 12, 15, 22, 35, 58, 75, 100, 95]
       },
-      annotations: [{
-        text: 'All series normalized 0–100 · descriptive, not causal',
-        x: 0,
-        xref: 'paper',
-        xanchor: 'left',
-        y: 1.12,
-        yref: 'paper',
-        yanchor: 'bottom',
-        font: {
-          size: isMobile ? 10 : 11,
-          color: '#333',
-          family: 'Space Grotesk, sans-serif'
-        },
-        showarrow: false
-      }],
-      margin: {
-        l: isMobile ? 50 : 60,
-        r: isMobile ? 20 : 40,
-        t: 50,
-        b: isMobile ? 90 : 80
+      unemployment: {
+        x: ["2020-01", "2020-07", "2021-01", "2021-07", "2022-01", "2022-07", "2023-01", "2023-07", "2024-01", "2024-07", "2025-01", "2025-07"],
+        y: [25, 95, 78, 45, 32, 28, 25, 22, 20, 25, 28, 30]
       },
-      height: isMobile ? 500 : isTablet ? 700 : 850,
-      plot_bgcolor: '#fff',
-      paper_bgcolor: '#fff',
-      font: {
-        family: 'Space Grotesk, sans-serif',
-        size: isMobile ? 11 : 12
+      eggs: {
+        x: ["2020-01", "2020-07", "2021-01", "2021-07", "2022-01", "2022-07", "2023-01", "2023-07", "2024-01", "2024-07", "2025-01", "2025-07"],
+        y: [15, 18, 22, 28, 45, 72, 100, 68, 45, 52, 58, 62]
       },
-      legend: {
-        orientation: 'h',
-        x: 0,
-        y: 1.12,
-        font: { size: isMobile ? 11 : 12 }
+      gold: {
+        x: ["2020-01", "2020-07", "2021-01", "2021-07", "2022-01", "2022-07", "2023-01", "2023-07", "2024-01", "2024-07", "2025-01", "2025-07"],
+        y: [55, 65, 58, 52, 58, 62, 68, 72, 85, 92, 95, 100]
       },
-      hoverlabel: {
-        font: {
-          size: isMobile ? 12 : 13,
-          family: 'Space Grotesk, sans-serif'
-        },
-        bgcolor: '#fff',
-        bordercolor: 'rgba(0,0,0,.10)'
+      beef: {
+        x: ["2020-01", "2020-07", "2021-01", "2021-07", "2022-01", "2022-07", "2023-01", "2023-07", "2024-01", "2024-07", "2025-01", "2025-07"],
+        y: [45, 52, 58, 65, 72, 78, 82, 88, 92, 95, 98, 100]
       }
     };
 
-    try {
-      Plotly.newPlot('anxiety-chart', traces, layout, {
-        responsive: true,
-        displayModeBar: false,
-        showTips: false
+    this.renderAnxietyChart(data, isMobile, isTablet);
+    this.createMetricToggles(data, isMobile, isTablet);
+  }
+
+  renderAnxietyChart(data, isMobile, isTablet) {
+    const traces = this.anxietyMetrics
+      .filter(m => this.activeMetrics[m.key])
+      .map(metric => ({
+        x: data[metric.key].x,
+        y: data[metric.key].y,
+        name: metric.name,
+        type: "scatter",
+        mode: "lines+markers",
+        line: { color: metric.color, width: 3 },
+        marker: { size: 6, color: metric.color },
+        hovertemplate: `%{y}<extra>${metric.name}</extra>`
+      }));
+
+    const layout = {
+      plot_bgcolor: "rgba(0,0,0,0)",
+      paper_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "Space Grotesk, sans-serif", color: "#e5e5e5" },
+      height: isMobile ? 400 : 450,
+      margin: { l: isMobile ? 40 : 60, r: isMobile ? 20 : 40, t: 30, b: 80 },
+      hovermode: "x unified",
+      showlegend: true,
+      legend: {
+        orientation: isTablet ? "h" : "v",
+        x: isTablet ? 0.5 : 1.02,
+        xanchor: isTablet ? "center" : "left",
+        y: isTablet ? -0.25 : 1,
+        yanchor: isTablet ? "bottom" : "top",
+        bgcolor: "rgba(0,0,0,0.5)",
+        bordercolor: "rgba(255,255,255,0.1)",
+        borderwidth: 1,
+        font: { size: isMobile ? 10 : 12 }
+      },
+      xaxis: {
+        title: { text: "Timeline", font: { size: isMobile ? 11 : 13 } },
+        gridcolor: "rgba(255,255,255,0.05)",
+        showgrid: true,
+        zeroline: false,
+        tickfont: { size: isMobile ? 9 : 11 },
+        tickformat: "%b %Y"
+      },
+      yaxis: {
+        title: { text: "Normalized Index (0-100)", font: { size: isMobile ? 10 : 12 } },
+        gridcolor: "rgba(255,255,255,0.05)",
+        showgrid: true,
+        range: [0, 105],
+        tickfont: { size: isMobile ? 9 : 11 }
+      }
+    };
+
+    const config = {
+      responsive: true,
+      displayModeBar: false,
+      scrollZoom: false
+    };
+
+    Plotly.newPlot("anxiety-chart", traces, layout, config);
+    this.charts.anxiety = document.getElementById("anxiety-chart");
+  }
+
+  createMetricToggles(data, isMobile, isTablet) {
+    const container = document.getElementById('anxiety-toggles');
+    if (!container) return;
+
+    container.innerHTML = '';
+    
+    this.anxietyMetrics.forEach(metric => {
+      const button = document.createElement('button');
+      button.className = 'metric-toggle active';
+      button.setAttribute('data-metric', metric.key);
+      button.style.setProperty('--metric-color', metric.color);
+      button.innerHTML = `
+        <span class="metric-toggle-indicator"></span>
+        <span class="metric-toggle-name">${metric.name}</span>
+      `;
+      
+      button.addEventListener('click', () => {
+        this.activeMetrics[metric.key] = !this.activeMetrics[metric.key];
+        button.classList.toggle('active');
+        this.renderAnxietyChart(data, isMobile, isTablet);
       });
-      this.charts.anxiety = 'anxiety-chart';
-    } catch (error) {
-      console.error('Failed to update anxiety chart:', error);
-    }
+      
+      container.appendChild(button);
+    });
   }
 
   handleResize() {
+    let resizeTimer;
     window.addEventListener('resize', () => {
-      const isMobile = window.innerWidth < 480;
-      const isTablet = window.innerWidth < 768;
-      const h1 = isMobile ? 520 : isTablet ? 700 : 950;
-      const h2 = isMobile ? 500 : isTablet ? 700 : 850;
-
-      if (this.charts.intimacy && window.Plotly) {
-        Plotly.relayout('intimacy-chart', { height: h1 });
-      }
-      if (this.charts.anxiety && window.Plotly) {
-        Plotly.relayout('anxiety-chart', { height: h2 });
-      }
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (this.charts.intimacy) {
+          Plotly.Plots.resize(this.charts.intimacy);
+        }
+        if (this.charts.anxiety) {
+          Plotly.Plots.resize(this.charts.anxiety);
+        }
+      }, 250);
     });
   }
 }
 
-// ===== UI CONTROLLER =====
-class UIController {
-  constructor(audioEngine) {
-    this.audioEngine = audioEngine;
+// ===== TIKTOK EMBED HANDLER (NEW!) =====
+class TikTokEmbed {
+  constructor(container) {
+    this.container = container;
+    this.url = container.dataset.tiktokUrl;
+    this.title = container.dataset.title || 'TikTok video';
+    this.posterSrc = container.dataset.poster;
+    this.isLoaded = false;
+    this.iframe = null;
+
+    this.init();
   }
 
   init() {
-    this.initMusicToggle();
-    this.initVolumeControl();
+    // Set up poster image
+    const posterImg = this.container.querySelector('.ttk__poster-img');
+    if (posterImg && this.posterSrc) {
+      posterImg.src = this.posterSrc;
+    }
+
+    // Add click handler to poster button
+    const posterButton = this.container.querySelector('.ttk__poster');
+    if (posterButton) {
+      posterButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.load();
+      });
+    }
   }
 
-  initMusicToggle() {
-    const toggle = document.getElementById('music-toggle');
-    const text = toggle.querySelector('.music-toggle-text');
-    const volumeControl = document.getElementById('volume-control');
+  load() {
+    if (this.isLoaded) return;
 
-    toggle.addEventListener('click', async () => {
-      await this.audioEngine.start();
+    // Extract video ID from URL
+    const videoId = this.url.split('/').pop().split('?')[0];
+    if (!videoId) {
+      console.warn('Invalid TikTok URL:', this.url);
+      return;
+    }
 
-      if (this.audioEngine.musicEnabled) {
-        toggle.classList.add('active');
-        toggle.setAttribute('aria-pressed', 'true');
-        text.textContent = 'Music On';
-        volumeControl.classList.add('visible');
-      } else {
-        toggle.classList.remove('active');
-        toggle.setAttribute('aria-pressed', 'false');
-        text.textContent = 'Music Off';
-        volumeControl.classList.remove('visible');
-      }
-    });
+    // Create iframe with all optimizations
+    this.iframe = document.createElement('iframe');
+    
+    // Build embed URL with parameters
+    const embedUrl = new URL(`https://www.tiktok.com/embed/v2/${videoId}`);
+    embedUrl.searchParams.set('autoplay', '1');
+    embedUrl.searchParams.set('muted', '1');
+    
+    this.iframe.src = embedUrl.toString();
+
+    // Accessibility
+    this.iframe.title = this.title;
+    
+    // Security: Sandbox the iframe
+    this.iframe.sandbox = 'allow-scripts allow-same-origin allow-presentation';
+    
+    // Referrer policy for privacy
+    this.iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    
+    // Legacy scroll prevention attribute
+    this.iframe.setAttribute('scrolling', 'no');
+    
+    // Allow fullscreen
+    this.iframe.allow = 'fullscreen';
+    this.iframe.allowFullscreen = true;
+
+    // Error handling
+    this.iframe.addEventListener('error', () => {
+      console.warn('TikTok embed failed to load:', videoId);
+      this.handleLoadError();
+    }, { once: true });
+
+    // Create frame wrapper with aspect ratio
+    const frameWrapper = document.createElement('div');
+    frameWrapper.className = 'ttk__frame';
+    frameWrapper.appendChild(this.iframe);
+
+    // Replace poster with iframe
+    this.container.innerHTML = '';
+    this.container.appendChild(frameWrapper);
+
+    this.isLoaded = true;
   }
 
-  initVolumeControl() {
-    const slider = document.getElementById('volume-slider');
-    if (!slider) return;
-    slider.addEventListener('input', (e) => {
-      this.audioEngine.setVolume(e.target.value);
-    });
+  handleLoadError() {
+    const errorMsg = document.createElement('div');
+    errorMsg.className = 'ttk__error';
+    errorMsg.innerHTML = `
+      <p>Video unavailable</p>
+      <a href="${this.url}" target="_blank" rel="noopener">Watch on TikTok →</a>
+    `;
+    this.container.innerHTML = '';
+    this.container.appendChild(errorMsg);
   }
 }
 
-// ===== TikTok embed with proper embed.js (auto-loop, no related, scroll-aware) =====
-;(() => {
-  const el = document.querySelector('#tiktok-card');
-  if (!el) return;
+// ===== TIKTOK LAZY LOADING =====
+function setupTikTokEmbeds() {
+  const containers = document.querySelectorAll('.ttk');
+  if (!containers.length) return;
 
-  const url = el.getAttribute('data-tiktok-url') || '';
-  const m = url.match(/video\/(\d+)/);
-  const videoId = m && m[1];
-  if (!videoId) return;
+  const PREFERS_REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SUPPORTS_INTERSECTION_OBSERVER = 'IntersectionObserver' in window;
 
-  let blockquoteEl = null;
-  let observer = null;
+  if (PREFERS_REDUCED_MOTION || !SUPPORTS_INTERSECTION_OBSERVER) {
+    // Fallback: init immediately but don't auto-load
+    containers.forEach(container => new TikTokEmbed(container));
+    return;
+  }
 
-  const hydrate = () => {
-    if (el.dataset.hydrated === '1') return;
-    el.dataset.hydrated = '1';
-
-    // Create TikTok blockquote (official embed method)
-    const blockquote = document.createElement('blockquote');
-    blockquote.className = 'tiktok-embed';
-    blockquote.cite = url;
-    blockquote.setAttribute('data-video-id', videoId);
-    blockquote.style.maxWidth = '325px';
-    blockquote.style.minWidth = '325px';
-    blockquote.style.margin = '0 auto';
-
-    // Add fallback link
-    const link = document.createElement('a');
-    link.href = url;
-    link.textContent = 'View on TikTok';
-    blockquote.appendChild(link);
-
-    el.innerHTML = '';
-    el.appendChild(blockquote);
-    blockquoteEl = blockquote;
-
-    // Load TikTok embed script
-    if (!window.tiktokEmbedLoaded) {
-      const script = document.createElement('script');
-      script.src = 'https://www.tiktok.com/embed.js';
-      script.async = true;
-      script.onload = () => {
-        window.tiktokEmbedLoaded = true;
-        setupScrollObserver();
-      };
-      document.body.appendChild(script);
-    } else {
-      // Script already loaded, re-init
-      if (window.tiktok) {
-        window.tiktok.init();
+  // Use IntersectionObserver for lazy loading
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.__tiktokEmbed) {
+        entry.target.__tiktokEmbed = new TikTokEmbed(entry.target);
+        observer.unobserve(entry.target);
       }
-      setupScrollObserver();
-    }
-  };
+    });
+  }, {
+    rootMargin: '50px 0px',
+    threshold: 0.1
+  });
 
-  const setupScrollObserver = () => {
-    // Wait a bit for TikTok to render
-    setTimeout(() => {
-      const iframe = el.querySelector('iframe');
-      if (!iframe) return;
+  containers.forEach(container => observer.observe(container));
+}
 
-      observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            iframe.style.opacity = '1';
-            iframe.style.pointerEvents = 'auto';
-          } else {
-            iframe.style.opacity = '0';
-            iframe.style.pointerEvents = 'none';
-          }
-        });
-      }, {
-        threshold: 0.5
-      });
-      
-      observer.observe(iframe);
-    }, 1000);
-  };
-
-  // Initial hydration on scroll
-  const mainObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      hydrate();
-      mainObserver.disconnect();
-    }
-  }, { rootMargin: '200px' });
-
-  mainObserver.observe(el);
-})();
-
-// ===== MAIN APPLICATION =====
-class MicrositeApp {
+// ===== APP ORCHESTRATOR =====
+class App {
   constructor() {
-    // keep constructor light so no ReferenceErrors block init()
-    this.loaderEl = document.getElementById('loader');
-    this.modules = {};
+    this.depManager = new DependencyManager();
+    this.themeManager = new ThemeManager();
+    this.loaderManager = new LoaderManager();
+    this.audioEngine = new AudioEngine();
+    this.threeBackground = new ThreeBackground();
+    this.customCursor = new CustomCursor();
+    this.animationManager = new AnimationManager();
+    this.chartManager = new ChartManager();
   }
 
   async init() {
     try {
-      // start loader (fallback if LoaderManager missing)
-      if (typeof LoaderManager !== 'undefined') {
-        this.modules.loader = new LoaderManager();
-        this.modules.loader.start();
-      } else {
-        this.loaderEl?.classList.remove('hidden'); // ensure visible
-      }
+      // Start loader
+      this.loaderManager.start();
 
-      // Wait for libs (only if your DependencyManager exists)
-      if (typeof DependencyManager !== 'undefined') {
-        const deps = new DependencyManager();
-        await deps.waitForDependencies();
-      }
+      // Initialize theme first (affects colors)
+      this.themeManager.init();
 
-      // Init modules only if available to avoid hard crashes
-      if (typeof ThreeBackground !== 'undefined') {
-        this.modules.three = new ThreeBackground(); this.modules.three.init();
-      }
-      if (typeof AnimationController !== 'undefined') {
-        this.modules.anim = new AnimationController(); this.modules.anim.init();
-      }
-      if (typeof ChartManager !== 'undefined') {
-        this.modules.charts = new ChartManager(); this.modules.charts.init();
-      }
-      if (typeof CursorManager !== 'undefined' && typeof AudioEngine !== 'undefined') {
-        this.modules.audio = new AudioEngine();
-        this.modules.cursor = new CursorManager(this.modules.audio); this.modules.cursor.init();
-      }
-      if (typeof UIController !== 'undefined') {
-        this.modules.ui = new UIController(this.modules.audio); this.modules.ui.init();
-      }
+      // Wait for dependencies
+      await this.depManager.waitForDependencies();
 
-      // done
-      this.complete();
-    } catch (err) {
-      console.error('Failed to initialize app:', err);
-      this.complete(); // still hide loader
-    }
-  }
+      // Initialize all modules
+      this.audioEngine.init();
+      this.threeBackground.init();
+      this.customCursor.init();
+      this.animationManager.init();
+      this.chartManager.init();
+      
+      // Initialize TikTok embeds
+      setupTikTokEmbeds();
 
-  complete() {
-    if (this.modules.loader && typeof this.modules.loader.complete === 'function') {
-      this.modules.loader.complete();
-    } else {
-      this.loaderEl?.classList.add('hidden');
+      // Complete loader
+      this.loaderManager.complete();
+
+    } catch (error) {
+      console.error('Initialization error:', error);
+      this.loaderManager.complete();
     }
   }
 
   cleanup() {
-    try { this.modules.audio?.cleanup?.(); } catch {}
-    try { this.modules.cursor?.cleanup?.(); } catch {}
-    try { this.modules.three?.cleanup?.(); } catch {}
-    try { this.modules.anim?.cleanup?.(); } catch {}
+    this.audioEngine.cleanup();
+    this.threeBackground.cleanup();
+    this.animationManager.cleanup();
   }
 }
 
-// ===== BOOTSTRAP =====
-const boot = () => { window.app = new MicrositeApp(); window.app.init(); };
+// ===== ENTRY POINT =====
+let app;
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', boot);
+  document.addEventListener('DOMContentLoaded', () => {
+    app = new App();
+    app.init();
+  });
 } else {
-  boot();
+  app = new App();
+  app.init();
 }
 
-(() => {
-  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const cards = Array.from(document.querySelectorAll('.ttk'));
-  for (const card of cards) {
-    const url = card.dataset.tiktokUrl || '';
-    const vid = (url.match(/video\/(\d+)/) || [])[1];
-    if (!vid) continue;
-
-    // Poster
-    const posterBtn = card.querySelector('.ttk__poster');
-    const posterImg = card.querySelector('.ttk__poster-img');
-    posterImg.src = card.dataset.poster || '';
-
-    let hydrated = false;
-    const LOOP_DURATION_MS = 0; // set e.g. 60000 to “refresh loop” every 60s (off by default)
-
-    const hydrate = () => {
-      if (hydrated) return;
-      hydrated = true;
-
-      const frame = document.createElement('div');
-      frame.className = 'ttk__frame';
-
-      const iframe = document.createElement('iframe');
-      iframe.loading = 'lazy';           // saves bytes offscreen
-      iframe.title = 'TikTok video';     // accessibility / SEO friendly
-      iframe.src =
-        `https://www.tiktok.com/embed/v2/video/${vid}?lang=en-US&autoplay=1&controls=1&muted=1`;
-      iframe.allow =
-        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-      iframe.allowFullscreen = true;
-      iframe.scrolling = 'no';
-
-      frame.appendChild(iframe);
-      posterBtn.replaceWith(frame);
-
-      if (LOOP_DURATION_MS > 0) {
-        setInterval(() => {
-          const clone = iframe.cloneNode(false);
-          clone.src = iframe.src; // quiet reload
-          iframe.replaceWith(clone);
-        }, LOOP_DURATION_MS);
-      }
-    };
-
-    posterBtn.addEventListener('click', hydrate, { passive: true });
-
-    if (!prefersReduced) {
-      const io = new IntersectionObserver((entries) => {
-        for (const e of entries) if (e.isIntersecting) { hydrate(); io.disconnect(); }
-      }, { rootMargin: '120px 0px' });
-      io.observe(card);
-    }
-  }
-})();
-
-// As a last-resort safety, never leave the loader up on hard errors.
-window.addEventListener('error', () => {
-  document.getElementById('loader')?.classList.add('hidden');
+// Cleanup on page unload
+window.addEventListener('beforeunload', () => {
+  if (app) app.cleanup();
 });
+
+// Export for debugging
+window.App = App;
