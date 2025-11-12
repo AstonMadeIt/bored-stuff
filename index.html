@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>data ... yum ...</title>
+  <title>Merry Xmas Ya' Filthy Animal</title>
 
   <!-- Favicon & Fonts -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Styles -->
+  <!-- Critical CSS stays inline for FCP optimization -->
   <link rel="stylesheet" href="styles.css">
 
   <!-- Libraries - defer loads them asynchronously -->
@@ -21,7 +21,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" defer></script>
 
-  <!-- Our app -->
+  <!-- Our modular app -->
   <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -52,13 +52,12 @@
   <header>
     <div class="brand">I WUZ JUST BORED</div>
     <div class="header-controls">
-      <!-- Theme toggle will be added here by JavaScript -->
       <div class="volume-control" id="volume-control">
         <span class="volume-icon">🔊</span>
         <input type="range" min="0" max="100" value="40" class="volume-slider" id="volume-slider" aria-label="Volume control">
       </div>
       <button class="music-toggle" id="music-toggle" aria-label="Toggle ambient music" aria-pressed="false">
-        <span class="music-toggle-icon">🔇</span>
+        <span class="music-toggle-icon"></span>
         <span class="music-toggle-text">Music Off</span>
       </button>
     </div>
@@ -90,45 +89,88 @@
           the questions get interesting. No manifesto. No roadmap. Just signal.
         </p>
       </section>
-
-      <!-- TikTok press card (NEW OPTIMIZED EMBED) -->
+      
+           <!-- Press Cards -->
       <section class="press" aria-label="Press">
-        <article class="press-card press-card--video">
+        <article class="press-card">
           <div class="press-toprule" aria-hidden="true"></div>
-
-          <!-- TikTok embed with poster-first lazy loading -->
-          <div class="ttk"
-               data-tiktok-url="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
-               data-tiktok-url="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
-               data-title="Dating × Politics">
-            <button class="ttk__poster" type="button" aria-label="Play TikTok video: Dating × Politics">
-              <img class="ttk__poster-img" alt="TikTok video preview: Dating × Politics" loading="lazy" decoding="async">
-              <span class="ttk__play" aria-hidden="true">▶</span>
-            </button>
-          </div>
-
-          <!-- Card copy with fallback link -->
           <a class="press-link"
-             href="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
+             href="https://www.nytimes.com/2025/11/10/opinion/era-technology-poly-epoch.html"
              target="_blank" rel="noopener noreferrer"
-             aria-label="Open TikTok post in a new tab">
+             aria-label="Open NYT: Welcome to Our New Era. What Do We Call It?">
             <div>
-              <div class="press-kicker">TikTok</div>
-              <h2 class="press-headline">Dating x Politics</h2>
-              <p class="press-dek">This got spicy real fast ...</p>
+              <div class="press-kicker">Press</div>
+              <h2 class="press-headline">
+                Welcome to Our New Era. What Do We Call It?
+              </h2>
+              <p class="press-dek">
+                But if Smith were alive now, watching how iPhones, 
+                mRNA vaccines, electric vehicles or advanced 
+                microchips get made, he wouldn’t just update 
+                his theories — 
+                he would have to write a new book. 
+                What’s changed? In a word: complexity. 
+
+              </p>
               <div class="press-meta">
-                <span>@neuroquantumlab</span>
+                <span>NYT</span>
                 <span class="press-dot" aria-hidden="true"></span>
-                <span>Short video</span>
+                <time datetime="2025-11-11">Nov&nbsp;11,&nbsp;2025</time>
+                <span class="press-dot" aria-hidden="true"></span>
+                <span>25-min read</span>
               </div>
             </div>
             <div class="press-cta" aria-hidden="true">
-              Watch
-              <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              Read article
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M5 12h14M13 5l7 7-7 7"/>
+              </svg>
             </div>
           </a>
         </article>
       </section>
+      
+      <!-- === TikTok press card (SDK-free) === -->
+<section class="press" aria-label="Press">
+  <article class="press-card press-card--video">
+    <div class="press-toprule" aria-hidden="true"></div>
+
+    <!-- NEW embed (poster-first, no inner scroll) -->
+    <div class="ttk"
+         data-tiktok-url="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
+         data-title="Dating × Politics"
+         data-sub="This got spicy real fast…"
+         data-cta="Watch →"
+         data-poster="img/tiktok-poster.jpg">
+      <button class="ttk__poster" type="button" aria-label="Play TikTok">
+        <img class="ttk__poster-img" alt="TikTok preview" loading="lazy" decoding="async">
+        <span class="ttk__play" aria-hidden="true">▶</span>
+      </button>
+    </div>
+
+    <!-- Card copy (unchanged) -->
+    <a class="press-link"
+       href="https://www.tiktok.com/@neuroquantumlab/video/7549600251598966046"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Open TikTok post in a new tab">
+      <div>
+        <div class="press-kicker">TikTok</div>
+        <h2 class="press-headline">Dating x Politics</h2>
+        <p class="press-dek">This got spicy real fast ...</p>
+        <div class="press-meta">
+          <span>@neuroquantumlab</span>
+          <span class="press-dot" aria-hidden="true"></span>
+          <span>Short video</span>
+        </div>
+      </div>
+      <div class="press-cta" aria-hidden="true">
+        Watch
+        <svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+  </article>
+</section>
+<!-- === /TikTok press card === -->
 
       <!-- Voice Moment 2 -->
       <div class="voice-moment">
