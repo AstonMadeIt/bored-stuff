@@ -907,3 +907,37 @@
   50%     { background-position: 100% 50%; }
 }
 
+/* === Floating Holographic Journal Link === */
+.holo-link {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 3000;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  padding: 10px 18px;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.05)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  transition: 0.25s ease;
+}
+
+.holo-link:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.15)
+  );
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+  transform: translateY(-2px);
+}
