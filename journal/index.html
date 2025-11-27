@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bored Journal — Turn boredom into clarity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="journal.css">
+</head>
+<body>
+
+<div id="journal-root">
+    <div class="journal-window">
+        <div class="journal-header">
+            <span class="title">Bored Journal</span>
+            <div class="header-actions">
+                <button class="icon-btn" id="newEntryBtn" title="⌘N">New</button>
+                <button class="icon-btn" id="archiveBtn" title="⌘K">Archive</button>
+            </div>
+        </div>
+
+        <div class="editor-container">
+            <div class="date-stamp" id="dateStamp"></div>
+            <textarea 
+                class="editor font-sf-pro" 
+                id="editor" 
+                placeholder="When boredom strikes... what's actually on your mind?"
+                spellcheck="false"
+            ></textarea>
+        </div>
+
+        <div class="footer">
+            <div class="status">
+                <span class="saved-indicator" id="savedIndicator">Saved</span>
+            </div>
+            <div class="footer-actions">
+                <span class="entry-count" id="entryCount">0/2 free</span>
+                <button class="font-selector-trigger" id="fontBtn" title="⌘F">Font</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Font Picker -->
+<div class="font-picker" id="fontPicker">
+    <div class="font-picker-box">
+        <div class="font-picker-header">
+            <span class="font-picker-title">Choose Your Mood</span>
+            <button class="close-x" id="closeFontPicker">×</button>
+        </div>
+        <div class="font-grid" id="fontGrid"></div>
+    </div>
+</div>
+
+<!-- Archive Panel -->
+<div class="archive-panel" id="archivePanel">
+    <div class="archive-header">
+        <span class="archive-title">Your Thoughts</span>
+        <button class="close-x" id="closeArchive">×</button>
+    </div>
+    <div class="entries-list" id="entriesList"></div>
+</div>
+
+<!-- Entry View -->
+<div class="entry-view" id="entryView">
+    <div class="entry-view-box">
+        <div class="entry-view-header">
+            <span class="entry-view-date" id="entryViewDate"></span>
+            <button class="close-x" id="closeEntryView">×</button>
+        </div>
+        <div class="entry-view-content" id="entryViewContent"></div>
+    </div>
+</div>
+
+<!-- Paywall Modal -->
+<div class="modal" id="limitModal">
+    <div class="modal-box">
+        <div class="founding-badge">✨ Founding 333</div>
+        <h2>Turn boredom into a daily ritual</h2>
+        <p>You've tried it. You felt it. Now make it yours.</p>
+        <div class="price-tag">$3.33/mo</div>
+        <p style="font-size: 13px; margin-bottom: 28px; color: #ff8fa3; font-weight: 500;">This price locked forever for founding members</p>
+        <button class="unlock-btn">Join the Founding 333</button>
+        <button class="close-modal-btn" id="closeLimit">Not yet</button>
+    </div>
+</div>
+
+<div class="shortcut-hint" id="shortcutHint"></div>
+
+<script src="journal.js"></script>
+</body>
+</html>
