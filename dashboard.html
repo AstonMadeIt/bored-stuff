@@ -19,6 +19,105 @@
             --bg-primary: #ffffff;
             --bg-secondary: #f5f5f7;
             --border: #e5e5e7;
+            --card-shadow: rgba(0, 0, 0, 0.04);
+            --hover-shadow: rgba(0, 0, 0, 0.08);
+        }
+        
+        /* NATIVE DARK MODE */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #86868b;
+                --bg-primary: #1c1c1e;
+                --bg-secondary: #2c2c2e;
+                --border: #38383a;
+                --card-shadow: rgba(0, 0, 0, 0.3);
+                --hover-shadow: rgba(0, 0, 0, 0.5);
+            }
+        }
+        
+        /* Dark mode specific overrides - applies to both system preference and manual toggle */
+        @media (prefers-color-scheme: dark), .force-dark-mode {
+            .hero-header {
+                background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%) !important;
+            }
+            
+            .sticky-subheader {
+                background: rgba(28, 28, 30, 0.95) !important;
+            }
+            
+            .prediction-card {
+                background: var(--bg-secondary) !important;
+                border-color: var(--border) !important;
+            }
+            
+            .how-to-read {
+                background: var(--bg-secondary) !important;
+            }
+            
+            .sport-selector {
+                background: var(--bg-secondary) !important;
+            }
+            
+            .sport-option.active {
+                background: var(--bg-primary) !important;
+            }
+        }
+        
+        /* PITCH BLACK EDITORIAL DARK MODE - Conde Nast Grade */
+        body.force-dark-mode {
+            --bg-primary: #000000 !important;
+            --bg-secondary: #0d0d0d !important;
+            --text-primary: #ffffff !important;
+            --text-secondary: rgba(255,255,255,0.55) !important;
+            --border: rgba(255,255,255,0.06) !important;
+            --accent: #0A84FF !important;
+            --card-shadow: rgba(0, 0, 0, 0.4) !important;
+            --hover-shadow: rgba(10,132,255,0.25) !important;
+        }
+        
+        body.force-dark-mode .hero-header {
+            background: #000000 !important;
+        }
+        
+        body.force-dark-mode .sticky-subheader {
+            background: rgba(0, 0, 0, 0.95) !important;
+            border-bottom-color: rgba(255,255,255,0.06) !important;
+        }
+        
+        body.force-dark-mode .prediction-card {
+            background: #0d0d0d !important;
+            border: 1px solid rgba(255,255,255,0.06) !important;
+        }
+        
+        body.force-dark-mode .how-to-read {
+            background: #0d0d0d !important;
+        }
+        
+        body.force-dark-mode .sport-selector {
+            background: #0d0d0d !important;
+        }
+        
+        body.force-dark-mode .sport-option.active {
+            background: #111111 !important;
+        }
+        
+        body.force-dark-mode .model-card-interactive {
+            border: 1px solid rgba(255,255,255,0.06) !important;
+            background: #0d0d0d !important;
+        }
+        
+        /* Editorial hover elevation */
+        body.force-dark-mode .prediction-card:hover {
+            box-shadow: 0 0 0 1px var(--accent), 0 8px 32px rgba(10,132,255,0.25) !important;
+        }
+        
+        /* Gradient text effect for hero */
+        body.force-dark-mode .hero-title {
+            background: linear-gradient(90deg, #fff, #0A84FF) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
         }
         
         body {
@@ -29,12 +128,61 @@
             font-size: 17px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding-inline: max(20px, env(safe-area-inset-left));
+            transition: padding 0.3s ease;
+        }
+        
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 768px) {
+            .container {
+                padding-inline: 16px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .prediction-card {
+                padding: 20px 16px;
+            }
+            
+            .subheader-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .sport-selector {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .prediction-card {
+                padding: 16px 12px;
+            }
+            
+            .model-badges {
+                gap: 12px;
+            }
+            
+            .model-badge {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
         }
         
         /* APPLE-GRADE HERO HEADER */
@@ -95,9 +243,19 @@
             transition: transform 0.2s ease;
         }
         
+        .model-badge {
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+        }
+        
         .model-badge:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+        
+        @media (hover: none) {
+            .model-badge:hover {
+                transform: none;
+            }
         }
         
         .model-badge.secondary {
@@ -119,7 +277,9 @@
             padding: 16px 0;
             z-index: 100;
             margin-bottom: 30px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
+        
         
         .subheader-content {
             display: flex;
@@ -220,14 +380,20 @@
             font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
+            position: relative;
+        }
+        
+        .sport-option:hover {
+            color: var(--text-primary);
         }
         
         .sport-option.active {
             background: var(--bg-primary);
             color: var(--text-primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px var(--card-shadow);
+            transform: scale(1.02);
         }
         
         /* PREDICTION CARDS - Apple Card Style */
@@ -243,10 +409,23 @@
             border-radius: 16px;
             padding: 24px;
             border: 1px solid var(--border);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px var(--card-shadow);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .prediction-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--hover-shadow);
+            border-color: var(--accent);
+        }
+        
+        @media (hover: none) {
+            .prediction-card:hover {
+                transform: none;
+            }
         }
         
         .prediction-card::before {
@@ -276,7 +455,7 @@
         
         .prediction-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            box-shadow: 0 8px 24px var(--hover-shadow);
         }
         
         .card-header {
@@ -416,10 +595,12 @@
         }
         
         .trend-team-name {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 4px;
+            text-align: center;
+            letter-spacing: 0.5px;
         }
         
         .trend-indicator {
@@ -449,6 +630,7 @@
         .trend-metric {
             font-size: 0.75rem;
             color: var(--text-secondary);
+            transition: color 0.2s ease;
         }
         
         .trend-record {
@@ -456,6 +638,22 @@
             font-weight: 700;
             color: var(--text-primary);
             margin: 4px 0;
+            transition: color 0.2s ease;
+        }
+        
+        .trend-stat {
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        
+        .trend-stat:hover {
+            transform: translateY(-2px);
+            background: var(--bg-primary);
+        }
+        
+        @media (hover: none) {
+            .trend-stat:hover {
+                transform: none;
+            }
         }
         
         .trend-last5 {
@@ -833,9 +1031,158 @@
                 align-items: flex-start;
             }
         }
+        
+        /* iPhone 16e FIRST - Editorial Mobile Grid (375px viewport) */
+        @media (max-width: 430px) {
+            .container {
+                padding-inline: 12px;
+            }
+            
+            .hero-header {
+                padding: 64px 0 32px;
+            }
+            
+            .hero-title {
+                font-size: 1.9rem;
+                letter-spacing: -1.2px;
+                margin-bottom: 8px;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 6px;
+            }
+            
+            .hero-tagline {
+                font-size: 0.85rem;
+                margin-bottom: 24px;
+            }
+            
+            .sticky-subheader {
+                padding: 12px 0;
+                margin-bottom: 16px;
+            }
+            
+            .subheader-text {
+                font-size: 0.8rem;
+            }
+            
+            .prediction-card {
+                padding: 16px;
+                border-radius: 12px;
+                margin-bottom: 16px;
+            }
+            
+            .game-matchup {
+                font-size: 1.05rem;
+                line-height: 1.2;
+            }
+            
+            .prediction-details {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px;
+            }
+            
+            .model-card-interactive {
+                padding: 18px;
+            }
+            
+            .how-to-read {
+                padding: 16px 0;
+                margin: 16px 0;
+            }
+            
+            .sport-selector {
+                margin: 16px 0;
+            }
+            
+            /* Hide dark mode toggle on mobile (move to bottom nav) */
+            #darkModeToggle {
+                display: none;
+            }
+            
+            .desktop-only {
+                display: none !important;
+            }
+        }
+        
+        /* Bottom Navigation - Mobile Only */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 -2px 16px rgba(0,0,0,0.3);
+        }
+        
+        .bottom-nav-item {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 4px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .bottom-nav-item.active {
+            color: var(--accent);
+            background: rgba(10,132,255,0.15);
+        }
+        
+        .bottom-nav-item:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.05);
+        }
+        
+        @media (max-width: 430px) {
+            .bottom-nav {
+                display: block;
+            }
+            
+            /* Add bottom padding to prevent content from being hidden */
+            body {
+                padding-bottom: 60px;
+            }
+        }
+        
+        /* Dark mode for bottom nav */
+        body.force-dark-mode .bottom-nav {
+            background: rgba(0,0,0,0.95) !important;
+            border-top-color: rgba(255,255,255,0.06) !important;
+        }
     </style>
 </head>
 <body>
+    <!-- DARK MODE TOGGLE - Desktop Only -->
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;" class="desktop-only">
+        <button id="darkModeToggle" onclick="toggleDarkMode(event)" style="
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+            box-shadow: 0 2px 8px var(--card-shadow);
+        " onmouseover="this.style.background='var(--bg-primary)'" onmouseout="this.style.background='var(--bg-secondary)'">
+            🌙 Dark Mode
+        </button>
+    </div>
+    
     <div class="container">
         <!-- APPLE-GRADE HERO HEADER -->
         <div class="hero-header">
@@ -861,7 +1208,8 @@
         <div class="sticky-subheader">
             <div class="subheader-content">
                 <div class="subheader-text">
-                    Built With The Same Models Used In Hedge Fund Research Labs
+                    Research-Grade by Design.<br>
+                    <span style="font-size: 0.85em; opacity: 0.8;">The same machine learning families used to price risk on ~$50B trading desks — now calibrated for game night.</span>
                 </div>
                 <div class="subheader-badges">
                     <span class="subheader-badge">62.5% Accuracy</span>
@@ -894,6 +1242,14 @@
             <div class="sport-option active" onclick="filterSport('all')">All</div>
             <div class="sport-option" onclick="filterSport('nfl')">NFL</div>
             <div class="sport-option" onclick="filterSport('nba')">NBA</div>
+        </div>
+        
+        <!-- BOTTOM NAVIGATION - Mobile Only -->
+        <div class="bottom-nav">
+            <div class="bottom-nav-item active" onclick="filterSportMobile('all')">⭐ All</div>
+            <div class="bottom-nav-item" onclick="filterSportMobile('nfl')">🏈 NFL</div>
+            <div class="bottom-nav-item" onclick="filterSportMobile('nba')">🏀 NBA</div>
+            <div class="bottom-nav-item" onclick="toggleDarkModeMobile(event)" id="mobileDarkToggle">🌙</div>
         </div>
         
         <!-- TRUST INSERT -->
@@ -931,7 +1287,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Yo, here's my take on the Sixers-Grizzlies game:<br>• The Grizzlies have been playing some solid ball lately, going 6-4 in their last 10. The Sixers, on the other hand, have lost 3 straight and are just 5-5 in their last 10.<br>• Philly's been struggling on the road, and the Grizzlies are tough to beat at home. Memphis is 10-6 at home this season.<br>• Our model actually sees the Grizzlies winning this one by about 5 points, which is a decent edge over the Vegas spread. Their defense should give the Sixers issues.<br>• Ja Morant is balling out lately and I think he leads the Grizzlies to the win here. This Sixers team just doesn't have the same energy they had earlier in the season.
+                • Here's my pick for the 76ers vs Grizzlies game:<br>• The Grizzlies have been looking good lately, going 6-4 in their last 10 games. Their record might not be super impressive at 15-17, but they've been playing a lot better recently.<br>• Meanwhile, the 76ers are on a 3-game losing skid and have only gone 5-5 in their last 10. They're struggling to find consistency right now at 16-14 on the season.<br>• Our model actually sees a decent 4.9-point edge for the Grizzlies here versus the Vegas line. Their defense has been stifling, and I like their chances of containing the 76ers' offense.<br>• The home court advantage should help too - the Grizzlies have been much better in Memphis this year.
             </div>
         </div>
         
@@ -941,18 +1297,18 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_5135954506302354053"></canvas>
+                <canvas id="trend_544707927249491624"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
-                    <div class="trend-team-name">Philadelphia 76</div>
+                    <div class="trend-team-name">PHI</div>
                     <div class="trend-record">16-14</div>
                     <div class="trend-last5">Last 10: 5-5</div>
                     <div class="trend-streak streak-loss">L3</div>
                     <div class="trend-metric">115.7 PPG</div>
                 </div>
                 <div class="trend-stat">
-                    <div class="trend-team-name">Memphis Grizzli</div>
+                    <div class="trend-team-name">MEM</div>
                     <div class="trend-record">15-17</div>
                     <div class="trend-last5">Last 10: 6-4</div>
                     <div class="trend-streak streak-loss">L1</div>
@@ -988,7 +1344,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on the Celtics vs Jazz game:<br>• Utah's been playing better lately - they've won 2 in a row after a rough stretch. Boston had a tough loss last game, so they'll be looking to bounce back.<br>• The Jazz have the home court advantage here, and their record at home (12-19) is way better than on the road. That's a big factor.<br>• Our model likes the Jazz by over 6 points in this one. That's a decent edge compared to the Vegas spread.<br>• Boston's been solid overall this season at 19-12, but they've been a bit up and down in their last 10 games at 7-3. The Jazz are trying to get things going.
+                • Alright, here's my take on the Celtics vs Jazz game:<br>• The Jazz have been playing much better lately, going 4-6 in their last 10 games and winning their last 2. Meanwhile, the Celtics are coming off a tough loss and have a 7-3 record in their last 10.<br>• Boston's defense has been solid this season, but our model sees them struggling to contain the Jazz's balanced scoring attack. Utah's got some real offensive firepower right now.<br>• I think the Jazz's home court advantage is going to make a big difference here. Their record at home is much better than on the road.<br>• Our analytics give the Jazz a 6.3 point edge over the Celtics, which is a nice spread compared to the Vegas line. The model is pretty confident in this one.
             </div>
         </div>
         
@@ -998,18 +1354,18 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_5610634887059288339"></canvas>
+                <canvas id="trend_7794813975488415349"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
-                    <div class="trend-team-name">Boston Celtics</div>
+                    <div class="trend-team-name">BOS</div>
                     <div class="trend-record">19-12</div>
                     <div class="trend-last5">Last 10: 7-3</div>
                     <div class="trend-streak streak-loss">L1</div>
                     <div class="trend-metric">116.5 PPG</div>
                 </div>
                 <div class="trend-stat">
-                    <div class="trend-team-name">Utah Jazz</div>
+                    <div class="trend-team-name">UTA</div>
                     <div class="trend-record">12-19</div>
                     <div class="trend-last5">Last 10: 4-6</div>
                     <div class="trend-streak streak-win">W2</div>
@@ -1045,7 +1401,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on this game:<br>• The Lakers are coming in hot, with a 5-5 record in their last 10 games and a win in their last outing. Meanwhile, the Pistons have dropped their last two and are a bit cold lately.<br>• Looking at the full-season numbers, the Lakers have a solid 20-10 record compared to the Pistons' impressive 24-8 mark. But our model sees a Lakers edge of 4.9 points here, which is pretty significant.<br>• Detroit's defense has been stifling this season, but they've struggled a bit on the road. The Lakers should be able to take advantage at home.<br>• I think the Lakers' mix of veteran experience and young talent will be too much for the Pistons to handle, especially with Detroit's recent slide.
+                • Here's my take on the Detroit Pistons vs. Los Angeles Lakers game:<br>• The Lakers are coming in hot, having won their last game to get to 20-10 on the season. Meanwhile, the Pistons have dropped their last 2 after a strong 7-3 stretch.<br>• The Lakers' defense has really stepped up lately, holding opponents under 110 points in 5 of their last 7 games. This should give them an edge against the Pistons' middling offense.<br>• Our model sees the Lakers winning this one by about 5 points, which is a decent gap compared to the Vegas spread. The Lakers have been tough at home all year.<br>• Detroit's been a little inconsistent lately, with that 2-game losing streak. Their road record isn't great either at just 9-6 so far.
             </div>
         </div>
         
@@ -1055,18 +1411,18 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_2920444136016337433"></canvas>
+                <canvas id="trend_8731813434660042162"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
-                    <div class="trend-team-name">Detroit Pistons</div>
+                    <div class="trend-team-name">DET</div>
                     <div class="trend-record">24-8</div>
                     <div class="trend-last5">Last 10: 7-3</div>
                     <div class="trend-streak streak-loss">L2</div>
                     <div class="trend-metric">118.8 PPG</div>
                 </div>
                 <div class="trend-stat">
-                    <div class="trend-team-name">Los Angeles Lak</div>
+                    <div class="trend-team-name">LAL</div>
                     <div class="trend-record">20-10</div>
                     <div class="trend-last5">Last 10: 5-5</div>
                     <div class="trend-streak streak-win">W1</div>
@@ -1102,7 +1458,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on the Kings-Clippers game:<br>• The Clippers are on a 4-game winning streak and playing really well at home right now. That home court juice is big.<br>• Sacramento is struggling - they're only 8-24 overall and 3-7 in their last 10 games. That's not a great look going up against a hot Clippers team.<br>• Our model sees a solid 3.7 point edge for the Clippers here, which is a decent-sized cushion for a game like this. Their recent run and Sacramento's poor form seem to line up.<br>• The Clippers have been a tough out at home, and with the Kings on a 1-game losing streak, I like LA to keep it rolling here.
+                • Here's my take on this game, fam:<br>• The Clippers are rolling right now, on a 4-game win streak at home. That's gotta be tough for the Kings to come in and try to stop.<br>• Sacramento's been struggling lately, only 3-7 in their last 10 games and just lost their last one. Their 8-24 record on the season ain't looking too hot.<br>• Our model actually sees the Clippers winning this one by about 4 points, which is a decent edge over what Vegas has. Their defense has been locking teams down at home.<br>• The Kings just don't have the firepower to hang with the Clippers, especially on the road. LA's got the better talent and they're playing with a lot of confidence right now.
             </div>
         </div>
         
@@ -1112,18 +1468,18 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_6919759088186286821"></canvas>
+                <canvas id="trend_8864258765885897487"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
-                    <div class="trend-team-name">Sacramento King</div>
+                    <div class="trend-team-name">SAC</div>
                     <div class="trend-record">8-24</div>
                     <div class="trend-last5">Last 10: 3-7</div>
                     <div class="trend-streak streak-loss">L1</div>
                     <div class="trend-metric">111.7 PPG</div>
                 </div>
                 <div class="trend-stat">
-                    <div class="trend-team-name">Los Angeles Cli</div>
+                    <div class="trend-team-name">LAC</div>
                     <div class="trend-record">10-21</div>
                     <div class="trend-last5">Last 10: 5-5</div>
                     <div class="trend-streak streak-win">W4</div>
@@ -1248,7 +1604,7 @@
                 📈 Auto-refreshed every 5 minutes • SHAP Explainability On • 62.5% Accuracy (Trailing 30 Days)
             </div>
             <div class="footer-text" style="margin-top: 8px;">
-                Last sync: 12:17 PM
+                Last sync: 12:52 PM
             </div>
             <div class="footer-badges">
                 <span class="footer-badge">CatBoost</span>
@@ -1262,7 +1618,48 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-        // Sport filter
+        // Dark mode toggle (manual override)
+        function toggleDarkMode(event) {
+            if (event) event.preventDefault();
+            const isDark = document.body.classList.toggle('force-dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            
+            // Update button text
+            const btn = event ? event.target : document.getElementById('darkModeToggle');
+            const mobileBtn = document.getElementById('mobileDarkToggle');
+            if (btn && btn.id === 'darkModeToggle') {
+                btn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+            }
+            if (mobileBtn) {
+                mobileBtn.textContent = isDark ? '☀️' : '🌙';
+            }
+            
+            console.log('Dark mode toggled:', isDark);
+        }
+        
+        // Initialize dark mode on page load
+        (function() {
+            const savedDarkMode = localStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedDarkMode === 'true' || (savedDarkMode === null && prefersDark)) {
+                document.body.classList.add('force-dark-mode');
+            }
+            
+            // Update button text on load
+            window.addEventListener('load', function() {
+                const btn = document.getElementById('darkModeToggle');
+                const mobileBtn = document.getElementById('mobileDarkToggle');
+                if (btn && document.body.classList.contains('force-dark-mode')) {
+                    btn.textContent = '☀️ Light Mode';
+                }
+                if (mobileBtn && document.body.classList.contains('force-dark-mode')) {
+                    mobileBtn.textContent = '☀️';
+                }
+            });
+        })();
+        
+        // Sport filter (desktop)
         function filterSport(sport) {
             document.querySelectorAll('.sport-option').forEach(el => el.classList.remove('active'));
             event.target.classList.add('active');
@@ -1276,6 +1673,55 @@
                     card.style.display = 'none';
                 }
             });
+            
+            // Sync with bottom nav
+            document.querySelectorAll('.bottom-nav-item').forEach(el => {
+                if (el.textContent.includes('All') && sport === 'all') el.classList.add('active');
+                else if (el.textContent.includes('NFL') && sport === 'nfl') el.classList.add('active');
+                else if (el.textContent.includes('NBA') && sport === 'nba') el.classList.add('active');
+                else if (!el.textContent.includes('🌙') && !el.textContent.includes('☀️')) el.classList.remove('active');
+            });
+        }
+        
+        // Sport filter (mobile bottom nav)
+        function filterSportMobile(sport) {
+            document.querySelectorAll('.bottom-nav-item').forEach(el => {
+                if (!el.textContent.includes('🌙') && !el.textContent.includes('☀️')) {
+                    el.classList.remove('active');
+                }
+            });
+            event.target.classList.add('active');
+            
+            // Sync with desktop selector
+            document.querySelectorAll('.sport-option').forEach(el => {
+                el.classList.remove('active');
+                if ((sport === 'all' && el.textContent === 'All') ||
+                    (sport === 'nfl' && el.textContent === 'NFL') ||
+                    (sport === 'nba' && el.textContent === 'NBA')) {
+                    el.classList.add('active');
+                }
+            });
+            
+            const cards = document.querySelectorAll('.prediction-card');
+            cards.forEach(card => {
+                const cardSport = card.dataset.sport;
+                if (sport === 'all' || cardSport === sport) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Mobile dark mode toggle
+        function toggleDarkModeMobile(event) {
+            toggleDarkMode(event);
+            const btn = document.getElementById('mobileDarkToggle');
+            if (btn && document.body.classList.contains('force-dark-mode')) {
+                btn.textContent = '☀️';
+            } else if (btn) {
+                btn.textContent = '🌙';
+            }
         }
         
         // Interactive model cards
@@ -1285,10 +1731,12 @@
             });
         });
         
-        // Auto-refresh
-        setTimeout(() => {
-            location.reload();
-        }, 300000);
+        // Auto-refresh (disabled on mobile to preserve scroll position)
+        if (window.innerWidth > 430) {
+            setTimeout(() => {
+                location.reload();
+            }, 300000);
+        }
         
         // Initialize charts
         
@@ -1296,14 +1744,14 @@
         Chart.defaults.color = '#86868b';
     
 
-        const trendCtx_trend_5135954506302354053 = document.getElementById('trend_5135954506302354053');
-        if (trendCtx_trend_5135954506302354053) {
-            new Chart(trendCtx_trend_5135954506302354053, {
+        const trendCtx_trend_544707927249491624 = document.getElementById('trend_544707927249491624');
+        if (trendCtx_trend_544707927249491624) {
+            new Chart(trendCtx_trend_544707927249491624, {
                 type: 'line',
                 data: {
                     labels: ["10/07", "10/11", "10/12", "10/14", "10/18", "10/23", "10/25"],
                     datasets: [{
-                        label: 'Philadelphia 76',
+                        label: 'PHI',
                         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                         borderColor: '#007aff',
                         backgroundColor: 'rgba(0, 122, 255, 0.1)',
@@ -1313,7 +1761,7 @@
                         borderWidth: 2,
                         fill: true
                     }, {
-                        label: 'Memphis Grizzli',
+                        label: 'MEM',
                         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                         borderColor: '#d32f2f',
                         backgroundColor: 'rgba(211, 47, 47, 0.1)',
@@ -1374,14 +1822,14 @@
         }
         
 
-        const trendCtx_trend_5610634887059288339 = document.getElementById('trend_5610634887059288339');
-        if (trendCtx_trend_5610634887059288339) {
-            new Chart(trendCtx_trend_5610634887059288339, {
+        const trendCtx_trend_7794813975488415349 = document.getElementById('trend_7794813975488415349');
+        if (trendCtx_trend_7794813975488415349) {
+            new Chart(trendCtx_trend_7794813975488415349, {
                 type: 'line',
                 data: {
                     labels: ["10/04", "10/06", "10/12", "10/13", "10/15", "10/22", "10/24", "10/26"],
                     datasets: [{
-                        label: 'Boston Celtics',
+                        label: 'BOS',
                         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                         borderColor: '#007aff',
                         backgroundColor: 'rgba(0, 122, 255, 0.1)',
@@ -1391,7 +1839,7 @@
                         borderWidth: 2,
                         fill: true
                     }, {
-                        label: 'Utah Jazz',
+                        label: 'UTA',
                         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                         borderColor: '#d32f2f',
                         backgroundColor: 'rgba(211, 47, 47, 0.1)',
@@ -1452,14 +1900,14 @@
         }
         
 
-        const trendCtx_trend_2920444136016337433 = document.getElementById('trend_2920444136016337433');
-        if (trendCtx_trend_2920444136016337433) {
-            new Chart(trendCtx_trend_2920444136016337433, {
+        const trendCtx_trend_8731813434660042162 = document.getElementById('trend_8731813434660042162');
+        if (trendCtx_trend_8731813434660042162) {
+            new Chart(trendCtx_trend_8731813434660042162, {
                 type: 'line',
                 data: {
                     labels: ["10/06", "10/08", "10/11", "10/13", "10/23", "10/25", "10/26"],
                     datasets: [{
-                        label: 'Detroit Pistons',
+                        label: 'DET',
                         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                         borderColor: '#007aff',
                         backgroundColor: 'rgba(0, 122, 255, 0.1)',
@@ -1469,7 +1917,7 @@
                         borderWidth: 2,
                         fill: true
                     }, {
-                        label: 'Los Angeles Lak',
+                        label: 'LAL',
                         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                         borderColor: '#d32f2f',
                         backgroundColor: 'rgba(211, 47, 47, 0.1)',
@@ -1530,14 +1978,14 @@
         }
         
 
-        const trendCtx_trend_6919759088186286821 = document.getElementById('trend_6919759088186286821');
-        if (trendCtx_trend_6919759088186286821) {
-            new Chart(trendCtx_trend_6919759088186286821, {
+        const trendCtx_trend_8864258765885897487 = document.getElementById('trend_8864258765885897487');
+        if (trendCtx_trend_8864258765885897487) {
+            new Chart(trendCtx_trend_8864258765885897487, {
                 type: 'line',
                 data: {
                     labels: ["10/09", "10/11", "10/13", "10/15", "10/17", "10/24", "10/26"],
                     datasets: [{
-                        label: 'Sacramento King',
+                        label: 'SAC',
                         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                         borderColor: '#007aff',
                         backgroundColor: 'rgba(0, 122, 255, 0.1)',
@@ -1547,7 +1995,7 @@
                         borderWidth: 2,
                         fill: true
                     }, {
-                        label: 'Los Angeles Cli',
+                        label: 'LAC',
                         data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
                         borderColor: '#d32f2f',
                         backgroundColor: 'rgba(211, 47, 47, 0.1)',
