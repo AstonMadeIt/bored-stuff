@@ -11,16 +11,51 @@
             box-sizing: border-box;
         }
         
+        /* ==========================================
+           GLOBAL — Bloomberg x Vanity Fair
+        ========================================== */
         :root {
-            --accent: #007aff;
+            /* Dark mode (default) */
+            --black: #000000;
+            --offblack: #0a0a0a;
+            --card-bg-dark: #111111;
+            --border-dark: #222222;
+            --text-primary-dark: #f5f5f7;
+            --text-secondary-dark: #8d8d93;
+            --accent-dark: #ff453a; /* Apple Red */
+            --accent-blue: #0a84ff;
+            --highlight-dark: rgba(255, 255, 255, 0.06);
+            --shadow-dark: 0 8px 32px rgba(0,0,0,0.65);
+            
+            /* Light mode (editorial luxury) */
+            --white: #ffffff;
+            --offwhite: #fafafa;
+            --card-bg-light: #ffffff;
+            --border-light: #e8e8e8;
+            --text-primary-light: #1a1a1a;
+            --text-secondary-light: #6e6e73;
+            --accent-light: #007aff;
+            --accent-red-light: #ff3b30;
+            --highlight-light: rgba(0, 0, 0, 0.04);
+            --shadow-light: 0 4px 24px rgba(0,0,0,0.08);
+            
+            /* Shared */
+            --radius: 16px;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
             --signal: #d32f2f;
-            --text-primary: #1d1d1f;
-            --text-secondary: #86868b;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f5f5f7;
-            --border: #e5e5e7;
-            --card-shadow: rgba(0, 0, 0, 0.04);
-            --hover-shadow: rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Light mode variables (default) */
+        :root:not(.force-dark-mode) {
+            --bg-primary: var(--white);
+            --bg-secondary: var(--offwhite);
+            --card-bg: var(--card-bg-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --border: var(--border-light);
+            --accent: var(--accent-light);
+            --highlight: var(--highlight-light);
+            --shadow: var(--shadow-light);
         }
         
         /* NATIVE DARK MODE */
@@ -404,28 +439,59 @@
             margin: 30px 0;
         }
         
+        /* ==========================================
+           CARD SYSTEM — Editorial Blocks
+        ========================================== */
         .prediction-card {
-            background: var(--bg-primary);
-            border-radius: 16px;
-            padding: 24px;
+            background: var(--card-bg);
             border: 1px solid var(--border);
-            box-shadow: 0 2px 8px var(--card-shadow);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 18px 0;
+            box-shadow: var(--shadow);
+            transition: transform 0.18s cubic-bezier(.4,0,.2,1), box-shadow 0.2s ease;
             position: relative;
             overflow: hidden;
             cursor: pointer;
         }
         
+        /* Luxe magazine border accent */
+        .prediction-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .prediction-card.high-confidence::before {
+            opacity: 1;
+        }
+        
         .prediction-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--hover-shadow);
-            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.75);
         }
         
         @media (hover: none) {
             .prediction-card:hover {
                 transform: none;
             }
+        }
+        
+        /* Fade-in animation for new content */
+        .prediction-card {
+            animation: fadeIn 0.22s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .prediction-card::before {
@@ -539,17 +605,26 @@
         }
         
         .confidence-badge.high {
-            background: rgba(211, 47, 47, 0.1);
-            color: var(--signal);
+            background: rgba(255, 69, 58, 0.12);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 500;
+            color: var(--accent);
         }
         
         .confidence-badge.medium {
-            background: rgba(255, 149, 0, 0.1);
+            background: rgba(255, 149, 0, 0.12);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 500;
             color: #ff9500;
         }
         
         .confidence-badge.low {
-            background: var(--bg-secondary);
+            background: rgba(255,255,255,0.06);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 500;
             color: var(--text-secondary);
         }
         
@@ -859,13 +934,6 @@
             font-size: 1rem;
         }
         
-        /* FOOTER CHART - Vegas vs Model */
-        .footer-chart-section {
-            margin: 60px 0;
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
-        }
-        
         .chart-header {
             text-align: center;
             margin-bottom: 30px;
@@ -945,35 +1013,6 @@
             border-radius: 12px;
             color: var(--text-secondary);
             font-weight: 600;
-        }
-        
-        /* AS SEEN IN */
-        .as-seen-in {
-            text-align: center;
-            padding: 30px 0;
-            margin: 40px 0;
-        }
-        
-        .as-seen-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-            font-weight: 600;
-        }
-        
-        .as-seen-badges {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .as-seen-badge {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 500;
         }
         
         /* MOBILE OPTIMIZATION */
@@ -1246,10 +1285,10 @@
         
         <!-- BOTTOM NAVIGATION - Mobile Only -->
         <div class="bottom-nav">
-            <div class="bottom-nav-item active" onclick="filterSportMobile('all')">⭐ All</div>
-            <div class="bottom-nav-item" onclick="filterSportMobile('nfl')">🏈 NFL</div>
-            <div class="bottom-nav-item" onclick="filterSportMobile('nba')">🏀 NBA</div>
-            <div class="bottom-nav-item" onclick="toggleDarkModeMobile(event)" id="mobileDarkToggle">🌙</div>
+            <button class="bottom-nav-item active" onclick="filterSportMobile('all')">All</button>
+            <button class="bottom-nav-item" onclick="filterSportMobile('nfl')">NFL</button>
+            <button class="bottom-nav-item" onclick="filterSportMobile('nba')">NBA</button>
+            <button class="bottom-nav-item" onclick="toggleDarkModeMobile(event)" id="mobileDarkToggle">🌙</button>
         </div>
         
         <!-- TRUST INSERT -->
@@ -1287,7 +1326,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my pick for the 76ers vs Grizzlies game:<br>• The Grizzlies have been looking good lately, going 6-4 in their last 10 games. Their record might not be super impressive at 15-17, but they've been playing a lot better recently.<br>• Meanwhile, the 76ers are on a 3-game losing skid and have only gone 5-5 in their last 10. They're struggling to find consistency right now at 16-14 on the season.<br>• Our model actually sees a decent 4.9-point edge for the Grizzlies here versus the Vegas line. Their defense has been stifling, and I like their chances of containing the 76ers' offense.<br>• The home court advantage should help too - the Grizzlies have been much better in Memphis this year.
+                • Here's my take on this game:<br>• The Grizzlies have been playing well lately, going 6-4 in their last 10 games, and they're looking to bounce back from a recent loss. Their record of 15-17 doesn't do them justice - they've been more competitive than that.<br>• The Sixers, on the other hand, have hit a bit of a rough patch, losing their last 3 games. Their 16-14 record and 5-5 stretch in the last 10 games shows they've been a bit inconsistent.<br>• Our model sees the Grizzlies with a 4.9-point edge in this one, which is a decent-sized advantage. Memphis has been tough at home, and their offense should be able to take advantage of the Sixers' defense.<br>• The Grizzlies are the hungrier team right now and playing in front of their home crowd. I think they'll find a way to get the job done.
             </div>
         </div>
         
@@ -1297,7 +1336,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_544707927249491624"></canvas>
+                <canvas id="trend_6523614374477303815"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1344,7 +1383,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Alright, here's my take on the Celtics vs Jazz game:<br>• The Jazz have been playing much better lately, going 4-6 in their last 10 games and winning their last 2. Meanwhile, the Celtics are coming off a tough loss and have a 7-3 record in their last 10.<br>• Boston's defense has been solid this season, but our model sees them struggling to contain the Jazz's balanced scoring attack. Utah's got some real offensive firepower right now.<br>• I think the Jazz's home court advantage is going to make a big difference here. Their record at home is much better than on the road.<br>• Our analytics give the Jazz a 6.3 point edge over the Celtics, which is a nice spread compared to the Vegas line. The model is pretty confident in this one.
+                • Here's my take on this Celtics vs Jazz game:<br>• The Jazz have won 2 in a row and are playing well at home lately, even though their overall record ain't great at 12-19. The Celtics have been up and down, going 7-3 in their last 10 but just lost their last game.<br>• Utah's defense has been stifling opponents at home, and our model sees them limiting the Celtics' offense by a solid 2.5 points. Boston's road record and recent form is a bit shaky.<br>• The Jazz are catching points at home, and our projections have them winning this one by over 6 points. That's a nice edge vs the Vegas line.<br>• Jayson Tatum has been carrying the Celtics, but I'm not sure the rest of the team can keep up on the road against a motivated Jazz squad.
             </div>
         </div>
         
@@ -1354,7 +1393,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_7794813975488415349"></canvas>
+                <canvas id="trend_1467785939315389731"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1401,7 +1440,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on the Detroit Pistons vs. Los Angeles Lakers game:<br>• The Lakers are coming in hot, having won their last game to get to 20-10 on the season. Meanwhile, the Pistons have dropped their last 2 after a strong 7-3 stretch.<br>• The Lakers' defense has really stepped up lately, holding opponents under 110 points in 5 of their last 7 games. This should give them an edge against the Pistons' middling offense.<br>• Our model sees the Lakers winning this one by about 5 points, which is a decent gap compared to the Vegas spread. The Lakers have been tough at home all year.<br>• Detroit's been a little inconsistent lately, with that 2-game losing streak. Their road record isn't great either at just 9-6 so far.
+                • Here's my take on this Pistons vs Lakers game:<br>• The Lakers are looking to bounce back after a slight dip, going 5-5 in their last 10. But they've got home court advantage and are facing a Pistons squad that's lost their last two games.<br>• Detroit has been solid overall this season at 24-8, but our model sees their offense struggling against the Lakers' stingy defense (SHAP: -2.6 pts).<br>• The Lakers have been a bit inconsistent lately, but they're still 20-10 on the season and have LeBron leading the charge. Our data gives them a 4.9 point edge over Vegas.<br>• I think the Lakers' star power and home court will be the difference here. Detroit's recent losses suggest their momentum is slowing down a bit.
             </div>
         </div>
         
@@ -1411,7 +1450,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_8731813434660042162"></canvas>
+                <canvas id="trend_3606927277831950657"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1458,7 +1497,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on this game, fam:<br>• The Clippers are rolling right now, on a 4-game win streak at home. That's gotta be tough for the Kings to come in and try to stop.<br>• Sacramento's been struggling lately, only 3-7 in their last 10 games and just lost their last one. Their 8-24 record on the season ain't looking too hot.<br>• Our model actually sees the Clippers winning this one by about 4 points, which is a decent edge over what Vegas has. Their defense has been locking teams down at home.<br>• The Kings just don't have the firepower to hang with the Clippers, especially on the road. LA's got the better talent and they're playing with a lot of confidence right now.
+                • Okay, here's my take on this Kings vs Clippers game:<br>• The Clippers are rolling right now - they're on a 4-game winning streak and have looked really good at home lately.<br>• The Kings are really struggling overall, just 8-24 on the season and only 3-7 in their last 10. That's not a good sign going up against a hot Clippers team.<br>• Our model sees the Clippers winning this one by about 3.7 points, which is a decent edge over the Vegas spread. Their strong home court and the Kings' poor recent form point to a Clippers cover.<br>• The Clippers defense has been stifling at home, and the Kings offense has been inconsistent all year. I think the Clips pull away late in this one.
             </div>
         </div>
         
@@ -1468,7 +1507,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_8864258765885897487"></canvas>
+                <canvas id="trend_2989926302208346973"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1585,26 +1624,13 @@
             </div>
         </div>
         
-        <!-- AS SEEN IN -->
-        <div class="as-seen-in">
-            <div class="as-seen-title">As Seen In</div>
-            <div class="as-seen-badges">
-                <span class="as-seen-badge">🏈 r/sportsbook</span>
-                <span class="as-seen-badge">📊 Kaggle</span>
-                <span class="as-seen-badge">🧠 Medium Analytics</span>
-            </div>
-        </div>
-        
-        <!-- FOOTER CHART - Vegas vs Model -->
-        <div class="footer-chart-section"><div class="chart-header"><div class="chart-title">Model vs Vegas Line Comparison</div><div class="chart-subtitle">No Vegas data available</div></div></div>
-        
         <!-- FOOTER -->
         <div class="footer">
             <div class="footer-text">
                 📈 Auto-refreshed every 5 minutes • SHAP Explainability On • 62.5% Accuracy (Trailing 30 Days)
             </div>
             <div class="footer-text" style="margin-top: 8px;">
-                Last sync: 12:52 PM
+                Last sync: 01:12 PM
             </div>
             <div class="footer-badges">
                 <span class="footer-badge">CatBoost</span>
@@ -1676,10 +1702,11 @@
             
             // Sync with bottom nav
             document.querySelectorAll('.bottom-nav-item').forEach(el => {
-                if (el.textContent.includes('All') && sport === 'all') el.classList.add('active');
-                else if (el.textContent.includes('NFL') && sport === 'nfl') el.classList.add('active');
-                else if (el.textContent.includes('NBA') && sport === 'nba') el.classList.add('active');
-                else if (!el.textContent.includes('🌙') && !el.textContent.includes('☀️')) el.classList.remove('active');
+                const text = el.textContent.trim();
+                if (text === 'All' && sport === 'all') el.classList.add('active');
+                else if (text === 'NFL' && sport === 'nfl') el.classList.add('active');
+                else if (text === 'NBA' && sport === 'nba') el.classList.add('active');
+                else if (!text.includes('🌙') && !text.includes('☀️')) el.classList.remove('active');
             });
         }
         
@@ -1744,9 +1771,9 @@
         Chart.defaults.color = '#86868b';
     
 
-        const trendCtx_trend_544707927249491624 = document.getElementById('trend_544707927249491624');
-        if (trendCtx_trend_544707927249491624) {
-            new Chart(trendCtx_trend_544707927249491624, {
+        const trendCtx_trend_6523614374477303815 = document.getElementById('trend_6523614374477303815');
+        if (trendCtx_trend_6523614374477303815) {
+            new Chart(trendCtx_trend_6523614374477303815, {
                 type: 'line',
                 data: {
                     labels: ["10/07", "10/11", "10/12", "10/14", "10/18", "10/23", "10/25"],
@@ -1822,9 +1849,9 @@
         }
         
 
-        const trendCtx_trend_7794813975488415349 = document.getElementById('trend_7794813975488415349');
-        if (trendCtx_trend_7794813975488415349) {
-            new Chart(trendCtx_trend_7794813975488415349, {
+        const trendCtx_trend_1467785939315389731 = document.getElementById('trend_1467785939315389731');
+        if (trendCtx_trend_1467785939315389731) {
+            new Chart(trendCtx_trend_1467785939315389731, {
                 type: 'line',
                 data: {
                     labels: ["10/04", "10/06", "10/12", "10/13", "10/15", "10/22", "10/24", "10/26"],
@@ -1900,9 +1927,9 @@
         }
         
 
-        const trendCtx_trend_8731813434660042162 = document.getElementById('trend_8731813434660042162');
-        if (trendCtx_trend_8731813434660042162) {
-            new Chart(trendCtx_trend_8731813434660042162, {
+        const trendCtx_trend_3606927277831950657 = document.getElementById('trend_3606927277831950657');
+        if (trendCtx_trend_3606927277831950657) {
+            new Chart(trendCtx_trend_3606927277831950657, {
                 type: 'line',
                 data: {
                     labels: ["10/06", "10/08", "10/11", "10/13", "10/23", "10/25", "10/26"],
@@ -1978,9 +2005,9 @@
         }
         
 
-        const trendCtx_trend_8864258765885897487 = document.getElementById('trend_8864258765885897487');
-        if (trendCtx_trend_8864258765885897487) {
-            new Chart(trendCtx_trend_8864258765885897487, {
+        const trendCtx_trend_2989926302208346973 = document.getElementById('trend_2989926302208346973');
+        if (trendCtx_trend_2989926302208346973) {
+            new Chart(trendCtx_trend_2989926302208346973, {
                 type: 'line',
                 data: {
                     labels: ["10/09", "10/11", "10/13", "10/15", "10/17", "10/24", "10/26"],
