@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pro Sports Intel AI™</title>
+    <link rel="icon" type="image/jpeg" href="https://iwuzjustbored.space/psi_favicon.jpg">
+    <link rel="apple-touch-icon" href="https://iwuzjustbored.space/psi_favicon.jpg">
     <style>
         * {
             margin: 0;
@@ -220,22 +222,101 @@
             }
         }
         
-        /* APPLE-GRADE HERO HEADER */
+        /* CLEAN HERO HEADER - Logo First */
         .hero-header {
-            padding: 60px 0 40px;
+            padding: 80px 0 50px;
             text-align: center;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
             border-bottom: 1px solid var(--border);
             position: relative;
         }
         
+        /* Light mode hero - subtle gradient */
+        :root:not(.force-dark-mode) .hero-header {
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+        }
+        
+        /* Dark mode hero - Radial gradient backdrop */
+        body.force-dark-mode .hero-header {
+            background: 
+                radial-gradient(circle at 50% 30%, rgba(10,132,255,0.08), transparent 70%),
+                var(--black) !important;
+        }
+        
+        /* Hero Logo + Title Container - Clean & Minimal */
+        .hero-brand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        
+        .hero-logo {
+            height: 120px;
+            width: auto;
+            max-width: 350px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
+            transition: transform 0.2s cubic-bezier(.4,0,.2,1), filter 0.2s ease;
+        }
+        
+        .hero-logo:hover {
+            transform: translateY(-2px) scale(1.02);
+            filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.16));
+        }
+        
+        /* Dark mode logo - electric blue glow */
+        body.force-dark-mode .hero-logo {
+            filter: drop-shadow(0 4px 16px rgba(10, 132, 255, 0.3)) drop-shadow(0 0 24px rgba(10, 132, 255, 0.2));
+        }
+        
+        body.force-dark-mode .hero-logo:hover {
+            filter: drop-shadow(0 6px 24px rgba(10, 132, 255, 0.4)) drop-shadow(0 0 32px rgba(10, 132, 255, 0.25));
+        }
+        
         .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: -2px;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -1px;
             color: var(--text-primary);
-            margin-bottom: 12px;
+            margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.2;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-brand-container {
+                gap: 14px;
+                margin-bottom: 32px;
+            }
+            
+            .hero-logo {
+                height: 100px;
+                max-width: 280px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 430px) {
+            .hero-brand-container {
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+            
+            .hero-logo {
+                height: 80px;
+                max-width: 220px;
+            }
+            
+            .hero-title {
+                font-size: 1.6rem;
+            }
         }
         
         .hero-subtitle {
@@ -1251,23 +1332,12 @@
     </div>
     
     <div class="container">
-        <!-- APPLE-GRADE HERO HEADER -->
+        <!-- CLEAN HERO HEADER - Logo First -->
         <div class="hero-header">
-            <h1 class="hero-title">Pro Sports Intel AI™</h1>
-            <div class="hero-subtitle">ML-Backed Prediction Engine</div>
-            <div class="hero-tagline">
-                Trained on billions of data points.<br>
-                Tuned every 5 minutes.<br>
-                Built for the people who want to win tomorrow.
-            </div>
-            
-            <!-- Model Badges - Apple Silicon Style -->
-            <div class="model-badges">
-                <div class="model-badge">CatBoost<br><span style="font-size: 0.7rem; opacity: 0.9;">Primary</span></div>
-                <div class="model-badge secondary">XGBoost<br><span style="font-size: 0.7rem; opacity: 0.9;">Ensemble</span></div>
-                <div class="model-badge secondary">LightGBM<br><span style="font-size: 0.7rem; opacity: 0.9;">Very Fast</span></div>
-                <div class="model-badge tool">Optuna<br><span style="font-size: 0.7rem; opacity: 0.9;">Optimizer</span></div>
-                <div class="model-badge tool">SHAP<br><span style="font-size: 0.7rem; opacity: 0.9;">Explainable</span></div>
+            <!-- Logo + Title - Centered & Minimal -->
+            <div class="hero-brand-container">
+                <img src="https://iwuzjustbored.space/psi_logo.jpg" alt="Pro Sports Intel AI" class="hero-logo" onerror="console.error('Logo failed to load:', this.src);">
+                <h1 class="hero-title">Pro Sports Intel AI™</h1>
             </div>
         </div>
         
@@ -1354,7 +1424,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on the Sixers vs. Grizzlies game:<br>• The Grizzlies have been rolling lately, going 6-4 in their last 10. They're a scrappy team that's been playing tough defense.<br>• The Sixers have really struggled, losing 3 in a row. They just can't seem to find their rhythm right now.<br>• Our model has the Grizzlies winning this one by about 5 points. Memphis has a big advantage at home and Philly's sloppy play will hurt them.<br>• The model sees about a 1 point edge for us compared to the Vegas line, so there's some good value here.
+                • Here's my take on this game:<br>• The Grizzlies have been playing some solid ball lately, going 6-4 in their last 10. They've got a chance to get back on track after a recent 1-game skid.<br>• The 76ers have been a bit inconsistent, going 5-5 in their last 10 and on a 3-game losing streak. Their road form has been shaky.<br>• Our model sees a 4.9 point edge for the Grizzlies here, which is a decent-sized cushion. Their home court should give them an advantage.<br>• Memphis has been a tough out at home, while the 76ers have struggled away from Philly. That home court boost could be the difference.
             </div>
         </div>
         
@@ -1364,7 +1434,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_7363345363448566261"></canvas>
+                <canvas id="trend_8228003933712517856"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1411,7 +1481,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on the Celtics vs. Jazz game:<br>• The Jazz have been picking up some momentum lately, winning their last 2 games. That's a nice little streak after going just 4-6 in their previous 10.<br>• On the other hand, the Celtics have been a bit up and down, going 7-3 in their last 10 but just dropping their last game. Their road record hasn't been great this season.<br>• Our model sees the Jazz having a solid 6.3 point edge in this one. Their defense has been stifling at home and the Celtics have struggled against tough defensive teams like this.<br>• That model edge is pretty sizable compared to the Vegas spread, so I feel good about the Jazz covering here.
+                • Hey man, here's my take on the Celtics vs. Jazz game:<br>• The Jazz have been rolling lately, winning their last 2 games after a rough 4-6 stretch. Meanwhile, the Celtics just snapped a 1-game losing streak.<br>• Boston's been playing better overall though - they're 19-12 on the season and 7-3 in their last 10 games. The Jazz are struggling at 12-19.<br>• Our model sees the Jazz defense giving the Celtics trouble, with a projected 6.3 point edge. That's a nice advantage compared to the Vegas spread.<br>• The Jazz are at home, which always boosts their chances. Donovan Mitchell has been balling out lately too.
             </div>
         </div>
         
@@ -1421,7 +1491,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_4742017400232157480"></canvas>
+                <canvas id="trend_4554540526796418101"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1468,7 +1538,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Aight, here's my take on this Pistons-Lakers matchup:<br>• The Lakers have been a little up-and-down lately, going just 5-5 in their last 10. But they're still 20-10 on the season and got a W in their last game, so they're looking to build some momentum.<br>• Meanwhile, the Pistons have been solid overall at 24-8, but they're coming in hot off two straight losses. Their recent form hasn't been as strong, going 7-3 in the last 10.<br>• Our model sees the Lakers with a solid 4.9 point edge here. Their defense should be able to slow down the Pistons' offense enough to get the W at home.<br>• The Lakers have been tough to beat at Staples Center, so I think the home court advantage plays a big factor too.
+                • Here's my take on the Pistons vs Lakers game:<br>• The Lakers are coming in hot, winning their last game and going 5-5 in their last 10. Meanwhile, the Pistons have dropped their last two and are 7-3 in their last 10.<br>• Our model sees the Lakers' defense giving the Pistons trouble, with a projected 4.9 point edge for LA. The Pistons have been solid overall, but struggle against tough defenses.<br>• The Lakers are at home, where they've been tough to beat this season at 20-10. The Pistons have been great on the road too, but the home court gives the Lakers a boost.<br>• Statistically, this is a close matchup. But our advanced analytics give the Lakers a real edge, with their SHAP insights indicating they'll be able to slow down the Pistons' potent offense.
             </div>
         </div>
         
@@ -1478,7 +1548,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_1713289518837361197"></canvas>
+                <canvas id="trend_8412298481262334398"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1525,7 +1595,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on the Sacramento Kings vs. Los Angeles Clippers game:<br>• The Clippers are rolling right now, on a 4-game winning streak at home. That home court advantage is huge.<br>• The Kings have really struggled this season, sitting at just 8-24. They're only 3-7 in their last 10 games - not a good look.<br>• Our model sees the Clippers winning this one by about 3.7 points. That's a decent edge over the Vegas spread.<br>• The Clippers have the better overall roster and better recent form. I think they'll handle the Kings pretty comfortably.
+                • Here's my take on this game:<br>• The Clippers are rolling right now, on a 4-game win streak at home. Sacramento on the other hand has been struggling, going just 3-7 in their last 10.<br>• The Kings have been a mess this season at 8-24. They're coming off a loss last game, which is never a good sign going into a road matchup against a hot team.<br>• Our model actually sees the Clippers winning this one by 3.7 points, a decent edge over the Vegas line. Their scoring punch and recent form should be too much for the Kings.<br>• Kawhi and PG have been balling out lately, and the Clippers are tough to beat at home. That home court advantage is real.
             </div>
         </div>
         
@@ -1535,7 +1605,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_6907637796043463492"></canvas>
+                <canvas id="trend_2109940846282275858"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1559,106 +1629,27 @@
     
                         </div>
         
-        <!-- INTERACTIVE MODEL CARDS -->
-        <div class="models-section">
-            <div class="chart-header">
-                <div class="chart-title">Built With The Same Models Used In Hedge Fund Research Labs</div>
-            </div>
-            <div class="models-grid">
-                
-        <div class="model-card-interactive">
-            <div class="model-card-header">
-                <div class="model-name">CatBoost</div>
-                <span class="model-badge-small primary">Primary</span>
-            </div>
-            <div class="model-description">Gradient boosting on decision trees. Our primary prediction model achieving 62.5% accuracy.</div>
-            <div class="model-expanded">
-                <div class="model-feature"><span class="model-feature-icon">🔮</span><span><strong>How this model helps YOU:</strong> Identifies high-confidence games where model accuracy exceeds 65%</span></div>
-<div class="model-feature"><span class="model-feature-icon">⚙️</span><span><strong>Last 30 days accuracy:</strong> 62.5% winner prediction accuracy</span></div>
-<div class="model-feature"><span class="model-feature-icon">🧠</span><span><strong>What it's best at:</strong> Close games, high-spread volatility, division matchups</span></div>
-            </div>
-        </div>
-        
-
-        <div class="model-card-interactive">
-            <div class="model-card-header">
-                <div class="model-name">XGBoost</div>
-                <span class="model-badge-small secondary">Secondary</span>
-            </div>
-            <div class="model-description">Extreme gradient boosting. Ensemble member providing robust predictions through parallel tree construction.</div>
-            <div class="model-expanded">
-                <div class="model-feature"><span class="model-feature-icon">🔮</span><span><strong>How this model helps YOU:</strong> Provides ensemble diversity to reduce overfitting</span></div>
-<div class="model-feature"><span class="model-feature-icon">⚙️</span><span><strong>Performance:</strong> Very fast inference, excellent for real-time predictions</span></div>
-<div class="model-feature"><span class="model-feature-icon">🧠</span><span><strong>What it's best at:</strong> Large feature spaces, non-linear relationships</span></div>
-            </div>
-        </div>
-        
-
-        <div class="model-card-interactive">
-            <div class="model-card-header">
-                <div class="model-name">LightGBM</div>
-                <span class="model-badge-small secondary">Secondary</span>
-            </div>
-            <div class="model-description">Light gradient boosting machine. Fast, distributed gradient boosting framework for high-performance predictions.</div>
-            <div class="model-expanded">
-                <div class="model-feature"><span class="model-feature-icon">🔮</span><span><strong>How this model helps YOU:</strong> Enables rapid model updates every 5 minutes</span></div>
-<div class="model-feature"><span class="model-feature-icon">⚙️</span><span><strong>Performance:</strong> Fastest training and inference of all ensemble models</span></div>
-<div class="model-feature"><span class="model-feature-icon">🧠</span><span><strong>What it's best at:</strong> Large datasets, real-time predictions</span></div>
-            </div>
-        </div>
-        
-
-        <div class="model-card-interactive">
-            <div class="model-card-header">
-                <div class="model-name">Optuna</div>
-                <span class="model-badge-small tool">Tool</span>
-            </div>
-            <div class="model-description">Hyperparameter optimization framework. Automatically tunes model parameters for optimal performance using Bayesian optimization.</div>
-            <div class="model-expanded">
-                <div class="model-feature"><span class="model-feature-icon">🔮</span><span><strong>How this model helps YOU:</strong> Ensures models are always optimized for current data patterns</span></div>
-<div class="model-feature"><span class="model-feature-icon">⚙️</span><span><strong>Last optimization:</strong> 30+ trials per model, continuously improving</span></div>
-<div class="model-feature"><span class="model-feature-icon">🧠</span><span><strong>What it's best at:</strong> Finding optimal hyperparameters, reducing manual tuning</span></div>
-            </div>
-        </div>
-        
-
-        <div class="model-card-interactive">
-            <div class="model-card-header">
-                <div class="model-name">SHAP</div>
-                <span class="model-badge-small tool">Tool</span>
-            </div>
-            <div class="model-description">SHapley Additive exPlanations. Provides model interpretability by explaining individual predictions.</div>
-            <div class="model-expanded">
-                <div class="model-feature"><span class="model-feature-icon">🔮</span><span><strong>How this model helps YOU:</strong> Shows exactly why the model made each prediction</span></div>
-<div class="model-feature"><span class="model-feature-icon">⚙️</span><span><strong>Explainability:</strong> Game theory-based feature importance</span></div>
-<div class="model-feature"><span class="model-feature-icon">🧠</span><span><strong>What it's best at:</strong> Understanding model decisions, building trust</span></div>
-            </div>
-        </div>
-        
-
-        <div class="model-card-interactive">
-            <div class="model-card-header">
-                <div class="model-name">nfl_data_py</div>
-                <span class="model-badge-small tool">Tool</span>
-            </div>
-            <div class="model-description">Play-by-play data integration. Real EPA, success rates, and explosive play metrics from NFL play-by-play data.</div>
-            <div class="model-expanded">
-                <div class="model-feature"><span class="model-feature-icon">🔮</span><span><strong>How this model helps YOU:</strong> Replaces approximations with real efficiency metrics</span></div>
-<div class="model-feature"><span class="model-feature-icon">⚙️</span><span><strong>Data coverage:</strong> 1999+ seasons, all play-by-play data</span></div>
-<div class="model-feature"><span class="model-feature-icon">🧠</span><span><strong>What it's best at:</strong> Real efficiency metrics, not approximations</span></div>
-            </div>
-        </div>
-        
-            </div>
-        </div>
-        
         <!-- FOOTER -->
         <div class="footer">
+            <!-- Model Badges - Moved to Footer -->
+            <div class="model-badges-footer">
+                <div class="model-badge">CatBoost<br><span style="font-size: 0.7rem; opacity: 0.9;">Primary</span></div>
+                <div class="model-badge secondary">XGBoost<br><span style="font-size: 0.7rem; opacity: 0.9;">Ensemble</span></div>
+                <div class="model-badge secondary">LightGBM<br><span style="font-size: 0.7rem; opacity: 0.9;">Very Fast</span></div>
+                <div class="model-badge tool">Optuna<br><span style="font-size: 0.7rem; opacity: 0.9;">Optimizer</span></div>
+                <div class="model-badge tool">SHAP<br><span style="font-size: 0.7rem; opacity: 0.9;">Explainable</span></div>
+            </div>
+            
+            <!-- Tagline - Moved to Footer -->
+            <div class="footer-tagline">
+                Trained on billions of data points. Tuned every 5 minutes. Built for the people who want to win tomorrow.
+            </div>
+            
             <div class="footer-text">
                 📈 Auto-refreshed every 5 minutes • SHAP Explainability On • 62.5% Accuracy (Trailing 30 Days)
             </div>
             <div class="footer-text" style="margin-top: 8px;">
-                Last sync: 01:18 PM
+                Last sync: 02:17 PM
             </div>
             <div class="footer-badges">
                 <span class="footer-badge">CatBoost</span>
@@ -1799,9 +1790,9 @@
         Chart.defaults.color = '#86868b';
     
 
-        const trendCtx_trend_7363345363448566261 = document.getElementById('trend_7363345363448566261');
-        if (trendCtx_trend_7363345363448566261) {
-            new Chart(trendCtx_trend_7363345363448566261, {
+        const trendCtx_trend_8228003933712517856 = document.getElementById('trend_8228003933712517856');
+        if (trendCtx_trend_8228003933712517856) {
+            new Chart(trendCtx_trend_8228003933712517856, {
                 type: 'line',
                 data: {
                     labels: ["10/07", "10/11", "10/12", "10/14", "10/18", "10/23", "10/25"],
@@ -1877,9 +1868,9 @@
         }
         
 
-        const trendCtx_trend_4742017400232157480 = document.getElementById('trend_4742017400232157480');
-        if (trendCtx_trend_4742017400232157480) {
-            new Chart(trendCtx_trend_4742017400232157480, {
+        const trendCtx_trend_4554540526796418101 = document.getElementById('trend_4554540526796418101');
+        if (trendCtx_trend_4554540526796418101) {
+            new Chart(trendCtx_trend_4554540526796418101, {
                 type: 'line',
                 data: {
                     labels: ["10/04", "10/06", "10/12", "10/13", "10/15", "10/22", "10/24", "10/26"],
@@ -1955,9 +1946,9 @@
         }
         
 
-        const trendCtx_trend_1713289518837361197 = document.getElementById('trend_1713289518837361197');
-        if (trendCtx_trend_1713289518837361197) {
-            new Chart(trendCtx_trend_1713289518837361197, {
+        const trendCtx_trend_8412298481262334398 = document.getElementById('trend_8412298481262334398');
+        if (trendCtx_trend_8412298481262334398) {
+            new Chart(trendCtx_trend_8412298481262334398, {
                 type: 'line',
                 data: {
                     labels: ["10/06", "10/08", "10/11", "10/13", "10/23", "10/25", "10/26"],
@@ -2033,9 +2024,9 @@
         }
         
 
-        const trendCtx_trend_6907637796043463492 = document.getElementById('trend_6907637796043463492');
-        if (trendCtx_trend_6907637796043463492) {
-            new Chart(trendCtx_trend_6907637796043463492, {
+        const trendCtx_trend_2109940846282275858 = document.getElementById('trend_2109940846282275858');
+        if (trendCtx_trend_2109940846282275858) {
+            new Chart(trendCtx_trend_2109940846282275858, {
                 type: 'line',
                 data: {
                     labels: ["10/09", "10/11", "10/13", "10/15", "10/17", "10/24", "10/26"],
