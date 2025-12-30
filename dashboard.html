@@ -1168,21 +1168,47 @@
             display: inline-block;
             padding: 8px 16px;
             margin: 0 4px;
-            color: var(--text-secondary);
             cursor: pointer;
             border-radius: 8px;
             transition: all 0.2s ease;
             user-select: none;
+            font-weight: 500;
         }
         
-        .bottom-nav-item.active {
-            color: var(--accent);
-            background: rgba(10,132,255,0.15);
+        /* Light mode default */
+        :root:not(.force-dark-mode) .bottom-nav-item {
+            color: var(--text-secondary-light);
         }
         
-        .bottom-nav-item:hover {
-            color: var(--text-primary);
-            background: rgba(255,255,255,0.05);
+        /* Dark mode default - brighter for visibility */
+        body.force-dark-mode .bottom-nav-item {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+        
+        /* Light mode active */
+        :root:not(.force-dark-mode) .bottom-nav-item.active {
+            color: var(--accent-light) !important;
+            background: rgba(0, 122, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Dark mode active - pure white for clarity */
+        body.force-dark-mode .bottom-nav-item.active {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+            font-weight: 600;
+        }
+        
+        /* Light mode hover */
+        :root:not(.force-dark-mode) .bottom-nav-item:hover {
+            color: var(--text-primary-light);
+            background: rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Dark mode hover - brighter */
+        body.force-dark-mode .bottom-nav-item:hover {
+            color: rgba(255, 255, 255, 0.9) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
         }
         
         @media (max-width: 430px) {
@@ -1196,10 +1222,12 @@
             }
         }
         
-        /* Dark mode for bottom nav */
+        /* Dark mode for bottom nav - ensure proper contrast */
         body.force-dark-mode .bottom-nav {
-            background: rgba(0,0,0,0.95) !important;
-            border-top-color: rgba(255,255,255,0.06) !important;
+            background: rgba(0,0,0,0.98) !important;
+            border-top-color: rgba(255,255,255,0.12) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
         }
     </style>
 </head>
@@ -1326,7 +1354,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on this game:<br>• The Grizzlies have been playing well lately, going 6-4 in their last 10 games, and they're looking to bounce back from a recent loss. Their record of 15-17 doesn't do them justice - they've been more competitive than that.<br>• The Sixers, on the other hand, have hit a bit of a rough patch, losing their last 3 games. Their 16-14 record and 5-5 stretch in the last 10 games shows they've been a bit inconsistent.<br>• Our model sees the Grizzlies with a 4.9-point edge in this one, which is a decent-sized advantage. Memphis has been tough at home, and their offense should be able to take advantage of the Sixers' defense.<br>• The Grizzlies are the hungrier team right now and playing in front of their home crowd. I think they'll find a way to get the job done.
+                • Here's my take on the Sixers vs. Grizzlies game:<br>• The Grizzlies have been rolling lately, going 6-4 in their last 10. They're a scrappy team that's been playing tough defense.<br>• The Sixers have really struggled, losing 3 in a row. They just can't seem to find their rhythm right now.<br>• Our model has the Grizzlies winning this one by about 5 points. Memphis has a big advantage at home and Philly's sloppy play will hurt them.<br>• The model sees about a 1 point edge for us compared to the Vegas line, so there's some good value here.
             </div>
         </div>
         
@@ -1336,7 +1364,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_6523614374477303815"></canvas>
+                <canvas id="trend_7363345363448566261"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1383,7 +1411,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on this Celtics vs Jazz game:<br>• The Jazz have won 2 in a row and are playing well at home lately, even though their overall record ain't great at 12-19. The Celtics have been up and down, going 7-3 in their last 10 but just lost their last game.<br>• Utah's defense has been stifling opponents at home, and our model sees them limiting the Celtics' offense by a solid 2.5 points. Boston's road record and recent form is a bit shaky.<br>• The Jazz are catching points at home, and our projections have them winning this one by over 6 points. That's a nice edge vs the Vegas line.<br>• Jayson Tatum has been carrying the Celtics, but I'm not sure the rest of the team can keep up on the road against a motivated Jazz squad.
+                • Here's my take on the Celtics vs. Jazz game:<br>• The Jazz have been picking up some momentum lately, winning their last 2 games. That's a nice little streak after going just 4-6 in their previous 10.<br>• On the other hand, the Celtics have been a bit up and down, going 7-3 in their last 10 but just dropping their last game. Their road record hasn't been great this season.<br>• Our model sees the Jazz having a solid 6.3 point edge in this one. Their defense has been stifling at home and the Celtics have struggled against tough defensive teams like this.<br>• That model edge is pretty sizable compared to the Vegas spread, so I feel good about the Jazz covering here.
             </div>
         </div>
         
@@ -1393,7 +1421,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_1467785939315389731"></canvas>
+                <canvas id="trend_4742017400232157480"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1440,7 +1468,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Here's my take on this Pistons vs Lakers game:<br>• The Lakers are looking to bounce back after a slight dip, going 5-5 in their last 10. But they've got home court advantage and are facing a Pistons squad that's lost their last two games.<br>• Detroit has been solid overall this season at 24-8, but our model sees their offense struggling against the Lakers' stingy defense (SHAP: -2.6 pts).<br>• The Lakers have been a bit inconsistent lately, but they're still 20-10 on the season and have LeBron leading the charge. Our data gives them a 4.9 point edge over Vegas.<br>• I think the Lakers' star power and home court will be the difference here. Detroit's recent losses suggest their momentum is slowing down a bit.
+                • Aight, here's my take on this Pistons-Lakers matchup:<br>• The Lakers have been a little up-and-down lately, going just 5-5 in their last 10. But they're still 20-10 on the season and got a W in their last game, so they're looking to build some momentum.<br>• Meanwhile, the Pistons have been solid overall at 24-8, but they're coming in hot off two straight losses. Their recent form hasn't been as strong, going 7-3 in the last 10.<br>• Our model sees the Lakers with a solid 4.9 point edge here. Their defense should be able to slow down the Pistons' offense enough to get the W at home.<br>• The Lakers have been tough to beat at Staples Center, so I think the home court advantage plays a big factor too.
             </div>
         </div>
         
@@ -1450,7 +1478,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_3606927277831950657"></canvas>
+                <canvas id="trend_1713289518837361197"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1497,7 +1525,7 @@
         <div class="prediction-edge ai-powered">
             <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
             <div class="ai-explanation">
-                • Okay, here's my take on this Kings vs Clippers game:<br>• The Clippers are rolling right now - they're on a 4-game winning streak and have looked really good at home lately.<br>• The Kings are really struggling overall, just 8-24 on the season and only 3-7 in their last 10. That's not a good sign going up against a hot Clippers team.<br>• Our model sees the Clippers winning this one by about 3.7 points, which is a decent edge over the Vegas spread. Their strong home court and the Kings' poor recent form point to a Clippers cover.<br>• The Clippers defense has been stifling at home, and the Kings offense has been inconsistent all year. I think the Clips pull away late in this one.
+                • Here's my take on the Sacramento Kings vs. Los Angeles Clippers game:<br>• The Clippers are rolling right now, on a 4-game winning streak at home. That home court advantage is huge.<br>• The Kings have really struggled this season, sitting at just 8-24. They're only 3-7 in their last 10 games - not a good look.<br>• Our model sees the Clippers winning this one by about 3.7 points. That's a decent edge over the Vegas spread.<br>• The Clippers have the better overall roster and better recent form. I think they'll handle the Kings pretty comfortably.
             </div>
         </div>
         
@@ -1507,7 +1535,7 @@
                 <div class="trend-label">Recent Form</div>
             </div>
             <div class="trend-chart-container">
-                <canvas id="trend_2989926302208346973"></canvas>
+                <canvas id="trend_6907637796043463492"></canvas>
             </div>
             <div class="trend-stats">
                 <div class="trend-stat">
@@ -1630,7 +1658,7 @@
                 📈 Auto-refreshed every 5 minutes • SHAP Explainability On • 62.5% Accuracy (Trailing 30 Days)
             </div>
             <div class="footer-text" style="margin-top: 8px;">
-                Last sync: 01:12 PM
+                Last sync: 01:18 PM
             </div>
             <div class="footer-badges">
                 <span class="footer-badge">CatBoost</span>
@@ -1771,9 +1799,9 @@
         Chart.defaults.color = '#86868b';
     
 
-        const trendCtx_trend_6523614374477303815 = document.getElementById('trend_6523614374477303815');
-        if (trendCtx_trend_6523614374477303815) {
-            new Chart(trendCtx_trend_6523614374477303815, {
+        const trendCtx_trend_7363345363448566261 = document.getElementById('trend_7363345363448566261');
+        if (trendCtx_trend_7363345363448566261) {
+            new Chart(trendCtx_trend_7363345363448566261, {
                 type: 'line',
                 data: {
                     labels: ["10/07", "10/11", "10/12", "10/14", "10/18", "10/23", "10/25"],
@@ -1849,9 +1877,9 @@
         }
         
 
-        const trendCtx_trend_1467785939315389731 = document.getElementById('trend_1467785939315389731');
-        if (trendCtx_trend_1467785939315389731) {
-            new Chart(trendCtx_trend_1467785939315389731, {
+        const trendCtx_trend_4742017400232157480 = document.getElementById('trend_4742017400232157480');
+        if (trendCtx_trend_4742017400232157480) {
+            new Chart(trendCtx_trend_4742017400232157480, {
                 type: 'line',
                 data: {
                     labels: ["10/04", "10/06", "10/12", "10/13", "10/15", "10/22", "10/24", "10/26"],
@@ -1927,9 +1955,9 @@
         }
         
 
-        const trendCtx_trend_3606927277831950657 = document.getElementById('trend_3606927277831950657');
-        if (trendCtx_trend_3606927277831950657) {
-            new Chart(trendCtx_trend_3606927277831950657, {
+        const trendCtx_trend_1713289518837361197 = document.getElementById('trend_1713289518837361197');
+        if (trendCtx_trend_1713289518837361197) {
+            new Chart(trendCtx_trend_1713289518837361197, {
                 type: 'line',
                 data: {
                     labels: ["10/06", "10/08", "10/11", "10/13", "10/23", "10/25", "10/26"],
@@ -2005,9 +2033,9 @@
         }
         
 
-        const trendCtx_trend_2989926302208346973 = document.getElementById('trend_2989926302208346973');
-        if (trendCtx_trend_2989926302208346973) {
-            new Chart(trendCtx_trend_2989926302208346973, {
+        const trendCtx_trend_6907637796043463492 = document.getElementById('trend_6907637796043463492');
+        if (trendCtx_trend_6907637796043463492) {
+            new Chart(trendCtx_trend_6907637796043463492, {
                 type: 'line',
                 data: {
                     labels: ["10/09", "10/11", "10/13", "10/15", "10/17", "10/24", "10/26"],
