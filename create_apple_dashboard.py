@@ -2364,7 +2364,7 @@ def render_prediction_card_apple(pred, historical_df, trend_charts_data, sport, 
                 <div class="detail-label">Spread</div>
                 <div class="detail-value">{abs(spread):.1f} pts</div>
             </div>
-            {f'<div class="detail-item"><div class="detail-label">Vegas Line</div><div class="detail-value">{abs(vegas):.1f} pts</div></div>' if vegas else ''}
+            {f'<div class="detail-item"><div class="detail-label">DraftKings Line</div><div class="detail-value">{abs(draftkings_spread):.1f} pts</div></div>' if draftkings_spread is not None else (f'<div class="detail-item"><div class="detail-label">Vegas Line</div><div class="detail-value">{abs(vegas):.1f} pts</div></div>' if vegas else '')}
             <div class="detail-item">
                 <div class="detail-label">Confidence</div>
                 <span class="confidence-badge {conf_class.replace('-confidence', '')}">{conf_text} ({confidence*100:.0f}%)</span>

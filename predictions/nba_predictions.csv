@@ -1,5 +1,25 @@
 date,game_time_est,away_team,home_team,predicted_spread,predicted_winner,confidence_score,is_high_confidence,sport,vegas_spread,divergence,clutch_analyzer_used,rest_advantage,home_rest_days,away_rest_days,home_is_b2b,away_is_b2b,net_rating_advantage,streak_advantage,home_avg_points_L10,away_avg_points_L10,clutch_adjustment,late_game_advantage,home_clutch_factor,away_clutch_factor,_clutch_backend_only
-2025-12-31,08:00 PM EST,Philadelphia 76ers,Memphis Grizzlies,1.4,Memphis Grizzlies,0.799,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-2.0,0.0,0.0,-3.55,0.21,-4.0,4.0,True
-2025-12-31,09:00 PM EST,Boston Celtics,Utah Jazz,2.7,Utah Jazz,0.814,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-4.0,0.0,0.0,-3.56,-0.17,2.0,4.0,True
-2025-12-31,10:30 PM EST,Detroit Pistons,Los Angeles Lakers,-2.3,Detroit Pistons,0.799,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-2.0,0.0,0.0,-7.14,-0.05,6.0,-2.0,True
-2025-12-31,11:00 PM EST,Sacramento Kings,Los Angeles Clippers,4.7,Los Angeles Clippers,0.787,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,0.0,0.0,0.0,0.92,0.46,-5.0,3.0,True
+2025-12-31,01:00 PM EST,Golden State Warriors,Charlotte Hornets,5.2,Charlotte Hornets,0.802,1,NBA,-7.5,12.678968689703034,True,0.0,2.0,2.0,0,0,0.0,-3.0,0.0,0.0,0.01,0.0,-1.0,-10.0,True
+2025-12-31,03:00 PM EST,Minnesota Timberwolves,Atlanta Hawks,-5.6,Minnesota Timberwolves,0.793,1,NBA,-5.5,0.13179980934054925,True,0.0,2.0,2.0,0,0,0.0,-1.0,0.0,0.0,-10.0,-0.39,-5.0,8.0,True
+2025-12-31,03:00 PM EST,Orlando Magic,Indiana Pacers,5.5,Indiana Pacers,0.788,1,NBA,-4.5,10.010837023746348,True,0.0,2.0,2.0,0,0,0.0,1.0,0.0,0.0,1.65,-0.01,-8.0,3.0,True
+2025-12-31,03:30 PM EST,Phoenix Suns,Cleveland Cavaliers,-6.1,Phoenix Suns,0.789,1,NBA,6.5,12.559879292046789,True,0.0,2.0,2.0,0,0,0.0,2.0,0.0,0.0,-10.0,-0.03,0.0,1.0,True
+2025-12-31,07:00 PM EST,New Orleans Pelicans,Chicago Bulls,-5.2,New Orleans Pelicans,0.798,1,NBA,1.5,6.703365283283189,True,0.0,2.0,2.0,0,0,0.0,-2.0,0.0,0.0,-10.0,-0.23,8.0,-10.0,True
+2025-12-31,07:00 PM EST,New York Knicks,San Antonio Spurs,3.4,San Antonio Spurs,0.787,1,NBA,2.5,0.8623284702412639,True,0.0,2.0,2.0,0,0,0.0,0.0,0.0,0.0,-0.43,-0.22,6.0,10.0,True
+2025-12-31,07:30 PM EST,Denver Nuggets,Toronto Raptors,8.9,Toronto Raptors,0.79,1,NBA,6.5,2.4144806387211837,True,0.0,2.0,2.0,0,0,0.0,3.0,0.0,0.0,4.87,-0.1,6.0,-9.0,True
+2025-12-31,08:00 PM EST,Washington Wizards,Milwaukee Bucks,3.6,Milwaukee Bucks,0.788,1,NBA,10.5,6.869121694535606,True,0.0,2.0,2.0,0,0,0.0,2.0,0.0,0.0,-0.29,-0.14,-6.0,0.0,True
+2025-12-31,08:00 PM EST,Portland Trail Blazers,Oklahoma City Thunder,4.0,Oklahoma City Thunder,0.789,1,NBA,15.5,11.545854406159265,True,0.0,2.0,2.0,0,0,0.0,5.0,0.0,0.0,0.01,0.03,-1.0,4.0,True
+2026-01-01,06:00 PM EST,Houston Rockets,Brooklyn Nets,-4.7,Houston Rockets,0.787,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,1.0,0.0,0.0,-8.5,-0.06,-6.0,-1.0,True
+2026-01-01,07:00 PM EST,Miami Heat,Detroit Pistons,-0.3,Miami Heat,0.799,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-2.0,0.0,0.0,-5.17,-0.38,-2.0,1.0,True
+2026-01-01,08:30 PM EST,Philadelphia 76ers,Dallas Mavericks,2.3,Dallas Mavericks,0.789,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,0.0,0.0,0.0,-1.65,0.01,3.0,4.0,True
+2026-01-01,10:00 PM EST,Boston Celtics,Sacramento Kings,0.3,Sacramento Kings,0.793,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-1.0,0.0,0.0,-4.03,-0.52,3.0,4.0,True
+2026-01-01,10:30 PM EST,Utah Jazz,Los Angeles Clippers,4.1,Los Angeles Clippers,0.788,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,3.0,0.0,0.0,0.22,0.11,-5.0,2.0,True
+2026-01-02,07:00 PM EST,San Antonio Spurs,Indiana Pacers,3.8,Indiana Pacers,0.788,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,3.0,0.0,0.0,-0.08,-0.04,-8.0,6.0,True
+2026-01-02,07:00 PM EST,Brooklyn Nets,Washington Wizards,6.4,Washington Wizards,0.812,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-5.0,0.0,0.0,0.2,0.1,0.0,-6.0,True
+2026-01-02,07:30 PM EST,Denver Nuggets,Cleveland Cavaliers,13.0,Cleveland Cavaliers,0.79,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,3.0,0.0,0.0,8.96,0.21,0.0,-9.0,True
+2026-01-02,07:30 PM EST,Atlanta Hawks,New York Knicks,13.9,New York Knicks,0.789,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,1.0,0.0,0.0,10.0,0.25,10.0,-5.0,True
+2026-01-02,08:00 PM EST,Orlando Magic,Chicago Bulls,0.4,Chicago Bulls,0.799,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-2.0,0.0,0.0,-4.57,-0.19,8.0,3.0,True
+2026-01-02,08:00 PM EST,Charlotte Hornets,Milwaukee Bucks,3.5,Milwaukee Bucks,0.787,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,0.0,0.0,0.0,-0.27,-0.14,-6.0,-1.0,True
+2026-01-02,08:00 PM EST,Portland Trail Blazers,New Orleans Pelicans,1.1,New Orleans Pelicans,0.789,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,4.0,0.0,0.0,-2.79,0.03,-10.0,4.0,True
+2026-01-02,09:00 PM EST,Sacramento Kings,Phoenix Suns,14.8,Phoenix Suns,0.798,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-2.0,0.0,0.0,10.0,0.29,1.0,3.0,True
+2026-01-02,10:00 PM EST,Oklahoma City Thunder,Golden State Warriors,0.3,Golden State Warriors,0.786,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,0.0,0.0,0.0,-3.37,-0.04,-10.0,-1.0,True
+2026-01-02,10:30 PM EST,Memphis Grizzlies,Los Angeles Lakers,5.5,Los Angeles Lakers,0.799,1,NBA,,,True,0.0,2.0,2.0,0,0,0.0,-2.0,0.0,0.0,0.64,-0.21,6.0,-4.0,True

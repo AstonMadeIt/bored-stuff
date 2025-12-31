@@ -611,9 +611,7 @@ def predict_nba_games():
         import requests
         from dateutil import parser
         import pytz
-        
-        url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard'
-        response = requests.get(url, timeout=10)
+        from datetime import datetime, timedelta
         
         upcoming_games = []
         team_name_map = {
@@ -621,61 +619,77 @@ def predict_nba_games():
             'LA Lakers': 'Los Angeles Lakers',
         }
         
-        if response.status_code == 200:
-            data = response.json()
-            events = data.get('events', [])
+        # Check today and next 2 days for games
+        for days_offset in range(0, 3):
+            check_date = datetime.now() + timedelta(days=days_offset)
+            date_str = check_date.strftime('%Y%m%d')
             
-            for event in events:
-                status = event.get('status', {})
-                status_type = status.get('type', {})
+            url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard'
+            params = {'dates': date_str}
+            response = requests.get(url, params=params, timeout=10)
+            
+            if response.status_code == 200:
+                data = response.json()
+                events = data.get('events', [])
                 
-                # Skip only truly completed games (Final, Final/OT, etc.)
-                status_name = status_type.get('name', '').lower()
-                if status_name in ['final', 'final/ot', 'final/2ot', 'final/3ot']:
-                    continue
-                
-                # Include: scheduled, in progress, delayed, etc.
-                
-                competitions = event.get('competitions', [])
-                if not competitions:
-                    continue
-                
-                comp = competitions[0]
-                competitors = comp.get('competitors', [])
-                
-                if len(competitors) < 2:
-                    continue
-                
-                home = next((c for c in competitors if c.get('homeAway') == 'home'), None)
-                away = next((c for c in competitors if c.get('homeAway') == 'away'), None)
-                
-                if home and away:
-                    home_team = team_name_map.get(home['team']['displayName'], home['team']['displayName'])
-                    away_team = team_name_map.get(away['team']['displayName'], away['team']['displayName'])
+                for event in events:
+                    status = event.get('status', {})
+                    status_type = status.get('type', {})
                     
-                    # Get game time from event date
-                    game_time_est = None
-                    date_str = event.get('date', '')
-                    if date_str:
-                        try:
-                            dt = parser.parse(date_str)
-                            if dt.tzinfo is None:
-                                dt = pytz.UTC.localize(dt)
-                            est = pytz.timezone('US/Eastern')
-                            dt_est = dt.astimezone(est)
-                            game_time_est = dt_est.strftime("%I:%M %p EST")
-                        except Exception as e:
-                            # Debug: print error
-                            pass
+                    # Check if game is completed
+                    # ESPN uses: completed=True, or status name contains 'final'
+                    is_completed = status_type.get('completed', False)
+                    status_name = status_type.get('name', '').lower()
                     
-                    upcoming_games.append({
-                        'date': date_str[:10] if date_str else '',
-                        'game_time_est': game_time_est,
-                        'home_team': home_team,
-                        'away_team': away_team,
-                        'game_id': event.get('id', ''),
-                        'status': status_type.get('shortDetail', '')
-                    })
+                    # Skip completed games
+                    if is_completed or 'final' in status_name:
+                        continue
+                    
+                    # Include: scheduled, in progress, delayed, etc.
+                    competitions = event.get('competitions', [])
+                    if not competitions:
+                        continue
+                    
+                    comp = competitions[0]
+                    competitors = comp.get('competitors', [])
+                    
+                    if len(competitors) < 2:
+                        continue
+                    
+                    home = next((c for c in competitors if c.get('homeAway') == 'home'), None)
+                    away = next((c for c in competitors if c.get('homeAway') == 'away'), None)
+                    
+                    if home and away:
+                        home_team = team_name_map.get(home['team']['displayName'], home['team']['displayName'])
+                        away_team = team_name_map.get(away['team']['displayName'], away['team']['displayName'])
+                        
+                        # Get game time from event date
+                        game_time_est = None
+                        event_date_str = event.get('date', '')
+                        if event_date_str:
+                            try:
+                                dt = parser.parse(event_date_str)
+                                if dt.tzinfo is None:
+                                    dt = pytz.UTC.localize(dt)
+                                est = pytz.timezone('US/Eastern')
+                                dt_est = dt.astimezone(est)
+                                game_time_est = dt_est.strftime("%I:%M %p EST")
+                            except Exception as e:
+                                pass
+                        
+                        # Use the check_date (the date we're querying) for the game date
+                        # Format as YYYY-MM-DD
+                        game_date = check_date.strftime('%Y-%m-%d')
+                        if not any(g['home_team'] == home_team and g['away_team'] == away_team 
+                                  for g in upcoming_games):
+                            upcoming_games.append({
+                                'date': game_date,
+                                'game_time_est': game_time_est,
+                                'home_team': home_team,
+                                'away_team': away_team,
+                                'game_id': event.get('id', ''),
+                                'status': status_type.get('shortDetail', '')
+                            })
         
         # Fallback to NBA API if ESPN fails
         if not upcoming_games:
@@ -975,7 +989,11 @@ def predict_nba_games():
                 odds_fetcher = OddsFetcher()
                 odds_data = odds_fetcher.get_game_odds(home_team, away_team)
                 if odds_data:
+                    # odds_fetcher now returns spread in model convention:
+                    # Negative = away favored, Positive = home favored
                     draftkings_spread = odds_data.get('spread')
+                    
+                    # Calculate TRUE divergence (both in same convention now)
                     if draftkings_spread is not None:
                         divergence = abs(predicted_spread - draftkings_spread)
             except Exception as e:
