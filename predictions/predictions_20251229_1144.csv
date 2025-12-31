@@ -1,0 +1,2 @@
+away,home,status,predicted_winner,predicted_spread,home_win_prob,confidence,catboost,xgboost,lightgbm
+Los Angeles Rams,Atlanta Falcons,"Mon, December 29th at 8:15 PM EST",Atlanta Falcons,12.0,0.8,0.6,9.6,15.8,10.6

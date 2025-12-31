@@ -1,0 +1,2 @@
+sport,date,week,away_team,home_team,predicted_spread,predicted_winner,confidence_score,is_high_confidence,vegas_spread,model_market_divergence,market_movement,game_time
+NFL,2025-12-30,17,Los Angeles Rams,Atlanta Falcons,4.45,Atlanta Falcons,0.66,0,7.5,3.13,6.0,01:15 AM

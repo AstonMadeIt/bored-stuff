@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Results - Pro Sports Intel AI™</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -2px;
+        }
+        
+        .subtitle {
+            color: #86868b;
+            margin-bottom: 40px;
+        }
+        
+        .stats-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .big-stat {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #34c759;
+            margin-bottom: 8px;
+        }
+        
+        .game-card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid #e5e5e7;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .game-card.correct {
+            border-left-color: #34c759;
+        }
+        
+        .game-card.incorrect {
+            border-left-color: #ff3b30;
+        }
+        
+        .game-card.high-confidence {
+            background: #f0f9ff;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .game-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .result-badge {
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .result-badge.correct {
+            background: #34c759;
+            color: white;
+        }
+        
+        .result-badge.incorrect {
+            background: #ff3b30;
+            color: white;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 12px 0;
+        }
+        
+        .prediction-info {
+            color: #86868b;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+        
+        .divergence {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recent Results</h1>
+        <div class="subtitle">Last 7 Days Performance</div>
+        
+        <div class="stats-card">
+            <div class="big-stat">25.0%</div>
+            <p>Win Rate (1/4 predictions)</p>
+        </div>
+
+        <div class="game-card incorrect high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2025-12-30T00:00:00</div>
+                    <div class="score">
+                        Utah Jazz 119 - 129 Boston Celtics
+                    </div>
+                </div>
+                <div class="result-badge incorrect">✗ WRONG</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Utah Jazz</strong> by 6.3 pts
+                
+                <br>
+                Confidence: 81% | 
+                Spread Error: 16.3 pts
+            </div>
+        </div>
+
+        <div class="game-card incorrect high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2025-12-30T00:00:00</div>
+                    <div class="score">
+                        Memphis Grizzlies 136 - 139 Philadelphia 76ers
+                    </div>
+                </div>
+                <div class="result-badge incorrect">✗ WRONG</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Memphis Grizzlies</strong> by 4.9 pts
+                
+                <br>
+                Confidence: 80% | 
+                Spread Error: 7.9 pts
+            </div>
+        </div>
+
+        <div class="game-card incorrect high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2025-12-30T00:00:00</div>
+                    <div class="score">
+                        Los Angeles Lakers 106 - 128 Detroit Pistons
+                    </div>
+                </div>
+                <div class="result-badge incorrect">✗ WRONG</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Los Angeles Lakers</strong> by 4.9 pts
+                
+                <br>
+                Confidence: 80% | 
+                Spread Error: 26.9 pts
+            </div>
+        </div>
+
+        <div class="game-card correct high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2025-12-30T00:00:00</div>
+                    <div class="score">
+                        Los Angeles Clippers 131 - 90 Sacramento Kings
+                    </div>
+                </div>
+                <div class="result-badge correct">✓ CORRECT</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Los Angeles Clippers</strong> by 3.7 pts
+                
+                <br>
+                Confidence: 79% | 
+                Spread Error: 37.3 pts
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

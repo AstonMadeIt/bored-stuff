@@ -627,8 +627,11 @@ def predict_nba_games():
             
             for event in events:
                 status = event.get('status', {})
-                if status.get('type', {}).get('completed', False):
-                    continue  # Skip completed games
+                status_type = status.get('type', {})
+                
+                # Skip completed games
+                if status_type.get('completed', False) or status_type.get('name', '').lower() in ['final', 'final/ot']:
+                    continue
                 
                 competitions = event.get('competitions', [])
                 if not competitions:
@@ -647,7 +650,7 @@ def predict_nba_games():
                     home_team = team_name_map.get(home['team']['displayName'], home['team']['displayName'])
                     away_team = team_name_map.get(away['team']['displayName'], away['team']['displayName'])
                     
-                    # Get game time
+                    # Get game time from event date
                     game_time_est = None
                     date_str = event.get('date', '')
                     if date_str:
@@ -658,7 +661,8 @@ def predict_nba_games():
                             est = pytz.timezone('US/Eastern')
                             dt_est = dt.astimezone(est)
                             game_time_est = dt_est.strftime("%I:%M %p EST")
-                        except:
+                        except Exception as e:
+                            # Debug: print error
                             pass
                     
                     upcoming_games.append({
@@ -667,7 +671,7 @@ def predict_nba_games():
                         'home_team': home_team,
                         'away_team': away_team,
                         'game_id': event.get('id', ''),
-                        'status': status.get('type', {}).get('shortDetail', '')
+                        'status': status_type.get('shortDetail', '')
                     })
         
         # Fallback to NBA API if ESPN fails

@@ -1,0 +1,11 @@
+[
+  {
+    "away": "Los Angeles Rams",
+    "home": "Atlanta Falcons",
+    "status": "Mon, December 29th at 8:15 PM EST",
+    "predicted_winner": "Atlanta Falcons",
+    "predicted_spread": 12.0,
+    "home_win_prob": 0.8,
+    "confidence": 0.6,
+    "catboost": 9.6,
+    "xgboost": 

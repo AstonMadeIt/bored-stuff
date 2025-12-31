@@ -1,0 +1,844 @@
+==========================================
+🌅 MORNING RUN - Wed Dec 31 07:00:05 EST 2025
+==========================================
+
+📊 Generating predictions...
+================================================================================
+🏈🏀 GENERATING ALL PREDICTIONS
+================================================================================
+
+🏈 Generating NFL predictions...
+================================================================================
+🎯 PREDICTING TODAY'S NFL GAMES
+================================================================================
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Loading historical data...
+   ✅ Loaded 684 historical games
+
+📅 Fetching games for December 31, 2025...
+
+💰 Fetching Vegas odds...
+      ✅ Fetched odds for 16 games (Credits: 1/100, Remaining: 99)
+
+⚠️  No upcoming games found for today
+   ⚠️  No NFL games today
+
+🏀 Generating NBA predictions...
+   🎯 Clutch Analyzer Formula: (Streak × Late Game) / (Record Divergence - PPG Divergence)
+================================================================================
+🏀 NBA PREDICTIONS - ENHANCED FEATURES + CLUTCH ANALYZER
+================================================================================
+🔥 Using ENHANCED NBA features: Rest/B2B, Last 10 weighted, Pace, Net Rating, Streaks
+🎯 CLUTCH ANALYZER INTEGRATED: Formula-based late game adjustment active
+   Formula: (Streak × Late Game) / (Record Matchup Divergence - PPG Divergence)
+
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Fetching upcoming NBA games...
+   ✅ Found 9 upcoming games
+
+📊 Loading historical NBA data...
+      🔥 ENHANCED FEATURES: Rest advantage=0.0, Home B2B=0.0, Away B2B=0.0
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 5.2 → Final: 5.2
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Golden State Warriors @ Charlotte Hornets
+      Predicted: Charlotte Hornets by 5.2
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 4.4 → Final: 4.4
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Minnesota Timberwolves @ Atlanta Hawks
+      Predicted: Atlanta Hawks by 4.4
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Orlando Magic @ Indiana Pacers
+      Predicted: Indiana Pacers by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Phoenix Suns @ Cleveland Cavaliers
+      Predicted: Cleveland Cavaliers by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 4.8 → Final: 4.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   New Orleans Pelicans @ Chicago Bulls
+      Predicted: Chicago Bulls by 4.8
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.8 → Final: 3.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   New York Knicks @ San Antonio Spurs
+      Predicted: San Antonio Spurs by 3.8
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 4.0 → Final: 4.0
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Denver Nuggets @ Toronto Raptors
+      Predicted: Toronto Raptors by 4.0
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Washington Wizards @ Milwaukee Bucks
+      Predicted: Milwaukee Bucks by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Portland Trail Blazers @ Oklahoma City Thunder
+      Predicted: Oklahoma City Thunder by 3.9
+
+✅ Generated 9 NBA predictions
+   ✅ Generated 9 NBA predictions
+   💾 Saved 9 predictions to database for tracking
+✅ Database initialized: predictions/validation.db
+   ✅ Stored 9 predictions (0 skipped)
+   ✅ Stored 9 predictions in validation system
+
+✅ Total predictions: 0 NFL + 9 NBA
+   Saved to: predictions/all_predictions.json
+
+🎉 All predictions generated!
+
+✅ Predictions generated!
+
+📊 Updating dashboard...
+/Users/a.fleming/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+📊 Note: This script only generates the dashboard from existing predictions.
+   To generate NEW predictions, run: python3 generate_all_predictions.py
+
+✅ Standings fetcher initialized
+⚠️  ANTHROPIC_API_KEY not set - AI insights disabled (using fallback)
+✅ SHAP explainer enabled (with training background)
+📊 Fetching standings (one-time fetch)...
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Fetched NFL standings for 0 teams
+   ✅ Standings cached (NBA: 30, NFL: 0)
+✅ Apple-grade dashboard created: predictions/dashboard.html
+
+✅ Dashboard updated!
+
+🎉 Morning run complete!
+
+==========================================
+✅ Morning run finished at Wed Dec 31 07:00:21 EST 2025
+==========================================
+==========================================
+🌅 MORNING RUN - Wed Dec 31 07:20:05 EST 2025
+==========================================
+
+📊 Generating predictions...
+================================================================================
+🏈🏀 GENERATING ALL PREDICTIONS
+================================================================================
+
+🏈 Generating NFL predictions...
+================================================================================
+🎯 PREDICTING TODAY'S NFL GAMES
+================================================================================
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Loading historical data...
+   ✅ Loaded 684 historical games
+
+📅 Fetching games for December 31, 2025...
+
+💰 Fetching Vegas odds...
+      ✅ Fetched odds for 16 games (Credits: 1/100, Remaining: 99)
+
+⚠️  No upcoming games found for today
+   ⚠️  No NFL games today
+
+🏀 Generating NBA predictions...
+   🎯 Clutch Analyzer Formula: (Streak × Late Game) / (Record Divergence - PPG Divergence)
+================================================================================
+🏀 NBA PREDICTIONS - ENHANCED FEATURES + CLUTCH ANALYZER
+================================================================================
+🔥 Using ENHANCED NBA features: Rest/B2B, Last 10 weighted, Pace, Net Rating, Streaks
+🎯 CLUTCH ANALYZER INTEGRATED: Formula-based late game adjustment active
+   Formula: (Streak × Late Game) / (Record Matchup Divergence - PPG Divergence)
+
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Fetching upcoming NBA games...
+   ✅ Found 9 upcoming games
+
+📊 Loading historical NBA data...
+      🔥 ENHANCED FEATURES: Rest advantage=0.0, Home B2B=0.0, Away B2B=0.0
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 5.2 → Final: 5.2
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Golden State Warriors @ Charlotte Hornets
+      Predicted: Charlotte Hornets by 5.2
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 4.4 → Final: 4.4
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Minnesota Timberwolves @ Atlanta Hawks
+      Predicted: Atlanta Hawks by 4.4
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Orlando Magic @ Indiana Pacers
+      Predicted: Indiana Pacers by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Phoenix Suns @ Cleveland Cavaliers
+      Predicted: Cleveland Cavaliers by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 4.8 → Final: 4.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   New Orleans Pelicans @ Chicago Bulls
+      Predicted: Chicago Bulls by 4.8
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.8 → Final: 3.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   New York Knicks @ San Antonio Spurs
+      Predicted: San Antonio Spurs by 3.8
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 4.0 → Final: 4.0
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Denver Nuggets @ Toronto Raptors
+      Predicted: Toronto Raptors by 4.0
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Washington Wizards @ Milwaukee Bucks
+      Predicted: Milwaukee Bucks by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Portland Trail Blazers @ Oklahoma City Thunder
+      Predicted: Oklahoma City Thunder by 3.9
+
+✅ Generated 9 NBA predictions
+   ✅ Generated 9 NBA predictions
+   💾 Saved 9 predictions to database for tracking
+✅ Database initialized: predictions/validation.db
+   ✅ Stored 9 predictions (0 skipped)
+   ✅ Stored 9 predictions in validation system
+
+✅ Total predictions: 0 NFL + 9 NBA
+   Saved to: predictions/all_predictions.json
+
+🎉 All predictions generated!
+
+✅ Predictions generated!
+
+📊 Updating dashboard...
+/Users/a.fleming/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+📊 Note: This script only generates the dashboard from existing predictions.
+   To generate NEW predictions, run: python3 generate_all_predictions.py
+
+✅ Standings fetcher initialized
+✅ AI insights enabled
+✅ SHAP explainer enabled (with training background)
+📊 Fetching standings (one-time fetch)...
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Fetched NFL standings for 0 teams
+   ✅ Standings cached (NBA: 30, NFL: 0)
+✅ Apple-grade dashboard created: predictions/dashboard.html
+
+✅ Dashboard updated!
+
+📦 Committing to git...
+From ssh://github.com/AstonMadeIt/bored-stuff
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+[main b9a6a3e] Auto-update: Morning predictions and dashboard 2025-12-31 07:20
+ 2 files changed, 3014 insertions(+)
+ create mode 100644 predictions/all_predictions.json
+ create mode 100644 predictions/dashboard.html
+   ✅ Committed: Auto-update: Morning predictions and dashboard 2025-12-31 07:20
+   📤 Pushing to remote...
+To ssh://github.com/AstonMadeIt/bored-stuff.git
+   6872814..b9a6a3e  main -> main
+   ✅ Pushed to remote
+
+🎉 Morning run complete!
+
+==========================================
+✅ Morning run finished at Wed Dec 31 07:20:41 EST 2025
+==========================================
+==========================================
+🌅 MORNING RUN - Wed Dec 31 07:27:05 EST 2025
+==========================================
+
+📊 Generating predictions...
+================================================================================
+🏈🏀 GENERATING ALL PREDICTIONS
+================================================================================
+
+🏈 Generating NFL predictions...
+================================================================================
+🎯 PREDICTING TODAY'S NFL GAMES
+================================================================================
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Loading historical data...
+   ✅ Loaded 684 historical games
+
+📅 Fetching games for December 31, 2025...
+
+💰 Fetching Vegas odds...
+      ✅ Fetched odds for 16 games (Credits: 1/100, Remaining: 99)
+
+⚠️  No upcoming games found for today
+   ⚠️  No NFL games today
+
+🏀 Generating NBA predictions...
+   🎯 Clutch Analyzer Formula: (Streak × Late Game) / (Record Divergence - PPG Divergence)
+================================================================================
+🏀 NBA PREDICTIONS - ENHANCED FEATURES + CLUTCH ANALYZER
+================================================================================
+🔥 Using ENHANCED NBA features: Rest/B2B, Last 10 weighted, Pace, Net Rating, Streaks
+🎯 CLUTCH ANALYZER INTEGRATED: Formula-based late game adjustment active
+   Formula: (Streak × Late Game) / (Record Matchup Divergence - PPG Divergence)
+
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Fetching upcoming NBA games...
+   ✅ Found 9 upcoming games
+
+📊 Loading historical NBA data...
+      🔥 ENHANCED FEATURES: Rest advantage=0.0, Home B2B=0.0, Away B2B=0.0
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 5.2 → Final: 5.2
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Golden State Warriors @ Charlotte Hornets
+      Predicted: Charlotte Hornets by 5.2
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 4.4 → Final: 4.4
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Minnesota Timberwolves @ Atlanta Hawks
+      Predicted: Atlanta Hawks by 4.4
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Orlando Magic @ Indiana Pacers
+      Predicted: Indiana Pacers by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Phoenix Suns @ Cleveland Cavaliers
+      Predicted: Cleveland Cavaliers by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 4.8 → Final: 4.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   New Orleans Pelicans @ Chicago Bulls
+      Predicted: Chicago Bulls by 4.8
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.8 → Final: 3.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   New York Knicks @ San Antonio Spurs
+      Predicted: San Antonio Spurs by 3.8
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 4.0 → Final: 4.0
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Denver Nuggets @ Toronto Raptors
+      Predicted: Toronto Raptors by 4.0
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Washington Wizards @ Milwaukee Bucks
+      Predicted: Milwaukee Bucks by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 0.0
+         Late game advantage: +0.00
+   Portland Trail Blazers @ Oklahoma City Thunder
+      Predicted: Oklahoma City Thunder by 3.9
+
+✅ Generated 9 NBA predictions
+   ✅ Generated 9 NBA predictions
+   💾 Saved 9 predictions to database for tracking
+✅ Database initialized: predictions/validation.db
+   ✅ Stored 9 predictions (0 skipped)
+   ✅ Stored 9 predictions in validation system
+
+✅ Total predictions: 0 NFL + 9 NBA
+   Saved to: predictions/all_predictions.json
+
+🎉 All predictions generated!
+
+✅ Predictions generated!
+
+📊 Updating dashboard...
+/Users/a.fleming/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+📊 Note: This script only generates the dashboard from existing predictions.
+   To generate NEW predictions, run: python3 generate_all_predictions.py
+
+✅ Standings fetcher initialized
+✅ AI insights enabled
+✅ SHAP explainer enabled (with training background)
+📊 Fetching standings (one-time fetch)...
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Fetched NFL standings for 0 teams
+   ✅ Standings cached (NBA: 30, NFL: 0)
+✅ Apple-grade dashboard created: predictions/dashboard.html
+
+✅ Dashboard updated!
+
+📦 Committing to git...
+From ssh://github.com/AstonMadeIt/bored-stuff
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+   📋 Copied dashboard to root for GitHub Pages
+[main 82b535f] Auto-update: Morning predictions and dashboard 2025-12-31 07:27
+ 3 files changed, 93 insertions(+), 93 deletions(-)
+   ✅ Committed: Auto-update: Morning predictions and dashboard 2025-12-31 07:27
+   📤 Pushing to remote...
+To ssh://github.com/AstonMadeIt/bored-stuff.git
+   20107eb..82b535f  main -> main
+   ✅ Pushed to remote
+
+🎉 Morning run complete!
+
+==========================================
+✅ Morning run finished at Wed Dec 31 07:27:41 EST 2025
+==========================================
+==========================================
+🌅 MORNING RUN - Wed Dec 31 08:40:30 EST 2025
+==========================================
+
+📊 Generating predictions...
+================================================================================
+🏈🏀 GENERATING ALL PREDICTIONS
+================================================================================
+
+🏈 Generating NFL predictions...
+================================================================================
+🎯 PREDICTING TODAY'S NFL GAMES
+================================================================================
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Loading historical data...
+   ✅ Loaded 684 historical games
+
+📅 Fetching games for December 31, 2025...
+
+💰 Fetching Vegas odds...
+      ✅ Fetched odds for 16 games (Credits: 1/100, Remaining: 99)
+
+⚠️  No upcoming games found for today
+   ⚠️  No NFL games today
+
+🏀 Generating NBA predictions...
+   🎯 Clutch Analyzer Formula: (Streak × Late Game) / (Record Divergence - PPG Divergence)
+================================================================================
+🏀 NBA PREDICTIONS - ENHANCED FEATURES + CLUTCH ANALYZER
+================================================================================
+🔥 Using ENHANCED NBA features: Rest/B2B, Last 10 weighted, Pace, Net Rating, Streaks
+🎯 CLUTCH ANALYZER INTEGRATED: Formula-based late game adjustment active
+   Formula: (Streak × Late Game) / (Record Matchup Divergence - PPG Divergence)
+
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Fetching upcoming NBA games...
+   ✅ Found 9 upcoming games
+
+📊 Loading historical NBA data...
+      🔥 ENHANCED FEATURES: Rest advantage=0.0, Home B2B=0.0, Away B2B=0.0
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 5.2 → Final: 5.2
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -1.0, Away clutch: -10.0
+         Late game advantage: +0.00
+   Golden State Warriors @ Charlotte Hornets
+      Predicted: Charlotte Hornets by 5.2
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +10.0 pts
+         Model: 4.4 → Final: 14.4
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -5.0, Away clutch: 8.0
+         Late game advantage: -0.39
+   Minnesota Timberwolves @ Atlanta Hawks
+      Predicted: Atlanta Hawks by 14.4
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.1 pts
+         Model: 3.9 → Final: 3.7
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -8.0, Away clutch: 3.0
+         Late game advantage: -0.01
+   Orlando Magic @ Indiana Pacers
+      Predicted: Indiana Pacers by 3.7
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +1.4 pts
+         Model: 3.9 → Final: 5.3
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 1.0
+         Late game advantage: -0.03
+   Phoenix Suns @ Cleveland Cavaliers
+      Predicted: Cleveland Cavaliers by 5.3
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +9.2 pts
+         Model: 4.8 → Final: 14.0
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 8.0, Away clutch: -10.0
+         Late game advantage: -0.23
+   New Orleans Pelicans @ Chicago Bulls
+      Predicted: Chicago Bulls by 14.0
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 3.8 → Final: 3.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 6.0, Away clutch: 10.0
+         Late game advantage: -0.22
+   New York Knicks @ San Antonio Spurs
+      Predicted: San Antonio Spurs by 3.8
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -4.0 pts
+         Model: 4.0 → Final: 0.0
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 6.0, Away clutch: -9.0
+         Late game advantage: -0.10
+   Denver Nuggets @ Toronto Raptors
+      Predicted: Toronto Raptors by 0.0
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -6.0, Away clutch: 0.0
+         Late game advantage: -0.14
+   Washington Wizards @ Milwaukee Bucks
+      Predicted: Milwaukee Bucks by 3.9
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 3.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -1.0, Away clutch: 4.0
+         Late game advantage: +0.03
+   Portland Trail Blazers @ Oklahoma City Thunder
+      Predicted: Oklahoma City Thunder by 3.9
+
+✅ Generated 9 NBA predictions
+   ✅ Generated 9 NBA predictions
+   💾 Saved 9 predictions to database for tracking
+✅ Database initialized: predictions/validation.db
+   ✅ Stored 9 predictions (0 skipped)
+   ✅ Stored 9 predictions in validation system
+
+✅ Total predictions: 0 NFL + 9 NBA
+   Saved to: predictions/all_predictions.json
+
+🎉 All predictions generated!
+
+✅ Predictions generated!
+
+📊 Updating dashboard...
+/Users/a.fleming/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+📊 Note: This script only generates the dashboard from existing predictions.
+   To generate NEW predictions, run: python3 generate_all_predictions.py
+
+✅ Standings fetcher initialized
+✅ AI insights enabled
+✅ SHAP explainer enabled (with training background)
+📊 Fetching standings (one-time fetch)...
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Fetched NFL standings for 0 teams
+   ✅ Standings cached (NBA: 30, NFL: 0)
+✅ Apple-grade dashboard created: predictions/dashboard.html
+
+✅ Dashboard updated!
+
+📦 Committing to git...
+From ssh://github.com/AstonMadeIt/bored-stuff
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+   📋 Copied dashboard to root for GitHub Pages
+[main 02023fe] Auto-update: Morning predictions and dashboard 2025-12-31 08:40
+ 3 files changed, 139 insertions(+), 139 deletions(-)
+   ✅ Committed: Auto-update: Morning predictions and dashboard 2025-12-31 08:40
+   📤 Pushing to remote...
+To ssh://github.com/AstonMadeIt/bored-stuff.git
+   82b535f..02023fe  main -> main
+   ✅ Pushed to remote
+
+🎉 Morning run complete!
+
+==========================================
+✅ Morning run finished at Wed Dec 31 08:40:58 EST 2025
+==========================================
+==========================================
+🌅 MORNING RUN - Wed Dec 31 09:00:46 EST 2025
+==========================================
+
+📊 Generating predictions...
+================================================================================
+🏈🏀 GENERATING ALL PREDICTIONS
+================================================================================
+
+🏈 Generating NFL predictions...
+================================================================================
+🎯 PREDICTING TODAY'S NFL GAMES
+================================================================================
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Loading historical data...
+   ✅ Loaded 684 historical games
+
+📅 Fetching games for December 31, 2025...
+
+💰 Fetching Vegas odds...
+      ✅ Fetched odds for 16 games (Credits: 1/100, Remaining: 99)
+
+⚠️  No upcoming games found for today
+   ⚠️  No NFL games today
+
+🏀 Generating NBA predictions...
+   🎯 Clutch Analyzer Formula: (Streak × Late Game) / (Record Divergence - PPG Divergence)
+================================================================================
+🏀 NBA PREDICTIONS - ENHANCED FEATURES + CLUTCH ANALYZER
+================================================================================
+🔥 Using ENHANCED NBA features: Rest/B2B, Last 10 weighted, Pace, Net Rating, Streaks
+🎯 CLUTCH ANALYZER INTEGRATED: Formula-based late game adjustment active
+   Formula: (Streak × Late Game) / (Record Matchup Divergence - PPG Divergence)
+
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Fetching upcoming NBA games...
+   ✅ Found 9 upcoming games
+
+📊 Loading historical NBA data...
+      🔥 ENHANCED FEATURES: Rest advantage=0.0, Home B2B=0.0, Away B2B=0.0
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 5.2 → Final: 5.2
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -1.0, Away clutch: -10.0
+         Late game advantage: +0.00
+   Golden State Warriors @ Charlotte Hornets
+      Predicted: Charlotte Hornets by 5.2
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -10.0 pts
+         Model: 4.4 → Final: -5.6
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -5.0, Away clutch: 8.0
+         Late game advantage: -0.39
+   Minnesota Timberwolves @ Atlanta Hawks
+      Predicted: Minnesota Timberwolves by 5.6
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +1.7 pts
+         Model: 3.9 → Final: 5.5
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -8.0, Away clutch: 3.0
+         Late game advantage: -0.01
+   Orlando Magic @ Indiana Pacers
+      Predicted: Indiana Pacers by 5.5
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -10.0 pts
+         Model: 3.9 → Final: -6.1
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 1.0
+         Late game advantage: -0.03
+   Phoenix Suns @ Cleveland Cavaliers
+      Predicted: Phoenix Suns by 6.1
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -10.0 pts
+         Model: 4.8 → Final: -5.2
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 8.0, Away clutch: -10.0
+         Late game advantage: -0.23
+   New Orleans Pelicans @ Chicago Bulls
+      Predicted: New Orleans Pelicans by 5.2
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.4 pts
+         Model: 3.8 → Final: 3.4
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 6.0, Away clutch: 10.0
+         Late game advantage: -0.22
+   New York Knicks @ San Antonio Spurs
+      Predicted: San Antonio Spurs by 3.4
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +4.9 pts
+         Model: 4.0 → Final: 8.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 6.0, Away clutch: -9.0
+         Late game advantage: -0.10
+   Denver Nuggets @ Toronto Raptors
+      Predicted: Toronto Raptors by 8.9
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.3 pts
+         Model: 3.9 → Final: 3.6
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -6.0, Away clutch: 0.0
+         Late game advantage: -0.14
+   Washington Wizards @ Milwaukee Bucks
+      Predicted: Milwaukee Bucks by 3.6
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 4.0
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -1.0, Away clutch: 4.0
+         Late game advantage: +0.03
+   Portland Trail Blazers @ Oklahoma City Thunder
+      Predicted: Oklahoma City Thunder by 4.0
+
+✅ Generated 9 NBA predictions
+   ✅ Generated 9 NBA predictions
+   💾 Saved 9 predictions to database for tracking
+✅ Database initialized: predictions/validation.db
+   ✅ Stored 9 predictions (0 skipped)
+   ✅ Stored 9 predictions in validation system
+
+✅ Total predictions: 0 NFL + 9 NBA
+   Saved to: predictions/all_predictions.json
+
+🎉 All predictions generated!
+
+✅ Predictions generated!
+
+📊 Updating dashboard...
+/Users/a.fleming/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+📊 Note: This script only generates the dashboard from existing predictions.
+   To generate NEW predictions, run: python3 generate_all_predictions.py
+
+✅ Standings fetcher initialized
+✅ AI insights enabled
+✅ SHAP explainer enabled (with training background)
+📊 Fetching standings (one-time fetch)...
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Fetched NFL standings for 0 teams
+   ✅ Standings cached (NBA: 30, NFL: 0)
+✅ Apple-grade dashboard created: predictions/dashboard.html
+
+✅ Dashboard updated!
+
+📦 Committing to git...
+From ssh://github.com/AstonMadeIt/bored-stuff
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+   📋 Copied dashboard to root for GitHub Pages
+[main 17aae62] Auto-update: Morning predictions and dashboard 2025-12-31 09:01
+ 3 files changed, 93 insertions(+), 93 deletions(-)
+   ✅ Committed: Auto-update: Morning predictions and dashboard 2025-12-31 09:01
+   📤 Pushing to remote...
+To ssh://github.com/AstonMadeIt/bored-stuff.git
+   1641e6e..17aae62  main -> main
+   ✅ Pushed to remote
+
+🎉 Morning run complete!
+
+==========================================
+✅ Morning run finished at Wed Dec 31 09:01:15 EST 2025
+==========================================

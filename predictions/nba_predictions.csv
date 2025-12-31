@@ -1,0 +1,10 @@
+date,game_time_est,away_team,home_team,predicted_spread,predicted_winner,confidence_score,is_high_confidence,sport,clutch_analyzer_used,rest_advantage,home_rest_days,away_rest_days,home_is_b2b,away_is_b2b,net_rating_advantage,streak_advantage,home_avg_points_L10,away_avg_points_L10,clutch_adjustment,late_game_advantage,home_clutch_factor,away_clutch_factor,_clutch_backend_only
+2025-12-31T00:00:00,,Golden State Warriors,Charlotte Hornets,5.2,Charlotte Hornets,0.802,1,NBA,True,0.0,2.0,2.0,0,0,0.0,-3.0,0.0,0.0,0.01,0.0,-1.0,-10.0,True
+2025-12-31T00:00:00,,Minnesota Timberwolves,Atlanta Hawks,-5.6,Minnesota Timberwolves,0.793,1,NBA,True,0.0,2.0,2.0,0,0,0.0,-1.0,0.0,0.0,-10.0,-0.39,-5.0,8.0,True
+2025-12-31T00:00:00,,Orlando Magic,Indiana Pacers,5.5,Indiana Pacers,0.788,1,NBA,True,0.0,2.0,2.0,0,0,0.0,1.0,0.0,0.0,1.65,-0.01,-8.0,3.0,True
+2025-12-31T00:00:00,,Phoenix Suns,Cleveland Cavaliers,-6.1,Phoenix Suns,0.789,1,NBA,True,0.0,2.0,2.0,0,0,0.0,2.0,0.0,0.0,-10.0,-0.03,0.0,1.0,True
+2025-12-31T00:00:00,,New Orleans Pelicans,Chicago Bulls,-5.2,New Orleans Pelicans,0.798,1,NBA,True,0.0,2.0,2.0,0,0,0.0,-2.0,0.0,0.0,-10.0,-0.23,8.0,-10.0,True
+2025-12-31T00:00:00,,New York Knicks,San Antonio Spurs,3.4,San Antonio Spurs,0.787,1,NBA,True,0.0,2.0,2.0,0,0,0.0,0.0,0.0,0.0,-0.43,-0.22,6.0,10.0,True
+2025-12-31T00:00:00,,Denver Nuggets,Toronto Raptors,8.9,Toronto Raptors,0.79,1,NBA,True,0.0,2.0,2.0,0,0,0.0,3.0,0.0,0.0,4.87,-0.1,6.0,-9.0,True
+2025-12-31T00:00:00,,Washington Wizards,Milwaukee Bucks,3.6,Milwaukee Bucks,0.788,1,NBA,True,0.0,2.0,2.0,0,0,0.0,2.0,0.0,0.0,-0.29,-0.14,-6.0,0.0,True
+2025-12-31T00:00:00,,Portland Trail Blazers,Oklahoma City Thunder,4.0,Oklahoma City Thunder,0.789,1,NBA,True,0.0,2.0,2.0,0,0,0.0,5.0,0.0,0.0,0.01,0.03,-1.0,4.0,True

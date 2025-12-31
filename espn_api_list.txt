@@ -1,0 +1,1129 @@
+Skip to content
+ 
+Search Gists
+
+All gists
+Back to GitHub
+Sign in
+Sign up
+Instantly share code, notes, and snippets.
+@nntrn
+nntrn/espn-api-list.md
+Last active 5 hours ago
+Code
+Revisions
+46
+Stars
+599
+Forks
+73
+Clone this repository at &lt;script src=&quot;https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c.js&quot;&gt;&lt;/script&gt;
+
+List of nfl endpoints for ESPN's API
+espn-api-list.md
+List of NFL API Endpoints
+This page has been updated a lot in the past 3 years. Older revisions you might like more than this one:
+
+June 2021 - list of endpoints for other sports/leagues (i.e. nba, nhl, mlb)
+August 2021 - get historical fantasy league data
+September 2021 - list of endpoints in plain text
+May 2023 - collapsed endpoint response examples
+Mar 2025 - endpoints from partners.api.espn.com *NEW*
+Personal Note
+
+This is what I do to learn the inner workings of ESPN's API. I like looking at how other people make header calls and what parameters they use.
+
+# download or copy to your bin
+curl -O https://raw.githubusercontent.com/nntrn/gh-search/refs/heads/devel/gh-search
+
+# note: i use --not nntrn so i don't search my own stuff
+gh-search --search 'sports.core.api.espn.com/v3' --not --user nntrn --per-page 50
+gh-search --search gamelog --content api.espn.com --out /tmp/espn
+
+# for quick scanning
+grep -r -C 15 api.espn.com /tmp/espn
+Here's the frontend for searching github's code:
+
+search?q=content:sports.core.api.espn.com NOT user:nntrn
+search?q=content:sports.core.api.espn.com language:shell
+search?q=gamelog content:api.espn.com language:python
+search?q=content:api.espn.com fantasy pbp
+Additional Resources
+
+nfl-nerd (api)
+espn-wiki ⭐
+ESPN's hidden API endpoints
+Using ESPN's new Fantasy API (v3)
+ESPN: Get Endpoint (CRAN Package)
+Additionally,
+
+This gist is limited to NFL endpoints only but it can be refashioned for others (i.e. /sports/football/leagues/nfl/ => /sports/baseball/leagues/mlb/)
+
+List of ESPN leagues: API | Document
+
+Games Today (for all sports)
+
+Paramaters
+
+{YEAR}: Football season (YYYY)
+{SEASONTYPE}: 1=pre, 2=regular, 3=post, 4=off
+{EVENT_ID}: game id
+{TEAM_ID}: 1-32 (view all)
+{ATHLETE_ID}: view all
+{FANTASY_LEAGUE_ID}: Fantasy league id
+{BET_PROVIDER_ID}: view all
+Table of Contents
+
+Reference List
+News
+Detailed
+Teams
+Games
+Athletes
+Calendar
+Odds
+Scoreboard
+Leagues
+Search
+Pick em challenges
+Fantasy
+Endpoints
+Reference List
+
+Get list of ids
+
+Events:
+site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates={YEAR}
+
+Filter: &seasontype=2&week=1 | &seasontype=2
+
+Athletes:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes?limit=1000&active=true
+
+Team:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams?limit=32
+
+Positions:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/positions?limit=75
+
+Venues:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/venues?limit=700
+
+Leaders:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/leaders?limit=100
+
+Seasons:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons?limit=100
+
+Franchises:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/franchises?limit=50
+
+News:
+site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=50
+
+Team News (limit is incompatible with team filter):
+site.api.espn.com/apis/site/v2/sports/football/nfl/news?team={TEAM_ID}
+
+News
+
+NFL news
+site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=50
+
+news with api links to event
+now.core.api.espn.com/v1/sports/news?limit=1000&sport=football
+
+⭐ news using playerId [view]
+site.api.espn.com/apis/fantasy/v2/games/ffl/news/players?limit=50&playerId={ATHLETE_ID}
+
+Search query - max limit 100 [view]
+site.web.api.espn.com/apis/search/v2?limit=100&query={SEARCH_TERM}
+
+Team news:
+site.api.espn.com/apis/site/v2/sports/football/nfl/news?team={TEAM_ID}
+
+Contributor news:
+site.web.api.espn.com/apis/v2/flex?contributor=adam-schefter&limit=100&pubkey=contributor-page
+
+Detailed
+
+Get live updates (xhr=1)
+
+Scoreboard: cdn.espn.com/core/nfl/scoreboard?xhr=1&limit=50
+
+Schedule: cdn.espn.com/core/nfl/schedule?xhr=1&year={YEAR}&week={WEEK_NUM}
+
+Standings: cdn.espn.com/core/nfl/standings?xhr=1
+
+Boxscore: cdn.espn.com/core/nfl/boxscore?xhr=1&gameId={EVENT_ID}
+
+Recap: cdn.espn.com/core/nfl/recap?xhr=1&gameId={EVENT_ID}
+
+Plays: cdn.espn.com/core/nfl/playbyplay?xhr=1&gameId={EVENT_ID}
+
+Game: cdn.espn.com/core/nfl/game?xhr=1&gameId={EVENT_ID}
+
+Matchup: cdn.espn.com/core/nfl/matchup?xhr=1&gameId={EVENT_ID}
+
+Teams
+
+Athletes:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/teams/{TEAM_ID}/athletes?limit=200
+
+Team Events:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/teams/{TEAM_ID}/events
+
+List of NFL Teams (with id,logo,name):
+site.api.espn.com/apis/site/v2/sports/football/nfl/teams
+
+Team:
+site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{TEAM_ID}
+
+Teams (Season):
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/teams
+
+Team (season):
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/teams/{TEAM_ID}
+
+Current Leaders:
+site.web.api.espn.com/apis/site/v3/sports/football/nfl/teamleaders
+
+Season Leaders:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/leaders
+
+Record:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/teams/{TEAM_ID}/record
+
+Depthcharts:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/teams/{TEAM_ID}/depthcharts
+
+Roster:
+site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{TEAM_ID}/roster
+
+⭐ Detailed Roster:
+site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{TEAM_ID}?enable=roster,projection,stats
+
+Schedule:
+site.api.espn.com/apis/site/v2/sports/football/nfl/teams/{TEAM_ID}/schedule?season={YEAR}
+
+Injuries:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/{TEAM_ID}/injuries
+
+Statistics:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/teams/{TEAM_ID}/statistics
+
+Past performance:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/{TEAM_ID}/odds/{BET_PROVIDER_ID}/past-performances?limit=140
+
+Projection (not valid for past seasons):
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2023/teams/{TEAM_ID}/projection
+
+Season standing:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/groups/{CONFERENCE_ID}/standings
+
+AFC (CONFERENCE_ID=8)
+NFC (CONFERENCE_ID=7)
+
+Games
+
+⭐ Summary:
+1 => site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={EVENT_ID}
+2 => site.web.api.espn.com/apis/site/v2/sports/football/nfl/summary?event={EVENT_ID}
+
+Events:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events
+
+Play by Plays:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/plays?limit=300
+
+Get events with plays:
+site.web.api.espn.com/apis/fantasy/v2/games/ffl/games?dates=YYYYMMDD-YYYYMMDD&pbpOnly=true
+
+Drives:
+plays, drive start/end times, and total offensive plays
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/drives
+
+Play probabilities:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/probabilities?limit=300
+
+Linescores:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/competitors/{TEAM_ID}/linescores
+
+Records:
+Record Year To Date as of Event (wins, losses, streaks, etc)
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/competitors/{TEAM_ID}/records
+
+Scoring & All Splits:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/competitors/{TEAM_ID}/statistics
+
+Roster (get starters):
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/competitors/{TEAM_ID}/roster
+
+Weekly talent picks:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/weeks/{WEEK_NUM}/talentpicks?limit=100
+
+Weekly event ids:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/weeks/{WEEK_NUM}/events
+
+QBR Weekly/Game stats:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/weeks/{WEEK_NUM}/qbr/10000?limit=100
+
+Game officials/judges:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/officials
+
+Expected margin of victory & predicted win percentage:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/powerindex/{TEAM_ID}
+
+Athletes
+
+⭐ Splits:
+site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/{ATHLETE_ID}/splits
+
+Get all active player ids:
+https://sports.core.api.espn.com/v3/sports/football/nfl/athletes?limit=20000&active=true
+
+Player stats for event:
+
+Eventlog:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/athletes/{ATHLETE_ID}/eventlog
+
+Event stats:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/competitors/{TEAM_ID}/roster/{ATHLETE_ID}/statistics/0
+
+Current leaders:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/leaders
+
+Leaders (year):
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/leaders
+
+Talent picks:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/talentpicks
+
+⭐ Gamelog:
+site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/{ATHLETE_ID}/gamelog
+
+Coaches:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/coaches?limit=50
+
+Athletes v2:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes
+
+Athletes v3:
+https://sports.core.api.espn.com/v3/sports/football/nfl/athletes?limit=1000
+
+Player stats for each game:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/athletes/{ATHLETE_ID}/eventlog
+
+statisticslog:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes/{ATHLETE_ID}/statisticslog
+
+⭐ Athlete Overview:
+site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/{ATHLETE_ID}/overview
+
+Free agents:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/freeagents
+
+Draft:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/draft
+
+Draft rounds:
+site.web.api.espn.com/apis/v2/scoreboard/header?draft_year={YEAR}&draft_round=1
+
+Calendar
+
+Get all Monday games:
+https://site.api.espn.com/apis/site/v2/mondaynightfootball
+
+Get all Thursday games:
+https://site.api.espn.com/apis/site/v2/thursdaynightfootball
+
+Get all Sunday games:
+https://site.api.espn.com/apis/site/v2/sundaynightfootball
+
+Ondays:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/calendar/ondays
+
+Offdays:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/calendar/offdays
+
+Blacklist:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/calendar/blacklist
+
+Whitelist dates:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/calendar/whitelist
+
+Weeks:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/weeks
+
+Rankings, events, and talentpicks for week:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/weeks/{WEEKNUM}
+
+Season:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}
+
+Odds
+
+https://site.web.api.espn.com/apis/v3/sports/football/nfl/odds
+
+Win probabilities:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/probabilities?limit=200
+
+Odds:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/odds
+
+Matchup Quality & Game Projection:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/predictor
+
+Against-the-spread:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/2/teams/{TEAM_ID}/ats
+
+Futures:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/futures
+
+Head-to-head (game):
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/odds/{BET_PROVIDER_ID}/head-to-heads
+
+Odds records: (might encounter errors with older years)
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/0/teams/{TEAM_ID}/odds-records
+
+Game odds:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/{EVENT_ID}/competitions/{EVENT_ID}/odds/{BET_PROVIDER_ID}/history/0/movement?limit=100
+
+QBR Weekly/Game stats:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/2/weeks/{WEEK_NUM}/qbr/10000
+
+Past performances: get spread, over/under odds, moneyline
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/{TEAM_ID}/odds/{BET_PROVIDER_ID}/past-performances?limit=200
+
+Scoreboard
+
+Day:
+site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=YYYYMMDD
+
+Week:
+site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=YYYY&seasontype={SEASONTYPE}&week={WEEKNUM}
+
+Year:
+site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=YYYY&seasontype=2
+
+Range (cannot be more than 13 months):
+site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=1000&dates=YYYYMMDD-YYYYMMDD
+
+Examples:
+site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard
+
+?dates=2022
+?dates=2022&seasontype=2&week=1
+?dates=20200901-20210228
+?dates=20200901
+Leagues
+
+Transactions:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/transactions
+
+Groups:
+sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/{YEAR}/types/{SEASONTYPE}/groups
+
+Franchises:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/franchises
+
+Header:
+https://site.web.api.espn.com/apis/v2/scoreboard/header?sport=football&league=nfl
+
+Search
+
+https://site.web.api.espn.com/apis/common/v3/search?query=nfl&limit=5&mode=prefix
+https://site.web.api.espn.com/apis/common/v3/search
+Pick em challenges
+
+Parameters
+
+{USER_GAME_ID}
+{GROUP_ID}
+{CHALLENGE_ID} and {CHALLENGE_NAME}
+{VIEW_NAME}
+⭐ allon
+⭐ chui_default
+chui_default_group
+chui_default_groupParticipationHistory
+chui_default_metadata
+chui_pagetype_group_picks
+pagetype_leaderboard
+Challenges:
+https://gambit-api.fantasy.espn.com/apis/v1/challenges
+
+Scoring:
+gambit-api.fantasy.espn.com/apis/v1/challenges/{CHALLENGE_NAME}?scoringPeriodId={WEEKNUM}&view={VIEW_NAME}
+
+Group:
+gambit-api.fantasy.espn.com/apis/v1/challenges/{CHALLENGE_NAME}/groups/{GROUP_ID}?view={VIEW_NAME}
+
+⭐ User
+gambit-api.fantasy.espn.com/apis/v1/challenges/{CHALLENGE_NAME}/entries/{USER_GAME_ID}?view={VIEW_NAME}
+
+Leaderboard:
+gambit-api.fantasy.espn.com/apis/v1/challenges/{CHALLENGE_NAME}/leaderboard?view={VIEW_NAME}
+
+Propositions:
+gambit-api.fantasy.espn.com/apis/v1/propositions?challengeId={CHALLENGE_ID}&view={VIEW_NAME}
+
+Fantasy
+
+v3 header:
+X-Fantasy-Filter: {"players":{"limit":2000},"filterActive":{"value":true}}
+Current season:
+https://fantasy.espn.com/apis/v3/games/ffl
+Players:
+https://fantasy.espn.com/apis/v3/games/ffl/seasons/2023/players?view=players_wl
+
+&view=mTeam&view=mRoster&view=mMatchup&view=mSettings
+Private league:
+fantasy.espn.com/apis/v3/games/ffl/seasons/{YEAR}/segments/0/leagues/{FANTASY_LEAGUE_ID}
+
+season < 2018: fantasy.espn.com/apis/v3/games/ffl/leagueHistory/{FANTASY_LEAGUE_ID}?seasonId={YEAR}
+
+season > 2018: fantasy.espn.com/apis/v3/games/ffl/seasons/{YEAR}/segments/0/leagues/{FANTASY_LEAGUE_ID}
+
+Games (v2):
+site.web.api.espn.com/apis/fantasy/v2/games/ffl/games?dates=YYYYMMDD
+dates=YYYYMMDD-YYYYMMDD
+Curl Fantasy Filters
+
+Get % owned for players:
+fantasy.espn.com/apis/v3/games/ffl/seasons/{YEAR}/players?scoringPeriodId=0&view=players_wl
+
+curl -H 'X-Fantasy-Filter: {"filterActive":{"value":true}}' <URL>
+X-Fantasy-Filter is required in the request header to get all active players.
+Omitting this returns only 50 items
+
+⭐ Get player info:
+fantasy.espn.com/apis/v3/games/ffl/seasons/{YEAR}/segments/0/leaguedefaults/{PPR_ID}?view=kona_player_info
+
+curl -H 'X-Fantasy-Filter: {"players":{"limit":2000,"sortPercOwned":{"sortPriority":4,"sortAsc":false}}}' <URL>
+sortPercOwned is required with limit
+PPR_ID can be 1, 3, or 4.
+Get bye week for all teams:
+fantasy.espn.com/apis/v3/games/ffl/seasons/{YEAR}?view=proTeamSchedules_wl
+
+jq '.settings.proTeams|map({name,byeWeek})'
+Fantasy Stats
+
+Position
+
+{ "1": "QB",
+  "2": "RB",
+  "3": "WR",
+  "4": "TE",
+  "5": "K",
+ "16": "DST" }
+Player stats
+View
+
+Endpoints
+
+Athlete endpoints
+
+https://partners.api.espn.com/v2/sports/football/nfl/athletes?limit=7000
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/bio
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/gamelog ⭐
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/news
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/overview
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/results
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/scorecards
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/splits
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/stats
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/14876/vsathlete
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/statistics/byathlete
+https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/statistics/byteam
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes?limit=1000
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes/14876
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes/14876/statistics/0
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/athletes/14876/statisticslog
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/athletes/14876/notes
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/athletes/14876/projections
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/athletes/14876/statistics
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/athletes/14876/statistics/0
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/athletes/14876/eventlog
+https://sports.core.api.espn.com/v3/sports/football/nfl/athletes?page=1&limit=20000
+Calendar endpoints
+
+Blacklist dates, whitelist dates, events
+
+https://site.web.api.espn.com/apis/fantasy/v2/games/ffl/games?dates=20200901-20210228&pbpOnly=true
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/calendar
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/calendar/blacklist
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/calendar/whitelist
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401326315
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401326315/competitions/401326315
+Season endpoints
+
+Game weeks, Season types, weekly events, weekly picks
+
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/coaches/4408695
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/athletes
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/athletes/14876
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/coaches?limit=50
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/draft
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/futures
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/futures/1561
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/teams
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/teams/12
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/groups
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/groups/1
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/leaders
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/weeks
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/weeks/6
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/weeks/6/events
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/weeks/6/qbr/10000
+Betting endpoints
+
+Betting, odds, draft
+
+https://site.web.api.espn.com/apis/v3/sports/football/nfl/odds
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401220181/competitions/401220181/competitors/34/roster
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401220181/competitions/401220181/odds
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401220181/competitions/401220181/plays?limit=400
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401220181/competitions/401220181/probabilities?limit=200
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401249063/competitions/401249063/plays/4012490631
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401326315/competitions/401326315/odds/1003
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401326315/competitions/401326315/odds/1003/predictors
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401326315/competitions/401326315/probabilities/4012490631
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/draft/athletes?limit=500
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/draft/rounds
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/draft/status
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/weeks/6/talentpicks
+Metainfo endpoints
+
+Franchise, news, venues
+
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/news
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard
+https://site.api.espn.com/apis/site/v3/sports/football/nfl/leaders?season=2021
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/franchises
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/franchises/1
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/leaders
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/leaders/0
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/positions?limit=100
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/positions/8
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/providers/1003
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/groups/1/standings
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/groups/1/teams
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/talentpicks
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/venues/3493
+Team endpoints
+
+Depthcharts, injuries, coaches, roster, odds records
+
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/12
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/12/roster
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/12/schedule
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/34?enable=projection
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/34?enable=roster
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/34?enable=stats
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/teams/12/athletes
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/teams/12/coaches/17553
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/teams/12/depthcharts
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/teams/12/events
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/teams/12/projection
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/12/ats
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/12/attendance
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/12/leaders
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/12/odds-records
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/12/record
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/12/statistics
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2021/types/2/teams/12/statistics/0
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/12/injuries
+Fantasy endpoints
+
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2025?view=allon
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2024?view=chui_default_platformsettings
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2024/players?scoringPeriodId=2&view=chui_default_platformsettings
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2024/players?view=kona_player_info
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2024/players?view=players_wl
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2024/segments/1/leaguedefaults/3?scoringPeriodId=0&view=kona_player_info
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2024?view=chui_default_admin_group
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2024?view=chui_default_dashboard
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2024?view=chui_default_platformsettings
+new.md
+Athletes:
+
+https://partners.api.espn.com/v2/sports/football/nfl/athletes?limit=7000
+
+https://sports.core.api.espn.com/v3/sports/football/nfl/athletes?page=1&limit=20000
+
+Events
+
+https://partners.api.espn.com/v2/sports/football/nfl/events?limit=1000
+&dates=20230101-20240101 or &dates=20230101 or &dates=2023
+
+Fantasy
+
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/{{YEAR}}/players?view={{VIEW_NAME}}
+
+# To get more than 50 items, run in terminal:
+curl -H 'X-Fantasy-Filter: {"games":{"limit":2000}}' <URL>
+Views (that I know of):
+
+mDraftDetail
+mLiveScoring
+mMatchup
+mTeam
+mMatchupScore
+mStandings
+mRoster
+mBoxscore
+kona_player_info
+player_wl
+allon
+Stat column names
+
+id   displayid  abbrev    description
+---  ---------  --------  --------------------------------
+0    7          PA        Each Pass Attempted
+1    8          PC        Each Pass Completed
+2    11         INC       Each Incomplete Pass
+3    0          PY        Passing Yards
+4    14         PTD       TD Pass
+5    1          PY5       Every 5 passing yards
+6    2          PY10      Every 10 passing yards
+View more
+ Load earlier comments...
+@propsdaily
+propsdaily
+commented
+on May 15
+Does anyone know the URL/end point for the entire 2025 NFL schedule that was released yesterday!?
+
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard -> Only shows 2025 Week 1
+
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?seasontype=2&week=1 -> Shows 2024 schedule (for whatever week you put in!?
+You could maybe do something like this to get all regular season events:
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2025/types/2/events?limit=1000
+ @JimNayzium
+JimNayzium
+commented
+on Jun 23
+Anyone have a feed link that woud let me see who was OUT for a given week on a roster?
+For example, Barkley sat out week 18 for Eagles. But in his roster the active: "false" is set. And it's false for all players so I assume that's just a throw away meaningless thing for that end point.
+
+Any thoughts?
+ @nntrn
+Author
+nntrn
+commented
+on Jun 24
+Anyone have a feed link that woud let me see who was OUT for a given week on a roster? For example, Barkley sat out week 18 for Eagles. But in his roster the active: "false" is set. And it's false for all players so I assume that's just a throw away meaningless thing for that end point.
+
+Any thoughts?
+@JimNayzium, your definition of OUT isn't clear - what counts as out? present, but didn't play? not present and didn't play?
+
+players in event rosters with .statistics["$ref"] definitely played and players missing this field probably didn't
+
+i think active is a real time field that shows when a player is active during the game.
+
+---
+
+view players from event roster:
+/nfl/events/401671841/competitions/401671841/competitors/21/roster
+
+not pratical, but you can validate this by checking each player's eventlog:
+/nfl/seasons/2024/athletes/3929630/eventlog
+ @JimNayzium
+JimNayzium
+commented
+on Jun 25
+• 
+@nntrn - Thanks so much for the help!
+the active explanation makes sense, and thanks for that!
+So I just meant the actual injury report status going into the game.
+Present, but didn't play is not what I mean at all. A player who dresses out, is on active roster and garners no playing time would not have been "OUT" on the injury report. But Barkley was in a ball cap the entire game week 18, so he would have been OUT week 18.
+
+So for Barkley, on the roster for that week, the didNotPlay === false, does not mean necessarily he was listed as "OUT" if that makes sense?
+
+Also, not having statistics would not be 100 percent accurate either. A WR could go in for a a number of plays, never be targeted and never gain statistics of any kind.
+
+Was just hoping to see a pregame injury report end point of some kind. Or "This week's inactives" type thing.
+
+{
+  "playerId": 3929630,
+  "period": 0,
+  "active": false,
+  "starter": false,
+  "forPlayerId": 0,
+  "jersey": "26",
+  "valid": false,
+  "athlete": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2024/athletes/3929630?lang=en&region=us"
+  },
+  "position": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/positions/9?lang=en&region=us"
+  },
+  "didNotPlay": false,
+  "displayName": "Barkley"
+},
+ @propsdaily
+propsdaily
+commented
+on Jun 25
+• 
+@nntrn - Thanks so much for the help! the active explanation makes sense, and thanks for that! So I just meant the actual injury report status going into the game. Present, but didn't play is not what I mean at all. A player who dresses out, is on active roster and garners no playing time would not have been "OUT" on the injury report. But Barkley was in a ball cap the entire game week 18, so he would have been OUT week 18.
+
+So for Barkley, on the roster for that week, the didNotPlay === false, does not mean necessarily he was listed as "OUT" if that makes sense?
+
+Also, not having statistics would not be 100 percent accurate either. A WR could go in for a a number of plays, never be targeted and never gain statistics of any kind.
+
+Was just hoping to see a pregame injury report end point of some kind. Or "This week's inactives" type thing.
+
+{
+  "playerId": 3929630,
+  "period": 0,
+  "active": false,
+  "starter": false,
+  "forPlayerId": 0,
+  "jersey": "26",
+  "valid": false,
+  "athlete": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2024/athletes/3929630?lang=en&region=us"
+  },
+  "position": {
+    "$ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/positions/9?lang=en&region=us"
+  },
+  "didNotPlay": false,
+  "displayName": "Barkley"
+},
+@JimNayzium I'm not sure if this would help pre-game but for post, you could check their event log.
+
+It looks like it shows a played => true/false, and for week 18 on Barkley it shows false.
+ @dice-bet
+dice-bet
+commented
+on Jul 1
+• 
+Does anyone know the URL/end point for the entire 2025 NFL schedule that was released yesterday!?
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard -> Only shows 2025 Week 1
+https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?seasontype=2&week=1 -> Shows 2024 schedule (for whatever week you put in!?
+You could maybe do something like this to get all regular season events: https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2025/types/2/events?limit=1000
+https://cdn.espn.com/core/nfl/schedule?xhr=1
+ @ryanbuckner
+ryanbuckner
+commented
+on Jul 1
+via email
+ I wrote a GAS project to hit these endpoints. You can see it here
+
+https://www.reddit.com/r/googlesheets/comments/1kmk9qp/real_time_nfl_scores_google_sheet_202526_season/
+…
+ @johnpuksta
+johnpuksta
+commented
+on Jul 9
+Noticed something odd:
+
+For the 2024 events API, it doesn't return playoff games past the 1st divisional round. For example, for the Eagles (ID = 21), you can see the response of https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2024/teams/21/events is missing Games 401671889 (SuperBowl) and 401671888 (NFC champ).
+
+For previous years (2023 season), I verified that all games were there (pre, in, post season).
+
+I checked the other Events API: https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events?season=2024&seasontypes=3&page=3. Here you can filter by page to go through each result. None of these pages contain these missing games either.
+
+Do we think ESPN forgot to track these games or is there a new playoffs API?
+ @aaronweldy
+aaronweldy
+commented
+on Jul 12
+If anyone's interested, I've gotten pretty far in creating an OpenAPI spec for all of the endpoints listed here + more: https://github.com/aaronweldy/espn-openapi
+
+Fully types out the response schema & is easy to create generated clients for whatever language you want with your favorite OpenAPI generator.
+ @KieranMunslow
+KieranMunslow
+commented
+on Jul 14
+Hi, a specific one regarding the NFL. Is anyone aware of a way to view the correct values for passing yards after catch? Receiving yards after catch seems fine but passing yards after catch I'm struggling to find.
+The player stats of an event don't have that stat (e.g. https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=401671764)
+And the statistics section of a player's event log has the stat, but its seemingly 0 no matter what
+(e.g. Jared Goff and Amon-Ra for the same Lions-Cowboys game
+Goff - https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401671764/competitions/401671764/competitors/8/roster/3046779/statistics/0?lang=en&region=us
+Amon Ra - https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401671764/competitions/401671764/competitors/8/roster/4374302/statistics/0?lang=en&region=us)
+ @nntrn
+Author
+nntrn
+commented
+on Jul 15
+Hi, a specific one regarding the NFL. Is anyone aware of a way to view the correct values for passing yards after catch? Receiving yards after catch seems fine but passing yards after catch I'm struggling to find.
+You can get this in the play by play
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401671764/competitions/401671764/plays?limit=300
+
+This is what I see for Goff btw:
+
+Details
+@KieranMunslow
+ @KieranMunslow
+KieranMunslow
+commented
+on Jul 15
+Hi, a specific one regarding the NFL. Is anyone aware of a way to view the correct values for passing yards after catch? Receiving yards after catch seems fine but passing yards after catch I'm struggling to find.
+You can get this in the play by play https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401671764/competitions/401671764/plays?limit=300
+
+This is what I see for Goff btw:
+
+@KieranMunslow
+Ah I never noticed it in the play by play section, thanks @nntrn. I'll have to take a look and see if there is a realistic way for me to total them and attribute to correct QB.
+
+The stats I was more referring to as in the Goff example was the 2 below. PYAC ideally should be 180 and PY@C should be 135.
+
+Details
+ @macsochor
+macsochor
+commented
+on Jul 25
+Thank you so much for putting this together! I am creating a website to run an alternate rules DFS contest for my friends and I wanted to add live scoring. I'll only need to fetch the scores for around 50 players, what endpoint do you think would be best for this?
+
+I see that I could potentially make a call to each player endpoint or to each game endpoint, but I'm guessing that I could add headers to one of these requests to just get the stats for the games happening today for only a certain set of playerIds. Does any endpoint come to mind?
+
+I can probably hack it all together with the existing ones, I just don't want to spam the api and parse through a bunch of data if I don't have to
+ @nntrn
+Author
+nntrn
+commented
+on Jul 27
+I see that I could potentially make a call to each player endpoint or to each game endpoint, but I'm guessing that I could add headers to one of these requests to just get the stats for the games happening today for only a certain set of playerIds. Does any endpoint come to mind?
+@macsochor, if you want players playing THAT day, check out the xhr links
+
+https://cdn.espn.com/core/nfl/game?xhr=1&gameId=401127922
+https://cdn.espn.com/core/nfl/schedule?xhr=1&year=2025&week=1
+more in gist
+ @guizucolotto
+guizucolotto
+commented
+on Jul 28
+I think I missed something, what call do I get the information from the Stats example at the end of this .md?
+ @JimNayzium
+JimNayzium
+commented
+on Jul 28
+• 
+I have a fun one that is quite maddening. (No pun intended)
+In the drive play-by-play feed from a Bills game week 1 with id: 401671617
+There was a discrepancy in the totals I was getting for James Cook's stats and I found a mistake by ESPN apparently.
+I see no real way to know the mistake should be discounted or removed in the feeds either, at least not in these feeds. Other than comparing the stat totals at the end, but then determining what is wrong is near impossible.
+
+I compared the PDF at nfl.com of the play by play hard copy of the actual game on these two plays and it would seem that the James Cook 11 yard rush does not exist at all. Somehow it just got entered for James Cook. Typically if a penalty happens or a play is reviewed that is well documented by ESPN's feeds. This is a pure mistake I am afraid. Like the intern who entered the data just shanked.
+
+To be clear, this first play just doesn't appear in the https://static.www.nfl.com/gamecenter/7d40236a-1312-11ef-afd1-646009f18b2e.pdf report here. And if you look at the json data you will see the same exact clock times.
+
+I guess this is the type thing that causes a "stat" correction to be made in fantasy maybe?
+
+Any thoughts on a way to detect these type things? Something I am missing?
+
+Details
+ @KieranMunslow
+KieranMunslow
+commented
+on Jul 28
+@JimNayzium, I've taken a look at what you've mentioned and think you're spot on with this being a phantom play.
+
+In terms of detecting things like this, it seems pretty tough as the non-existent play is populated as though its real. The one discrepancy I can find is the value of the wallclock field. I've listed a few plays around the play you're looking and the fake Cook play breaks the sequence. Its hard to know if this will be the case in other instances though.
+
+The real Cook rush with penalty on play - 2024-09-08T19:39:07Z
+The phantom Cook rush - 2024-09-08T19:40:06Z
+The Kincaid pass - 2024-09-08T19:39:58Z
+The Cook rush for loss of 3 yards - 2024-09-08T19:40:41Z
+
+Also out of curiosity, what URL are you requesting this data from? My responses all lacked the "yardsAfterCatch": 0 for the Kincaid pass which you seem to have.
+ @nntrn
+Author
+nntrn
+commented
+on Aug 2
+@guizucolotto
+
+I think I missed something, what call do I get the information from the Stats example at the end of this .md?
+https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/2025?view=chui_default_platformsettings
+
+in .settings.statSettings.stats
+
+Output
+ @KieranMunslow
+KieranMunslow
+commented
+on Aug 4
+Hi, a specific one regarding the NFL. Is anyone aware of a way to view the correct values for passing yards after catch? Receiving yards after catch seems fine but passing yards after catch I'm struggling to find.
+You can get this in the play by play https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401671764/competitions/401671764/plays?limit=300
+
+This is what I see for Goff btw:
+
+@KieranMunslow
+Hi @nntrn, I'm just coming back to this now and I'm struggling to find the 'yardsAfterCatch' field in the play-by-play, even using the URL you've provided. It was definitely there when I first accessed it so confused as to why its seemingly different now.
+
+Any ideas on what might be happening here?
+ @newadventure079
+newadventure079
+commented
+on Aug 27
+Cannot Tell if Picks are made for College Pick 'em or Pigskin Pick 'em Current Week via ESPN Pick'em API
+
+Problem Summary
+
+I'm using ESPN's Pick'em API to track user picks for challenges like NFL Pigskin Pick'em and College Football Pick'em.
+
+The core issue:
+I need to know, each week, whether a user has made their picks before the games start. However, the way the API is structured makes this difficult once the season has started.
+
+Current Behavior
+
+Before Week 1:
+
+If .picks doesn’t exist: The user hasn’t made any picks.
+If .picks exists but is empty: The user has submitted picks, but the pick data isn’t available until the games start.
+After Week 1 & Throughout the Season:
+
+The .picks array is a flat list with all picks for the season added as games begin.
+There’s no breakdown by week (no .picks.week2, .picks.week3, etc.).
+For example:
+Just before Week 2, .picks for everyone has 16 entries from Week 1.
+There are no empty or null entries for future weeks.
+As Week 2 games start, new picks are revealed, and the array grows (17, 18, 19, ...).
+There's no way to tell ahead of time if someone has made their picks for the upcoming week; you only find out after kickoff, when it’s too late for users to make the picks for the week.
+Ideal vs. Actual Data Structure
+
+Ideal structure (week-by-week distinction):
+
+{
+  "picks": {
+    "week1": [...],
+    "week2": [...],
+    // etc.
+  }
+}
+Actual structure (flat array, no week info):
+
+{
+  "picks": [
+    {...}, // week 1
+    {...}, // week 1
+    // ... (only fills as games start, no separation by week)
+  ]
+}
+API URLs
+
+College Football Pick'em:
+https://gambit-api.fantasy.espn.com/apis/v1/challenges/college-football-pickem-2025/entries/{user_guid}
+NFL Pigskin Pick'em:
+https://gambit-api.fantasy.espn.com/apis/v1/challenges/nfl-pigskin-pickem-2025/entries/{user_guid}
+What I Want
+
+Is there any way, using the current ESPN Pick'em API, to determine before kickoff whether a user has or hasn't made their picks for a given week during the season?
+
+Right now, I can only detect an empty/null picks list at the very start of the season (before Week 1).
+After that, the .picks array grows each week, and there's no way to distinguish “not made picks for this week yet” from simply “picks for this week aren’t public yet”—until it’s already too late.
+Before the pick ems site redesign a few years ago, ESPN provided this information. If you viewed a person's picks entry, it would say "Chuck has not made their picks yet", but this functionality was removed in the redesign
+
+Question
+
+Is this a current limitation of the API, or is there a workaround to detect per-week pick completion before games start?
+
+Thank you!
+ @JamesSingleton
+JamesSingleton
+commented
+on Sep 5
+Is there a way to get Men's and Women's College Basketball week data? For example, https://site.api.espn.com/apis/common/v3/sports/football/college-football/seasons?startingseason=2023 will give me a weeks array with the number and their start and end date. However, https://site.api.espn.com/apis/common/v3/sports/basketball/mens-college-basketball/seasons?startingseason=2023 does not give me any of that data.
+ @bkohler96
+bkohler96
+commented
+on Sep 7
+Concerning the NFL only, Does anyone know any other status text ESPN uses to signify whehter a game is live in progress or not other than these?
+
+  "STATUS_SCHEDULED" ,
+  "STATUS_IN_PROGRESS",
+  "STATUS_HALFTIME",
+  "STATUS_END_PERIOD",
+  "STATUS_FINAL"
+For example is there a STATUS_OVERTIME or *_OVER_TIME maybe? Or STATUS_POST_PONED? etc...
+
+thanks!
+I don't know of any official list but just discovered there's a "STATUS_DELAYED" from the Panther / Jags game with a weather delay right now!
+
+@JimNayzium
+ @JamesSingleton
+JamesSingleton
+commented
+on Sep 8
+For college football, is there a way to get stats per week per division? For example, for FBS I want to see the passing yards leader, touchdown leader, sack leader, etc etc.
+ @dnielso5
+dnielso5
+commented
+on Sep 8
+anyone know how i could pull play by play info by player?
+
+I have a script that knows my yahoo player ID, i want to pull their latest play and have it display, similar to yahoos gamelog when viewing your matchup.
+ @aloktomarr
+aloktomarr
+commented
+on Oct 9
+Hi Guys,
+Happy to see this detailed doc. Found out just what I was looking for!
+Did you guys make espn API key from espn website.
+Could you help me with the information of where could I get the api key for getting data from these endpoints.
+ @dnielso5
+dnielso5
+commented
+on Oct 9
+For ESPN you don't need an API key at least for what i do, this is what i use to pull information for a specific game
+
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/EVENT_ID/competitions/EVENT_ID/plays?limit=300
+
+Replace both "EVENT_ID" with the specific game ID and then this link would pull up that game with the last 300 plays. you can edit the "limit" to make get more or less plays.
+
+https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401547515/competitions/401547515/plays?limit=300
+ @aloktomarr
+aloktomarr
+commented
+on Oct 9
+Thanks a ton! Savior!
+ @caffeinePlease
+caffeinePlease
+commented
+3 weeks ago
+Any chance someone could help me find info for Women's Super League (English women's soccer)?
+ @nntrn
+Author
+nntrn
+commented
+3 weeks ago
+@caffeinePlease
+
+https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.w.1
+ @JimNayzium
+JimNayzium
+commented
+last week
+Can someone show me how to pull a team roster for a given week in a season, if that given week was the particular team's BYE WEEK?
+
+Currenlty I only have been able to figure out how to pull a roster of a team for a given week from the GAME / competition URLS, and if a team does not have a compeition that given week due to their bye week, then I can't seem to find a weekly roster showing active players for that given week.
+
+What I am trying to do is recreate after the season a database table that will show each player by id, with a column that shows the week of the season, and a column that shows 1/0 if it's that players bye week.
+
+It's easy to "deduce" a player's bye week if that player was on ONE team all 18 weeks becusae it would just be the one missing from the game rosters etc... but if a player was traded mid season and participated in two bye weeks or NO bye weeks, then it gets hairy to figure out in hindsight.
+
+Any help would be appreciated.
+
+In a perfect world there is an endpoint I am not fully aware of that would just be a WEEKLY ROSTER instead of "CURRENT" Roster.
+ to join this conversation on GitHub. Already have an account? Sign in to comment
+Footer
+© 2025 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Community
+Docs
+Contact
+Manage cookies
+Do not share my personal information

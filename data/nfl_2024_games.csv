@@ -1,0 +1,336 @@
+date,event_id,home_team,away_team,home_team_id,away_team_id,home_score,away_score,status,week
+2024-01-06T21:30Z,401547639,Baltimore Ravens,Pittsburgh Steelers,33,23,10,17,Final,18
+2024-01-07T01:15Z,401547644,Indianapolis Colts,Houston Texans,11,34,19,23,Final,18
+2024-01-07T18:00Z,401547641,Cincinnati Bengals,Cleveland Browns,4,5,31,14,Final,18
+2024-01-07T18:00Z,401547642,Detroit Lions,Minnesota Vikings,8,16,30,20,Final,18
+2024-01-07T18:00Z,401547652,Tennessee Titans,Jacksonville Jaguars,10,30,28,20,Final,18
+2024-01-07T18:00Z,401547648,New England Patriots,New York Jets,17,20,3,17,Final,18
+2024-01-07T18:00Z,401547649,New Orleans Saints,Atlanta Falcons,18,1,48,17,Final,18
+2024-01-07T18:00Z,401547640,Carolina Panthers,Tampa Bay Buccaneers,29,27,0,9,Final,18
+2024-01-07T21:25Z,401547643,Green Bay Packers,Chicago Bears,9,3,17,9,Final,18
+2024-01-07T21:25Z,401547646,Las Vegas Raiders,Denver Broncos,13,7,27,14,Final,18
+2024-01-07T21:25Z,401547650,New York Giants,Philadelphia Eagles,19,21,27,10,Final,18
+2024-01-07T21:25Z,401547638,Arizona Cardinals,Seattle Seahawks,22,26,20,21,Final,18
+2024-01-07T21:25Z,401547645,Los Angeles Chargers,Kansas City Chiefs,24,12,12,13,Final,18
+2024-01-07T21:25Z,401547651,San Francisco 49ers,Los Angeles Rams,25,14,20,21,Final,18
+2024-01-07T21:25Z,401547653,Washington Commanders,Dallas Cowboys,28,6,10,38,Final,18
+2024-01-08T01:20Z,401547647,Miami Dolphins,Buffalo Bills,15,2,14,21,Final,18
+2024-01-13T21:30Z,401547749,Houston Texans,Cleveland Browns,34,5,45,14,Final,1
+2024-01-14T01:00Z,401547750,Kansas City Chiefs,Miami Dolphins,12,15,26,7,Final,1
+2024-01-14T21:30Z,401547752,Dallas Cowboys,Green Bay Packers,6,9,32,48,Final,1
+2024-01-15T01:15Z,401547753,Detroit Lions,Los Angeles Rams,8,14,24,23,Final,1
+2024-01-15T21:30Z,401547751,Buffalo Bills,Pittsburgh Steelers,2,23,31,17,Final,1
+2024-01-16T01:15Z,401547754,Tampa Bay Buccaneers,Philadelphia Eagles,27,21,32,9,Final,1
+2024-01-20T21:30Z,401547755,Baltimore Ravens,Houston Texans,33,34,34,10,Final,2
+2024-01-21T01:15Z,401547756,San Francisco 49ers,Green Bay Packers,25,9,24,21,Final,2
+2024-01-21T20:00Z,401547757,Detroit Lions,Tampa Bay Buccaneers,8,27,31,23,Final,2
+2024-01-21T23:30Z,401547758,Buffalo Bills,Kansas City Chiefs,2,12,24,27,Final,2
+2024-01-28T20:00Z,401547379,Baltimore Ravens,Kansas City Chiefs,33,12,10,17,Final,3
+2024-01-28T23:30Z,401547380,San Francisco 49ers,Detroit Lions,25,8,34,31,Final,3
+2024-02-04T20:00Z,401616889,AFC,NFC,31,32,59,64,Final,4
+2024-02-11T23:30Z,401547378,Kansas City Chiefs,San Francisco 49ers,12,25,25,22,Final,5
+2024-08-02T00:00Z,401671610,Chicago Bears,Houston Texans,3,34,21,17,Final,1
+2024-08-08T23:00Z,401671918,New England Patriots,Carolina Panthers,17,29,17,3,Final,2
+2024-08-08T23:00Z,401673457,New York Giants,Detroit Lions,19,8,14,3,Final,2
+2024-08-09T23:00Z,401671915,Miami Dolphins,Atlanta Falcons,15,1,20,13,Final,2
+2024-08-09T23:00Z,401671905,Pittsburgh Steelers,Houston Texans,23,34,12,20,Final,2
+2024-08-09T23:30Z,401671897,Baltimore Ravens,Philadelphia Eagles,33,21,13,16,Final,2
+2024-08-10T16:00Z,401673171,New York Jets,Washington Commanders,20,28,20,17,Final,2
+2024-08-10T17:00Z,401671615,Buffalo Bills,Chicago Bears,2,3,6,33,Final,2
+2024-08-10T20:00Z,401672005,Minnesota Vikings,Las Vegas Raiders,16,13,24,23,Final,2
+2024-08-10T20:25Z,401671902,Cleveland Browns,Green Bay Packers,5,9,10,23,Final,2
+2024-08-10T23:00Z,401671900,Cincinnati Bengals,Tampa Bay Buccaneers,4,27,14,17,Final,2
+2024-08-10T23:00Z,401673472,Tennessee Titans,San Francisco 49ers,10,25,17,13,Final,2
+2024-08-10T23:00Z,401671910,Jacksonville Jaguars,Kansas City Chiefs,30,12,26,13,Final,2
+2024-08-10T23:05Z,401671907,Los Angeles Chargers,Seattle Seahawks,24,26,3,16,Final,2
+2024-08-11T00:00Z,401673456,Arizona Cardinals,New Orleans Saints,22,18,14,16,Final,2
+2024-08-11T17:00Z,401671920,Indianapolis Colts,Denver Broncos,11,7,30,34,Final,2
+2024-08-11T20:30Z,401671913,Los Angeles Rams,Dallas Cowboys,14,6,13,12,Final,2
+2024-08-15T23:00Z,401671919,New England Patriots,Philadelphia Eagles,17,21,13,14,Final,3
+2024-08-17T16:00Z,401671898,Baltimore Ravens,Atlanta Falcons,33,1,13,12,Final,3
+2024-08-17T17:00Z,401671901,Chicago Bears,Cincinnati Bengals,3,4,27,3,Final,3
+2024-08-17T17:00Z,401671924,Houston Texans,New York Giants,34,19,28,10,Final,3
+2024-08-17T20:00Z,401671911,Kansas City Chiefs,Detroit Lions,12,8,23,24,Final,3
+2024-08-17T20:25Z,401671903,Cleveland Browns,Minnesota Vikings,5,16,12,27,Final,3
+2024-08-17T23:00Z,401673562,Tennessee Titans,Seattle Seahawks,10,26,16,15,Final,3
+2024-08-17T23:00Z,401671936,Indianapolis Colts,Arizona Cardinals,11,22,21,13,Final,3
+2024-08-17T23:00Z,401671916,Miami Dolphins,Washington Commanders,15,28,13,6,Final,3
+2024-08-17T23:00Z,401671906,Pittsburgh Steelers,Buffalo Bills,23,2,3,9,Final,3
+2024-08-17T23:00Z,401676591,Carolina Panthers,New York Jets,29,20,12,15,Final,3
+2024-08-17T23:05Z,401671908,Los Angeles Chargers,Los Angeles Rams,24,14,9,13,Final,3
+2024-08-17T23:30Z,401671925,Jacksonville Jaguars,Tampa Bay Buccaneers,30,27,20,7,Final,3
+2024-08-18T02:00Z,401672897,Las Vegas Raiders,Dallas Cowboys,13,6,12,27,Final,3
+2024-08-19T00:00Z,401671921,Denver Broncos,Green Bay Packers,7,9,27,2,Final,3
+2024-08-19T00:00Z,401671611,San Francisco 49ers,New Orleans Saints,25,18,16,10,Final,3
+2024-08-23T00:00Z,401671612,Cincinnati Bengals,Indianapolis Colts,4,11,14,27,Final,4
+2024-08-23T00:20Z,401671912,Kansas City Chiefs,Chicago Bears,12,3,21,34,Final,4
+2024-08-23T23:00Z,401671922,Atlanta Falcons,Jacksonville Jaguars,1,30,0,31,Final,4
+2024-08-23T23:30Z,401671917,Tampa Bay Buccaneers,Miami Dolphins,27,15,24,14,Final,4
+2024-08-24T02:00Z,401672898,Las Vegas Raiders,San Francisco 49ers,13,25,24,24,Final,4
+2024-08-24T17:00Z,401671896,Buffalo Bills,Carolina Panthers,2,29,26,31,Final,4
+2024-08-24T17:00Z,401673458,Detroit Lions,Pittsburgh Steelers,8,23,24,17,Final,4
+2024-08-24T17:00Z,401671899,Green Bay Packers,Baltimore Ravens,9,33,30,7,Final,4
+2024-08-24T17:00Z,401672006,Philadelphia Eagles,Minnesota Vikings,21,16,3,26,Final,4
+2024-08-24T17:00Z,401671914,Houston Texans,Los Angeles Rams,34,14,17,15,Final,4
+2024-08-24T20:00Z,401671909,Dallas Cowboys,Los Angeles Chargers,6,24,19,26,Final,4
+2024-08-24T23:30Z,401673172,New York Jets,New York Giants,20,19,10,6,Final,4
+2024-08-25T02:00Z,401671904,Seattle Seahawks,Cleveland Browns,26,5,37,33,Final,4
+2024-08-25T18:00Z,401673561,New Orleans Saints,Tennessee Titans,18,10,27,30,Final,4
+2024-08-25T20:30Z,401671613,Denver Broncos,Arizona Cardinals,7,22,38,12,Final,4
+2024-08-26T00:00Z,401671614,Washington Commanders,New England Patriots,28,17,20,10,Final,4
+2024-09-06T00:40Z,401671789,Kansas City Chiefs,Baltimore Ravens,12,33,27,20,Final,1
+2024-09-07T00:15Z,401671805,Philadelphia Eagles,Green Bay Packers,21,9,34,29,Final,1
+2024-09-08T17:00Z,401671744,Atlanta Falcons,Pittsburgh Steelers,1,23,10,18,Final,1
+2024-09-08T17:00Z,401671617,Buffalo Bills,Arizona Cardinals,2,22,34,28,Final,1
+2024-09-08T17:00Z,401671719,Chicago Bears,Tennessee Titans,3,10,24,17,Final,1
+2024-09-08T17:00Z,401671628,Cincinnati Bengals,New England Patriots,4,17,10,16,Final,1
+2024-09-08T17:00Z,401671861,Indianapolis Colts,Houston Texans,11,34,27,29,Final,1
+2024-09-08T17:00Z,401671849,Miami Dolphins,Jacksonville Jaguars,15,30,20,17,Final,1
+2024-09-08T17:00Z,401671734,New Orleans Saints,Carolina Panthers,18,29,47,10,Final,1
+2024-09-08T17:00Z,401671712,New York Giants,Minnesota Vikings,19,16,6,28,Final,1
+2024-09-08T20:05Z,401671659,Los Angeles Chargers,Las Vegas Raiders,24,13,22,10,Final,1
+2024-09-08T20:05Z,401671664,Seattle Seahawks,Denver Broncos,26,7,26,20,Final,1
+2024-09-08T20:25Z,401671761,Cleveland Browns,Dallas Cowboys,5,6,17,33,Final,1
+2024-09-08T20:25Z,401671770,Tampa Bay Buccaneers,Washington Commanders,27,28,37,20,Final,1
+2024-09-09T00:20Z,401671792,Detroit Lions,Los Angeles Rams,8,14,26,20,Final,1
+2024-09-10T00:15Z,401671696,San Francisco 49ers,New York Jets,25,20,32,19,Final,1
+2024-09-13T00:15Z,401671807,Miami Dolphins,Buffalo Bills,15,2,10,31,Final,2
+2024-09-15T17:00Z,401671709,Dallas Cowboys,New Orleans Saints,6,18,19,44,Final,2
+2024-09-15T17:00Z,401671721,Detroit Lions,Tampa Bay Buccaneers,8,27,16,20,Final,2
+2024-09-15T17:00Z,401671723,Green Bay Packers,Indianapolis Colts,9,11,16,10,Final,2
+2024-09-15T17:00Z,401671636,Tennessee Titans,New York Jets,10,20,17,24,Final,2
+2024-09-15T17:00Z,401671645,Minnesota Vikings,San Francisco 49ers,16,25,23,17,Final,2
+2024-09-15T17:00Z,401671702,New England Patriots,Seattle Seahawks,17,26,20,23,Final,2
+2024-09-15T17:00Z,401671716,Washington Commanders,New York Giants,28,19,21,18,Final,2
+2024-09-15T17:00Z,401671652,Carolina Panthers,Los Angeles Chargers,29,24,3,26,Final,2
+2024-09-15T17:00Z,401671635,Jacksonville Jaguars,Cleveland Browns,30,5,13,18,Final,2
+2024-09-15T17:00Z,401671624,Baltimore Ravens,Las Vegas Raiders,33,13,23,26,Final,2
+2024-09-15T20:05Z,401671754,Arizona Cardinals,Los Angeles Rams,22,14,41,10,Final,2
+2024-09-15T20:25Z,401671668,Denver Broncos,Pittsburgh Steelers,7,23,6,13,Final,2
+2024-09-15T20:25Z,401671670,Kansas City Chiefs,Cincinnati Bengals,12,4,26,25,Final,2
+2024-09-16T00:20Z,401671786,Houston Texans,Chicago Bears,34,3,19,13,Final,2
+2024-09-17T00:15Z,401671691,Philadelphia Eagles,Atlanta Falcons,21,1,21,22,Final,2
+2024-09-20T00:15Z,401671808,New York Jets,New England Patriots,20,17,24,3,Final,3
+2024-09-22T17:00Z,401671855,Cleveland Browns,New York Giants,5,19,15,21,Final,3
+2024-09-22T17:00Z,401671823,Tennessee Titans,Green Bay Packers,10,9,14,30,Final,3
+2024-09-22T17:00Z,401671865,Indianapolis Colts,Chicago Bears,11,3,21,16,Final,3
+2024-09-22T17:00Z,401671646,Minnesota Vikings,Houston Texans,16,34,34,7,Final,3
+2024-09-22T17:00Z,401671736,New Orleans Saints,Philadelphia Eagles,18,21,12,15,Final,3
+2024-09-22T17:00Z,401671632,Pittsburgh Steelers,Los Angeles Chargers,23,24,20,10,Final,3
+2024-09-22T17:00Z,401671741,Tampa Bay Buccaneers,Denver Broncos,27,7,7,26,Final,3
+2024-09-22T20:05Z,401671658,Las Vegas Raiders,Carolina Panthers,13,29,22,36,Final,3
+2024-09-22T20:05Z,401671662,Seattle Seahawks,Miami Dolphins,26,15,24,3,Final,3
+2024-09-22T20:25Z,401671763,Dallas Cowboys,Baltimore Ravens,6,33,25,28,Final,3
+2024-09-22T20:25Z,401671772,Los Angeles Rams,San Francisco 49ers,14,25,27,24,Final,3
+2024-09-22T20:25Z,401671771,Arizona Cardinals,Detroit Lions,22,8,13,20,Final,3
+2024-09-23T00:20Z,401671793,Atlanta Falcons,Kansas City Chiefs,1,12,17,22,Final,3
+2024-09-23T23:30Z,401671682,Buffalo Bills,Jacksonville Jaguars,2,30,47,10,Final,3
+2024-09-24T00:15Z,401671490,Cincinnati Bengals,Washington Commanders,4,28,33,38,Final,3
+2024-09-27T00:15Z,401671812,New York Giants,Dallas Cowboys,19,6,15,20,Final,4
+2024-09-29T17:00Z,401671727,Atlanta Falcons,New Orleans Saints,1,18,26,24,Final,4
+2024-09-29T17:00Z,401671871,Chicago Bears,Los Angeles Rams,3,14,24,18,Final,4
+2024-09-29T17:00Z,401671643,Green Bay Packers,Minnesota Vikings,9,16,29,31,Final,4
+2024-09-29T17:00Z,401671867,Indianapolis Colts,Pittsburgh Steelers,11,23,27,24,Final,4
+2024-09-29T17:00Z,401671622,New York Jets,Denver Broncos,20,7,9,10,Final,4
+2024-09-29T17:00Z,401671740,Tampa Bay Buccaneers,Philadelphia Eagles,27,21,33,16,Final,4
+2024-09-29T17:00Z,401671745,Carolina Panthers,Cincinnati Bengals,29,4,24,34,Final,4
+2024-09-29T17:00Z,401671857,Houston Texans,Jacksonville Jaguars,34,30,24,20,Final,4
+2024-09-29T20:05Z,401671755,Arizona Cardinals,Washington Commanders,22,28,14,42,Final,4
+2024-09-29T20:05Z,401671758,San Francisco 49ers,New England Patriots,25,17,30,13,Final,4
+2024-09-29T20:25Z,401671672,Las Vegas Raiders,Cleveland Browns,13,5,20,16,Final,4
+2024-09-29T20:25Z,401671674,Los Angeles Chargers,Kansas City Chiefs,24,12,10,17,Final,4
+2024-09-30T00:20Z,401671783,Baltimore Ravens,Buffalo Bills,33,2,35,10,Final,4
+2024-09-30T23:30Z,401671683,Miami Dolphins,Tennessee Titans,15,10,12,31,Final,4
+2024-10-01T00:15Z,401671491,Detroit Lions,Seattle Seahawks,8,26,42,29,Final,4
+2024-10-04T00:15Z,401671815,Atlanta Falcons,Tampa Bay Buccaneers,1,27,36,30,Final,5
+2024-10-06T13:30Z,401671804,Minnesota Vikings,New York Jets,16,20,23,17,Final,5
+2024-10-06T17:00Z,401671872,Chicago Bears,Carolina Panthers,3,29,36,10,Final,5
+2024-10-06T17:00Z,401671626,Cincinnati Bengals,Baltimore Ravens,4,33,38,41,Final,5
+2024-10-06T17:00Z,401671700,New England Patriots,Miami Dolphins,17,15,10,15,Final,5
+2024-10-06T17:00Z,401671718,Washington Commanders,Cleveland Browns,28,5,34,13,Final,5
+2024-10-06T17:00Z,401671633,Jacksonville Jaguars,Indianapolis Colts,30,11,37,34,Final,5
+2024-10-06T17:00Z,401671859,Houston Texans,Buffalo Bills,34,2,23,20,Final,5
+2024-10-06T20:05Z,401671747,Denver Broncos,Las Vegas Raiders,7,13,34,18,Final,5
+2024-10-06T20:05Z,401671756,San Francisco 49ers,Arizona Cardinals,25,22,23,24,Final,5
+2024-10-06T20:25Z,401671679,Los Angeles Rams,Green Bay Packers,14,9,19,24,Final,5
+2024-10-06T20:25Z,401671680,Seattle Seahawks,New York Giants,26,19,20,29,Final,5
+2024-10-07T01:45Z,401671784,Pittsburgh Steelers,Dallas Cowboys,23,6,17,20,Final,5
+2024-10-08T00:15Z,401671687,Kansas City Chiefs,New Orleans Saints,12,18,26,13,Final,5
+2024-10-11T00:15Z,401671819,Seattle Seahawks,San Francisco 49ers,26,25,24,36,Final,6
+2024-10-13T13:30Z,401671802,Chicago Bears,Jacksonville Jaguars,3,30,35,16,Final,6
+2024-10-13T17:00Z,401671722,Green Bay Packers,Arizona Cardinals,9,22,34,13,Final,6
+2024-10-13T17:00Z,401671820,Tennessee Titans,Indianapolis Colts,10,11,17,20,Final,6
+2024-10-13T17:00Z,401671619,New England Patriots,Houston Texans,17,34,21,41,Final,6
+2024-10-13T17:00Z,401671735,New Orleans Saints,Tampa Bay Buccaneers,18,27,27,51,Final,6
+2024-10-13T17:00Z,401671714,Philadelphia Eagles,Cleveland Browns,21,5,20,16,Final,6
+2024-10-13T17:00Z,401671625,Baltimore Ravens,Washington Commanders,33,28,30,23,Final,6
+2024-10-13T20:05Z,401671655,Denver Broncos,Los Angeles Chargers,7,24,16,23,Final,6
+2024-10-13T20:05Z,401671657,Las Vegas Raiders,Pittsburgh Steelers,13,23,13,32,Final,6
+2024-10-13T20:25Z,401671764,Dallas Cowboys,Detroit Lions,6,8,9,47,Final,6
+2024-10-13T20:25Z,401671769,Carolina Panthers,Atlanta Falcons,29,1,20,38,Final,6
+2024-10-14T00:20Z,401671791,New York Giants,Cincinnati Bengals,19,4,7,17,Final,6
+2024-10-15T00:15Z,401671684,New York Jets,Buffalo Bills,20,2,20,23,Final,6
+2024-10-18T00:15Z,401671816,New Orleans Saints,Denver Broncos,18,7,10,33,Final,7
+2024-10-20T13:30Z,401671801,Jacksonville Jaguars,New England Patriots,30,17,32,16,Final,7
+2024-10-20T17:00Z,401671730,Atlanta Falcons,Seattle Seahawks,1,26,14,34,Final,7
+2024-10-20T17:00Z,401671616,Buffalo Bills,Tennessee Titans,2,10,34,10,Final,7
+2024-10-20T17:00Z,401671853,Cleveland Browns,Cincinnati Bengals,5,4,14,21,Final,7
+2024-10-20T17:00Z,401671644,Green Bay Packers,Houston Texans,9,34,24,22,Final,7
+2024-10-20T17:00Z,401671864,Indianapolis Colts,Miami Dolphins,11,15,16,10,Final,7
+2024-10-20T17:00Z,401671724,Minnesota Vikings,Detroit Lions,16,8,29,31,Final,7
+2024-10-20T17:00Z,401671710,New York Giants,Philadelphia Eagles,19,21,3,28,Final,7
+2024-10-20T20:05Z,401671663,Los Angeles Rams,Las Vegas Raiders,14,13,20,15,Final,7
+2024-10-20T20:05Z,401671640,Washington Commanders,Carolina Panthers,28,29,40,7,Final,7
+2024-10-20T20:25Z,401671777,San Francisco 49ers,Kansas City Chiefs,25,12,18,28,Final,7
+2024-10-21T00:20Z,401671785,Pittsburgh Steelers,New York Jets,23,20,37,15,Final,7
+2024-10-22T00:15Z,401671695,Tampa Bay Buccaneers,Baltimore Ravens,27,33,31,41,Final,7
+2024-10-22T01:00Z,401671699,Arizona Cardinals,Los Angeles Chargers,22,24,17,15,Final,7
+2024-10-25T00:15Z,401671817,Los Angeles Rams,Minnesota Vikings,14,16,30,20,Final,8
+2024-10-27T17:00Z,401671667,Cincinnati Bengals,Philadelphia Eagles,4,21,17,37,Final,8
+2024-10-27T17:00Z,401671852,Cleveland Browns,Baltimore Ravens,5,33,29,24,Final,8
+2024-10-27T17:00Z,401671720,Detroit Lions,Tennessee Titans,8,10,52,14,Final,8
+2024-10-27T17:00Z,401671850,Miami Dolphins,Arizona Cardinals,15,22,27,28,Final,8
+2024-10-27T17:00Z,401671618,New England Patriots,New York Jets,17,20,25,22,Final,8
+2024-10-27T17:00Z,401671739,Tampa Bay Buccaneers,Atlanta Falcons,27,1,26,31,Final,8
+2024-10-27T17:00Z,401671707,Jacksonville Jaguars,Green Bay Packers,30,9,27,30,Final,8
+2024-10-27T17:00Z,401671856,Houston Texans,Indianapolis Colts,34,11,23,20,Final,8
+2024-10-27T20:05Z,401671750,Los Angeles Chargers,New Orleans Saints,24,18,26,8,Final,8
+2024-10-27T20:05Z,401671760,Seattle Seahawks,Buffalo Bills,26,2,10,31,Final,8
+2024-10-27T20:25Z,401671600,Denver Broncos,Carolina Panthers,7,29,28,14,Final,8
+2024-10-27T20:25Z,401671671,Las Vegas Raiders,Kansas City Chiefs,13,12,20,27,Final,8
+2024-10-27T20:25Z,401671599,Washington Commanders,Chicago Bears,28,3,18,15,Final,8
+2024-10-28T00:20Z,401671795,San Francisco 49ers,Dallas Cowboys,25,6,30,24,Final,8
+2024-10-29T00:15Z,401671685,Pittsburgh Steelers,New York Giants,23,19,26,18,Final,8
+2024-11-01T00:15Z,401671809,New York Jets,Houston Texans,20,34,21,13,Final,9
+2024-11-03T18:00Z,401671728,Atlanta Falcons,Dallas Cowboys,1,6,27,21,Final,9
+2024-11-03T18:00Z,401671493,Buffalo Bills,Miami Dolphins,2,15,30,27,Final,9
+2024-11-03T18:00Z,401671704,Cincinnati Bengals,Las Vegas Raiders,4,13,41,24,Final,9
+2024-11-03T18:00Z,401671629,Cleveland Browns,Los Angeles Chargers,5,24,10,27,Final,9
+2024-11-03T18:00Z,401671822,Tennessee Titans,New England Patriots,10,17,20,17,Final,9
+2024-11-03T18:00Z,401671711,New York Giants,Washington Commanders,19,28,22,27,Final,9
+2024-11-03T18:00Z,401671650,Carolina Panthers,New Orleans Saints,29,18,23,22,Final,9
+2024-11-03T18:00Z,401671623,Baltimore Ravens,Denver Broncos,33,7,41,10,Final,9
+2024-11-03T21:05Z,401671797,Philadelphia Eagles,Jacksonville Jaguars,21,30,28,23,Final,9
+2024-11-03T21:05Z,401671661,Arizona Cardinals,Chicago Bears,22,3,29,9,Final,9
+2024-11-03T21:25Z,401671767,Green Bay Packers,Detroit Lions,9,8,14,24,Final,9
+2024-11-03T21:25Z,401671776,Seattle Seahawks,Los Angeles Rams,26,14,20,26,Final,9
+2024-11-04T01:20Z,401671647,Minnesota Vikings,Indianapolis Colts,16,11,21,13,Final,9
+2024-11-05T01:15Z,401671688,Kansas City Chiefs,Tampa Bay Buccaneers,12,27,30,24,Final,9
+2024-11-08T01:15Z,401671810,Baltimore Ravens,Cincinnati Bengals,33,4,35,34,Final,10
+2024-11-10T14:30Z,401671803,Carolina Panthers,New York Giants,29,19,20,17,Final,10
+2024-11-10T18:00Z,401671873,Chicago Bears,New England Patriots,3,17,3,19,Final,10
+2024-11-10T18:00Z,401671863,Indianapolis Colts,Buffalo Bills,11,2,20,30,Final,10
+2024-11-10T18:00Z,401671637,Kansas City Chiefs,Denver Broncos,12,7,16,14,Final,10
+2024-11-10T18:00Z,401671733,New Orleans Saints,Atlanta Falcons,18,1,20,17,Final,10
+2024-11-10T18:00Z,401671742,Tampa Bay Buccaneers,San Francisco 49ers,27,25,20,23,Final,10
+2024-11-10T18:00Z,401671641,Washington Commanders,Pittsburgh Steelers,28,23,27,28,Final,10
+2024-11-10T18:00Z,401671708,Jacksonville Jaguars,Minnesota Vikings,30,16,7,12,Final,10
+2024-11-10T21:05Z,401671751,Los Angeles Chargers,Tennessee Titans,24,10,27,17,Final,10
+2024-11-10T21:25Z,401671676,Dallas Cowboys,Philadelphia Eagles,6,21,6,34,Final,10
+2024-11-10T21:25Z,401671678,Arizona Cardinals,New York Jets,22,20,31,6,Final,10
+2024-11-11T01:20Z,401671787,Houston Texans,Detroit Lions,34,8,23,26,Final,10
+2024-11-12T01:15Z,401671693,Los Angeles Rams,Miami Dolphins,14,15,15,23,Final,10
+2024-11-15T01:15Z,401671813,Philadelphia Eagles,Washington Commanders,21,28,26,18,Final,11
+2024-11-17T18:00Z,401671869,Chicago Bears,Green Bay Packers,3,9,19,20,Final,11
+2024-11-17T18:00Z,401671642,Detroit Lions,Jacksonville Jaguars,8,30,52,6,Final,11
+2024-11-17T18:00Z,401671824,Tennessee Titans,Minnesota Vikings,10,16,13,23,Final,11
+2024-11-17T18:00Z,401671851,Miami Dolphins,Las Vegas Raiders,15,13,34,19,Final,11
+2024-11-17T18:00Z,401671701,New England Patriots,Los Angeles Rams,17,14,22,28,Final,11
+2024-11-17T18:00Z,401671746,New Orleans Saints,Cleveland Browns,18,5,35,14,Final,11
+2024-11-17T18:00Z,401671782,New York Jets,Indianapolis Colts,20,11,27,28,Final,11
+2024-11-17T18:00Z,401671630,Pittsburgh Steelers,Baltimore Ravens,23,33,18,16,Final,11
+2024-11-17T21:05Z,401671748,Denver Broncos,Atlanta Falcons,7,1,38,6,Final,11
+2024-11-17T21:05Z,401671757,San Francisco 49ers,Seattle Seahawks,25,26,17,20,Final,11
+2024-11-17T21:25Z,401671665,Buffalo Bills,Kansas City Chiefs,2,12,30,21,Final,11
+2024-11-18T01:20Z,401671675,Los Angeles Chargers,Cincinnati Bengals,24,4,34,27,Final,11
+2024-11-19T01:15Z,401671694,Dallas Cowboys,Houston Texans,6,34,10,34,Final,11
+2024-11-22T01:15Z,401671875,Cleveland Browns,Pittsburgh Steelers,5,23,24,19,Final,12
+2024-11-24T18:00Z,401671870,Chicago Bears,Minnesota Vikings,3,16,27,30,Final,12
+2024-11-24T18:00Z,401671866,Indianapolis Colts,Detroit Lions,11,8,6,24,Final,12
+2024-11-24T18:00Z,401671847,Miami Dolphins,New England Patriots,15,17,34,15,Final,12
+2024-11-24T18:00Z,401671638,New York Giants,Tampa Bay Buccaneers,19,27,7,30,Final,12
+2024-11-24T18:00Z,401671715,Washington Commanders,Dallas Cowboys,28,6,26,34,Final,12
+2024-11-24T18:00Z,401671651,Carolina Panthers,Kansas City Chiefs,29,12,27,30,Final,12
+2024-11-24T18:00Z,401671858,Houston Texans,Tennessee Titans,34,10,27,32,Final,12
+2024-11-24T21:05Z,401671656,Las Vegas Raiders,Denver Broncos,13,7,19,29,Final,12
+2024-11-24T21:25Z,401671768,Green Bay Packers,San Francisco 49ers,9,25,38,10,Final,12
+2024-11-24T21:25Z,401671775,Seattle Seahawks,Arizona Cardinals,26,22,16,6,Final,12
+2024-11-25T01:20Z,401671794,Los Angeles Rams,Philadelphia Eagles,14,21,20,37,Final,12
+2024-11-26T01:15Z,401671689,Los Angeles Chargers,Baltimore Ravens,24,33,23,30,Final,12
+2024-11-28T17:30Z,401671492,Detroit Lions,Chicago Bears,8,3,23,20,Final,13
+2024-11-28T21:30Z,401671779,Dallas Cowboys,New York Giants,6,19,27,20,Final,13
+2024-11-29T01:20Z,401671798,Green Bay Packers,Miami Dolphins,9,15,30,17,Final,13
+2024-11-29T20:00Z,401671806,Kansas City Chiefs,Las Vegas Raiders,12,13,19,17,Final,13
+2024-12-01T18:00Z,401671649,Atlanta Falcons,Los Angeles Chargers,1,24,13,17,Final,13
+2024-12-01T18:00Z,401671627,Cincinnati Bengals,Pittsburgh Steelers,4,23,38,44,Final,13
+2024-12-01T18:00Z,401671726,Minnesota Vikings,Arizona Cardinals,16,22,23,22,Final,13
+2024-12-01T18:00Z,401671620,New England Patriots,Indianapolis Colts,17,11,24,25,Final,13
+2024-12-01T18:00Z,401671703,New York Jets,Seattle Seahawks,20,26,21,26,Final,13
+2024-12-01T18:00Z,401671743,Washington Commanders,Tennessee Titans,28,10,42,19,Final,13
+2024-12-01T18:00Z,401671705,Jacksonville Jaguars,Houston Texans,30,34,20,23,Final,13
+2024-12-01T21:05Z,401671753,New Orleans Saints,Los Angeles Rams,18,14,14,21,Final,13
+2024-12-01T21:05Z,401671752,Carolina Panthers,Tampa Bay Buccaneers,29,27,23,26,Final,13
+2024-12-01T21:25Z,401671666,Baltimore Ravens,Philadelphia Eagles,33,21,19,24,Final,13
+2024-12-02T01:20Z,401671781,Buffalo Bills,San Francisco 49ers,2,25,35,10,Final,13
+2024-12-03T01:15Z,401671686,Denver Broncos,Cleveland Browns,7,5,41,32,Final,13
+2024-12-06T01:15Z,401671814,Detroit Lions,Green Bay Packers,8,9,34,31,Final,14
+2024-12-08T18:00Z,401671821,Tennessee Titans,Jacksonville Jaguars,10,30,6,10,Final,14
+2024-12-08T18:00Z,401671848,Miami Dolphins,New York Jets,15,20,32,26,Final,14
+2024-12-08T18:00Z,401671648,Minnesota Vikings,Atlanta Falcons,16,1,42,21,Final,14
+2024-12-08T18:00Z,401671601,New York Giants,New Orleans Saints,19,18,11,14,Final,14
+2024-12-08T18:00Z,401671713,Philadelphia Eagles,Carolina Panthers,21,29,22,16,Final,14
+2024-12-08T18:00Z,401671631,Pittsburgh Steelers,Cleveland Browns,23,5,27,14,Final,14
+2024-12-08T18:00Z,401671654,Tampa Bay Buccaneers,Las Vegas Raiders,27,13,28,13,Final,14
+2024-12-08T21:05Z,401671660,Arizona Cardinals,Seattle Seahawks,22,26,18,30,Final,14
+2024-12-08T21:25Z,401671773,Los Angeles Rams,Buffalo Bills,14,2,44,42,Final,14
+2024-12-08T21:25Z,401671774,San Francisco 49ers,Chicago Bears,25,3,38,13,Final,14
+2024-12-09T01:20Z,401671788,Kansas City Chiefs,Los Angeles Chargers,12,24,19,17,Final,14
+2024-12-10T01:15Z,401671690,Dallas Cowboys,Cincinnati Bengals,6,4,20,27,Final,14
+2024-12-13T01:15Z,401671818,San Francisco 49ers,Los Angeles Rams,25,14,6,12,Final,15
+2024-12-15T18:00Z,401671854,Cleveland Browns,Kansas City Chiefs,5,12,7,21,Final,15
+2024-12-15T18:00Z,401671825,Tennessee Titans,Cincinnati Bengals,10,4,27,37,Final,15
+2024-12-15T18:00Z,401671737,New Orleans Saints,Washington Commanders,18,28,19,20,Final,15
+2024-12-15T18:00Z,401671639,New York Giants,Baltimore Ravens,19,33,14,35,Final,15
+2024-12-15T18:00Z,401671731,Carolina Panthers,Dallas Cowboys,29,6,14,30,Final,15
+2024-12-15T18:00Z,401671706,Jacksonville Jaguars,New York Jets,30,20,25,32,Final,15
+2024-12-15T18:00Z,401671860,Houston Texans,Miami Dolphins,34,15,20,12,Final,15
+2024-12-15T21:25Z,401671669,Denver Broncos,Indianapolis Colts,7,11,31,13,Final,15
+2024-12-15T21:25Z,401671681,Detroit Lions,Buffalo Bills,8,2,42,48,Final,15
+2024-12-15T21:25Z,401671766,Philadelphia Eagles,Pittsburgh Steelers,21,23,27,13,Final,15
+2024-12-15T21:25Z,401671677,Arizona Cardinals,New England Patriots,22,17,30,17,Final,15
+2024-12-15T21:25Z,401671762,Los Angeles Chargers,Tampa Bay Buccaneers,24,27,17,40,Final,15
+2024-12-16T01:20Z,401671796,Seattle Seahawks,Green Bay Packers,26,9,13,30,Final,15
+2024-12-17T01:00Z,401671489,Minnesota Vikings,Chicago Bears,16,3,30,12,Final,15
+2024-12-17T01:30Z,401671697,Las Vegas Raiders,Atlanta Falcons,13,1,9,15,Final,15
+2024-12-20T01:15Z,401671749,Los Angeles Chargers,Denver Broncos,24,7,34,27,Final,16
+2024-12-21T18:00Z,401671780,Kansas City Chiefs,Houston Texans,12,34,27,19,Final,16
+2024-12-21T21:30Z,401671778,Baltimore Ravens,Pittsburgh Steelers,33,23,34,17,Final,16
+2024-12-22T18:00Z,401671729,Atlanta Falcons,New York Giants,1,19,34,7,Final,16
+2024-12-22T18:00Z,401671868,Chicago Bears,Detroit Lions,3,8,17,34,Final,16
+2024-12-22T18:00Z,401671811,Cincinnati Bengals,Cleveland Browns,4,5,24,6,Final,16
+2024-12-22T18:00Z,401671862,Indianapolis Colts,Tennessee Titans,11,10,38,30,Final,16
+2024-12-22T18:00Z,401671621,New York Jets,Los Angeles Rams,20,14,9,19,Final,16
+2024-12-22T18:00Z,401671717,Washington Commanders,Philadelphia Eagles,28,21,36,33,Final,16
+2024-12-22T18:00Z,401671732,Carolina Panthers,Arizona Cardinals,29,22,36,30,Final,16
+2024-12-22T21:05Z,401671759,Seattle Seahawks,Minnesota Vikings,26,16,24,27,Final,16
+2024-12-22T21:25Z,401671494,Buffalo Bills,New England Patriots,2,17,24,21,Final,16
+2024-12-22T21:25Z,401671673,Las Vegas Raiders,Jacksonville Jaguars,13,30,19,14,Final,16
+2024-12-22T21:25Z,401671874,Miami Dolphins,San Francisco 49ers,15,25,29,17,Final,16
+2024-12-23T01:20Z,401671790,Dallas Cowboys,Tampa Bay Buccaneers,6,27,26,24,Final,16
+2024-12-24T01:15Z,401671692,Green Bay Packers,New Orleans Saints,9,18,34,0,Final,16
+2024-12-25T18:00Z,401671799,Pittsburgh Steelers,Kansas City Chiefs,23,12,10,29,Final,17
+2024-12-25T21:30Z,401671800,Houston Texans,Baltimore Ravens,34,33,2,31,Final,17
+2024-12-27T01:15Z,401671876,Chicago Bears,Seattle Seahawks,3,26,3,6,Final,17
+2024-12-28T18:00Z,401671832,New England Patriots,Los Angeles Chargers,17,24,7,40,Final,17
+2024-12-28T21:30Z,401671835,Cincinnati Bengals,Denver Broncos,4,7,30,24,Final,17
+2024-12-29T01:00Z,401671829,Los Angeles Rams,Arizona Cardinals,14,22,13,9,Final,17
+2024-12-29T18:00Z,401671495,Buffalo Bills,New York Jets,2,20,40,14,Final,17
+2024-12-29T18:00Z,401671738,New Orleans Saints,Las Vegas Raiders,18,13,10,25,Final,17
+2024-12-29T18:00Z,401671846,New York Giants,Indianapolis Colts,19,11,45,33,Final,17
+2024-12-29T18:00Z,401671765,Philadelphia Eagles,Dallas Cowboys,21,6,41,7,Final,17
+2024-12-29T18:00Z,401671653,Tampa Bay Buccaneers,Carolina Panthers,27,29,48,14,Final,17
+2024-12-29T18:00Z,401671634,Jacksonville Jaguars,Tennessee Titans,30,10,20,13,Final,17
+2024-12-29T21:05Z,401671877,Cleveland Browns,Miami Dolphins,5,15,3,20,Final,17
+2024-12-29T21:25Z,401671725,Minnesota Vikings,Green Bay Packers,16,9,27,25,Final,17
+2024-12-30T01:20Z,401671842,Washington Commanders,Atlanta Falcons,28,1,30,24,Final,17
+2024-12-31T01:15Z,401671698,San Francisco 49ers,Detroit Lions,25,8,34,40,Final,17

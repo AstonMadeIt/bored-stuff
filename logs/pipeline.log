@@ -1,0 +1,146 @@
+[2025-12-29 13:32:41] ================================================================================
+[2025-12-29 13:32:41] 🚀 STARTING PRODUCTION PIPELINE
+[2025-12-29 13:32:41] ================================================================================
+[2025-12-29 13:32:41] ✅ Models found
+[2025-12-29 13:32:41] ▶️  Starting: NFL Predictions
+[2025-12-29 13:32:43] ✅ Completed: NFL Predictions (1.3s)
+[2025-12-29 13:32:43]       ⚠️  Error saving prediction: table predictions has no column named sport
+[2025-12-29 13:32:43]    ✅ Generated predictions for 1 games
+[2025-12-29 13:32:43]    🎯 High Confidence: 0 (0%)
+[2025-12-29 13:32:43] ▶️  Starting: NBA Predictions
+[2025-12-29 13:32:44] ✅ Completed: NBA Predictions (1.0s)
+[2025-12-29 13:32:44]    ✅ Generated 13 NBA predictions
+[2025-12-29 13:32:44] ▶️  Starting: Combine Predictions
+[2025-12-29 13:32:45] ✅ Completed: Combine Predictions (1.1s)
+[2025-12-29 13:32:45]       ⚠️  Error saving prediction: table predictions has no column named sport
+[2025-12-29 13:32:45]    ✅ Generated predictions for 1 games
+[2025-12-29 13:32:45]       ✅ Generated 1 NFL predictions
+[2025-12-29 13:32:45]    ✅ Generated 13 NBA predictions
+[2025-12-29 13:32:45]       ✅ Generated 13 NBA predictions
+[2025-12-29 13:32:45]    🎉 All predictions generated!
+[2025-12-29 13:32:45] ▶️  Starting: Create Dashboard
+[2025-12-29 13:32:45] ✅ Completed: Create Dashboard (0.0s)
+[2025-12-29 13:32:45] 🔍 Validating output...
+[2025-12-29 13:32:45]    ✅ Dashboard exists
+[2025-12-29 13:32:45]    ✅ Predictions JSON exists
+[2025-12-29 13:32:45] ================================================================================
+[2025-12-29 13:32:45] ✅ PRODUCTION PIPELINE COMPLETE
+[2025-12-29 13:32:45] ================================================================================
+[2025-12-29 13:32:45] 
+📊 PIPELINE SUMMARY
+[2025-12-29 13:32:45]    NFL Predictions: 1
+[2025-12-29 13:32:45]    NBA Predictions: 13
+[2025-12-29 13:32:45]    Total: 14
+[2025-12-29 13:32:45]    High Confidence: 0
+[2025-12-29 13:32:45] 
+📄 Dashboard: predictions/dashboard.html
+[2025-12-29 13:33:18] ================================================================================
+[2025-12-29 13:33:18] 🚀 STARTING PRODUCTION PIPELINE
+[2025-12-29 13:33:18] ================================================================================
+[2025-12-29 13:33:18] ✅ Models found
+[2025-12-29 13:33:18] ▶️  Starting: NFL Predictions
+[2025-12-29 13:33:19] ✅ Completed: NFL Predictions (1.2s)
+[2025-12-29 13:33:19]       ⚠️  Error saving prediction: table predictions has no column named sport
+[2025-12-29 13:33:19]    ✅ Generated predictions for 1 games
+[2025-12-29 13:33:19]    🎯 High Confidence: 0 (0%)
+[2025-12-29 13:33:19] ▶️  Starting: NBA Predictions
+[2025-12-29 13:33:20] ✅ Completed: NBA Predictions (0.9s)
+[2025-12-29 13:33:20]    ✅ Generated 13 NBA predictions
+[2025-12-29 13:33:20] ▶️  Starting: Combine Predictions
+[2025-12-29 13:33:21] ✅ Completed: Combine Predictions (1.0s)
+[2025-12-29 13:33:21]       ⚠️  Error saving prediction: table predictions has no column named sport
+[2025-12-29 13:33:21]    ✅ Generated predictions for 1 games
+[2025-12-29 13:33:21]       ✅ Generated 1 NFL predictions
+[2025-12-29 13:33:21]    ✅ Generated 13 NBA predictions
+[2025-12-29 13:33:21]       ✅ Generated 13 NBA predictions
+[2025-12-29 13:33:21]    🎉 All predictions generated!
+[2025-12-29 13:33:21] ▶️  Starting: Create Dashboard
+[2025-12-29 13:33:21] ✅ Completed: Create Dashboard (0.0s)
+[2025-12-29 13:33:21] 🔍 Validating output...
+[2025-12-29 13:33:21]    ✅ Dashboard exists
+[2025-12-29 13:33:21]    ✅ Predictions JSON exists
+[2025-12-29 13:33:21] ================================================================================
+[2025-12-29 13:33:21] ✅ PRODUCTION PIPELINE COMPLETE
+[2025-12-29 13:33:21] ================================================================================
+[2025-12-29 13:33:21] 
+📊 PIPELINE SUMMARY
+[2025-12-29 13:33:21]    NFL Predictions: 1
+[2025-12-29 13:33:21]    NBA Predictions: 13
+[2025-12-29 13:33:21]    Total: 14
+[2025-12-29 13:33:21]    High Confidence: 0
+[2025-12-29 13:33:21] 
+📄 Dashboard: predictions/dashboard.html
+[2025-12-29 13:51:31] ================================================================================
+[2025-12-29 13:51:31] 🚀 STARTING PRODUCTION PIPELINE
+[2025-12-29 13:51:31] ================================================================================
+[2025-12-29 13:51:31] ✅ Models found
+[2025-12-29 13:51:31] ▶️  Starting: NFL Predictions
+[2025-12-29 13:51:44] ✅ Completed: NFL Predictions (12.7s)
+[2025-12-29 13:51:44]       ⚠️  nfl_data_py error: Invalid comparison between dtype=datetime64[ns] and Timestamp
+[2025-12-29 13:51:44]       ⚠️  nfl_data_py error: Invalid comparison between dtype=datetime64[ns] and Timestamp
+[2025-12-29 13:51:44]       ⚠️  Error saving prediction: table predictions has no column named sport
+[2025-12-29 13:51:44]    ✅ Generated predictions for 1 games
+[2025-12-29 13:51:44]    🎯 High Confidence: 0 (0%)
+[2025-12-29 13:51:44] ▶️  Starting: NBA Predictions
+[2025-12-29 13:53:45] ✅ Completed: NBA Predictions (120.9s)
+[2025-12-29 13:53:45]    ✅ Generated 13 NBA predictions
+[2025-12-29 13:53:45] ▶️  Starting: Combine Predictions
+[2025-12-29 13:55:56] ✅ Completed: Combine Predictions (131.7s)
+[2025-12-29 13:55:56]       ⚠️  nfl_data_py error: Invalid comparison between dtype=datetime64[ns] and Timestamp
+[2025-12-29 13:55:56]       ⚠️  nfl_data_py error: Invalid comparison between dtype=datetime64[ns] and Timestamp
+[2025-12-29 13:55:56]       ⚠️  Error saving prediction: table predictions has no column named sport
+[2025-12-29 13:55:56]    ✅ Generated predictions for 1 games
+[2025-12-29 13:55:56]       ✅ Generated 1 NFL predictions
+[2025-12-29 13:55:56]    ✅ Generated 13 NBA predictions
+[2025-12-29 13:55:56]       ✅ Generated 13 NBA predictions
+[2025-12-29 13:55:56]    🎉 All predictions generated!
+[2025-12-29 13:55:56] ▶️  Starting: Create Dashboard
+[2025-12-29 13:55:56] ✅ Completed: Create Dashboard (0.1s)
+[2025-12-29 13:55:56] 🔍 Validating output...
+[2025-12-29 13:55:56]    ✅ Dashboard exists
+[2025-12-29 13:55:56]    ✅ Predictions JSON exists
+[2025-12-29 13:55:56] ================================================================================
+[2025-12-29 13:55:56] ✅ PRODUCTION PIPELINE COMPLETE
+[2025-12-29 13:55:56] ================================================================================
+[2025-12-29 13:55:56] 
+📊 PIPELINE SUMMARY
+[2025-12-29 13:55:56]    NFL Predictions: 1
+[2025-12-29 13:55:56]    NBA Predictions: 13
+[2025-12-29 13:55:56]    Total: 14
+[2025-12-29 13:55:56]    High Confidence: 0
+[2025-12-29 13:55:56] 
+📄 Dashboard: predictions/dashboard.html
+[2025-12-29 14:14:01] ================================================================================
+[2025-12-29 14:14:01] 🚀 STARTING PRODUCTION PIPELINE
+[2025-12-29 14:14:01] ================================================================================
+[2025-12-29 14:14:01] ✅ Models found
+[2025-12-29 14:14:01] ▶️  Starting: NFL Predictions
+[2025-12-29 14:14:14] ✅ Completed: NFL Predictions (13.5s)
+[2025-12-29 14:14:14]    ✅ Generated predictions for 1 games
+[2025-12-29 14:14:14]    🎯 High Confidence: 0 (0%)
+[2025-12-29 14:14:14] ▶️  Starting: NBA Predictions
+[2025-12-29 14:16:05] ✅ Completed: NBA Predictions (111.1s)
+[2025-12-29 14:16:05]    ✅ Generated 13 NBA predictions
+[2025-12-29 14:16:05] ▶️  Starting: Combine Predictions
+[2025-12-29 14:18:10] ✅ Completed: Combine Predictions (124.5s)
+[2025-12-29 14:18:10]    ✅ Generated predictions for 1 games
+[2025-12-29 14:18:10]       ✅ Generated 1 NFL predictions
+[2025-12-29 14:18:10]    ✅ Generated 13 NBA predictions
+[2025-12-29 14:18:10]       ✅ Generated 13 NBA predictions
+[2025-12-29 14:18:10]    🎉 All predictions generated!
+[2025-12-29 14:18:10] ▶️  Starting: Create Dashboard
+[2025-12-29 14:18:10] ✅ Completed: Create Dashboard (0.4s)
+[2025-12-29 14:18:10] 🔍 Validating output...
+[2025-12-29 14:18:10]    ✅ Dashboard exists
+[2025-12-29 14:18:10]    ✅ Predictions JSON exists
+[2025-12-29 14:18:10] ================================================================================
+[2025-12-29 14:18:10] ✅ PRODUCTION PIPELINE COMPLETE
+[2025-12-29 14:18:10] ================================================================================
+[2025-12-29 14:18:10] 
+📊 PIPELINE SUMMARY
+[2025-12-29 14:18:10]    NFL Predictions: 1
+[2025-12-29 14:18:10]    NBA Predictions: 13
+[2025-12-29 14:18:10]    Total: 14
+[2025-12-29 14:18:10]    High Confidence: 0
+[2025-12-29 14:18:10] 
+📄 Dashboard: predictions/dashboard.html
