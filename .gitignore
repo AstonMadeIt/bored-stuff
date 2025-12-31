@@ -1,1 +1,7 @@
 .DS_Store
+
+# API Keys
+setup_ai.sh
+*.plist
+.env
+~/.anthropic_key

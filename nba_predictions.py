@@ -629,9 +629,12 @@ def predict_nba_games():
                 status = event.get('status', {})
                 status_type = status.get('type', {})
                 
-                # Skip completed games
-                if status_type.get('completed', False) or status_type.get('name', '').lower() in ['final', 'final/ot']:
+                # Skip only truly completed games (Final, Final/OT, etc.)
+                status_name = status_type.get('name', '').lower()
+                if status_name in ['final', 'final/ot', 'final/2ot', 'final/3ot']:
                     continue
+                
+                # Include: scheduled, in progress, delayed, etc.
                 
                 competitions = event.get('competitions', [])
                 if not competitions:
@@ -964,6 +967,20 @@ def predict_nba_games():
             
             predicted_winner = home_team if predicted_spread > 0 else away_team
             
+            # Fetch DraftKings odds if available
+            draftkings_spread = None
+            divergence = None
+            try:
+                from odds_fetcher import OddsFetcher
+                odds_fetcher = OddsFetcher()
+                odds_data = odds_fetcher.get_game_odds(home_team, away_team)
+                if odds_data:
+                    draftkings_spread = odds_data.get('spread')
+                    if draftkings_spread is not None:
+                        divergence = abs(predicted_spread - draftkings_spread)
+            except Exception as e:
+                pass  # Silently fail if odds unavailable
+            
             # Include enhanced features in prediction output
             pred_dict = {
                 'date': game['date'],
@@ -975,6 +992,8 @@ def predict_nba_games():
                 'confidence_score': round(float(confidence_score), 3),
                 'is_high_confidence': is_high_conf,
                 'sport': 'NBA',
+                'vegas_spread': draftkings_spread,  # DraftKings spread
+                'divergence': divergence,  # Difference from DraftKings
                 'clutch_analyzer_used': feature_dict.get('clutch_analyzer_used', False) if 'feature_dict' in locals() else False
             }
             

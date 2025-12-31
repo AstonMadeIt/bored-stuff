@@ -2206,9 +2206,23 @@ def render_prediction_card_apple(pred, historical_df, trend_charts_data, sport, 
     away_trends = get_team_trends(historical_df, away, game_date, sport, standings_fetcher, cached_standings) if historical_df is not None else get_team_trends(None, away, game_date, sport, standings_fetcher, cached_standings)
     home_trends = get_team_trends(historical_df, home, game_date, sport, standings_fetcher, cached_standings) if historical_df is not None else get_team_trends(None, home, game_date, sport, standings_fetcher, cached_standings)
     
-    # Vegas deviation badge
+    # DraftKings odds badge (show divergence from DraftKings)
     vegas_badge = ""
-    if vegas_deviation is not None:
+    draftkings_spread = pred.get('vegas_spread')  # This is actually DraftKings now
+    divergence = pred.get('divergence')
+    
+    if draftkings_spread is not None:
+        # Show DraftKings line and divergence
+        dk_sign = '+' if draftkings_spread > 0 else ''
+        div_class = 'positive' if divergence and divergence > 3 else ''
+        div_text = f" (Δ{divergence:.1f} pts)" if divergence else ""
+        vegas_badge = f"""
+        <div class="vegas-deviation {div_class}">
+            DraftKings: {dk_sign}{draftkings_spread:.1f} pts{div_text}
+        </div>
+        """
+    elif vegas_deviation is not None:
+        # Fallback to old vegas_deviation if DraftKings not available
         dev_class = 'positive' if abs(vegas_deviation) > 0 else ''
         sign = '+' if vegas_deviation > 0 else ''
         vegas_badge = f"""
