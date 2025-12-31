@@ -1190,6 +1190,11 @@ def create_apple_dashboard():
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 16px;
+            gap: 12px;
+        }}
+        
+        .card-header > div:first-child {{
+            flex: 1;
         }}
         
         .game-matchup {{
@@ -2211,16 +2216,30 @@ def render_prediction_card_apple(pred, historical_df, trend_charts_data, sport, 
     draftkings_spread = pred.get('vegas_spread')  # This is actually DraftKings now
     divergence = pred.get('divergence')
     
-    if draftkings_spread is not None:
-        # Show DraftKings line and divergence
-        dk_sign = '+' if draftkings_spread > 0 else ''
-        div_class = 'positive' if divergence and divergence > 3 else ''
-        div_text = f" (Δ{divergence:.1f} pts)" if divergence else ""
-        vegas_badge = f"""
+    # Check if we have DraftKings data (handle both None and NaN cases)
+    if draftkings_spread is not None and str(draftkings_spread) != 'nan':
+        try:
+            draftkings_spread = float(draftkings_spread)
+            # Show DraftKings line and divergence
+            dk_sign = '+' if draftkings_spread > 0 else ''
+            div_class = ''
+            if divergence is not None and str(divergence) != 'nan':
+                try:
+                    div_val = float(divergence)
+                    div_class = 'positive' if div_val > 3 else ''
+                    div_text = f" (Δ{div_val:.1f} pts)"
+                except (ValueError, TypeError):
+                    div_text = ""
+            else:
+                div_text = ""
+            vegas_badge = f"""
         <div class="vegas-deviation {div_class}">
             DraftKings: {dk_sign}{draftkings_spread:.1f} pts{div_text}
         </div>
         """
+        except (ValueError, TypeError) as e:
+            # Debug: print error but continue
+            pass  # Skip if conversion fails
     elif vegas_deviation is not None:
         # Fallback to old vegas_deviation if DraftKings not available
         dev_class = 'positive' if abs(vegas_deviation) > 0 else ''

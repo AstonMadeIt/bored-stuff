@@ -842,3 +842,435 @@ To ssh://github.com/AstonMadeIt/bored-stuff.git
 ==========================================
 ✅ Morning run finished at Wed Dec 31 09:01:15 EST 2025
 ==========================================
+==========================================
+🌅 MORNING RUN - Wed Dec 31 11:14:30 EST 2025
+==========================================
+
+📊 Generating predictions...
+================================================================================
+🏈🏀 GENERATING ALL PREDICTIONS
+================================================================================
+
+🏈 Generating NFL predictions...
+================================================================================
+🎯 PREDICTING TODAY'S NFL GAMES
+================================================================================
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Loading historical data...
+   ✅ Loaded 684 historical games
+
+📅 Fetching games for December 31, 2025...
+
+💰 Fetching Vegas odds...
+      ✅ Fetched odds for 16 games (Credits: 1/100, Remaining: 99)
+
+⚠️  No upcoming games found for today
+   ⚠️  No NFL games today
+
+🏀 Generating NBA predictions...
+   🎯 Clutch Analyzer Formula: (Streak × Late Game) / (Record Divergence - PPG Divergence)
+================================================================================
+🏀 NBA PREDICTIONS - ENHANCED FEATURES + CLUTCH ANALYZER
+================================================================================
+🔥 Using ENHANCED NBA features: Rest/B2B, Last 10 weighted, Pace, Net Rating, Streaks
+🎯 CLUTCH ANALYZER INTEGRATED: Formula-based late game adjustment active
+   Formula: (Streak × Late Game) / (Record Matchup Divergence - PPG Divergence)
+
+✅ Loaded ensemble models: catboost, xgboost, lightgbm (3 models)
+
+📥 Fetching upcoming NBA games...
+   ✅ Found 24 upcoming games
+
+📊 Loading historical NBA data...
+      🔥 ENHANCED FEATURES: Rest advantage=0.0, Home B2B=0.0, Away B2B=0.0
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 5.2 → Final: 5.2
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -1.0, Away clutch: -10.0
+         Late game advantage: +0.00
+   Golden State Warriors @ Charlotte Hornets
+      Predicted: Charlotte Hornets by 5.2
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -10.0 pts
+         Model: 4.4 → Final: -5.6
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -5.0, Away clutch: 8.0
+         Late game advantage: -0.39
+   Minnesota Timberwolves @ Atlanta Hawks
+      Predicted: Minnesota Timberwolves by 5.6
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +1.7 pts
+         Model: 3.9 → Final: 5.5
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -8.0, Away clutch: 3.0
+         Late game advantage: -0.01
+   Orlando Magic @ Indiana Pacers
+      Predicted: Indiana Pacers by 5.5
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -10.0 pts
+         Model: 3.9 → Final: -6.1
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: 1.0
+         Late game advantage: -0.03
+   Phoenix Suns @ Cleveland Cavaliers
+      Predicted: Phoenix Suns by 6.1
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -10.0 pts
+         Model: 4.8 → Final: -5.2
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 8.0, Away clutch: -10.0
+         Late game advantage: -0.23
+   New Orleans Pelicans @ Chicago Bulls
+      Predicted: New Orleans Pelicans by 5.2
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.4 pts
+         Model: 3.8 → Final: 3.4
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 6.0, Away clutch: 10.0
+         Late game advantage: -0.22
+   New York Knicks @ San Antonio Spurs
+      Predicted: San Antonio Spurs by 3.4
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +4.9 pts
+         Model: 4.0 → Final: 8.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 6.0, Away clutch: -9.0
+         Late game advantage: -0.10
+   Denver Nuggets @ Toronto Raptors
+      Predicted: Toronto Raptors by 8.9
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.3 pts
+         Model: 3.9 → Final: 3.6
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -6.0, Away clutch: 0.0
+         Late game advantage: -0.14
+   Washington Wizards @ Milwaukee Bucks
+      Predicted: Milwaukee Bucks by 3.6
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.0 pts
+         Model: 3.9 → Final: 4.0
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -1.0, Away clutch: 4.0
+         Late game advantage: +0.03
+   Portland Trail Blazers @ Oklahoma City Thunder
+      Predicted: Oklahoma City Thunder by 4.0
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -8.5 pts
+         Model: 3.8 → Final: -4.7
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -6.0, Away clutch: -1.0
+         Late game advantage: -0.06
+   Houston Rockets @ Brooklyn Nets
+      Predicted: Houston Rockets by 4.7
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -5.2 pts
+         Model: 4.9 → Final: -0.3
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -2.0, Away clutch: 1.0
+         Late game advantage: -0.38
+   Miami Heat @ Detroit Pistons
+      Predicted: Miami Heat by 0.3
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -1.6 pts
+         Model: 3.9 → Final: 2.3
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 3.0, Away clutch: 4.0
+         Late game advantage: +0.01
+   Philadelphia 76ers @ Dallas Mavericks
+      Predicted: Dallas Mavericks by 2.3
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -4.0 pts
+         Model: 4.4 → Final: 0.3
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 3.0, Away clutch: 4.0
+         Late game advantage: -0.52
+   Boston Celtics @ Sacramento Kings
+      Predicted: Sacramento Kings by 0.3
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.2 pts
+         Model: 3.9 → Final: 4.1
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -5.0, Away clutch: 2.0
+         Late game advantage: +0.11
+   Utah Jazz @ Los Angeles Clippers
+      Predicted: Los Angeles Clippers by 4.1
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.1 pts
+         Model: 3.8 → Final: 3.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -8.0, Away clutch: 6.0
+         Late game advantage: -0.04
+   San Antonio Spurs @ Indiana Pacers
+      Predicted: Indiana Pacers by 3.8
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.2 pts
+         Model: 6.2 → Final: 6.4
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: -6.0
+         Late game advantage: +0.10
+   Brooklyn Nets @ Washington Wizards
+      Predicted: Washington Wizards by 6.4
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +9.0 pts
+         Model: 4.0 → Final: 13.0
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 0.0, Away clutch: -9.0
+         Late game advantage: +0.21
+   Denver Nuggets @ Cleveland Cavaliers
+      Predicted: Cleveland Cavaliers by 13.0
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +10.0 pts
+         Model: 3.9 → Final: 13.9
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 10.0, Away clutch: -5.0
+         Late game advantage: +0.25
+   Atlanta Hawks @ New York Knicks
+      Predicted: New York Knicks by 13.9
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -4.6 pts
+         Model: 4.9 → Final: 0.4
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 8.0, Away clutch: 3.0
+         Late game advantage: -0.19
+   Orlando Magic @ Chicago Bulls
+      Predicted: Chicago Bulls by 0.4
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -0.3 pts
+         Model: 3.8 → Final: 3.5
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -6.0, Away clutch: -1.0
+         Late game advantage: -0.14
+   Charlotte Hornets @ Milwaukee Bucks
+      Predicted: Milwaukee Bucks by 3.5
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -2.8 pts
+         Model: 3.9 → Final: 1.1
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -10.0, Away clutch: 4.0
+         Late game advantage: +0.03
+   Portland Trail Blazers @ New Orleans Pelicans
+      Predicted: New Orleans Pelicans by 1.1
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +10.0 pts
+         Model: 4.8 → Final: 14.8
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 1.0, Away clutch: 3.0
+         Late game advantage: +0.29
+   Sacramento Kings @ Phoenix Suns
+      Predicted: Phoenix Suns by 14.8
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: -3.4 pts
+         Model: 3.7 → Final: 0.3
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: -10.0, Away clutch: -1.0
+         Late game advantage: -0.04
+   Oklahoma City Thunder @ Golden State Warriors
+      Predicted: Golden State Warriors by 0.3
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Database initialized: predictions/validation.db
+✅ Database initialized: predictions/validation.db
+      🎯 [CLUTCH ANALYZER] Adjustment: +0.6 pts
+         Model: 4.9 → Final: 5.5
+         Formula: (Streak×Late Game) / (Record Divergence - PPG Divergence)
+         Home clutch: 6.0, Away clutch: -4.0
+         Late game advantage: -0.21
+   Memphis Grizzlies @ Los Angeles Lakers
+      Predicted: Los Angeles Lakers by 5.5
+
+✅ Generated 24 NBA predictions
+   ✅ Generated 24 NBA predictions
+   💾 Saved 24 predictions to database for tracking
+✅ Database initialized: predictions/validation.db
+   ✅ Stored 24 predictions (0 skipped)
+   ✅ Stored 24 predictions in validation system
+
+✅ Total predictions: 0 NFL + 24 NBA
+   Saved to: predictions/all_predictions.json
+
+🎉 All predictions generated!
+
+✅ Predictions generated!
+
+📊 Updating dashboard...
+/Users/a.fleming/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+📊 Note: This script only generates the dashboard from existing predictions.
+   To generate NEW predictions, run: python3 generate_all_predictions.py
+
+✅ Standings fetcher initialized
+✅ AI insights enabled
+✅ SHAP explainer enabled (with training background)
+📊 Fetching standings (one-time fetch)...
+✅ Scraped NBA standings for 30 teams from ESPN
+✅ Fetched NFL standings for 0 teams
+   ✅ Standings cached (NBA: 30, NFL: 0)
+✅ Apple-grade dashboard created: predictions/dashboard.html
+
+✅ Dashboard updated!
+
+📦 Committing to git...
+From ssh://github.com/AstonMadeIt/bored-stuff
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+   📋 Copied dashboard to root for GitHub Pages
+[main c96ac7c] Auto-update: Morning predictions and dashboard 2025-12-31 11:15
+ 3 files changed, 243 insertions(+), 243 deletions(-)
+   ✅ Committed: Auto-update: Morning predictions and dashboard 2025-12-31 11:15
+   📤 Pushing to remote...
+remote: error: GH013: Repository rule violations found for refs/heads/main.        
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   —————————————————————————————————————————        
+remote:     Resolve the following violations before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked push        
+remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push        
+remote:             
+remote:             
+remote:       —— Anthropic API Key —————————————————————————————————        
+remote:        locations:        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: QUICK_TEST.md:5        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: QUICK_TEST.md:47        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: com.prosportsintel.morning.plist:15        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: setup_ai.sh:4        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: setup_ai.sh:9        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        
+remote:        https://github.com/AstonMadeIt/bored-stuff/security/secret-scanning/unblock-secret/37cFnxNQ6b852cJX5wFSGBg4Nyq        
+remote:             
+remote: 
+remote: 
+To ssh://github.com/AstonMadeIt/bored-stuff.git
+ ! [remote rejected] main -> main (push declined due to repository rule violations)
+error: failed to push some refs to 'ssh://github.com/AstonMadeIt/bored-stuff.git'
+remote: error: GH013: Repository rule violations found for refs/heads/main.        
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   —————————————————————————————————————————        
+remote:     Resolve the following violations before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked push        
+remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push        
+remote:             
+remote:             
+remote:       —— Anthropic API Key —————————————————————————————————        
+remote:        locations:        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: QUICK_TEST.md:5        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: QUICK_TEST.md:47        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: com.prosportsintel.morning.plist:15        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: setup_ai.sh:4        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: setup_ai.sh:9        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        
+remote:        https://github.com/AstonMadeIt/bored-stuff/security/secret-scanning/unblock-secret/37cFnxNQ6b852cJX5wFSGBg4Nyq        
+remote:             
+remote: 
+remote: 
+To ssh://github.com/AstonMadeIt/bored-stuff.git
+ ! [remote rejected] main -> main (push declined due to repository rule violations)
+error: failed to push some refs to 'ssh://github.com/AstonMadeIt/bored-stuff.git'
+remote: error: GH013: Repository rule violations found for refs/heads/main.        
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   —————————————————————————————————————————        
+remote:     Resolve the following violations before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked push        
+remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push        
+remote:             
+remote:             
+remote:       —— Anthropic API Key —————————————————————————————————        
+remote:        locations:        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: QUICK_TEST.md:5        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: QUICK_TEST.md:47        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: com.prosportsintel.morning.plist:15        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: setup_ai.sh:4        
+remote:          - commit: 6546805b44d1565ef4ba9fd37d801cb792e25212        
+remote:            path: setup_ai.sh:9        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        
+remote:        https://github.com/AstonMadeIt/bored-stuff/security/secret-scanning/unblock-secret/37cFnxNQ6b852cJX5wFSGBg4Nyq        
+remote:             
+remote: 
+remote: 
+To ssh://github.com/AstonMadeIt/bored-stuff.git
+ ! [remote rejected] HEAD -> main (push declined due to repository rule violations)
+error: failed to push some refs to 'ssh://github.com/AstonMadeIt/bored-stuff.git'
+   ⚠️  Push failed (check logs: logs/scheduled_morning.log)
+
+🎉 Morning run complete!
+
+==========================================
+✅ Morning run finished at Wed Dec 31 11:15:43 EST 2025
+==========================================
