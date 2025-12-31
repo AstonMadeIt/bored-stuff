@@ -2,7 +2,7 @@
 
 ## Step 1: Set API Key (if not already set)
 ```bash
-export ANTHROPIC_API_KEY="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"
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
 ```
 
 **Note:** `export` doesn't print anything - that's normal! ✅
@@ -44,7 +44,7 @@ You should see AI-generated explanations instead of structured factors!
 
 Add to `~/.zshrc`:
 ```bash
-echo 'export ANTHROPIC_API_KEY="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"' >> ~/.zshrc
+echo 'export ANTHROPIC_API_KEY="sk-ant-api03-..."' >> ~/.zshrc
 source ~/.zshrc
 ```
 
