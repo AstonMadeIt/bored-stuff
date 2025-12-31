@@ -151,8 +151,8 @@
       "confidence_score": 0.787,
       "is_high_confidence": 1,
       "sport": "NBA",
-      "vegas_spread": 2.5,
-      "divergence": 0.8623284702412639,
+      "vegas_spread": 1.5,
+      "divergence": 1.862328470241264,
       "clutch_analyzer_used": true,
       "rest_advantage": 0.0,
       "home_rest_days": 2.0,
@@ -674,7 +674,7 @@
       "_clutch_backend_only": true
     }
   ],
-  "generated_at": "2025-12-31T11:30:21.766622",
+  "generated_at": "2025-12-31T11:37:51.009896",
   "nfl_count": 0,
   "nba_count": 24
 }
