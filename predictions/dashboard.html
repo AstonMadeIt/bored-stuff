@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Pro Sports Intel AI™</title>
+    <link rel="icon" type="image/jpeg" href="https://iwuzjustbored.space/psi_favicon.jpg">
+    <link rel="apple-touch-icon" href="https://iwuzjustbored.space/psi_favicon.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* ==========================================
+           GLOBAL — Bloomberg x Vanity Fair
+        ========================================== */
+        :root {
+            /* Dark mode (default) */
+            --black: #000000;
+            --offblack: #0a0a0a;
+            --card-bg-dark: #111111;
+            --border-dark: #222222;
+            --text-primary-dark: #f5f5f7;
+            --text-secondary-dark: #8d8d93;
+            --accent-dark: #ff453a; /* Apple Red */
+            --accent-blue: #0a84ff;
+            --highlight-dark: rgba(255, 255, 255, 0.06);
+            --shadow-dark: 0 8px 32px rgba(0,0,0,0.65);
+            
+            /* Light mode (editorial luxury) */
+            --white: #ffffff;
+            --offwhite: #fafafa;
+            --card-bg-light: #ffffff;
+            --border-light: #e8e8e8;
+            --text-primary-light: #1a1a1a;
+            --text-secondary-light: #6e6e73;
+            --accent-light: #007aff;
+            --accent-red-light: #ff3b30;
+            --highlight-light: rgba(0, 0, 0, 0.04);
+            --shadow-light: 0 4px 24px rgba(0,0,0,0.08);
+            
+            /* Shared */
+            --radius: 16px;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+            --signal: #d32f2f;
+        }
+        
+        /* Light mode variables (default) */
+        :root:not(.force-dark-mode) {
+            --bg-primary: var(--white);
+            --bg-secondary: var(--offwhite);
+            --card-bg: var(--card-bg-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --border: var(--border-light);
+            --accent: var(--accent-light);
+            --highlight: var(--highlight-light);
+            --shadow: var(--shadow-light);
+        }
+        
+        /* NATIVE DARK MODE */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f5f5f7;
+                --text-secondary: #86868b;
+                --bg-primary: #1c1c1e;
+                --bg-secondary: #2c2c2e;
+                --border: #38383a;
+                --card-shadow: rgba(0, 0, 0, 0.3);
+                --hover-shadow: rgba(0, 0, 0, 0.5);
+            }
+        }
+        
+        /* Dark mode specific overrides - applies to both system preference and manual toggle */
+        @media (prefers-color-scheme: dark), .force-dark-mode {
+            .hero-header {
+                background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%) !important;
+            }
+            
+            .sticky-subheader {
+                background: rgba(28, 28, 30, 0.95) !important;
+            }
+            
+            .prediction-card {
+                background: var(--bg-secondary) !important;
+                border-color: var(--border) !important;
+            }
+            
+            .how-to-read {
+                background: var(--bg-secondary) !important;
+            }
+            
+            .sport-selector {
+                background: var(--bg-secondary) !important;
+            }
+            
+            .sport-option.active {
+                background: var(--bg-primary) !important;
+            }
+        }
+        
+        /* PITCH BLACK EDITORIAL DARK MODE - Conde Nast Grade */
+        body.force-dark-mode {
+            --bg-primary: #000000 !important;
+            --bg-secondary: #0d0d0d !important;
+            --text-primary: #ffffff !important;
+            --text-secondary: rgba(255,255,255,0.55) !important;
+            --border: rgba(255,255,255,0.06) !important;
+            --accent: #0A84FF !important;
+            --card-shadow: rgba(0, 0, 0, 0.4) !important;
+            --hover-shadow: rgba(10,132,255,0.25) !important;
+        }
+        
+        body.force-dark-mode .hero-header {
+            background: #000000 !important;
+        }
+        
+        body.force-dark-mode .sticky-subheader {
+            background: rgba(0, 0, 0, 0.95) !important;
+            border-bottom-color: rgba(255,255,255,0.06) !important;
+        }
+        
+        body.force-dark-mode .prediction-card {
+            background: #0d0d0d !important;
+            border: 1px solid rgba(255,255,255,0.06) !important;
+        }
+        
+        body.force-dark-mode .how-to-read {
+            background: #0d0d0d !important;
+        }
+        
+        body.force-dark-mode .sport-selector {
+            background: #0d0d0d !important;
+        }
+        
+        body.force-dark-mode .sport-option.active {
+            background: #111111 !important;
+        }
+        
+        body.force-dark-mode .model-card-interactive {
+            border: 1px solid rgba(255,255,255,0.06) !important;
+            background: #0d0d0d !important;
+        }
+        
+        /* Editorial hover elevation */
+        body.force-dark-mode .prediction-card:hover {
+            box-shadow: 0 0 0 1px var(--accent), 0 8px 32px rgba(10,132,255,0.25) !important;
+        }
+        
+        /* Gradient text effect for hero */
+        body.force-dark-mode .hero-title {
+            background: linear-gradient(90deg, #fff, #0A84FF) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-inline: max(20px, env(safe-area-inset-left));
+            transition: padding 0.3s ease;
+        }
+        
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 768px) {
+            .container {
+                padding-inline: 16px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .prediction-card {
+                padding: 20px 16px;
+            }
+            
+            .subheader-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .sport-selector {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .prediction-card {
+                padding: 16px 12px;
+            }
+            
+            .model-badges {
+                gap: 12px;
+            }
+            
+            .model-badge {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        /* CLEAN HERO HEADER - Logo First */
+        .hero-header {
+            padding: 80px 0 50px;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        
+        /* Light mode hero - subtle gradient */
+        :root:not(.force-dark-mode) .hero-header {
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+        }
+        
+        /* Dark mode hero - Radial gradient backdrop */
+        body.force-dark-mode .hero-header {
+            background: 
+                radial-gradient(circle at 50% 30%, rgba(10,132,255,0.08), transparent 70%),
+                var(--black) !important;
+        }
+        
+        /* Hero Logo + Title Container - Clean & Minimal */
+        .hero-brand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        
+        .hero-logo {
+            height: 120px;
+            width: auto;
+            max-width: 350px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.12));
+            transition: transform 0.2s cubic-bezier(.4,0,.2,1), filter 0.2s ease;
+        }
+        
+        .hero-logo:hover {
+            transform: translateY(-2px) scale(1.02);
+            filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.16));
+        }
+        
+        /* Dark mode logo - electric blue glow */
+        body.force-dark-mode .hero-logo {
+            filter: drop-shadow(0 4px 16px rgba(10, 132, 255, 0.3)) drop-shadow(0 0 24px rgba(10, 132, 255, 0.2));
+        }
+        
+        body.force-dark-mode .hero-logo:hover {
+            filter: drop-shadow(0 6px 24px rgba(10, 132, 255, 0.4)) drop-shadow(0 0 32px rgba(10, 132, 255, 0.25));
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.2;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-brand-container {
+                gap: 14px;
+                margin-bottom: 32px;
+            }
+            
+            .hero-logo {
+                height: 100px;
+                max-width: 280px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 430px) {
+            .hero-brand-container {
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+            
+            .hero-logo {
+                height: 80px;
+                max-width: 220px;
+            }
+            
+            .hero-title {
+                font-size: 1.6rem;
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+        
+        .hero-tagline {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        /* MODEL BADGES - Apple Silicon Style */
+        .model-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 0 20px;
+        }
+        
+        .model-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: linear-gradient(90deg, var(--accent), #5856d6);
+            border-radius: 20px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+            transition: transform 0.2s ease;
+        }
+        
+        .model-badge {
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+        }
+        
+        .model-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+        
+        @media (hover: none) {
+            .model-badge:hover {
+                transform: none;
+            }
+        }
+        
+        .model-badge.secondary {
+            background: linear-gradient(90deg, #5856d6, #af52de);
+        }
+        
+        .model-badge.tool {
+            background: linear-gradient(90deg, #34c759, #30d158);
+        }
+        
+        /* STICKY SUBHEADER */
+        .sticky-subheader {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            z-index: 100;
+            margin-bottom: 30px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        
+        .subheader-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .subheader-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .subheader-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .subheader-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        /* HOW TO READ STRIP */
+        .how-to-read {
+            background: var(--bg-secondary);
+            padding: 20px 0;
+            margin: 30px 0;
+            border-radius: 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .how-to-read-content {
+            display: flex;
+            gap: 24px;
+            padding: 0 20px;
+            min-width: max-content;
+        }
+        
+        .signal-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        .signal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .signal-dot.low {
+            background: var(--accent);
+        }
+        
+        .signal-dot.medium {
+            background: #ff9500;
+        }
+        
+        .signal-dot.high {
+            background: var(--signal);
+        }
+        
+        .signal-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        /* SPORT SELECTOR - iOS Segmented Control */
+        .sport-selector {
+            display: flex;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 4px;
+            margin: 30px 0;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .sport-option {
+            flex: 1;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            position: relative;
+        }
+        
+        .sport-option:hover {
+            color: var(--text-primary);
+        }
+        
+        .sport-option.active {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px var(--card-shadow);
+            transform: scale(1.02);
+        }
+        
+        /* PREDICTION CARDS - Apple Card Style */
+        .predictions-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        /* ==========================================
+           CARD SYSTEM — Editorial Blocks
+        ========================================== */
+        .prediction-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 18px 0;
+            box-shadow: var(--shadow);
+            transition: transform 0.18s cubic-bezier(.4,0,.2,1), box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        /* Luxe magazine border accent */
+        .prediction-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            border-radius: 3px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .prediction-card.high-confidence::before {
+            opacity: 1;
+        }
+        
+        .prediction-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.75);
+        }
+        
+        @media (hover: none) {
+            .prediction-card:hover {
+                transform: none;
+            }
+        }
+        
+        /* Fade-in animation for new content */
+        .prediction-card {
+            animation: fadeIn 0.22s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .prediction-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .prediction-card.high-confidence::before {
+            background: linear-gradient(180deg, var(--signal), #ff3b30);
+            width: 4px;
+        }
+        
+        .prediction-card.medium-confidence::before {
+            background: linear-gradient(180deg, #ff9500, #ffcc00);
+            width: 4px;
+        }
+        
+        .prediction-card.low-confidence::before {
+            background: var(--border);
+            width: 4px;
+        }
+        
+        .prediction-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--hover-shadow);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .game-matchup {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            line-height: 1.3;
+        }
+        
+        .vegas-deviation {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+        
+        .vegas-deviation.positive {
+            background: rgba(52, 199, 89, 0.1);
+            color: #34c759;
+        }
+        
+        .vegas-deviation.negative {
+            background: rgba(255, 59, 48, 0.1);
+            color: #ff3b30;
+        }
+        
+        .prediction-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .detail-value.winner {
+            color: var(--signal);
+        }
+        
+        .confidence-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .confidence-badge.high {
+            background: rgba(255, 69, 58, 0.12);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+        
+        .confidence-badge.medium {
+            background: rgba(255, 149, 0, 0.12);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #ff9500;
+        }
+        
+        .confidence-badge.low {
+            background: rgba(255,255,255,0.06);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        /* TEAM TRENDS */
+        .team-trends-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .trend-header {
+            margin-bottom: 12px;
+        }
+        
+        .trend-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .trend-chart-container {
+            height: 120px;
+            margin: 12px 0;
+        }
+        
+        .trend-stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .trend-stat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+        
+        .trend-team-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        
+        .trend-indicator {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        
+        .trend-indicator.hot {
+            background: #34c759;
+            color: white;
+        }
+        
+        .trend-indicator.cold {
+            background: #ff3b30;
+            color: white;
+        }
+        
+        .trend-indicator.neutral {
+            background: var(--border);
+            color: var(--text-secondary);
+        }
+        
+        .trend-metric {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+        
+        .trend-record {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 4px 0;
+            transition: color 0.2s ease;
+        }
+        
+        .trend-stat {
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        
+        .trend-stat:hover {
+            transform: translateY(-2px);
+            background: var(--bg-primary);
+        }
+        
+        @media (hover: none) {
+            .trend-stat:hover {
+                transform: none;
+            }
+        }
+        
+        .trend-last5 {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        
+        .trend-streak {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin: 4px 0;
+        }
+        
+        .trend-streak.streak-win {
+            background: #34c759;
+            color: white;
+        }
+        
+        .trend-streak.streak-loss {
+            background: #ff3b30;
+            color: white;
+        }
+        
+        /* PREDICTION EDGE SECTION */
+        .prediction-edge {
+            margin-top: 20px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .prediction-edge.ai-powered {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.15) 0%, rgba(88, 86, 214, 0.15) 100%);
+            border-left: 4px solid #5856d6;
+        }
+        
+        .ai-explanation {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .ai-explanation br {
+            margin: 0;
+            padding: 0;
+            line-height: 1.4;
+        }
+        
+        .ai-explanation p {
+            margin: 0;
+            padding: 0;
+            line-height: 1.4;
+        }
+        
+        .edge-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .edge-factors {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .edge-factor {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+        
+        .edge-factor.factor-high {
+            background: rgba(0, 122, 255, 0.15);
+            font-weight: 600;
+        }
+        
+        .edge-icon {
+            font-size: 1rem;
+        }
+        
+        .edge-text {
+            flex: 1;
+        }
+        
+        /* INTERACTIVE MODEL CARDS */
+        .models-section {
+            margin: 60px 0;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+        
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .model-card-interactive {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(12px);
+        }
+        
+        .model-card-interactive:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        
+        .model-card-interactive.expanded {
+            box-shadow: 0 12px 32px rgba(0,0,0,0.16);
+        }
+        
+        .model-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .model-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+        
+        .model-badge-small {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .model-badge-small.primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .model-badge-small.secondary {
+            background: #5856d6;
+            color: white;
+        }
+        
+        .model-badge-small.tool {
+            background: #34c759;
+            color: white;
+        }
+        
+        .model-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        
+        .model-expanded {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .model-card-interactive.expanded .model-expanded {
+            max-height: 500px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .model-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+        
+        .model-feature-icon {
+            font-size: 1rem;
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .chart-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+        
+        .chart-container {
+            height: 400px;
+            position: relative;
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+        
+        /* TRUST INSERTS */
+        .trust-insert {
+            background: var(--bg-secondary);
+            padding: 24px;
+            border-radius: 16px;
+            margin: 40px 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .trust-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .trust-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* FOOTER */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        .footer-badges {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-badge {
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .model-badges {
+                gap: 12px;
+            }
+            
+            .model-badge {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+            
+            .predictions-feed {
+                gap: 16px;
+            }
+            
+            .prediction-card {
+                padding: 20px;
+            }
+            
+            .game-matchup {
+                font-size: 1.1rem;
+            }
+            
+            .models-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 300px;
+                padding: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding-inline: max(16px, env(safe-area-inset-left));
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .subheader-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        /* iPhone 16e FIRST - Editorial Mobile Grid (375px viewport) */
+        @media (max-width: 430px) {
+            .container {
+                padding-inline: 12px;
+            }
+            
+            .hero-header {
+                padding: 64px 0 32px;
+            }
+            
+            .hero-title {
+                font-size: 1.9rem;
+                letter-spacing: -1.2px;
+                margin-bottom: 8px;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 6px;
+            }
+            
+            .hero-tagline {
+                font-size: 0.85rem;
+                margin-bottom: 24px;
+            }
+            
+            .sticky-subheader {
+                padding: 12px 0;
+                margin-bottom: 16px;
+            }
+            
+            .subheader-text {
+                font-size: 0.8rem;
+            }
+            
+            .prediction-card {
+                padding: 16px;
+                border-radius: 12px;
+                margin-bottom: 16px;
+            }
+            
+            .game-matchup {
+                font-size: 1.05rem;
+                line-height: 1.2;
+            }
+            
+            .prediction-details {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px;
+            }
+            
+            .model-card-interactive {
+                padding: 18px;
+            }
+            
+            .how-to-read {
+                padding: 16px 0;
+                margin: 16px 0;
+            }
+            
+            .sport-selector {
+                margin: 16px 0;
+            }
+            
+            /* Hide dark mode toggle on mobile (move to bottom nav) */
+            #darkModeToggle {
+                display: none;
+            }
+            
+            .desktop-only {
+                display: none !important;
+            }
+        }
+        
+        /* Bottom Navigation - Mobile Only */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 -2px 16px rgba(0,0,0,0.3);
+        }
+        
+        .bottom-nav-item {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 4px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            user-select: none;
+            font-weight: 500;
+        }
+        
+        /* Light mode default */
+        :root:not(.force-dark-mode) .bottom-nav-item {
+            color: var(--text-secondary-light);
+        }
+        
+        /* Dark mode default - brighter for visibility */
+        body.force-dark-mode .bottom-nav-item {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+        
+        /* Light mode active */
+        :root:not(.force-dark-mode) .bottom-nav-item.active {
+            color: var(--accent-light) !important;
+            background: rgba(0, 122, 255, 0.1);
+            font-weight: 600;
+        }
+        
+        /* Dark mode active - pure white for clarity */
+        body.force-dark-mode .bottom-nav-item.active {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+            font-weight: 600;
+        }
+        
+        /* Light mode hover */
+        :root:not(.force-dark-mode) .bottom-nav-item:hover {
+            color: var(--text-primary-light);
+            background: rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Dark mode hover - brighter */
+        body.force-dark-mode .bottom-nav-item:hover {
+            color: rgba(255, 255, 255, 0.9) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        @media (max-width: 430px) {
+            .bottom-nav {
+                display: block;
+            }
+            
+            /* Add bottom padding to prevent content from being hidden */
+            body {
+                padding-bottom: 60px;
+            }
+        }
+        
+        /* Dark mode for bottom nav - ensure proper contrast */
+        body.force-dark-mode .bottom-nav {
+            background: rgba(0,0,0,0.98) !important;
+            border-top-color: rgba(255,255,255,0.12) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- DARK MODE TOGGLE - Desktop Only -->
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;" class="desktop-only">
+        <button id="darkModeToggle" onclick="toggleDarkMode(event)" style="
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+            box-shadow: 0 2px 8px var(--card-shadow);
+        " onmouseover="this.style.background='var(--bg-primary)'" onmouseout="this.style.background='var(--bg-secondary)'">
+            🌙 Dark Mode
+        </button>
+    </div>
+    
+    <div class="container">
+        <!-- CLEAN HERO HEADER - Logo First -->
+        <div class="hero-header">
+            <!-- Logo + Title - Centered & Minimal -->
+            <div class="hero-brand-container">
+                <img src="https://iwuzjustbored.space/psi_logo.jpg" alt="Pro Sports Intel AI" class="hero-logo" onerror="console.error('Logo failed to load:', this.src);">
+                <h1 class="hero-title">Pro Sports Intel AI™</h1>
+            </div>
+        </div>
+        
+        <!-- STICKY SUBHEADER -->
+        <div class="sticky-subheader">
+            <div class="subheader-content">
+                <div class="subheader-text">
+                    Research-Grade by Design.<br>
+                    <span style="font-size: 0.85em; opacity: 0.8;">The same machine learning families used to price risk on ~$50B trading desks — now calibrated for game night.</span>
+                </div>
+                <div class="subheader-badges">
+                    <span class="subheader-badge">62.5% Accuracy</span>
+                    <span class="subheader-badge">Auto-Refresh</span>
+                    <span class="subheader-badge">SHAP On</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- HOW TO READ STRIP -->
+        <div class="how-to-read">
+            <div class="how-to-read-content">
+                <div class="signal-item">
+                    <div class="signal-dot low"></div>
+                    <span class="signal-text">Low Confidence = Early Signal</span>
+                </div>
+                <div class="signal-item">
+                    <div class="signal-dot medium"></div>
+                    <span class="signal-text">Medium = Confirming Trend</span>
+                </div>
+                <div class="signal-item">
+                    <div class="signal-dot high"></div>
+                    <span class="signal-text">High = Actionable Edge</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SPORT SELECTOR -->
+        <div class="sport-selector">
+            <div class="sport-option active" onclick="filterSport('all')">All</div>
+            <div class="sport-option" onclick="filterSport('nfl')">NFL</div>
+            <div class="sport-option" onclick="filterSport('nba')">NBA</div>
+        </div>
+        
+        <!-- BOTTOM NAVIGATION - Mobile Only -->
+        <div class="bottom-nav">
+            <button class="bottom-nav-item active" onclick="filterSportMobile('all')">All</button>
+            <button class="bottom-nav-item" onclick="filterSportMobile('nfl')">NFL</button>
+            <button class="bottom-nav-item" onclick="filterSportMobile('nba')">NBA</button>
+            <button class="bottom-nav-item" onclick="toggleDarkModeMobile(event)" id="mobileDarkToggle">🌙</button>
+        </div>
+        
+        <!-- TRUST INSERT -->
+        <div class="trust-insert">
+            <div class="trust-title">Machine Learning + Market Reality</div>
+            <div class="trust-text">
+                Our models reference Vegas lines without anchoring to them. This reduces human bias and protects against trend chasing.
+            </div>
+        </div>
+        
+        <!-- PREDICTIONS FEED -->
+                        <div class="predictions-feed" id="predictionsFeed">
+                            
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">Golden State Warriors<br>@ Charlotte Hornets</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">Charlotte Hornets</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">5.2 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (80%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • The Hornets have been playing better lately, going 5-5 in their last 10 games, and they're at home where they've been more competitive. The Warriors have been a little inconsistent on the road, going 6-4 in their last 10.<br><br>• Our model sees a 5.2 point edge for the Hornets in this one, which is a decent-sized advantage. Charlotte's defense has been suspect at times, but playing at home should give them a boost.<br><br>• The Warriors are dealing with some injury issues too, which could make it tough for them to match the Hornets' energy. Golden State has won their last game, but they've been a bit up and down overall.<br><br>• I like the Hornets' chances here, especially with the home court and the model's projection. They're the hungrier team right now and should be able to take care of business.<br><br>• I'm feeling pretty good about this one - 80% confidence in the Hornets covering the spread at home.
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_6240756408094822615"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">GSW</div>
+                    <div class="trend-record">17-16</div>
+                    <div class="trend-last5">Last 10: 6-4</div>
+                    <div class="trend-streak streak-win">W1</div>
+                    <div class="trend-metric">115.1 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">CHA</div>
+                    <div class="trend-record">11-21</div>
+                    <div class="trend-last5">Last 10: 5-5</div>
+                    <div class="trend-streak streak-loss">L1</div>
+                    <div class="trend-metric">115.5 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">Minnesota Timberwolves<br>@ Atlanta Hawks</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">Atlanta Hawks</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">4.4 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (79%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • Here's my take on the Minnesota Timberwolves vs. Atlanta Hawks game:<br>• The Timberwolves have been solid lately, going 6-4 in their last 10 games. But the Hawks are really struggling, on a 7-game losing streak. Their recent form has been rough.<br>• This Hawks team can be dangerous at home, but they're just 15-19 overall. The Timberwolves have the better record at 21-12 and the more consistent play.<br>• Our model sees a 4.4 point edge for the Hawks here, which is a nice cushion against the spread. Their defense has been a big problem lately, and the Timberwolves should be able to take advantage.<br>• I like the Hawks at home in this one. Their recent struggles have me a bit worried, but the Timberwolves haven't proven they can dominate inferior teams on the road.
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_6327301532374617194"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">MIN</div>
+                    <div class="trend-record">21-12</div>
+                    <div class="trend-last5">Last 10: 6-4</div>
+                    <div class="trend-streak streak-win">W1</div>
+                    <div class="trend-metric">119.3 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">ATL</div>
+                    <div class="trend-record">15-19</div>
+                    <div class="trend-last5">Last 10: 2-8</div>
+                    <div class="trend-streak streak-loss">L7</div>
+                    <div class="trend-metric">119.1 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">Orlando Magic<br>@ Indiana Pacers</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">Indiana Pacers</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">3.9 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (79%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • Aight, here's my take on the Pacers vs Magic game:<br>• The Pacers have been struggling big time lately, losing 9 in a row. Their 6-27 record is rough.<br>• On the other hand, the Magic have been a bit more solid at 18-15, even though they've dropped their last game.<br>• Our model actually sees a decent 3.9 point edge for the Pacers here. Their offense should be able to take advantage of the Magic's leaky defense.<br>• Historically, the Pacers have been tough to beat at home, so that home court factor could give them a boost.
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_3417862353072298718"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">ORL</div>
+                    <div class="trend-record">18-15</div>
+                    <div class="trend-last5">Last 10: 4-6</div>
+                    <div class="trend-streak streak-loss">L1</div>
+                    <div class="trend-metric">116.8 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">IND</div>
+                    <div class="trend-record">6-27</div>
+                    <div class="trend-last5">Last 10: 1-9</div>
+                    <div class="trend-streak streak-loss">L9</div>
+                    <div class="trend-metric">110.1 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">Phoenix Suns<br>@ Cleveland Cavaliers</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">Cleveland Cavaliers</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">3.9 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (79%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • Here's my quick take on the Suns vs Cavs game:<br>• The Suns are rollin' right now - they've won 4 in a row and have a solid 6-4 record in their last 10. That hot streak has them at 19-13 on the season.<br>• The Cavs have been a bit up and down lately, going just 4-6 in their last 10. But they're coming off a win and looking to build some momentum at home.<br>• Our model actually sees the Cavs squeaking this one out by about 4 points. That's a decent edge over the Vegas spread, so I like Cleveland's chances to get the home W.<br>• The Suns have been good on the road, but the Cavs have been tough to beat at home. I think that home court ends up being the difference-maker.
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_1306689281993290803"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">PHX</div>
+                    <div class="trend-record">19-13</div>
+                    <div class="trend-last5">Last 10: 6-4</div>
+                    <div class="trend-streak streak-win">W4</div>
+                    <div class="trend-metric">115.1 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">CLE</div>
+                    <div class="trend-record">18-16</div>
+                    <div class="trend-last5">Last 10: 4-6</div>
+                    <div class="trend-streak streak-win">W1</div>
+                    <div class="trend-metric">119.4 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">New Orleans Pelicans<br>@ Chicago Bulls</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">Chicago Bulls</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">4.8 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (80%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • Here's my analysis on the Pelicans vs Bulls game:<br>• The Bulls are coming off a couple tough losses, but they've still got a solid 6-4 record in their last 10 games. They've got the talent to bounce back.<br>• The Pelicans have really struggled lately, losing 4 in a row. Their 8-26 record on the season just isn't getting it done.<br>• Our model sees the Bulls with a nice 4.8 point edge here, which is a decent sized advantage over Vegas. Their defense should give the Pelicans fits.<br>• Chicago's at home, where they've been much stronger this year. The home court boost should help them take care of business.
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_7270900614213337644"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">NOP</div>
+                    <div class="trend-record">8-26</div>
+                    <div class="trend-last5">Last 10: 5-5</div>
+                    <div class="trend-streak streak-loss">L4</div>
+                    <div class="trend-metric">115.5 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">CHI</div>
+                    <div class="trend-record">15-17</div>
+                    <div class="trend-last5">Last 10: 6-4</div>
+                    <div class="trend-streak streak-loss">L2</div>
+                    <div class="trend-metric">118.3 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">New York Knicks<br>@ San Antonio Spurs</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">San Antonio Spurs</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">3.8 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (79%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • Here's my quick take on the Knicks-Spurs game, fam:<br>• This is a pretty even matchup - both teams have been rolling lately, with 23-9 records and 8-2 in their last 10.<br>• But the Spurs are coming off back-to-back losses, so I think they'll be extra motivated to get back on track at home.<br>• Our model sees a slight 3.8 point edge for the Spurs, which is a decent cushion in a close game like this.<br>• Knicks have been great on the road (13-5 away), but the Spurs are tough to beat at home (12-3 at the AT&T Center).
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_3837749964972627169"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">NYK</div>
+                    <div class="trend-record">23-9</div>
+                    <div class="trend-last5">Last 10: 8-2</div>
+                    <div class="trend-streak streak-win">W3</div>
+                    <div class="trend-metric">120.8 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">SAS</div>
+                    <div class="trend-record">23-9</div>
+                    <div class="trend-last5">Last 10: 8-2</div>
+                    <div class="trend-streak streak-loss">L2</div>
+                    <div class="trend-metric">119.5 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">Denver Nuggets<br>@ Toronto Raptors</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">Toronto Raptors</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">4.0 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (79%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • Here's my analysis on the Nuggets vs Raptors game:<br>• The Raptors have been playing well at home, with a 50% win rate compared to the Nuggets' 29% on the road. Homecourt is a big advantage.<br>• The Nuggets have hit a bit of a rough patch, going 6-4 in their last 10 and on a 2-game losing streak. Their 22-10 record is still solid, but they're not as hot right now.<br>• The Raptors have been a bit more consistent, going 5-5 in their last 10 but riding a 2-game winning streak. Their 20-14 record is respectable.<br>• Our model sees a nice 4-point edge for the Raptors here compared to the Vegas spread. That's a decent cushion for a close game.
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_5967679570474326263"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">DEN</div>
+                    <div class="trend-record">22-10</div>
+                    <div class="trend-last5">Last 10: 6-4</div>
+                    <div class="trend-streak streak-loss">L2</div>
+                    <div class="trend-metric">125.7 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">TOR</div>
+                    <div class="trend-record">20-14</div>
+                    <div class="trend-last5">Last 10: 5-5</div>
+                    <div class="trend-streak streak-win">W2</div>
+                    <div class="trend-metric">114.1 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">Washington Wizards<br>@ Milwaukee Bucks</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">Milwaukee Bucks</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">3.9 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (79%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • Here's my take on the Wizards vs Bucks game:<br>• The Bucks have been looking better lately, winning 2 in a row. Their 14-19 record is a bit deceiving - they've been in much better form recently.<br>• Washington's been struggling overall at 7-24, and they're coming off a loss. Their 4-6 record in the last 10 shows they've been up and down.<br>• Our model sees the Bucks winning this one by around 4 points. That's a decent edge over the Vegas spread.<br>• Milwaukee's at home, where they've been more solid. The Bucks' home court advantage should play a factor.
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_3488310482739082230"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">WAS</div>
+                    <div class="trend-record">7-24</div>
+                    <div class="trend-last5">Last 10: 4-6</div>
+                    <div class="trend-streak streak-loss">L1</div>
+                    <div class="trend-metric">113.2 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">MIL</div>
+                    <div class="trend-record">14-19</div>
+                    <div class="trend-last5">Last 10: 4-6</div>
+                    <div class="trend-streak streak-win">W2</div>
+                    <div class="trend-metric">113.0 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    <div class="prediction-card high-confidence" data-sport="nba">
+        <div class="card-header">
+            <div class="game-matchup">Portland Trail Blazers<br>@ Oklahoma City Thunder</div>
+            
+        </div>
+        <div class="prediction-details">
+            <div class="detail-item">
+                <div class="detail-label">Predicted Winner</div>
+                <div class="detail-value winner">Oklahoma City Thunder</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Spread</div>
+                <div class="detail-value">3.9 pts</div>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">Confidence</div>
+                <span class="confidence-badge high">High (79%)</span>
+            </div>
+        </div>
+        
+        <div class="prediction-edge ai-powered">
+            <div class="edge-title">🤖 AI Analysis: Why This Pick?</div>
+            <div class="ai-explanation">
+                • Here's my take on the Thunder vs. Blazers game, my dude:<br>• The Thunder have been rolling lately, with a solid 28-5 record and 6 wins in their last 10. They're playing well at home, averaging 5.3 more PPG in OKC.<br>• Portland has been a bit up and down, with a 14-19 record and just a 5-5 stretch in their last 10. But they've won their last 2, so they've got a little momentum.<br>• Our model sees the Thunder taking this one by around 4 points. That's a decent edge over the Vegas spread, so I like the value there.<br>• The Thunder are tough to beat at home, and they've got a ton of talent led by Westbrook. I think that home court and their overall season dominance gives them a clear advantage.
+            </div>
+        </div>
+        
+        
+        <div class="team-trends-section">
+            <div class="trend-header">
+                <div class="trend-label">Recent Form</div>
+            </div>
+            <div class="trend-chart-container">
+                <canvas id="trend_6572977687338229764"></canvas>
+            </div>
+            <div class="trend-stats">
+                <div class="trend-stat">
+                    <div class="trend-team-name">POR</div>
+                    <div class="trend-record">14-19</div>
+                    <div class="trend-last5">Last 10: 5-5</div>
+                    <div class="trend-streak streak-win">W2</div>
+                    <div class="trend-metric">116.8 PPG</div>
+                </div>
+                <div class="trend-stat">
+                    <div class="trend-team-name">OKC</div>
+                    <div class="trend-record">28-5</div>
+                    <div class="trend-last5">Last 10: 6-4</div>
+                    <div class="trend-streak streak-win">W2</div>
+                    <div class="trend-metric">122.1 PPG</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+                        </div>
+        
+        <!-- FOOTER -->
+        <div class="footer">
+            <!-- Model Badges - Moved to Footer -->
+            <div class="model-badges-footer">
+                <div class="model-badge">CatBoost<br><span style="font-size: 0.7rem; opacity: 0.9;">Primary</span></div>
+                <div class="model-badge secondary">XGBoost<br><span style="font-size: 0.7rem; opacity: 0.9;">Ensemble</span></div>
+                <div class="model-badge secondary">LightGBM<br><span style="font-size: 0.7rem; opacity: 0.9;">Very Fast</span></div>
+                <div class="model-badge tool">Optuna<br><span style="font-size: 0.7rem; opacity: 0.9;">Optimizer</span></div>
+                <div class="model-badge tool">SHAP<br><span style="font-size: 0.7rem; opacity: 0.9;">Explainable</span></div>
+            </div>
+            
+            <!-- Tagline - Moved to Footer -->
+            <div class="footer-tagline">
+                Trained on billions of data points. Tuned every 5 minutes. Built for the people who want to win tomorrow.
+            </div>
+            
+            <div class="footer-text">
+                📈 Auto-refreshed every 5 minutes • SHAP Explainability On • 62.5% Accuracy (Trailing 30 Days)
+            </div>
+            <div class="footer-text" style="margin-top: 8px;">
+                Last sync: 07:20 AM
+            </div>
+            <div class="footer-badges">
+                <span class="footer-badge">CatBoost</span>
+                <span class="footer-badge">XGBoost</span>
+                <span class="footer-badge">LightGBM</span>
+                <span class="footer-badge">Optuna</span>
+                <span class="footer-badge">SHAP</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Dark mode toggle (manual override)
+        function toggleDarkMode(event) {
+            if (event) event.preventDefault();
+            const isDark = document.body.classList.toggle('force-dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            
+            // Update button text
+            const btn = event ? event.target : document.getElementById('darkModeToggle');
+            const mobileBtn = document.getElementById('mobileDarkToggle');
+            if (btn && btn.id === 'darkModeToggle') {
+                btn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+            }
+            if (mobileBtn) {
+                mobileBtn.textContent = isDark ? '☀️' : '🌙';
+            }
+            
+            console.log('Dark mode toggled:', isDark);
+        }
+        
+        // Initialize dark mode on page load
+        (function() {
+            const savedDarkMode = localStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedDarkMode === 'true' || (savedDarkMode === null && prefersDark)) {
+                document.body.classList.add('force-dark-mode');
+            }
+            
+            // Update button text on load
+            window.addEventListener('load', function() {
+                const btn = document.getElementById('darkModeToggle');
+                const mobileBtn = document.getElementById('mobileDarkToggle');
+                if (btn && document.body.classList.contains('force-dark-mode')) {
+                    btn.textContent = '☀️ Light Mode';
+                }
+                if (mobileBtn && document.body.classList.contains('force-dark-mode')) {
+                    mobileBtn.textContent = '☀️';
+                }
+            });
+        })();
+        
+        // Sport filter (desktop)
+        function filterSport(sport) {
+            document.querySelectorAll('.sport-option').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const cards = document.querySelectorAll('.prediction-card');
+            cards.forEach(card => {
+                const cardSport = card.dataset.sport;
+                if (sport === 'all' || cardSport === sport) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Sync with bottom nav
+            document.querySelectorAll('.bottom-nav-item').forEach(el => {
+                const text = el.textContent.trim();
+                if (text === 'All' && sport === 'all') el.classList.add('active');
+                else if (text === 'NFL' && sport === 'nfl') el.classList.add('active');
+                else if (text === 'NBA' && sport === 'nba') el.classList.add('active');
+                else if (!text.includes('🌙') && !text.includes('☀️')) el.classList.remove('active');
+            });
+        }
+        
+        // Sport filter (mobile bottom nav)
+        function filterSportMobile(sport) {
+            document.querySelectorAll('.bottom-nav-item').forEach(el => {
+                if (!el.textContent.includes('🌙') && !el.textContent.includes('☀️')) {
+                    el.classList.remove('active');
+                }
+            });
+            event.target.classList.add('active');
+            
+            // Sync with desktop selector
+            document.querySelectorAll('.sport-option').forEach(el => {
+                el.classList.remove('active');
+                if ((sport === 'all' && el.textContent === 'All') ||
+                    (sport === 'nfl' && el.textContent === 'NFL') ||
+                    (sport === 'nba' && el.textContent === 'NBA')) {
+                    el.classList.add('active');
+                }
+            });
+            
+            const cards = document.querySelectorAll('.prediction-card');
+            cards.forEach(card => {
+                const cardSport = card.dataset.sport;
+                if (sport === 'all' || cardSport === sport) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Mobile dark mode toggle
+        function toggleDarkModeMobile(event) {
+            toggleDarkMode(event);
+            const btn = document.getElementById('mobileDarkToggle');
+            if (btn && document.body.classList.contains('force-dark-mode')) {
+                btn.textContent = '☀️';
+            } else if (btn) {
+                btn.textContent = '🌙';
+            }
+        }
+        
+        // Interactive model cards
+        document.querySelectorAll('.model-card-interactive').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        });
+        
+        // Auto-refresh (disabled on mobile to preserve scroll position)
+        if (window.innerWidth > 430) {
+            setTimeout(() => {
+                location.reload();
+            }, 300000);
+        }
+        
+        // Initialize charts
+        
+        Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif';
+        Chart.defaults.color = '#86868b';
+    
+
+        const trendCtx_trend_6240756408094822615 = document.getElementById('trend_6240756408094822615');
+        if (trendCtx_trend_6240756408094822615) {
+            new Chart(trendCtx_trend_6240756408094822615, {
+                type: 'line',
+                data: {
+                    labels: ["10/05", "10/09", "10/11", "10/13", "10/15", "10/18", "10/23", "10/25"],
+                    datasets: [{
+                        label: 'GSW',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'CHA',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+
+        const trendCtx_trend_6327301532374617194 = document.getElementById('trend_6327301532374617194');
+        if (trendCtx_trend_6327301532374617194) {
+            new Chart(trendCtx_trend_6327301532374617194, {
+                type: 'line',
+                data: {
+                    labels: ["10/04", "10/11", "10/13", "10/17", "10/22", "10/24", "10/26"],
+                    datasets: [{
+                        label: 'MIN',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'ATL',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+
+        const trendCtx_trend_3417862353072298718 = document.getElementById('trend_3417862353072298718');
+        if (trendCtx_trend_3417862353072298718) {
+            new Chart(trendCtx_trend_3417862353072298718, {
+                type: 'line',
+                data: {
+                    labels: ["10/07", "10/09", "10/18", "10/23", "10/25", "10/26"],
+                    datasets: [{
+                        label: 'ORL',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'IND',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+
+        const trendCtx_trend_1306689281993290803 = document.getElementById('trend_1306689281993290803');
+        if (trendCtx_trend_1306689281993290803) {
+            new Chart(trendCtx_trend_1306689281993290803, {
+                type: 'line',
+                data: {
+                    labels: ["10/06", "10/08", "10/11", "10/13", "10/17", "10/23", "10/25", "10/26"],
+                    datasets: [{
+                        label: 'PHX',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'CLE',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+
+        const trendCtx_trend_7270900614213337644 = document.getElementById('trend_7270900614213337644');
+        if (trendCtx_trend_7270900614213337644) {
+            new Chart(trendCtx_trend_7270900614213337644, {
+                type: 'line',
+                data: {
+                    labels: ["10/07", "10/13", "10/15", "10/23", "10/25"],
+                    datasets: [{
+                        label: 'NOP',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'CHI',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+
+        const trendCtx_trend_3837749964972627169 = document.getElementById('trend_3837749964972627169');
+        if (trendCtx_trend_3837749964972627169) {
+            new Chart(trendCtx_trend_3837749964972627169, {
+                type: 'line',
+                data: {
+                    labels: ["10/06", "10/09", "10/13", "10/15", "10/18", "10/22", "10/25"],
+                    datasets: [{
+                        label: 'NYK',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'SAS',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+
+        const trendCtx_trend_5967679570474326263 = document.getElementById('trend_5967679570474326263');
+        if (trendCtx_trend_5967679570474326263) {
+            new Chart(trendCtx_trend_5967679570474326263, {
+                type: 'line',
+                data: {
+                    labels: ["10/04", "10/06", "10/13", "10/15", "10/17", "10/24", "10/26"],
+                    datasets: [{
+                        label: 'DEN',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'TOR',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+
+        const trendCtx_trend_3488310482739082230 = document.getElementById('trend_3488310482739082230');
+        if (trendCtx_trend_3488310482739082230) {
+            new Chart(trendCtx_trend_3488310482739082230, {
+                type: 'line',
+                data: {
+                    labels: ["10/06", "10/09", "10/11", "10/14", "10/18", "10/24", "10/26"],
+                    datasets: [{
+                        label: 'WAS',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'MIL',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+
+        const trendCtx_trend_6572977687338229764 = document.getElementById('trend_6572977687338229764');
+        if (trendCtx_trend_6572977687338229764) {
+            new Chart(trendCtx_trend_6572977687338229764, {
+                type: 'line',
+                data: {
+                    labels: ["10/11", "10/13", "10/18", "10/23", "10/25"],
+                    datasets: [{
+                        label: 'POR',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#007aff',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }, {
+                        label: 'OKC',
+                        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                padding: 8,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 8,
+                            cornerRadius: 6,
+                            displayColors: true,
+                            titleFont: { size: 11 },
+                            bodyFont: { size: 10 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: { size: 9 },
+                                stepSize: 5
+                            },
+                            grid: {
+                                color: '#f5f5f7',
+                                lineWidth: 0.75
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+    </script>
+</body>
+</html>
