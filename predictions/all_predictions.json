@@ -3,6 +3,7 @@
   "nba": [
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "Golden State Warriors",
       "home_team": "Charlotte Hornets",
       "predicted_spread": 5.2,
@@ -28,6 +29,7 @@
     },
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "Minnesota Timberwolves",
       "home_team": "Atlanta Hawks",
       "predicted_spread": -5.6,
@@ -53,6 +55,7 @@
     },
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "Orlando Magic",
       "home_team": "Indiana Pacers",
       "predicted_spread": 5.5,
@@ -78,6 +81,7 @@
     },
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "Phoenix Suns",
       "home_team": "Cleveland Cavaliers",
       "predicted_spread": -6.1,
@@ -103,6 +107,7 @@
     },
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "New Orleans Pelicans",
       "home_team": "Chicago Bulls",
       "predicted_spread": -5.2,
@@ -128,6 +133,7 @@
     },
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "New York Knicks",
       "home_team": "San Antonio Spurs",
       "predicted_spread": 3.4,
@@ -153,6 +159,7 @@
     },
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "Denver Nuggets",
       "home_team": "Toronto Raptors",
       "predicted_spread": 8.9,
@@ -178,6 +185,7 @@
     },
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "Washington Wizards",
       "home_team": "Milwaukee Bucks",
       "predicted_spread": 3.6,
@@ -203,6 +211,7 @@
     },
     {
       "date": "2025-12-31T00:00:00",
+      "game_time_est": null,
       "away_team": "Portland Trail Blazers",
       "home_team": "Oklahoma City Thunder",
       "predicted_spread": 4.0,
@@ -227,7 +236,7 @@
       "_clutch_backend_only": true
     }
   ],
-  "generated_at": "2025-12-31T09:00:47.434523",
+  "generated_at": "2025-12-31T10:18:41.609660",
   "nfl_count": 0,
   "nba_count": 9
 }
