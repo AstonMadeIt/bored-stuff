@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Performance - Pro Sports Intel AI™</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .big-stat {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #34c759;
+            margin-bottom: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e7;
+        }
+        
+        th {
+            background: #f5f5f7;
+            font-weight: 600;
+            color: #86868b;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .good { color: #34c759; font-weight: 700; }
+        .bad { color: #ff3b30; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Historical Model Performance</h1>
+        
+        <div class="stat-card">
+            <h2>Overall Performance</h2>
+            <div class="big-stat">0.3%</div>
+            <p>Win Rate (7/2664 predictions)</p>
+            <p>Average Confidence: 79.4%</p>
+            <p>Average Spread Error: 13.0 points</p>
+        </div>
+        
+        <div class="stat-card">
+            <h2>Performance by Sport</h2>
+            <table>
+                <tr>
+                    <th>Sport</th>
+                    <th>Record</th>
+                    <th>Win Rate</th>
+                    <th>Avg Confidence</th>
+                </tr>
+
+                <tr>
+                    <td><strong>NBA</strong></td>
+                    <td>7-1973</td>
+                    <td class="bad">0.4%</td>
+                    <td>79%</td>
+                </tr>
+
+                <tr>
+                    <td><strong>NFL</strong></td>
+                    <td>0-684</td>
+                    <td class="bad">0.0%</td>
+                    <td>nan%</td>
+                </tr>
+
+            </table>
+        </div>
+        
+        <div class="stat-card">
+            <h2>Performance by Confidence Level</h2>
+            <table>
+                <tr>
+                    <th>Confidence Range</th>
+                    <th>Record</th>
+                    <th>Win Rate</th>
+                </tr>
+
+                <tr>
+                    <td>High (70%+)</td>
+                    <td>7-3</td>
+                    <td>70.0%</td>
+                </tr>
+
+                <tr>
+                    <td>Low (<60%)</td>
+                    <td>0-2654</td>
+                    <td>0.0%</td>
+                </tr>
+
+            </table>
+        </div>
+        
+    </div>
+</body>
+</html>
