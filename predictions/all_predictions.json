@@ -914,24 +914,24 @@
       "week": 18,
       "away_team": "Miami Dolphins",
       "home_team": "New England Patriots",
-      "predicted_spread": 8.96,
+      "predicted_spread": 8.94,
       "predicted_winner": "New England Patriots",
-      "confidence_score": 0.695,
+      "confidence_score": 0.694,
       "is_high_confidence": 0,
       "vegas_spread": 12.0,
-      "model_market_divergence": 3.04,
-      "market_movement": -23.5,
+      "model_market_divergence": 3.06,
+      "market_movement": -25.5,
       "game_time": "09:25 PM",
       "shap_explanation": {
         "shap_values": [
           0.053321027478215974,
           -0.21701671297201414,
-          0.2775463551921834,
-          -0.3953139934453583,
+          0.2752680621702288,
+          -0.3967658720967819,
           -0.06756137326405906,
           -0.0490996219384499,
           0.18051397382703308,
-          0.46967481891511226,
+          0.46969546770476256,
           0.22018365731351922,
           0.0,
           -0.046010894058256896,
@@ -942,8 +942,8 @@
           -0.06609959445452035,
           -0.26125163490397907,
           -0.2425148319335382,
-          0.3336171629557329,
-          -0.08411460694416575,
+          0.3336297573324818,
+          -0.08412650705882527,
           -0.06344576639123801,
           0.3391018178802074,
           0.03722097177953401,
@@ -952,49 +952,49 @@
           0.007230605799033114,
           0.0956755379215673,
           -0.8493480284424215,
-          0.22678315088321432,
+          0.22626953530526697,
           -0.002291586232456382,
-          -0.23639459514486305,
+          -0.24019785642119756,
           -0.16680186793774263,
-          -0.2018366096652674,
-          -0.3079782339936935,
+          -0.17608330893512839,
+          -0.3072222604053934,
           0.1803454105211508,
           -0.36374444574333364,
           0.005557983733175576,
-          -0.010282705513033515,
+          -0.010291192828751017,
           -0.23147089348404506,
-          -0.2332744833165816,
+          -0.2669166790108466,
           0.09230367525101159,
           -0.24236289327710328,
           0.14939578401530035,
           -0.32095498019513286,
           -0.07217414533662814,
-          0.32606605846716863,
+          0.31957256348270763,
           -0.2766772967226793,
           0.394533341115723,
           -0.05373997910500975,
-          0.017778293982846662,
+          -0.005522879467753228,
           0.12709571375144052,
           0.0001466311425974709,
-          0.08661377396078906,
+          0.08661321164226111,
           -0.001706351097944534,
-          -0.17594684313556003,
-          -0.1940116603192318,
+          -0.16533298475051936,
+          -0.24987116356933525,
           -0.023530256920309682,
           -0.47422705943645044,
           0.00315111542964587,
           -0.0050464558818930525,
-          0.13692561118914057,
+          0.13530295794181768,
           -0.10815101310814469,
           0.004459475990306601,
-          -0.05126657579010195,
+          -0.04986669674664578,
           1.051358731518486,
           -0.009088479762665429,
           -0.009818522984287483,
           0.00025881563266011654,
           0.025120945263761314,
-          0.6333520964410257,
-          0.09335344304002038,
+          0.6798784610809565,
+          0.09270578706913003,
           0.3310947350298318,
           0.23555930485243975,
           0.0
@@ -1009,12 +1009,12 @@
             "importance": 0.21701671297201414
           },
           "home_avg_allowed_L5": {
-            "shap_value": 0.2775463551921834,
-            "importance": 0.2775463551921834
+            "shap_value": 0.2752680621702288,
+            "importance": 0.2752680621702288
           },
           "away_avg_allowed_L5": {
-            "shap_value": -0.3953139934453583,
-            "importance": 0.3953139934453583
+            "shap_value": -0.3967658720967819,
+            "importance": 0.3967658720967819
           },
           "home_win_rate_L5": {
             "shap_value": -0.06756137326405906,
@@ -1029,8 +1029,8 @@
             "importance": 0.18051397382703308
           },
           "away_diff_trend": {
-            "shap_value": 0.46967481891511226,
-            "importance": 0.46967481891511226
+            "shap_value": 0.46969546770476256,
+            "importance": 0.46969546770476256
           },
           "point_spread_estimate": {
             "shap_value": 0.22018365731351922,
@@ -1073,12 +1073,12 @@
             "importance": 0.2425148319335382
           },
           "home_opponent_strength": {
-            "shap_value": 0.3336171629557329,
-            "importance": 0.3336171629557329
+            "shap_value": 0.3336297573324818,
+            "importance": 0.3336297573324818
           },
           "away_opponent_strength": {
-            "shap_value": -0.08411460694416575,
-            "importance": 0.08411460694416575
+            "shap_value": -0.08412650705882527,
+            "importance": 0.08412650705882527
           },
           "opponent_strength_diff": {
             "shap_value": -0.06344576639123801,
@@ -1113,28 +1113,28 @@
             "importance": 0.8493480284424215
           },
           "away_point_diff_variance": {
-            "shap_value": 0.22678315088321432,
-            "importance": 0.22678315088321432
+            "shap_value": 0.22626953530526697,
+            "importance": 0.22626953530526697
           },
           "consistency_advantage": {
             "shap_value": -0.002291586232456382,
             "importance": 0.002291586232456382
           },
           "home_scoring_trend": {
-            "shap_value": -0.23639459514486305,
-            "importance": 0.23639459514486305
+            "shap_value": -0.24019785642119756,
+            "importance": 0.24019785642119756
           },
           "away_scoring_trend": {
             "shap_value": -0.16680186793774263,
             "importance": 0.16680186793774263
           },
           "scoring_trend_advantage": {
-            "shap_value": -0.2018366096652674,
-            "importance": 0.2018366096652674
+            "shap_value": -0.17608330893512839,
+            "importance": 0.17608330893512839
           },
           "home_yards_per_play": {
-            "shap_value": -0.3079782339936935,
-            "importance": 0.3079782339936935
+            "shap_value": -0.3072222604053934,
+            "importance": 0.3072222604053934
           },
           "away_yards_per_play": {
             "shap_value": 0.1803454105211508,
@@ -1149,16 +1149,16 @@
             "importance": 0.005557983733175576
           },
           "home_third_down_success": {
-            "shap_value": -0.010282705513033515,
-            "importance": 0.010282705513033515
+            "shap_value": -0.010291192828751017,
+            "importance": 0.010291192828751017
           },
           "away_third_down_success": {
             "shap_value": -0.23147089348404506,
             "importance": 0.23147089348404506
           },
           "home_red_zone_td": {
-            "shap_value": -0.2332744833165816,
-            "importance": 0.2332744833165816
+            "shap_value": -0.2669166790108466,
+            "importance": 0.2669166790108466
           },
           "away_red_zone_td": {
             "shap_value": 0.09230367525101159,
@@ -1181,8 +1181,8 @@
             "importance": 0.07217414533662814
           },
           "home_form_pca1": {
-            "shap_value": 0.32606605846716863,
-            "importance": 0.32606605846716863
+            "shap_value": 0.31957256348270763,
+            "importance": 0.31957256348270763
           },
           "home_form_pca2": {
             "shap_value": -0.2766772967226793,
@@ -1197,8 +1197,8 @@
             "importance": 0.05373997910500975
           },
           "home_back_to_back_away": {
-            "shap_value": 0.017778293982846662,
-            "importance": 0.017778293982846662
+            "shap_value": -0.005522879467753228,
+            "importance": 0.005522879467753228
           },
           "away_back_to_back_away": {
             "shap_value": 0.12709571375144052,
@@ -1209,20 +1209,20 @@
             "importance": 0.0001466311425974709
           },
           "away_timezone_disadvantage": {
-            "shap_value": 0.08661377396078906,
-            "importance": 0.08661377396078906
+            "shap_value": 0.08661321164226111,
+            "importance": 0.08661321164226111
           },
           "travel_advantage": {
             "shap_value": -0.001706351097944534,
             "importance": 0.001706351097944534
           },
           "home_qb_continuity": {
-            "shap_value": -0.17594684313556003,
-            "importance": 0.17594684313556003
+            "shap_value": -0.16533298475051936,
+            "importance": 0.16533298475051936
           },
           "away_qb_continuity": {
-            "shap_value": -0.1940116603192318,
-            "importance": 0.1940116603192318
+            "shap_value": -0.24987116356933525,
+            "importance": 0.24987116356933525
           },
           "home_ol_continuity": {
             "shap_value": -0.023530256920309682,
@@ -1241,8 +1241,8 @@
             "importance": 0.0050464558818930525
           },
           "qb_continuity_advantage": {
-            "shap_value": 0.13692561118914057,
-            "importance": 0.13692561118914057
+            "shap_value": 0.13530295794181768,
+            "importance": 0.13530295794181768
           },
           "home_4th_quarter_perf": {
             "shap_value": -0.10815101310814469,
@@ -1253,8 +1253,8 @@
             "importance": 0.004459475990306601
           },
           "fourth_quarter_advantage": {
-            "shap_value": -0.05126657579010195,
-            "importance": 0.05126657579010195
+            "shap_value": -0.04986669674664578,
+            "importance": 0.04986669674664578
           },
           "home_coach_aggression": {
             "shap_value": 1.051358731518486,
@@ -1277,12 +1277,12 @@
             "importance": 0.025120945263761314
           },
           "market_movement_units": {
-            "shap_value": 0.6333520964410257,
-            "importance": 0.6333520964410257
+            "shap_value": 0.6798784610809565,
+            "importance": 0.6798784610809565
           },
           "market_closing_line": {
-            "shap_value": 0.09335344304002038,
-            "importance": 0.09335344304002038
+            "shap_value": 0.09270578706913003,
+            "importance": 0.09270578706913003
           },
           "model_market_divergence": {
             "shap_value": 0.3310947350298318,
@@ -1312,8 +1312,8 @@
           },
           {
             "feature": "market_movement_units",
-            "shap_value": 0.6333520964410257,
-            "importance": 0.6333520964410257,
+            "shap_value": 0.6798784610809565,
+            "importance": 0.6798784610809565,
             "direction": "increases"
           },
           {
@@ -1324,14 +1324,14 @@
           },
           {
             "feature": "away_diff_trend",
-            "shap_value": 0.46967481891511226,
-            "importance": 0.46967481891511226,
+            "shap_value": 0.46969546770476256,
+            "importance": 0.46969546770476256,
             "direction": "increases"
           },
           {
             "feature": "away_avg_allowed_L5",
-            "shap_value": -0.3953139934453583,
-            "importance": 0.3953139934453583,
+            "shap_value": -0.3967658720967819,
+            "importance": 0.3967658720967819,
             "direction": "decreases"
           },
           {
@@ -1354,8 +1354,8 @@
           },
           {
             "feature": "home_opponent_strength",
-            "shap_value": 0.3336171629557329,
-            "importance": 0.3336171629557329,
+            "shap_value": 0.3336297573324818,
+            "importance": 0.3336297573324818,
             "direction": "increases"
           }
         ],
@@ -2730,17 +2730,17 @@
       "week": 18,
       "away_team": "Washington Commanders",
       "home_team": "Philadelphia Eagles",
-      "predicted_spread": 4.19,
+      "predicted_spread": 4.18,
       "predicted_winner": "Philadelphia Eagles",
       "confidence_score": 0.679,
       "is_high_confidence": 0,
       "vegas_spread": -4.0,
-      "model_market_divergence": 8.19,
-      "market_movement": 8.5,
+      "model_market_divergence": 8.18,
+      "market_movement": 7.5,
       "game_time": "09:25 PM",
       "shap_explanation": {
         "shap_values": [
-          -0.2881339245942867,
+          -0.28751833022400275,
           -0.30721012968324957,
           -0.11911834849719781,
           0.5790360240112784,
@@ -2751,7 +2751,7 @@
           0.11283509125526323,
           0.0,
           -0.012313598823546101,
-          0.2189897082511426,
+          0.2189493966474994,
           -0.22046104118952045,
           0.3025578603789269,
           0.012638012287617784,
@@ -2759,7 +2759,7 @@
           -0.1607167953009555,
           -0.21711257623767877,
           0.5971178058419878,
-          -0.06928543543961943,
+          -0.06928831605937667,
           -0.10242055996416412,
           0.4364824496210122,
           0.029225265849454445,
@@ -2769,7 +2769,7 @@
           0.0075497552465350285,
           -0.8613234614086674,
           0.3720005310445274,
-          0.08835519193627989,
+          0.08835370683380006,
           -0.24667388167619947,
           -0.14999181977775217,
           -0.2238074401431704,
@@ -2783,12 +2783,12 @@
           0.06876185084214625,
           -0.1800523870405309,
           0.13123721926404186,
-          -0.2161812999481509,
-          0.07616981870312393,
+          -0.21630939913699251,
+          0.07608255344660811,
           0.11355598181204371,
           -0.4375857578847595,
           0.3525472407457073,
-          0.09694253719147923,
+          0.0967539458935994,
           0.027005565477156778,
           0.08434627351426258,
           0.00011802768482993998,
@@ -2809,7 +2809,7 @@
           -0.009818522984287483,
           0.00025881563266011654,
           0.01911344022485565,
-          -0.07591720439880749,
+          -0.07608416571216925,
           -0.5009891442288396,
           0.27648658603075094,
           0.2695613016183924,
@@ -2817,8 +2817,8 @@
         ],
         "feature_importance": {
           "home_avg_points_L5": {
-            "shap_value": -0.2881339245942867,
-            "importance": 0.2881339245942867
+            "shap_value": -0.28751833022400275,
+            "importance": 0.28751833022400275
           },
           "away_avg_points_L5": {
             "shap_value": -0.30721012968324957,
@@ -2861,8 +2861,8 @@
             "importance": 0.012313598823546101
           },
           "week": {
-            "shap_value": 0.2189897082511426,
-            "importance": 0.2189897082511426
+            "shap_value": 0.2189493966474994,
+            "importance": 0.2189493966474994
           },
           "is_division_game": {
             "shap_value": -0.22046104118952045,
@@ -2893,8 +2893,8 @@
             "importance": 0.5971178058419878
           },
           "away_opponent_strength": {
-            "shap_value": -0.06928543543961943,
-            "importance": 0.06928543543961943
+            "shap_value": -0.06928831605937667,
+            "importance": 0.06928831605937667
           },
           "opponent_strength_diff": {
             "shap_value": -0.10242055996416412,
@@ -2933,8 +2933,8 @@
             "importance": 0.3720005310445274
           },
           "consistency_advantage": {
-            "shap_value": 0.08835519193627989,
-            "importance": 0.08835519193627989
+            "shap_value": 0.08835370683380006,
+            "importance": 0.08835370683380006
           },
           "home_scoring_trend": {
             "shap_value": -0.24667388167619947,
@@ -2989,12 +2989,12 @@
             "importance": 0.13123721926404186
           },
           "away_team_tier": {
-            "shap_value": -0.2161812999481509,
-            "importance": 0.2161812999481509
+            "shap_value": -0.21630939913699251,
+            "importance": 0.21630939913699251
           },
           "tier_matchup": {
-            "shap_value": 0.07616981870312393,
-            "importance": 0.07616981870312393
+            "shap_value": 0.07608255344660811,
+            "importance": 0.07608255344660811
           },
           "home_form_pca1": {
             "shap_value": 0.11355598181204371,
@@ -3009,8 +3009,8 @@
             "importance": 0.3525472407457073
           },
           "away_travel_miles_21d": {
-            "shap_value": 0.09694253719147923,
-            "importance": 0.09694253719147923
+            "shap_value": 0.0967539458935994,
+            "importance": 0.0967539458935994
           },
           "home_back_to_back_away": {
             "shap_value": 0.027005565477156778,
@@ -3093,8 +3093,8 @@
             "importance": 0.01911344022485565
           },
           "market_movement_units": {
-            "shap_value": -0.07591720439880749,
-            "importance": 0.07591720439880749
+            "shap_value": -0.07608416571216925,
+            "importance": 0.07608416571216925
           },
           "market_closing_line": {
             "shap_value": -0.5009891442288396,
@@ -3190,7 +3190,7 @@
       "is_high_confidence": 0,
       "vegas_spread": 13.5,
       "model_market_divergence": 12.37,
-      "market_movement": -27.0,
+      "market_movement": -27.5,
       "game_time": "09:25 PM",
       "shap_explanation": {
         "shap_values": [
@@ -3644,7 +3644,7 @@
       "is_high_confidence": 0,
       "vegas_spread": 11.0,
       "model_market_divergence": 7.51,
-      "market_movement": -21.5,
+      "market_movement": -23.5,
       "game_time": "06:00 PM",
       "shap_explanation": {
         "shap_values": [
@@ -3666,8 +3666,8 @@
           -0.01544009587489711,
           -0.05375077229926816,
           -0.07401779402811513,
-          0.2806029413945145,
-          -0.08693427813663882,
+          0.2805785727626573,
+          -0.08693928586612606,
           -0.1636151665815018,
           0.45375192722408714,
           0.015289579283817148,
@@ -3681,11 +3681,11 @@
           -0.2959039231177474,
           -0.18518823190198597,
           -0.2843174379959067,
-          -0.17533365883239235,
+          -0.17613076296884678,
           0.27410447553850853,
           -0.3020124938018972,
           0.0631580075422616,
-          -0.13307536401787942,
+          -0.1324189164910625,
           -0.049649704359867715,
           -0.2598107042735683,
           0.08905497248950155,
@@ -3700,7 +3700,7 @@
           0.042655680047028,
           0.10196406194357407,
           0.00012421217517839976,
-          0.06687253816933217,
+          0.06685285025051721,
           -0.028111063041275985,
           0.16414166390044113,
           -0.12152012136089667,
@@ -3717,8 +3717,8 @@
           -0.009818522984287483,
           0.00025881563266011654,
           -0.006614927434960123,
-          0.9960201934014645,
-          0.22710017743281496,
+          0.9961054885879554,
+          0.22720460309066112,
           0.3524859960204131,
           0.09925128295153222,
           0.0
@@ -3797,12 +3797,12 @@
             "importance": 0.07401779402811513
           },
           "home_opponent_strength": {
-            "shap_value": 0.2806029413945145,
-            "importance": 0.2806029413945145
+            "shap_value": 0.2805785727626573,
+            "importance": 0.2805785727626573
           },
           "away_opponent_strength": {
-            "shap_value": -0.08693427813663882,
-            "importance": 0.08693427813663882
+            "shap_value": -0.08693928586612606,
+            "importance": 0.08693928586612606
           },
           "opponent_strength_diff": {
             "shap_value": -0.1636151665815018,
@@ -3857,8 +3857,8 @@
             "importance": 0.2843174379959067
           },
           "home_yards_per_play": {
-            "shap_value": -0.17533365883239235,
-            "importance": 0.17533365883239235
+            "shap_value": -0.17613076296884678,
+            "importance": 0.17613076296884678
           },
           "away_yards_per_play": {
             "shap_value": 0.27410447553850853,
@@ -3873,8 +3873,8 @@
             "importance": 0.0631580075422616
           },
           "home_third_down_success": {
-            "shap_value": -0.13307536401787942,
-            "importance": 0.13307536401787942
+            "shap_value": -0.1324189164910625,
+            "importance": 0.1324189164910625
           },
           "away_third_down_success": {
             "shap_value": -0.049649704359867715,
@@ -3933,8 +3933,8 @@
             "importance": 0.00012421217517839976
           },
           "away_timezone_disadvantage": {
-            "shap_value": 0.06687253816933217,
-            "importance": 0.06687253816933217
+            "shap_value": 0.06685285025051721,
+            "importance": 0.06685285025051721
           },
           "travel_advantage": {
             "shap_value": -0.028111063041275985,
@@ -4001,12 +4001,12 @@
             "importance": 0.006614927434960123
           },
           "market_movement_units": {
-            "shap_value": 0.9960201934014645,
-            "importance": 0.9960201934014645
+            "shap_value": 0.9961054885879554,
+            "importance": 0.9961054885879554
           },
           "market_closing_line": {
-            "shap_value": 0.22710017743281496,
-            "importance": 0.22710017743281496
+            "shap_value": 0.22720460309066112,
+            "importance": 0.22720460309066112
           },
           "model_market_divergence": {
             "shap_value": 0.3524859960204131,
@@ -4024,8 +4024,8 @@
         "top_features": [
           {
             "feature": "market_movement_units",
-            "shap_value": 0.9960201934014645,
-            "importance": 0.9960201934014645,
+            "shap_value": 0.9961054885879554,
+            "importance": 0.9961054885879554,
             "direction": "increases"
           },
           {
@@ -4550,8 +4550,8 @@
       "predicted_winner": "Houston Texans",
       "confidence_score": 0.673,
       "is_high_confidence": 0,
-      "vegas_spread": -10.5,
-      "model_market_divergence": 13.68,
+      "vegas_spread": -11.0,
+      "model_market_divergence": 14.18,
       "market_movement": 21.0,
       "game_time": "06:00 PM",
       "shap_explanation": {
@@ -5006,7 +5006,7 @@
       "is_high_confidence": 0,
       "vegas_spread": -7.5,
       "model_market_divergence": 10.66,
-      "market_movement": 16.0,
+      "market_movement": 17.5,
       "game_time": "09:25 PM",
       "shap_explanation": {
         "shap_values": [
@@ -6500,8 +6500,8 @@
       "confidence_score": 0.3,
       "is_high_confidence": 1,
       "sport": "NBA",
-      "vegas_spread": 7.5,
-      "divergence": 4.806394778018541,
+      "vegas_spread": 8.5,
+      "divergence": 5.806394778018541,
       "clutch_analyzer_used": true,
       "rest_advantage": 0.0,
       "home_rest_days": 2.0,
@@ -6524,13 +6524,13 @@
       "off_def_ratio": 1.0,
       "pace_scoring_interaction": 110.0,
       "rest_clutch_interaction": 0.0,
-      "divergence_confidence_interaction": 2.05988347629366,
+      "divergence_confidence_interaction": 2.488454904865089,
       "ppg_def_interaction": 0.0,
       "ppg_diff_squared": 0.0,
       "def_diff_squared": 0.0,
       "rest_advantage_squared": 0.0,
       "momentum_clutch_cross": 0.0,
-      "confidence_divergence_cross": 2.05988347629366,
+      "confidence_divergence_cross": 2.488454904865089,
       "anomaly_score": -0.7247318341730805,
       "is_anomaly": "True"
     },
@@ -6709,7 +6709,7 @@
       "confidence_divergence_cross": NaN
     }
   ],
-  "generated_at": "2026-01-04T07:30:05.825525",
+  "generated_at": "2026-01-04T10:38:26.957471",
   "nfl_count": 14,
   "nba_count": 8
 }
