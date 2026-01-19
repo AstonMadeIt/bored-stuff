@@ -1,1083 +1,6 @@
 {
-  "nfl": [
-    {
-      "sport": "NFL",
-      "date": "2026-01-18",
-      "week": 2,
-      "away_team": "Los Angeles Rams",
-      "home_team": "Chicago Bears",
-      "predicted_spread": 6.44,
-      "predicted_winner": "Chicago Bears",
-      "confidence_score": 0.706,
-      "is_high_confidence": 1,
-      "vegas_spread": null,
-      "model_market_divergence": null,
-      "market_movement": null,
-      "game_time": "11:30 PM",
-      "shap_explanation": {
-        "shap_values": [
-          0.2321622423430998,
-          -0.25458851739547356,
-          0.33166999973072153,
-          -0.6219436665260707,
-          -0.06688367805360712,
-          -0.366718590899211,
-          0.9858647971890533,
-          0.950971173054888,
-          0.42964048703825597,
-          0.0,
-          0.04565577155027583,
-          -0.19737844184581646,
-          0.34282499653176585,
-          0.11731568257674897,
-          0.03687357056503174,
-          -0.02168353142565735,
-          -0.07012390938153984,
-          -0.16602255673697797,
-          0.6189430149745845,
-          -0.09449241024972657,
-          0.01179857810546025,
-          -0.3016774434394886,
-          0.007755420737084933,
-          -0.005682535339669812,
-          -0.008442621889368809,
-          0.007021589799073098,
-          -0.054128375067408,
-          -0.860562355362384,
-          0.21045575862168928,
-          0.04811127631031042,
-          -0.27595686149078746,
-          0.0777433700020142,
-          -0.16147428014782472,
-          0.1848656619262925,
-          -0.019293962170384732,
-          0.06714270576236003,
-          0.03496526607522952,
-          -0.2217762214755987,
-          -0.037664128909657396,
-          0.0037050125162022595,
-          -0.06312262844654469,
-          -0.22607165470194893,
-          0.2962613038345421,
-          -0.5924609527606772,
-          -0.0023294654612508927,
-          0.5387202269612203,
-          -0.40411443610413,
-          0.16092814336841854,
-          0.0405304014209878,
-          -0.010501820325625886,
-          0.041904066281942105,
-          0.0001466311425974709,
-          0.07310104615445631,
-          0.02087848993589727,
-          -0.20137343331653143,
-          -0.02891317894023828,
-          -0.21369077248058374,
-          -0.27281198673046714,
-          -0.008682043451990466,
-          -0.0022846478224528254,
-          0.21806274156790323,
-          -0.018740029605979487,
-          0.09556425317107767,
-          -0.16725979499252838,
-          1.0289270792090162,
-          -0.007471542868575085,
-          -0.006508576019634802,
-          -0.00015995572415704372,
-          0.08158607452063592,
-          -0.054572225589318284,
-          -0.5360131916190852,
-          0.3980371372281891,
-          -0.20490049969113527,
-          0.0
-        ],
-        "feature_importance": {
-          "home_avg_points_L5": {
-            "shap_value": 0.2321622423430998,
-            "importance": 0.2321622423430998
-          },
-          "away_avg_points_L5": {
-            "shap_value": -0.25458851739547356,
-            "importance": 0.25458851739547356
-          },
-          "home_avg_allowed_L5": {
-            "shap_value": 0.33166999973072153,
-            "importance": 0.33166999973072153
-          },
-          "away_avg_allowed_L5": {
-            "shap_value": -0.6219436665260707,
-            "importance": 0.6219436665260707
-          },
-          "home_win_rate_L5": {
-            "shap_value": -0.06688367805360712,
-            "importance": 0.06688367805360712
-          },
-          "away_win_rate_L5": {
-            "shap_value": -0.366718590899211,
-            "importance": 0.366718590899211
-          },
-          "home_diff_trend": {
-            "shap_value": 0.9858647971890533,
-            "importance": 0.9858647971890533
-          },
-          "away_diff_trend": {
-            "shap_value": 0.950971173054888,
-            "importance": 0.950971173054888
-          },
-          "point_spread_estimate": {
-            "shap_value": 0.42964048703825597,
-            "importance": 0.42964048703825597
-          },
-          "home_advantage": {
-            "shap_value": 0.0,
-            "importance": 0.0
-          },
-          "rest_advantage": {
-            "shap_value": 0.04565577155027583,
-            "importance": 0.04565577155027583
-          },
-          "week": {
-            "shap_value": -0.19737844184581646,
-            "importance": 0.19737844184581646
-          },
-          "is_division_game": {
-            "shap_value": 0.34282499653176585,
-            "importance": 0.34282499653176585
-          },
-          "home_team_home_advantage": {
-            "shap_value": 0.11731568257674897,
-            "importance": 0.11731568257674897
-          },
-          "away_team_away_disadvantage": {
-            "shap_value": 0.03687357056503174,
-            "importance": 0.03687357056503174
-          },
-          "home_momentum": {
-            "shap_value": -0.02168353142565735,
-            "importance": 0.02168353142565735
-          },
-          "away_momentum": {
-            "shap_value": -0.07012390938153984,
-            "importance": 0.07012390938153984
-          },
-          "momentum_advantage": {
-            "shap_value": -0.16602255673697797,
-            "importance": 0.16602255673697797
-          },
-          "home_opponent_strength": {
-            "shap_value": 0.6189430149745845,
-            "importance": 0.6189430149745845
-          },
-          "away_opponent_strength": {
-            "shap_value": -0.09449241024972657,
-            "importance": 0.09449241024972657
-          },
-          "opponent_strength_diff": {
-            "shap_value": 0.01179857810546025,
-            "importance": 0.01179857810546025
-          },
-          "week_normalized": {
-            "shap_value": -0.3016774434394886,
-            "importance": 0.3016774434394886
-          },
-          "is_early_season": {
-            "shap_value": 0.007755420737084933,
-            "importance": 0.007755420737084933
-          },
-          "is_mid_season": {
-            "shap_value": -0.005682535339669812,
-            "importance": 0.005682535339669812
-          },
-          "is_late_season": {
-            "shap_value": -0.008442621889368809,
-            "importance": 0.008442621889368809
-          },
-          "h2h_home_win_rate": {
-            "shap_value": 0.007021589799073098,
-            "importance": 0.007021589799073098
-          },
-          "h2h_games_played": {
-            "shap_value": -0.054128375067408,
-            "importance": 0.054128375067408
-          },
-          "home_point_diff_variance": {
-            "shap_value": -0.860562355362384,
-            "importance": 0.860562355362384
-          },
-          "away_point_diff_variance": {
-            "shap_value": 0.21045575862168928,
-            "importance": 0.21045575862168928
-          },
-          "consistency_advantage": {
-            "shap_value": 0.04811127631031042,
-            "importance": 0.04811127631031042
-          },
-          "home_scoring_trend": {
-            "shap_value": -0.27595686149078746,
-            "importance": 0.27595686149078746
-          },
-          "away_scoring_trend": {
-            "shap_value": 0.0777433700020142,
-            "importance": 0.0777433700020142
-          },
-          "scoring_trend_advantage": {
-            "shap_value": -0.16147428014782472,
-            "importance": 0.16147428014782472
-          },
-          "home_yards_per_play": {
-            "shap_value": 0.1848656619262925,
-            "importance": 0.1848656619262925
-          },
-          "away_yards_per_play": {
-            "shap_value": -0.019293962170384732,
-            "importance": 0.019293962170384732
-          },
-          "home_explosive_rate": {
-            "shap_value": 0.06714270576236003,
-            "importance": 0.06714270576236003
-          },
-          "away_explosive_rate": {
-            "shap_value": 0.03496526607522952,
-            "importance": 0.03496526607522952
-          },
-          "home_third_down_success": {
-            "shap_value": -0.2217762214755987,
-            "importance": 0.2217762214755987
-          },
-          "away_third_down_success": {
-            "shap_value": -0.037664128909657396,
-            "importance": 0.037664128909657396
-          },
-          "home_red_zone_td": {
-            "shap_value": 0.0037050125162022595,
-            "importance": 0.0037050125162022595
-          },
-          "away_red_zone_td": {
-            "shap_value": -0.06312262844654469,
-            "importance": 0.06312262844654469
-          },
-          "efficiency_advantage": {
-            "shap_value": -0.22607165470194893,
-            "importance": 0.22607165470194893
-          },
-          "home_team_tier": {
-            "shap_value": 0.2962613038345421,
-            "importance": 0.2962613038345421
-          },
-          "away_team_tier": {
-            "shap_value": -0.5924609527606772,
-            "importance": 0.5924609527606772
-          },
-          "tier_matchup": {
-            "shap_value": -0.0023294654612508927,
-            "importance": 0.0023294654612508927
-          },
-          "home_form_pca1": {
-            "shap_value": 0.5387202269612203,
-            "importance": 0.5387202269612203
-          },
-          "home_form_pca2": {
-            "shap_value": -0.40411443610413,
-            "importance": 0.40411443610413
-          },
-          "home_travel_miles_21d": {
-            "shap_value": 0.16092814336841854,
-            "importance": 0.16092814336841854
-          },
-          "away_travel_miles_21d": {
-            "shap_value": 0.0405304014209878,
-            "importance": 0.0405304014209878
-          },
-          "home_back_to_back_away": {
-            "shap_value": -0.010501820325625886,
-            "importance": 0.010501820325625886
-          },
-          "away_back_to_back_away": {
-            "shap_value": 0.041904066281942105,
-            "importance": 0.041904066281942105
-          },
-          "home_after_long_trip": {
-            "shap_value": 0.0001466311425974709,
-            "importance": 0.0001466311425974709
-          },
-          "away_timezone_disadvantage": {
-            "shap_value": 0.07310104615445631,
-            "importance": 0.07310104615445631
-          },
-          "travel_advantage": {
-            "shap_value": 0.02087848993589727,
-            "importance": 0.02087848993589727
-          },
-          "home_qb_continuity": {
-            "shap_value": -0.20137343331653143,
-            "importance": 0.20137343331653143
-          },
-          "away_qb_continuity": {
-            "shap_value": -0.02891317894023828,
-            "importance": 0.02891317894023828
-          },
-          "home_ol_continuity": {
-            "shap_value": -0.21369077248058374,
-            "importance": 0.21369077248058374
-          },
-          "away_ol_continuity": {
-            "shap_value": -0.27281198673046714,
-            "importance": 0.27281198673046714
-          },
-          "home_qb_change_flag": {
-            "shap_value": -0.008682043451990466,
-            "importance": 0.008682043451990466
-          },
-          "away_qb_change_flag": {
-            "shap_value": -0.0022846478224528254,
-            "importance": 0.0022846478224528254
-          },
-          "qb_continuity_advantage": {
-            "shap_value": 0.21806274156790323,
-            "importance": 0.21806274156790323
-          },
-          "home_4th_quarter_perf": {
-            "shap_value": -0.018740029605979487,
-            "importance": 0.018740029605979487
-          },
-          "away_4th_quarter_perf": {
-            "shap_value": 0.09556425317107767,
-            "importance": 0.09556425317107767
-          },
-          "fourth_quarter_advantage": {
-            "shap_value": -0.16725979499252838,
-            "importance": 0.16725979499252838
-          },
-          "home_coach_aggression": {
-            "shap_value": 1.0289270792090162,
-            "importance": 1.0289270792090162
-          },
-          "away_coach_aggression": {
-            "shap_value": -0.007471542868575085,
-            "importance": 0.007471542868575085
-          },
-          "home_adjustment_delta": {
-            "shap_value": -0.006508576019634802,
-            "importance": 0.006508576019634802
-          },
-          "away_adjustment_delta": {
-            "shap_value": -0.00015995572415704372,
-            "importance": 0.00015995572415704372
-          },
-          "coaching_aggression_diff": {
-            "shap_value": 0.08158607452063592,
-            "importance": 0.08158607452063592
-          },
-          "market_movement_units": {
-            "shap_value": -0.054572225589318284,
-            "importance": 0.054572225589318284
-          },
-          "market_closing_line": {
-            "shap_value": -0.5360131916190852,
-            "importance": 0.5360131916190852
-          },
-          "model_market_divergence": {
-            "shap_value": 0.3980371372281891,
-            "importance": 0.3980371372281891
-          },
-          "prediction_confidence": {
-            "shap_value": -0.20490049969113527,
-            "importance": 0.20490049969113527
-          },
-          "is_high_confidence": {
-            "shap_value": 0.0,
-            "importance": 0.0
-          }
-        },
-        "top_features": [
-          {
-            "feature": "home_coach_aggression",
-            "shap_value": 1.0289270792090162,
-            "importance": 1.0289270792090162,
-            "direction": "increases"
-          },
-          {
-            "feature": "home_diff_trend",
-            "shap_value": 0.9858647971890533,
-            "importance": 0.9858647971890533,
-            "direction": "increases"
-          },
-          {
-            "feature": "away_diff_trend",
-            "shap_value": 0.950971173054888,
-            "importance": 0.950971173054888,
-            "direction": "increases"
-          },
-          {
-            "feature": "home_point_diff_variance",
-            "shap_value": -0.860562355362384,
-            "importance": 0.860562355362384,
-            "direction": "decreases"
-          },
-          {
-            "feature": "away_avg_allowed_L5",
-            "shap_value": -0.6219436665260707,
-            "importance": 0.6219436665260707,
-            "direction": "decreases"
-          },
-          {
-            "feature": "home_opponent_strength",
-            "shap_value": 0.6189430149745845,
-            "importance": 0.6189430149745845,
-            "direction": "increases"
-          },
-          {
-            "feature": "away_team_tier",
-            "shap_value": -0.5924609527606772,
-            "importance": 0.5924609527606772,
-            "direction": "decreases"
-          },
-          {
-            "feature": "home_form_pca1",
-            "shap_value": 0.5387202269612203,
-            "importance": 0.5387202269612203,
-            "direction": "increases"
-          },
-          {
-            "feature": "market_closing_line",
-            "shap_value": -0.5360131916190852,
-            "importance": 0.5360131916190852,
-            "direction": "decreases"
-          },
-          {
-            "feature": "point_spread_estimate",
-            "shap_value": 0.42964048703825597,
-            "importance": 0.42964048703825597,
-            "direction": "increases"
-          }
-        ],
-        "base_value": 0.21242339165646704
-      }
-    },
-    {
-      "sport": "NFL",
-      "date": "2026-01-18",
-      "week": 2,
-      "away_team": "Houston Texans",
-      "home_team": "New England Patriots",
-      "predicted_spread": 5.05,
-      "predicted_winner": "New England Patriots",
-      "confidence_score": 0.681,
-      "is_high_confidence": 0,
-      "vegas_spread": null,
-      "model_market_divergence": null,
-      "market_movement": null,
-      "game_time": "08:00 PM",
-      "shap_explanation": {
-        "shap_values": [
-          0.10875501440344709,
-          0.2819460998995737,
-          0.3143789564982167,
-          0.13729286288363768,
-          -0.0951504789021567,
-          0.0610812788520775,
-          0.31907888900899073,
-          -1.2217364238932047,
-          0.19591895065231854,
-          0.0,
-          -0.06908256595624962,
-          -0.2286174759556701,
-          0.14393141553625186,
-          0.11049653947333521,
-          -0.016451716395023366,
-          -0.0801503373374922,
-          -0.23209212958976808,
-          -0.38006678456833387,
-          0.7994258450581286,
-          -0.17793460983235973,
-          -0.08383812035238108,
-          -0.19923640664830372,
-          -0.10629579160013236,
-          -0.005143036896606645,
-          -0.007698429586421298,
-          -0.006168015158835729,
-          -0.1294713174643313,
-          -0.7595231140919789,
-          -0.011094049401131685,
-          -0.025972941520422524,
-          -0.18845714569905853,
-          -0.040100476912269374,
-          -0.32543540251256614,
-          -0.151588964620948,
-          0.19549648422339225,
-          -0.23761077217862067,
-          -0.06384207459870239,
-          0.035460082300820844,
-          0.0006289701775767753,
-          -0.20835676152006272,
-          0.14717590243911005,
-          -0.22084830307371042,
-          0.3378795043613097,
-          -0.19707017694152568,
-          -0.044188810483057825,
-          0.33088760140594614,
-          -0.3582549922184392,
-          0.27779975985063177,
-          -0.07509451868721044,
-          -0.004331343890698918,
-          0.07924157496859963,
-          0.0001466311425974709,
-          0.07646004124478345,
-          0.040668456157270966,
-          -0.07971025301094642,
-          -0.10147090000831085,
-          -0.2676696258630568,
-          -0.4498768441282877,
-          0.0004081637927447446,
-          0.0032616624111687998,
-          0.1296410536764111,
-          -0.07104546803106672,
-          -0.13326380827224626,
-          -0.17261026828780518,
-          0.9523154439835758,
-          0.002729467646270223,
-          -0.006508576019634802,
-          -0.0003417374475657198,
-          0.13388211518717041,
-          0.059076617386765104,
-          0.2010819346926285,
-          0.43797047744892836,
-          0.17139206306820035,
-          0.0
-        ],
-        "feature_importance": {
-          "home_avg_points_L5": {
-            "shap_value": 0.10875501440344709,
-            "importance": 0.10875501440344709
-          },
-          "away_avg_points_L5": {
-            "shap_value": 0.2819460998995737,
-            "importance": 0.2819460998995737
-          },
-          "home_avg_allowed_L5": {
-            "shap_value": 0.3143789564982167,
-            "importance": 0.3143789564982167
-          },
-          "away_avg_allowed_L5": {
-            "shap_value": 0.13729286288363768,
-            "importance": 0.13729286288363768
-          },
-          "home_win_rate_L5": {
-            "shap_value": -0.0951504789021567,
-            "importance": 0.0951504789021567
-          },
-          "away_win_rate_L5": {
-            "shap_value": 0.0610812788520775,
-            "importance": 0.0610812788520775
-          },
-          "home_diff_trend": {
-            "shap_value": 0.31907888900899073,
-            "importance": 0.31907888900899073
-          },
-          "away_diff_trend": {
-            "shap_value": -1.2217364238932047,
-            "importance": 1.2217364238932047
-          },
-          "point_spread_estimate": {
-            "shap_value": 0.19591895065231854,
-            "importance": 0.19591895065231854
-          },
-          "home_advantage": {
-            "shap_value": 0.0,
-            "importance": 0.0
-          },
-          "rest_advantage": {
-            "shap_value": -0.06908256595624962,
-            "importance": 0.06908256595624962
-          },
-          "week": {
-            "shap_value": -0.2286174759556701,
-            "importance": 0.2286174759556701
-          },
-          "is_division_game": {
-            "shap_value": 0.14393141553625186,
-            "importance": 0.14393141553625186
-          },
-          "home_team_home_advantage": {
-            "shap_value": 0.11049653947333521,
-            "importance": 0.11049653947333521
-          },
-          "away_team_away_disadvantage": {
-            "shap_value": -0.016451716395023366,
-            "importance": 0.016451716395023366
-          },
-          "home_momentum": {
-            "shap_value": -0.0801503373374922,
-            "importance": 0.0801503373374922
-          },
-          "away_momentum": {
-            "shap_value": -0.23209212958976808,
-            "importance": 0.23209212958976808
-          },
-          "momentum_advantage": {
-            "shap_value": -0.38006678456833387,
-            "importance": 0.38006678456833387
-          },
-          "home_opponent_strength": {
-            "shap_value": 0.7994258450581286,
-            "importance": 0.7994258450581286
-          },
-          "away_opponent_strength": {
-            "shap_value": -0.17793460983235973,
-            "importance": 0.17793460983235973
-          },
-          "opponent_strength_diff": {
-            "shap_value": -0.08383812035238108,
-            "importance": 0.08383812035238108
-          },
-          "week_normalized": {
-            "shap_value": -0.19923640664830372,
-            "importance": 0.19923640664830372
-          },
-          "is_early_season": {
-            "shap_value": -0.10629579160013236,
-            "importance": 0.10629579160013236
-          },
-          "is_mid_season": {
-            "shap_value": -0.005143036896606645,
-            "importance": 0.005143036896606645
-          },
-          "is_late_season": {
-            "shap_value": -0.007698429586421298,
-            "importance": 0.007698429586421298
-          },
-          "h2h_home_win_rate": {
-            "shap_value": -0.006168015158835729,
-            "importance": 0.006168015158835729
-          },
-          "h2h_games_played": {
-            "shap_value": -0.1294713174643313,
-            "importance": 0.1294713174643313
-          },
-          "home_point_diff_variance": {
-            "shap_value": -0.7595231140919789,
-            "importance": 0.7595231140919789
-          },
-          "away_point_diff_variance": {
-            "shap_value": -0.011094049401131685,
-            "importance": 0.011094049401131685
-          },
-          "consistency_advantage": {
-            "shap_value": -0.025972941520422524,
-            "importance": 0.025972941520422524
-          },
-          "home_scoring_trend": {
-            "shap_value": -0.18845714569905853,
-            "importance": 0.18845714569905853
-          },
-          "away_scoring_trend": {
-            "shap_value": -0.040100476912269374,
-            "importance": 0.040100476912269374
-          },
-          "scoring_trend_advantage": {
-            "shap_value": -0.32543540251256614,
-            "importance": 0.32543540251256614
-          },
-          "home_yards_per_play": {
-            "shap_value": -0.151588964620948,
-            "importance": 0.151588964620948
-          },
-          "away_yards_per_play": {
-            "shap_value": 0.19549648422339225,
-            "importance": 0.19549648422339225
-          },
-          "home_explosive_rate": {
-            "shap_value": -0.23761077217862067,
-            "importance": 0.23761077217862067
-          },
-          "away_explosive_rate": {
-            "shap_value": -0.06384207459870239,
-            "importance": 0.06384207459870239
-          },
-          "home_third_down_success": {
-            "shap_value": 0.035460082300820844,
-            "importance": 0.035460082300820844
-          },
-          "away_third_down_success": {
-            "shap_value": 0.0006289701775767753,
-            "importance": 0.0006289701775767753
-          },
-          "home_red_zone_td": {
-            "shap_value": -0.20835676152006272,
-            "importance": 0.20835676152006272
-          },
-          "away_red_zone_td": {
-            "shap_value": 0.14717590243911005,
-            "importance": 0.14717590243911005
-          },
-          "efficiency_advantage": {
-            "shap_value": -0.22084830307371042,
-            "importance": 0.22084830307371042
-          },
-          "home_team_tier": {
-            "shap_value": 0.3378795043613097,
-            "importance": 0.3378795043613097
-          },
-          "away_team_tier": {
-            "shap_value": -0.19707017694152568,
-            "importance": 0.19707017694152568
-          },
-          "tier_matchup": {
-            "shap_value": -0.044188810483057825,
-            "importance": 0.044188810483057825
-          },
-          "home_form_pca1": {
-            "shap_value": 0.33088760140594614,
-            "importance": 0.33088760140594614
-          },
-          "home_form_pca2": {
-            "shap_value": -0.3582549922184392,
-            "importance": 0.3582549922184392
-          },
-          "home_travel_miles_21d": {
-            "shap_value": 0.27779975985063177,
-            "importance": 0.27779975985063177
-          },
-          "away_travel_miles_21d": {
-            "shap_value": -0.07509451868721044,
-            "importance": 0.07509451868721044
-          },
-          "home_back_to_back_away": {
-            "shap_value": -0.004331343890698918,
-            "importance": 0.004331343890698918
-          },
-          "away_back_to_back_away": {
-            "shap_value": 0.07924157496859963,
-            "importance": 0.07924157496859963
-          },
-          "home_after_long_trip": {
-            "shap_value": 0.0001466311425974709,
-            "importance": 0.0001466311425974709
-          },
-          "away_timezone_disadvantage": {
-            "shap_value": 0.07646004124478345,
-            "importance": 0.07646004124478345
-          },
-          "travel_advantage": {
-            "shap_value": 0.040668456157270966,
-            "importance": 0.040668456157270966
-          },
-          "home_qb_continuity": {
-            "shap_value": -0.07971025301094642,
-            "importance": 0.07971025301094642
-          },
-          "away_qb_continuity": {
-            "shap_value": -0.10147090000831085,
-            "importance": 0.10147090000831085
-          },
-          "home_ol_continuity": {
-            "shap_value": -0.2676696258630568,
-            "importance": 0.2676696258630568
-          },
-          "away_ol_continuity": {
-            "shap_value": -0.4498768441282877,
-            "importance": 0.4498768441282877
-          },
-          "home_qb_change_flag": {
-            "shap_value": 0.0004081637927447446,
-            "importance": 0.0004081637927447446
-          },
-          "away_qb_change_flag": {
-            "shap_value": 0.0032616624111687998,
-            "importance": 0.0032616624111687998
-          },
-          "qb_continuity_advantage": {
-            "shap_value": 0.1296410536764111,
-            "importance": 0.1296410536764111
-          },
-          "home_4th_quarter_perf": {
-            "shap_value": -0.07104546803106672,
-            "importance": 0.07104546803106672
-          },
-          "away_4th_quarter_perf": {
-            "shap_value": -0.13326380827224626,
-            "importance": 0.13326380827224626
-          },
-          "fourth_quarter_advantage": {
-            "shap_value": -0.17261026828780518,
-            "importance": 0.17261026828780518
-          },
-          "home_coach_aggression": {
-            "shap_value": 0.9523154439835758,
-            "importance": 0.9523154439835758
-          },
-          "away_coach_aggression": {
-            "shap_value": 0.002729467646270223,
-            "importance": 0.002729467646270223
-          },
-          "home_adjustment_delta": {
-            "shap_value": -0.006508576019634802,
-            "importance": 0.006508576019634802
-          },
-          "away_adjustment_delta": {
-            "shap_value": -0.0003417374475657198,
-            "importance": 0.0003417374475657198
-          },
-          "coaching_aggression_diff": {
-            "shap_value": 0.13388211518717041,
-            "importance": 0.13388211518717041
-          },
-          "market_movement_units": {
-            "shap_value": 0.059076617386765104,
-            "importance": 0.059076617386765104
-          },
-          "market_closing_line": {
-            "shap_value": 0.2010819346926285,
-            "importance": 0.2010819346926285
-          },
-          "model_market_divergence": {
-            "shap_value": 0.43797047744892836,
-            "importance": 0.43797047744892836
-          },
-          "prediction_confidence": {
-            "shap_value": 0.17139206306820035,
-            "importance": 0.17139206306820035
-          },
-          "is_high_confidence": {
-            "shap_value": 0.0,
-            "importance": 0.0
-          }
-        },
-        "top_features": [
-          {
-            "feature": "away_diff_trend",
-            "shap_value": -1.2217364238932047,
-            "importance": 1.2217364238932047,
-            "direction": "decreases"
-          },
-          {
-            "feature": "home_coach_aggression",
-            "shap_value": 0.9523154439835758,
-            "importance": 0.9523154439835758,
-            "direction": "increases"
-          },
-          {
-            "feature": "home_opponent_strength",
-            "shap_value": 0.7994258450581286,
-            "importance": 0.7994258450581286,
-            "direction": "increases"
-          },
-          {
-            "feature": "home_point_diff_variance",
-            "shap_value": -0.7595231140919789,
-            "importance": 0.7595231140919789,
-            "direction": "decreases"
-          },
-          {
-            "feature": "away_ol_continuity",
-            "shap_value": -0.4498768441282877,
-            "importance": 0.4498768441282877,
-            "direction": "decreases"
-          },
-          {
-            "feature": "model_market_divergence",
-            "shap_value": 0.43797047744892836,
-            "importance": 0.43797047744892836,
-            "direction": "increases"
-          },
-          {
-            "feature": "momentum_advantage",
-            "shap_value": -0.38006678456833387,
-            "importance": 0.38006678456833387,
-            "direction": "decreases"
-          },
-          {
-            "feature": "home_form_pca2",
-            "shap_value": -0.3582549922184392,
-            "importance": 0.3582549922184392,
-            "direction": "decreases"
-          },
-          {
-            "feature": "home_team_tier",
-            "shap_value": 0.3378795043613097,
-            "importance": 0.3378795043613097,
-            "direction": "increases"
-          },
-          {
-            "feature": "home_form_pca1",
-            "shap_value": 0.33088760140594614,
-            "importance": 0.33088760140594614,
-            "direction": "increases"
-          }
-        ],
-        "base_value": 0.21242339165646704
-      }
-    }
-  ],
+  "nfl": [],
   "nba": [
-    {
-      "date": "2026-01-18",
-      "game_time_est": "12:00 PM EST",
-      "away_team": "Orlando Magic",
-      "home_team": "Memphis Grizzlies",
-      "predicted_spread": 2.2,
-      "predicted_winner": "Memphis Grizzlies",
-      "confidence_score": 0.799,
-      "is_high_confidence": 1,
-      "sport": "NBA",
-      "vegas_spread": null,
-      "divergence": null,
-      "clutch_analyzer_used": true,
-      "rest_advantage": 0.0,
-      "home_rest_days": 2.0,
-      "away_rest_days": 2.0,
-      "home_is_b2b": 0,
-      "away_is_b2b": 0,
-      "net_rating_advantage": 0.0,
-      "streak_advantage": -2.0,
-      "home_avg_points_L10": 0.0,
-      "away_avg_points_L10": 0.0,
-      "clutch_adjustment": -2.69,
-      "late_game_advantage": 0.22,
-      "home_clutch_factor": -4.0,
-      "away_clutch_factor": 7.0,
-      "_clutch_backend_only": true
-    },
-    {
-      "date": "2026-01-18",
-      "game_time_est": "07:00 PM EST",
-      "away_team": "Brooklyn Nets",
-      "home_team": "Chicago Bulls",
-      "predicted_spread": 0.0,
-      "predicted_winner": "Chicago Bulls",
-      "confidence_score": 0.802,
-      "is_high_confidence": 1,
-      "sport": "NBA",
-      "vegas_spread": null,
-      "divergence": null,
-      "clutch_analyzer_used": true,
-      "rest_advantage": 0.0,
-      "home_rest_days": 2.0,
-      "away_rest_days": 2.0,
-      "home_is_b2b": 0,
-      "away_is_b2b": 0,
-      "net_rating_advantage": 0.0,
-      "streak_advantage": -3.0,
-      "home_avg_points_L10": 0.0,
-      "away_avg_points_L10": 0.0,
-      "clutch_adjustment": -5.17,
-      "late_game_advantage": -0.09,
-      "home_clutch_factor": 5.0,
-      "away_clutch_factor": -6.0,
-      "_clutch_backend_only": true
-    },
-    {
-      "date": "2026-01-18",
-      "game_time_est": "07:00 PM EST",
-      "away_team": "New Orleans Pelicans",
-      "home_team": "Houston Rockets",
-      "predicted_spread": 4.4,
-      "predicted_winner": "Houston Rockets",
-      "confidence_score": 0.787,
-      "is_high_confidence": 1,
-      "sport": "NBA",
-      "vegas_spread": null,
-      "divergence": null,
-      "clutch_analyzer_used": true,
-      "rest_advantage": 0.0,
-      "home_rest_days": 2.0,
-      "away_rest_days": 2.0,
-      "home_is_b2b": 0,
-      "away_is_b2b": 0,
-      "net_rating_advantage": 0.0,
-      "streak_advantage": 0.0,
-      "home_avg_points_L10": 0.0,
-      "away_avg_points_L10": 0.0,
-      "clutch_adjustment": 0.58,
-      "late_game_advantage": -0.42,
-      "home_clutch_factor": -5.0,
-      "away_clutch_factor": -4.0,
-      "_clutch_backend_only": true
-    },
-    {
-      "date": "2026-01-18",
-      "game_time_est": "08:00 PM EST",
-      "away_team": "Charlotte Hornets",
-      "home_team": "Denver Nuggets",
-      "predicted_spread": 7.7,
-      "predicted_winner": "Denver Nuggets",
-      "confidence_score": 0.793,
-      "is_high_confidence": 1,
-      "sport": "NBA",
-      "vegas_spread": null,
-      "divergence": null,
-      "clutch_analyzer_used": true,
-      "rest_advantage": 0.0,
-      "home_rest_days": 2.0,
-      "away_rest_days": 2.0,
-      "home_is_b2b": 0,
-      "away_is_b2b": 0,
-      "net_rating_advantage": 0.0,
-      "streak_advantage": -1.0,
-      "home_avg_points_L10": 0.0,
-      "away_avg_points_L10": 0.0,
-      "clutch_adjustment": 3.38,
-      "late_game_advantage": -0.06,
-      "home_clutch_factor": 0.0,
-      "away_clutch_factor": -3.0,
-      "_clutch_backend_only": true
-    },
-    {
-      "date": "2026-01-18",
-      "game_time_est": "09:00 PM EST",
-      "away_team": "Portland Trail Blazers",
-      "home_team": "Sacramento Kings",
-      "predicted_spread": -6.1,
-      "predicted_winner": "Portland Trail Blazers",
-      "confidence_score": 0.789,
-      "is_high_confidence": 1,
-      "sport": "NBA",
-      "vegas_spread": null,
-      "divergence": null,
-      "clutch_analyzer_used": true,
-      "rest_advantage": 0.0,
-      "home_rest_days": 2.0,
-      "away_rest_days": 2.0,
-      "home_is_b2b": 0,
-      "away_is_b2b": 0,
-      "net_rating_advantage": 0.0,
-      "streak_advantage": 4.0,
-      "home_avg_points_L10": 0.0,
-      "away_avg_points_L10": 0.0,
-      "clutch_adjustment": -10.0,
-      "late_game_advantage": -0.43,
-      "home_clutch_factor": -4.0,
-      "away_clutch_factor": 5.0,
-      "_clutch_backend_only": true
-    },
-    {
-      "date": "2026-01-18",
-      "game_time_est": "09:30 PM EST",
-      "away_team": "Toronto Raptors",
-      "home_team": "Los Angeles Lakers",
-      "predicted_spread": 4.7,
-      "predicted_winner": "Los Angeles Lakers",
-      "confidence_score": 0.814,
-      "is_high_confidence": 1,
-      "sport": "NBA",
-      "vegas_spread": null,
-      "divergence": null,
-      "clutch_analyzer_used": true,
-      "rest_advantage": 0.0,
-      "home_rest_days": 2.0,
-      "away_rest_days": 2.0,
-      "home_is_b2b": 0,
-      "away_is_b2b": 0,
-      "net_rating_advantage": 0.0,
-      "streak_advantage": -4.0,
-      "home_avg_points_L10": 0.0,
-      "away_avg_points_L10": 0.0,
-      "clutch_adjustment": -1.57,
-      "late_game_advantage": 0.05,
-      "home_clutch_factor": 4.0,
-      "away_clutch_factor": 8.0,
-      "_clutch_backend_only": true
-    },
     {
       "date": "2026-01-19",
       "game_time_est": "01:00 PM EST",
@@ -1251,7 +174,7 @@
       "game_time_est": "07:30 PM EST",
       "away_team": "Phoenix Suns",
       "home_team": "Brooklyn Nets",
-      "predicted_spread": 2.8,
+      "predicted_spread": 2.7,
       "predicted_winner": "Brooklyn Nets",
       "confidence_score": 0.789,
       "is_high_confidence": 1,
@@ -1268,8 +191,8 @@
       "streak_advantage": 3.0,
       "home_avg_points_L10": 0.0,
       "away_avg_points_L10": 0.0,
-      "clutch_adjustment": -1.16,
-      "late_game_advantage": 0.08,
+      "clutch_adjustment": -1.21,
+      "late_game_advantage": 0.04,
       "home_clutch_factor": -6.0,
       "away_clutch_factor": 0.0,
       "_clutch_backend_only": true
@@ -1363,8 +286,8 @@
       "game_time_est": "08:00 PM EST",
       "away_team": "Los Angeles Clippers",
       "home_team": "Chicago Bulls",
-      "predicted_spread": -0.2,
-      "predicted_winner": "Los Angeles Clippers",
+      "predicted_spread": 9.8,
+      "predicted_winner": "Chicago Bulls",
       "confidence_score": 0.798,
       "is_high_confidence": 1,
       "sport": "NBA",
@@ -1380,9 +303,9 @@
       "streak_advantage": -2.0,
       "home_avg_points_L10": 0.0,
       "away_avg_points_L10": 0.0,
-      "clutch_adjustment": -5.01,
-      "late_game_advantage": -0.01,
-      "home_clutch_factor": 5.0,
+      "clutch_adjustment": 5.01,
+      "late_game_advantage": 0.01,
+      "home_clutch_factor": 6.0,
       "away_clutch_factor": 0.0,
       "_clutch_backend_only": true
     },
@@ -1391,7 +314,7 @@
       "game_time_est": "08:00 PM EST",
       "away_team": "San Antonio Spurs",
       "home_team": "Houston Rockets",
-      "predicted_spread": 4.8,
+      "predicted_spread": 6.0,
       "predicted_winner": "Houston Rockets",
       "confidence_score": 0.789,
       "is_high_confidence": 1,
@@ -1408,8 +331,8 @@
       "streak_advantage": 2.0,
       "home_avg_points_L10": 0.0,
       "away_avg_points_L10": 0.0,
-      "clutch_adjustment": 0.91,
-      "late_game_advantage": -0.18,
+      "clutch_adjustment": 2.04,
+      "late_game_advantage": -0.14,
       "home_clutch_factor": -5.0,
       "away_clutch_factor": 1.0,
       "_clutch_backend_only": true
@@ -1447,8 +370,8 @@
       "game_time_est": "10:00 PM EST",
       "away_team": "Los Angeles Lakers",
       "home_team": "Denver Nuggets",
-      "predicted_spread": 13.8,
-      "predicted_winner": "Denver Nuggets",
+      "predicted_spread": -5.3,
+      "predicted_winner": "Los Angeles Lakers",
       "confidence_score": 0.787,
       "is_high_confidence": 1,
       "sport": "NBA",
@@ -1464,9 +387,9 @@
       "streak_advantage": 1.0,
       "home_avg_points_L10": 0.0,
       "away_avg_points_L10": 0.0,
-      "clutch_adjustment": 10.0,
-      "late_game_advantage": 0.08,
-      "home_clutch_factor": 0.0,
+      "clutch_adjustment": -9.13,
+      "late_game_advantage": -0.01,
+      "home_clutch_factor": 2.0,
       "away_clutch_factor": 4.0,
       "_clutch_backend_only": true
     },
@@ -1475,7 +398,7 @@
       "game_time_est": "10:00 PM EST",
       "away_team": "Toronto Raptors",
       "home_team": "Golden State Warriors",
-      "predicted_spread": 8.6,
+      "predicted_spread": 13.4,
       "predicted_winner": "Golden State Warriors",
       "confidence_score": 0.787,
       "is_high_confidence": 1,
@@ -1492,10 +415,10 @@
       "streak_advantage": 1.0,
       "home_avg_points_L10": 0.0,
       "away_avg_points_L10": 0.0,
-      "clutch_adjustment": 4.8,
-      "late_game_advantage": 0.4,
+      "clutch_adjustment": 9.58,
+      "late_game_advantage": 0.37,
       "home_clutch_factor": -10.0,
-      "away_clutch_factor": 8.0,
+      "away_clutch_factor": 7.0,
       "_clutch_backend_only": true
     },
     {
@@ -1503,7 +426,7 @@
       "game_time_est": "10:00 PM EST",
       "away_team": "Miami Heat",
       "home_team": "Sacramento Kings",
-      "predicted_spread": -2.3,
+      "predicted_spread": -2.1,
       "predicted_winner": "Miami Heat",
       "confidence_score": 0.786,
       "is_high_confidence": 1,
@@ -1520,14 +443,210 @@
       "streak_advantage": 0.0,
       "home_avg_points_L10": 0.0,
       "away_avg_points_L10": 0.0,
-      "clutch_adjustment": -6.05,
-      "late_game_advantage": -0.53,
-      "home_clutch_factor": -4.0,
+      "clutch_adjustment": -5.86,
+      "late_game_advantage": -0.43,
+      "home_clutch_factor": -2.0,
       "away_clutch_factor": -4.0,
+      "_clutch_backend_only": true
+    },
+    {
+      "date": "2026-01-21",
+      "game_time_est": "07:00 PM EST",
+      "away_team": "Cleveland Cavaliers",
+      "home_team": "Charlotte Hornets",
+      "predicted_spread": -5.2,
+      "predicted_winner": "Cleveland Cavaliers",
+      "confidence_score": 0.798,
+      "is_high_confidence": 1,
+      "sport": "NBA",
+      "vegas_spread": null,
+      "divergence": null,
+      "clutch_analyzer_used": true,
+      "rest_advantage": 0.0,
+      "home_rest_days": 2.0,
+      "away_rest_days": 2.0,
+      "home_is_b2b": 0,
+      "away_is_b2b": 0,
+      "net_rating_advantage": 0.0,
+      "streak_advantage": -2.0,
+      "home_avg_points_L10": 0.0,
+      "away_avg_points_L10": 0.0,
+      "clutch_adjustment": -9.98,
+      "late_game_advantage": -0.26,
+      "home_clutch_factor": -5.0,
+      "away_clutch_factor": 2.0,
+      "_clutch_backend_only": true
+    },
+    {
+      "date": "2026-01-21",
+      "game_time_est": "07:30 PM EST",
+      "away_team": "Indiana Pacers",
+      "home_team": "Boston Celtics",
+      "predicted_spread": 10.4,
+      "predicted_winner": "Boston Celtics",
+      "confidence_score": 0.789,
+      "is_high_confidence": 1,
+      "sport": "NBA",
+      "vegas_spread": null,
+      "divergence": null,
+      "clutch_analyzer_used": true,
+      "rest_advantage": 0.0,
+      "home_rest_days": 2.0,
+      "away_rest_days": 2.0,
+      "home_is_b2b": 0,
+      "away_is_b2b": 0,
+      "net_rating_advantage": 0.0,
+      "streak_advantage": 0.0,
+      "home_avg_points_L10": 0.0,
+      "away_avg_points_L10": 0.0,
+      "clutch_adjustment": 6.49,
+      "late_game_advantage": 0.07,
+      "home_clutch_factor": 0.0,
+      "away_clutch_factor": -6.0,
+      "_clutch_backend_only": true
+    },
+    {
+      "date": "2026-01-21",
+      "game_time_est": "07:30 PM EST",
+      "away_team": "Brooklyn Nets",
+      "home_team": "New York Knicks",
+      "predicted_spread": 5.6,
+      "predicted_winner": "New York Knicks",
+      "confidence_score": 0.803,
+      "is_high_confidence": 1,
+      "sport": "NBA",
+      "vegas_spread": null,
+      "divergence": null,
+      "clutch_analyzer_used": true,
+      "rest_advantage": 0.0,
+      "home_rest_days": 2.0,
+      "away_rest_days": 2.0,
+      "home_is_b2b": 0,
+      "away_is_b2b": 0,
+      "net_rating_advantage": 0.0,
+      "streak_advantage": -3.0,
+      "home_avg_points_L10": 0.0,
+      "away_avg_points_L10": 0.0,
+      "clutch_adjustment": 0.28,
+      "late_game_advantage": 0.14,
+      "home_clutch_factor": 10.0,
+      "away_clutch_factor": -6.0,
+      "_clutch_backend_only": true
+    },
+    {
+      "date": "2026-01-21",
+      "game_time_est": "08:00 PM EST",
+      "away_team": "Atlanta Hawks",
+      "home_team": "Memphis Grizzlies",
+      "predicted_spread": 13.8,
+      "predicted_winner": "Memphis Grizzlies",
+      "confidence_score": 0.788,
+      "is_high_confidence": 1,
+      "sport": "NBA",
+      "vegas_spread": null,
+      "divergence": null,
+      "clutch_analyzer_used": true,
+      "rest_advantage": 0.0,
+      "home_rest_days": 2.0,
+      "away_rest_days": 2.0,
+      "home_is_b2b": 0,
+      "away_is_b2b": 0,
+      "net_rating_advantage": 0.0,
+      "streak_advantage": 1.0,
+      "home_avg_points_L10": 0.0,
+      "away_avg_points_L10": 0.0,
+      "clutch_adjustment": 10.0,
+      "late_game_advantage": 0.34,
+      "home_clutch_factor": -5.0,
+      "away_clutch_factor": -8.0,
+      "_clutch_backend_only": true
+    },
+    {
+      "date": "2026-01-21",
+      "game_time_est": "08:00 PM EST",
+      "away_team": "Detroit Pistons",
+      "home_team": "New Orleans Pelicans",
+      "predicted_spread": 2.7,
+      "predicted_winner": "New Orleans Pelicans",
+      "confidence_score": 0.788,
+      "is_high_confidence": 1,
+      "sport": "NBA",
+      "vegas_spread": null,
+      "divergence": null,
+      "clutch_analyzer_used": true,
+      "rest_advantage": 0.0,
+      "home_rest_days": 2.0,
+      "away_rest_days": 2.0,
+      "home_is_b2b": 0,
+      "away_is_b2b": 0,
+      "net_rating_advantage": 0.0,
+      "streak_advantage": 2.0,
+      "home_avg_points_L10": 0.0,
+      "away_avg_points_L10": 0.0,
+      "clutch_adjustment": -1.16,
+      "late_game_advantage": 0.32,
+      "home_clutch_factor": -2.0,
+      "away_clutch_factor": 0.0,
+      "_clutch_backend_only": true
+    },
+    {
+      "date": "2026-01-21",
+      "game_time_est": "09:30 PM EST",
+      "away_team": "Oklahoma City Thunder",
+      "home_team": "Milwaukee Bucks",
+      "predicted_spread": 5.7,
+      "predicted_winner": "Milwaukee Bucks",
+      "confidence_score": 0.803,
+      "is_high_confidence": 1,
+      "sport": "NBA",
+      "vegas_spread": null,
+      "divergence": null,
+      "clutch_analyzer_used": true,
+      "rest_advantage": 0.0,
+      "home_rest_days": 2.0,
+      "away_rest_days": 2.0,
+      "home_is_b2b": 0,
+      "away_is_b2b": 0,
+      "net_rating_advantage": 0.0,
+      "streak_advantage": -3.0,
+      "home_avg_points_L10": 0.0,
+      "away_avg_points_L10": 0.0,
+      "clutch_adjustment": 0.39,
+      "late_game_advantage": -0.29,
+      "home_clutch_factor": -4.0,
+      "away_clutch_factor": -1.0,
+      "_clutch_backend_only": true
+    },
+    {
+      "date": "2026-01-21",
+      "game_time_est": "10:00 PM EST",
+      "away_team": "Toronto Raptors",
+      "home_team": "Sacramento Kings",
+      "predicted_spread": 6.5,
+      "predicted_winner": "Sacramento Kings",
+      "confidence_score": 0.786,
+      "is_high_confidence": 1,
+      "sport": "NBA",
+      "vegas_spread": null,
+      "divergence": null,
+      "clutch_analyzer_used": true,
+      "rest_advantage": 0.0,
+      "home_rest_days": 2.0,
+      "away_rest_days": 2.0,
+      "home_is_b2b": 0,
+      "away_is_b2b": 0,
+      "net_rating_advantage": 0.0,
+      "streak_advantage": 0.0,
+      "home_avg_points_L10": 0.0,
+      "away_avg_points_L10": 0.0,
+      "clutch_adjustment": 2.8,
+      "late_game_advantage": -0.1,
+      "home_clutch_factor": -2.0,
+      "away_clutch_factor": 7.0,
       "_clutch_backend_only": true
     }
   ],
-  "generated_at": "2026-01-18T07:30:51.407779",
-  "nfl_count": 2,
-  "nba_count": 22
+  "generated_at": "2026-01-19T07:30:06.166710",
+  "nfl_count": 0,
+  "nba_count": 23
 }
