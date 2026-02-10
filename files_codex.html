@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic AI in Use — File Management Assistant</title>
+<style>
+  /* ═══════════════════════════════════════════════════
+     PRISM — CHROMATIC EDITORIAL
+     Each section IS a different color universe.
+     The page is a journey through saturated color fields.
+     Typography: Libre Bodoni (editorial display), Sora (body/UI), Space Mono (data)
+     Inspiration: Pantone universe × Kinfolk precision × Color field painting ×
+                  Apartamento courage × Anna Wintour's September Issue
+     ═══════════════════════════════════════════════════ */
+
+
+  @font-face {
+    font-family: 'Syne';
+    src: url('Fonts/Syne/Syne-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Syne';
+    src: url('Fonts/Syne/Syne-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Syne';
+    src: url('Fonts/Syne/Syne-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Encode Sans';
+    src: url('Fonts/EncodeSans/EncodeSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Encode Sans';
+    src: url('Fonts/EncodeSans/EncodeSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Encode Sans';
+    src: url('Fonts/EncodeSans/EncodeSans-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Encode Sans';
+    src: url('Fonts/EncodeSans/EncodeSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    /* The Prism Spectrum — each section gets its own universe */
+
+    /* Zone 0: Opening — Deep ink */
+    --z0-bg: #0C0A0F;
+    --z0-text: #F5F2ED;
+    --z0-accent: #E8C547;
+    --z0-muted: rgba(245,242,237,0.4);
+
+    /* Zone 1: Coral Territory */
+    --z1-bg: #F04E3E;
+    --z1-bg-deep: #D13A2B;
+    --z1-text: #FFFFFF;
+    --z1-accent: #FFD4C9;
+    --z1-muted: rgba(255,255,255,0.5);
+
+    /* Zone 2: Deep Teal */
+    --z2-bg: #0A3D3D;
+    --z2-bg-light: #0E5252;
+    --z2-text: #E0F5F0;
+    --z2-accent: #4CEBC2;
+    --z2-muted: rgba(224,245,240,0.4);
+
+    /* Zone 3: Electric Violet */
+    --z3-bg: #3B0764;
+    --z3-bg-light: #581C87;
+    --z3-text: #F3E8FF;
+    --z3-accent: #D8B4FE;
+    --z3-muted: rgba(243,232,255,0.4);
+
+    /* Zone 4: Saffron Gold */
+    --z4-bg: #F5EDE0;
+    --z4-text: #1A1612;
+    --z4-accent: #D97706;
+    --z4-muted: #9A8F82;
+
+    /* Neutral */
+    --cream: #FAF7F2;
+    --ink: #1A1612;
+
+    /* Type */
+    --display: 'Syne', sans-serif;
+    --body: 'Encode Sans', sans-serif;
+    --mono: 'Encode Sans', sans-serif;
+
+    --col: 700px;
+    --wide: 1040px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { font-family: var(--body); overflow-x: hidden; }
+
+  .col { max-width: var(--col); margin: 0 auto; padding: 0 24px; }
+  .col-wide { max-width: var(--wide); margin: 0 auto; padding: 0 24px; }
+
+  /* ═══ ZONE 0: THE OPENING — DEEP INK ═══ */
+  .zone-0 {
+    background: var(--z0-bg);
+    color: var(--z0-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .zone-0::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(232,197,71,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .z0-inner {
+    max-width: var(--wide);
+    margin: 0 auto;
+    padding: 120px 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .z0-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--z0-accent);
+    margin-bottom: 40px;
+  }
+
+  .z0-title {
+    font-family: var(--display);
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -3px;
+    color: var(--z0-text);
+    margin-bottom: 32px;
+  }
+
+  .z0-title em {
+    font-style: italic;
+    color: var(--z0-accent);
+  }
+
+  .z0-deck {
+    font-family: var(--body);
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--z0-muted);
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+
+  .z0-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .z0-meta-item {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--z0-muted);
+  }
+
+  .z0-meta-item strong { color: var(--z0-text); font-weight: 700; }
+
+  /* Giant decorative number */
+  .z0-watermark {
+    position: absolute;
+    bottom: -60px; right: -20px;
+    font-family: var(--display);
+    font-size: clamp(200px, 30vw, 450px);
+    font-weight: 700;
+    font-style: italic;
+    color: rgba(232,197,71,0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* ═══ ZONE TRANSITION ═══ */
+  .zone-transition {
+    height: 4px;
+  }
+
+  .zt-coral { background: linear-gradient(90deg, var(--z0-bg), var(--z1-bg)); }
+  .zt-teal { background: linear-gradient(90deg, var(--z1-bg), var(--z2-bg)); }
+  .zt-violet { background: linear-gradient(90deg, var(--z2-bg), var(--z3-bg)); }
+  .zt-gold { background: linear-gradient(90deg, var(--z3-bg), var(--z4-bg)); }
+
+  /* ═══ ZONE 1: CORAL TERRITORY ═══ */
+  .zone-1 {
+    background: var(--z1-bg);
+    color: var(--z1-text);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .zone-1::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .zone-inner {
+    max-width: var(--wide);
+    margin: 0 auto;
+    padding: 80px 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Zone section eyebrows adapt to each zone */
+  .zs-eyebrow {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .z1 .zs-eyebrow { color: var(--z1-accent); }
+  .z2 .zs-eyebrow { color: var(--z2-accent); }
+  .z3 .zs-eyebrow { color: var(--z3-accent); }
+  .z4 .zs-eyebrow { color: var(--z4-accent); }
+
+  .zs-title {
+    font-family: var(--display);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+  }
+
+  .zs-title em { font-style: italic; }
+
+  .zs-body p {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .zs-body p strong { font-weight: 600; opacity: 1; }
+
+  /* ── CHART CONTAINERS — Adapt per zone ── */
+  .chart-zone {
+    padding: 32px;
+    margin: 36px 0;
+    position: relative;
+  }
+
+  .chart-zone svg { width: 100%; height: auto; display: block; }
+
+  .chart-zone.cz-coral { background: var(--z1-bg-deep); border-radius: 4px; }
+  .chart-zone.cz-teal { background: var(--z2-bg-light); border-radius: 4px; }
+  .chart-zone.cz-violet { background: var(--z3-bg-light); border-radius: 4px; }
+  .chart-zone.cz-gold { background: white; border: 1px solid #E8D8C4; border-radius: 2px; }
+
+  .chart-caption-zone {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-align: center;
+    margin-top: 16px;
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── METRICS — Zone-adaptive ── */
+  .prism-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin: 40px 0;
+  }
+
+  .pm-cell {
+    padding: 32px 24px;
+    text-align: center;
+    transition: transform 0.2s;
+    position: relative;
+  }
+
+  .pm-cell:hover { transform: scale(1.03); z-index: 2; }
+
+  .pm-value {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .pm-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    opacity: 0.5;
+  }
+
+  .pm-delta {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+
+  /* Coral zone metrics */
+  .pm-coral { background: var(--z1-bg-deep); color: white; }
+  .pm-coral .pm-delta { color: var(--z1-accent); }
+
+  @media (max-width: 768px) { .prism-metrics { grid-template-columns: repeat(2, 1fr); } }
+
+
+  /* ── HOW-TO GUIDE COMPONENTS ── */
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin: 26px 0 10px;
+  }
+
+  .guide-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 20px;
+    border-radius: 6px;
+  }
+
+  .guide-card h4 {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .guide-card p {
+    font-family: var(--body);
+    font-size: 13px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  .checklist {
+    list-style: none;
+    margin-top: 14px;
+  }
+
+  .checklist li {
+    margin: 8px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .checklist li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    opacity: 0.7;
+  }
+
+  .howto-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 24px 0 8px;
+  }
+
+  .howto-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .step-num {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  .step-body h4 {
+    font-family: var(--display);
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .step-body p {
+    font-family: var(--body);
+    font-size: 13px;
+    line-height: 1.65;
+    opacity: 0.85;
+  }
+
+  .prompt-block {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 16px 18px;
+    background: rgba(217,119,6,0.08);
+    border-left: 4px solid var(--z4-accent);
+    margin-top: 14px;
+  }
+
+  .screen-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin: 24px 0 8px;
+  }
+
+  .screen-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .screen-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  }
+
+  .screen-meta {
+    margin-top: 10px;
+  }
+
+  .screen-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .screen-title {
+    font-family: var(--display);
+    font-size: 18px;
+    margin-top: 6px;
+  }
+
+  .screen-caption {
+    font-family: var(--body);
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+
+  .faq-list {
+    margin-top: 12px;
+  }
+
+  .faq-item {
+    margin: 12px 0;
+    padding: 12px 14px;
+    background: rgba(0,0,0,0.03);
+    border-left: 4px solid var(--z4-accent);
+  }
+
+  .faq-item h4 {
+    font-family: var(--display);
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .faq-item p {
+    font-family: var(--body);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .guide-grid { grid-template-columns: 1fr; }
+    .screen-grid { grid-template-columns: 1fr; }
+    .howto-step { grid-template-columns: 1fr; }
+  }
+
+
+  /* ── ENABLEMENT COMPONENTS ── */
+  .value-list { margin-top: 16px; }
+  .value-list li { list-style: none; margin: 8px 0; padding-left: 14px; position: relative; }
+  .value-list li::before { content: '•'; position: absolute; left: 0; color: currentColor; opacity: 0.6; }
+
+  .step-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 28px 0 10px;
+  }
+
+  .step-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 20px;
+    border-radius: 6px;
+    min-height: 140px;
+  }
+
+  .step-card h4 {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .step-card p {
+    font-family: var(--body);
+    font-size: 13px;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  .screen-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 28px 0 10px;
+  }
+
+  .screen-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.25);
+    padding: 18px;
+    border-radius: 6px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .screen-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .screen-title {
+    font-family: var(--display);
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+  .screen-caption {
+    font-family: var(--body);
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.75;
+  }
+
+  .prompt-block {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 18px 20px;
+    background: rgba(217,119,6,0.08);
+    border-left: 4px solid var(--z4-accent);
+    margin-top: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .step-grid, .screen-grid { grid-template-columns: 1fr; }
+  }
+
+
+  /* ═══ ZONE 2: DEEP TEAL ═══ */
+  .zone-2 {
+    background: var(--z2-bg);
+    color: var(--z2-text);
+    position: relative;
+  }
+
+  .zone-2::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 20% 80%, rgba(76,235,194,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* ── CALLOUT — Zone-adaptive ── */
+  .callout-prism {
+    padding: 36px 32px;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .callout-prism.cp-teal {
+    background: var(--z2-bg-light);
+    border-left: 4px solid var(--z2-accent);
+  }
+
+  .callout-prism.cp-violet {
+    background: var(--z3-bg-light);
+    border-left: 4px solid var(--z3-accent);
+  }
+
+  .callout-prism.cp-gold {
+    background: rgba(217,119,6,0.08);
+    border-left: 4px solid var(--z4-accent);
+  }
+
+  .cp-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .cp-teal .cp-tag { color: var(--z2-accent); }
+  .cp-violet .cp-tag { color: var(--z3-accent); }
+  .cp-gold .cp-tag { color: var(--z4-accent); }
+
+  .callout-prism h4 {
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .callout-prism p {
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    opacity: 0.8;
+  }
+
+  /* ── DATA TABLE — Zone-adaptive ── */
+  .prism-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+  }
+
+  .prism-table thead th {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 14px 16px;
+    opacity: 0.5;
+  }
+
+  .prism-table tbody td {
+    padding: 16px;
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 300;
+    transition: background 0.15s;
+  }
+
+  .prism-table.pt-teal thead th { border-bottom: 1px solid rgba(76,235,194,0.2); }
+  .prism-table.pt-teal tbody td { border-bottom: 1px solid rgba(76,235,194,0.08); }
+  .prism-table.pt-teal tbody tr:hover td { background: rgba(76,235,194,0.05); }
+
+  .pt-name { font-weight: 500 !important; }
+  .pt-num { font-family: var(--mono) !important; font-size: 13px !important; }
+  .pt-accent { font-weight: 600 !important; }
+
+  /* ═══ ZONE 3: ELECTRIC VIOLET ═══ */
+  .zone-3 {
+    background: var(--z3-bg);
+    color: var(--z3-text);
+    position: relative;
+  }
+
+  .zone-3::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(216,180,254,0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* ── PULL QUOTE — Oversized ── */
+  .pull-quote-prism {
+    padding: 56px 0;
+    text-align: center;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .pull-quote-prism::before, .pull-quote-prism::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    margin: 0 auto;
+    opacity: 0.2;
+  }
+
+  .pull-quote-prism blockquote {
+    font-family: var(--display);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px 0;
+  }
+
+  .pull-quote-prism cite {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.4;
+    font-style: normal;
+  }
+
+  /* Zone-specific quote borders */
+  .pq-violet::before, .pq-violet::after { background: var(--z3-accent); }
+
+  /* ═══ ZONE 4: SAFFRON GOLD ═══ */
+  .zone-4 {
+    background: var(--z4-bg);
+    color: var(--z4-text);
+    position: relative;
+  }
+
+  /* ── CTA ── */
+  .cta-prism {
+    text-align: center;
+    padding: 72px 24px;
+    margin: 40px 0;
+  }
+
+  .cta-prism h3 {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  .cta-prism p {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--z4-muted);
+    margin-bottom: 28px;
+  }
+
+  .cta-prism-btn {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: white;
+    background: var(--z4-accent);
+    padding: 16px 40px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .cta-prism-btn:hover { background: #B45309; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(217,119,6,0.3); }
+
+  /* ── FOOTER ── */
+  .footer-prism {
+    border-top: 1px solid #E8D8C4;
+    padding: 40px 0 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .fp-source {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--z4-muted);
+    max-width: 420px;
+    line-height: 1.7;
+  }
+
+  .fp-right { text-align: right; }
+  .fp-timestamp { font-family: var(--mono); font-size: 10px; color: var(--z4-muted); }
+
+  .fp-badge {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--z4-accent);
+    color: var(--z4-accent);
+  }
+
+  /* ── TOOLTIP ── */
+  .tooltip-prism {
+    position: absolute;
+    pointer-events: none;
+    background: var(--z0-bg);
+    color: white;
+    padding: 14px 18px;
+    font-family: var(--mono);
+    font-size: 12px;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 100;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    white-space: nowrap;
+  }
+
+  .tooltip-prism .tt-title { font-family: var(--display); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .tooltip-prism .tt-row { display: flex; justify-content: space-between; gap: 20px; margin-top: 3px; }
+  .tooltip-prism .tt-label { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; }
+  .tooltip-prism .tt-val { font-weight: 700; }
+
+  /* ── ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(20px); animation: pFade 0.6s ease-out both; }
+  @keyframes pFade { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ ZONE 0: THE OPENING ═══════════════ -->
+<div class="zone-0">
+  <div class="z0-watermark">AI</div>
+  <div class="z0-inner">
+    <div class="z0-eyebrow">Enablement How‑To · Real Session</div>
+    <h1 class="z0-title">Agentic AI in Use<br><em>File Management Assistant</em></h1>
+    <div class="z0-deck">This guide shows how a non‑technical teammate can clean a messy font library using an AI assistant — safely, clearly, and in minutes. Follow the steps, copy the prompts, and you’ll get the same result.</div>
+    <div class="z0-meta">
+      <div class="z0-meta-item"><strong>Audience</strong> Anyone who feels “not technical”</div>
+      <div class="z0-meta-item"><strong>Outcome</strong> Clean, deduped font library</div>
+      <div class="z0-meta-item"><strong>Date</strong> <span id="meta-date"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ZONE 1: CORAL ═══════════════ -->
+<div class="zone-transition zt-coral"></div>
+<div class="zone-1 z1">
+  <div class="zone-inner">
+    <div class="zs-eyebrow">Part One · Get Ready</div>
+    <h2 class="zs-title">What you’ll do (and why it’s safe)</h2>
+    <div class="zs-body" style="max-width:680px;">
+      <p>You’re not “deleting everything.” You’re keeping only the files you need, removing exact duplicates, and organizing what remains. The assistant asks for confirmation before any destructive action.</p>
+    </div>
+
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h4>Inputs you need</h4>
+        <ul class="checklist">
+          <li>The folder path you want cleaned.</li>
+          <li>The file types you want to keep (e.g., <strong>.ttf</strong>).</li>
+          <li>Whether duplicates should be detected by file content.</li>
+        </ul>
+      </div>
+      <div class="guide-card">
+        <h4>Safety promises</h4>
+        <ul class="checklist">
+          <li>Ask for confirmation before deletions.</li>
+          <li>Provide a summary of what changed.</li>
+          <li>Leave a clean, usable folder structure.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prism-metrics">
+      <div class="pm-cell pm-coral">
+        <div class="pm-value">3,343</div>
+        <div class="pm-label">Files Scanned</div>
+        <div class="pm-delta">Live run</div>
+      </div>
+      <div class="pm-cell pm-coral">
+        <div class="pm-value">3,017</div>
+        <div class="pm-label">Duplicates Removed</div>
+        <div class="pm-delta">SHA‑256</div>
+      </div>
+      <div class="pm-cell pm-coral">
+        <div class="pm-value">326</div>
+        <div class="pm-label">Unique Kept</div>
+        <div class="pm-delta">.ttf only</div>
+      </div>
+      <div class="pm-cell pm-coral">
+        <div class="pm-value">8</div>
+        <div class="pm-label">Families Retained</div>
+        <div class="pm-delta">Final folders</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ZONE 2: DEEP TEAL ═══════════════ -->
+<div class="zone-transition zt-teal"></div>
+<div class="zone-2 z2">
+  <div class="zone-inner">
+    <div class="zs-eyebrow">Part Two · Step‑by‑Step</div>
+    <h2 class="zs-title" style="color:var(--z2-text)">Copy these prompts — that’s the whole workflow</h2>
+    <div class="zs-body" style="max-width:680px; color:var(--z2-text);">
+      <p>Each step is one message. If anything feels risky, you can say “stop” or ask for a preview first.</p>
+    </div>
+
+    <div class="howto-steps">
+      <div class="howto-step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>Point the assistant to the folder</h4>
+          <p>Example: “Can you open this folder and show me what’s inside: /path/to/Fonts?”</p>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>Define what to keep</h4>
+          <p>Example: “Keep only .ttf files. Delete any .txt or readme files.”</p>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>Approve de‑duplication by content</h4>
+          <p>Example: “De‑dupe by file contents (hash), not by filename.”</p>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>Ask for a clean structure</h4>
+          <p>Example: “Move the remaining files into a single clean folder, remove empty folders.”</p>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h4>Get a results summary</h4>
+          <p>Example: “Report how many files were scanned, removed, and kept.”</p>
+        </div>
+      </div>
+      <div class="howto-step">
+        <div class="step-num">06</div>
+        <div class="step-body">
+          <h4>Optional: curate the final set</h4>
+          <p>Example: “Keep only the 8 most distinct families and put each in its own folder.”</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-prism cp-teal">
+      <div class="cp-tag">Copy/Paste Prompt</div>
+      <h4 style="color:var(--z2-text)">One‑shot version</h4>
+      <p style="color:var(--z2-text)">Use this if you want to do it all in one message.</p>
+      <div class="prompt-block">“Clean /path/to/Fonts. Keep only unique .ttf files, dedupe by content, remove all .txt or non‑ttf files, flatten the folder, and summarize what changed.”</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ZONE 3: ELECTRIC VIOLET ═══════════════ -->
+<div class="zone-transition zt-violet"></div>
+<div class="zone-3 z3">
+  <div class="zone-inner">
+    <div class="zs-eyebrow">Part Three · Visual Walkthrough</div>
+    <h2 class="zs-title" style="color:var(--z3-text)">Screens from the live session</h2>
+    <div class="zs-body" style="max-width:680px; color:var(--z3-text);">
+      <p>These screenshots show the exact flow: locate, confirm, execute, and verify.</p>
+    </div>
+
+    <div class="screen-grid">
+      <div class="screen-card">
+        <img src="screen-01.png" alt="Path confirmed" />
+        <div class="screen-meta">
+          <div class="screen-label">Screen 01</div>
+          <div class="screen-title">Path Confirmed</div>
+          <div class="screen-caption">Assistant locates the target folder and confirms it with the user.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <img src="screen-02.png" alt="De-dupe summary" />
+        <div class="screen-meta">
+          <div class="screen-label">Screen 02</div>
+          <div class="screen-title">De‑dupe Summary</div>
+          <div class="screen-caption">Counts reported for scanned files, duplicates removed, and kept files.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <img src="screen-03.png" alt="Final structure" />
+        <div class="screen-meta">
+          <div class="screen-label">Screen 03</div>
+          <div class="screen-title">Final Structure</div>
+          <div class="screen-caption">Eight clean subfolders with the most distinct families.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <img src="screen-04.png" alt="Confirmation prompt" />
+        <div class="screen-meta">
+          <div class="screen-label">Screen 04</div>
+          <div class="screen-title">Safety Confirmations</div>
+          <div class="screen-caption">The assistant confirms extension and deletion rules before acting.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-quote-prism pq-violet">
+      <blockquote style="color:var(--z3-text)">“It’s like having a careful ops teammate who does the cleanup work for you.”</blockquote>
+      <cite style="color:var(--z3-accent)">— Internal enablement feedback</cite>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ZONE 4: SAFFRON GOLD ═══════════════ -->
+<div class="zone-transition zt-gold"></div>
+<div class="zone-4 z4">
+  <div class="zone-inner">
+    <div class="zs-eyebrow" style="color:var(--z4-accent)">Part Four · Help + Next Uses</div>
+    <h2 class="zs-title" style="color:var(--z4-text)">Common questions (and simple answers)</h2>
+    <div class="zs-body" style="max-width:680px; color:var(--z4-text);">
+      <p>These are the most common fears — and how the process keeps you safe.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <h4>“What if it deletes the wrong files?”</h4>
+        <p>You can require a confirmation step before anything is deleted. The assistant will ask first.</p>
+      </div>
+      <div class="faq-item">
+        <h4>“How do I know duplicates are truly duplicates?”</h4>
+        <p>Ask for de‑duplication by file content hash. That guarantees identical files, not just similar names.</p>
+      </div>
+      <div class="faq-item">
+        <h4>“What if I only want a few families?”</h4>
+        <p>Say which families to keep, and the assistant will move them into named folders and delete the rest.</p>
+      </div>
+    </div>
+
+    <div class="callout-prism cp-gold">
+      <div class="cp-tag">Reusable Prompt</div>
+      <h4 style="color:var(--z4-text)">General file clean‑up template</h4>
+      <p style="color:var(--z4-text)">Use this for PDFs, images, exports, or any messy folder.</p>
+      <div class="prompt-block">“Clean /path/to/folder. Keep only <em>[file type]</em>, dedupe by content, remove everything else, and summarize the results.”</div>
+    </div>
+
+    <div class="cta-prism">
+      <h3>Next: Use it for any ops cleanup</h3>
+      <p>Great for asset libraries, dataset exports, media folders, and project handoffs.</p>
+      <a href="#" class="cta-prism-btn">Playbook: AI‑Assisted File Operations</a>
+    </div>
+
+    <div class="col">
+      <footer class="footer-prism">
+        <div class="fp-source">Source: Live session transcript and file system operations. Metrics reflect the actual run.</div>
+        <div class="fp-right">
+          <div class="fp-timestamp" id="timestamp"></div>
+          <div class="fp-badge">Syne + Encode Sans · Local Fonts</div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script>
+  const now = new Date();
+  const dateOpts = { month: 'short', day: 'numeric', year: 'numeric' };
+  const timeOpts = { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+  const metaDate = document.getElementById('meta-date');
+  const ts = document.getElementById('timestamp');
+  if (metaDate) metaDate.textContent = now.toLocaleDateString('en-US', dateOpts);
+  if (ts) ts.textContent = now.toLocaleString('en-US', timeOpts);
+</script>
+
+</body>
+</html>
