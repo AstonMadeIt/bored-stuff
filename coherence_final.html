@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coherence — A Text Session</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ══ TWILIGHT PALETTE — from the village overlook ══ */
+  --sky-deep: #1e2a3a;
+  --sky-mid: #2a3f4f;
+  --sky-teal: #3d5a5a;
+  --sunset-coral: #e8947a;
+  --sunset-peach: #f2b896;
+  --sunset-pink: #d4838a;
+  --sunset-orange: #e07a5f;
+  
+  /* Village tones */
+  --village-teal: #4a6b6b;
+  --village-dark: #2a3a3a;
+  --foliage-dark: #2d4a3a;
+  --foliage-mid: #3d5a4a;
+  --wood-warm: #6a5040;
+  --wood-dark: #3a2a20;
+  --lantern-glow: #f4d03f;
+  --window-warm: #e8c878;
+  
+  /* Surfaces */
+  --surface-dark: rgba(20, 28, 35, 0.92);
+  --surface-mid: rgba(35, 50, 55, 0.85);
+  --surface-soft: rgba(60, 75, 75, 0.7);
+  --surface-glow: rgba(244, 208, 63, 0.04);
+  
+  /* Text */
+  --text-primary: #f5efe8;
+  --text-soft: #c8bfb5;
+  --text-whisper: #8a8078;
+  --text-dim: #5a5550;
+  
+  /* Message accents */
+  --msg-you-bg: rgba(232, 148, 122, 0.12);
+  --msg-you-border: rgba(232, 148, 122, 0.2);
+  --msg-them-bg: rgba(74, 107, 107, 0.15);
+  --msg-them-border: rgba(74, 107, 107, 0.2);
+  
+  /* Effects */
+  --border-soft: rgba(200, 180, 170, 0.08);
+  --glow-lantern: rgba(244, 208, 63, 0.4);
+  --glow-coral: rgba(232, 148, 122, 0.3);
+  --rain-mist: rgba(180, 200, 210, 0.25);
+  --rain-drop: rgba(200, 220, 230, 0.4);
+  
+  /* Type */
+  --serif-display: 'Cormorant Garamond', Georgia, serif;
+  --serif-body: 'Crimson Pro', Georgia, serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--sky-deep);
+  color: var(--text-primary);
+  font-family: var(--serif-body);
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════════
+   HERO SCENE — Full viewport illustrated landscape
+   ══════════════════════════════════════ */
+.hero-scene {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 80px;
+}
+
+.hero-scene__sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* SVG landscape fills the hero */
+.landscape-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Stars overlay */
+.hero-scene__stars {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
+
+/* Rain overlay */
+.hero-scene__rain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rain-drop {
+  position: absolute;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(to bottom, transparent, var(--rain-drop), transparent);
+  opacity: 0;
+  animation: rain-fall linear infinite;
+}
+
+@keyframes rain-fall {
+  0% { 
+    transform: translateY(-20px) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% { 
+    transform: translateY(100vh) translateX(-20px);
+    opacity: 0;
+  }
+}
+
+/* Mist layers */
+.hero-scene__mist {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, var(--rain-mist), transparent);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Hero content overlay */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 0 40px;
+}
+
+.hero__time {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--sunset-peach);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fade-in 1.2s ease-out 0.8s forwards;
+  text-shadow: 0 0 20px rgba(244, 208, 63, 0.3);
+}
+
+.hero__title {
+  font-family: var(--serif-display);
+  font-size: clamp(42px, 9vw, 88px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  max-width: 700px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: rise-in 1s ease-out 1s forwards;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+
+.hero__deck {
+  font-family: var(--serif-body);
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-soft);
+  max-width: 440px;
+  margin: 0 auto 40px;
+  opacity: 0;
+  animation: rise-in 1s ease-out 1.2s forwards;
+}
+
+.hero__scroll {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  opacity: 0;
+  animation: fade-in 1s ease-out 2s forwards;
+}
+
+.hero__scroll span {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+/* ══════════════════════════════════════
+   MAIN CONTENT — below the hero
+   ══════════════════════════════════════ */
+.main-content {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    var(--village-dark) 0%,
+    var(--sky-deep) 15%,
+    var(--sky-deep) 100%
+  );
+  z-index: 20;
+}
+
+/* Mist bleeding into content */
+.main-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to bottom, var(--rain-mist), transparent);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   SECTION TRACKER
+   ══════════════════════════════════════ */
+.tracker {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 998;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.tracker__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.tracker__label {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: lowercase;
+  color: var(--text-dim);
+  opacity: 0;
+  transform: translateX(8px);
+  transition: all 0.4s ease;
+}
+
+.tracker__item:hover .tracker__label,
+.tracker__item.active .tracker__label {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--sunset-peach);
+}
+
+.tracker__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-dim);
+  background: transparent;
+  transition: all 0.4s ease;
+}
+
+.tracker__item.active .tracker__dot {
+  background: var(--lantern-glow);
+  border-color: var(--lantern-glow);
+  box-shadow: 0 0 10px var(--glow-lantern), 0 0 20px rgba(244, 208, 63, 0.2);
+}
+
+@media (max-width: 900px) { .tracker { display: none; } }
+
+/* ══════════════════════════════════════
+   MOVEMENT HEADERS
+   ══════════════════════════════════════ */
+.movement {
+  padding: 80px 40px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.movement__inner {
+  max-width: 580px;
+  width: 100%;
+}
+
+.movement__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.movement__number {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--lantern-glow);
+  letter-spacing: 2px;
+  padding: 5px 12px;
+  border: 1px solid rgba(244, 208, 63, 0.2);
+  border-radius: 20px;
+  background: rgba(244, 208, 63, 0.05);
+}
+
+.movement__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(244, 208, 63, 0.15), transparent);
+}
+
+.movement__timestamp {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+/* ══════════════════════════════════════
+   TEXT SESSION
+   ══════════════════════════════════════ */
+.session {
+  padding: 20px 40px 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.session__inner {
+  max-width: 580px;
+  width: 100%;
+}
+
+.msg {
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: msg-in 0.6s ease-out forwards;
+  animation-play-state: paused;
+}
+
+.msg.visible { animation-play-state: running; }
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mei — left-aligned, cool teal tones */
+.msg--mei {
+  text-align: left;
+  padding-right: 50px;
+}
+
+.msg--mei .msg__content {
+  background: var(--msg-them-bg);
+  border: 1px solid var(--msg-them-border);
+  border-radius: 18px 18px 18px 4px;
+  display: inline-block;
+}
+
+/* Daniel — right-aligned, warm coral tones */
+.msg--daniel {
+  text-align: right;
+  padding-left: 50px;
+}
+
+.msg--daniel .msg__content {
+  background: var(--msg-you-bg);
+  border: 1px solid var(--msg-you-border);
+  border-radius: 18px 18px 4px 18px;
+  display: inline-block;
+  text-align: left;
+}
+
+.msg__content {
+  padding: 18px 24px;
+  max-width: 88%;
+}
+
+.msg__name {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+
+.msg--mei .msg__name { color: var(--village-teal); }
+.msg--daniel .msg__name { color: var(--sunset-coral); }
+
+.msg__text {
+  font-family: var(--serif-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--text-primary);
+}
+
+.msg__text em {
+  font-style: italic;
+  color: var(--sunset-peach);
+}
+
+.msg__text strong {
+  font-weight: 500;
+  color: var(--window-warm);
+}
+
+.msg__text .heat {
+  color: var(--sunset-coral);
+}
+
+.msg__time {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+}
+
+/* Consecutive messages from same person */
+.msg--continuation {
+  margin-top: -16px;
+}
+
+.msg--continuation .msg__name {
+  display: none;
+}
+
+/* ══════════════════════════════════════
+   NARRATIVE INTERLUDE
+   ══════════════════════════════════════ */
+.interlude {
+  padding: 50px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.interlude__inner {
+  max-width: 480px;
+  text-align: center;
+  position: relative;
+  padding: 32px 0;
+}
+
+.interlude__inner::before,
+.interlude__inner::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--text-dim), transparent);
+}
+
+.interlude__inner::before { top: 0; }
+.interlude__inner::after { bottom: 0; }
+
+.interlude__text {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.85;
+  color: var(--text-soft);
+}
+
+/* ══════════════════════════════════════
+   PULL QUOTE
+   ══════════════════════════════════════ */
+.pullquote {
+  padding: 70px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.pullquote__inner {
+  max-width: 620px;
+  text-align: center;
+  position: relative;
+}
+
+.pullquote__mark {
+  font-family: var(--serif-display);
+  font-size: 100px;
+  font-weight: 400;
+  color: var(--sunset-coral);
+  opacity: 0.12;
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+}
+
+.pullquote__text {
+  font-family: var(--serif-display);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-primary);
+  position: relative;
+  z-index: 1;
+}
+
+.pullquote__attr {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--village-teal);
+  letter-spacing: 1px;
+  margin-top: 20px;
+  text-transform: lowercase;
+}
+
+/* ══════════════════════════════════════
+   LANTERN DIVIDER
+   ══════════════════════════════════════ */
+.lantern-divider {
+  padding: 50px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.lantern-divider svg {
+  width: 50px;
+  height: auto;
+  opacity: 0.5;
+}
+
+.lantern-glow {
+  animation: lantern-pulse 4s ease-in-out infinite;
+}
+
+@keyframes lantern-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+
+/* ══════════════════════════════════════
+   CODA
+   ══════════════════════════════════════ */
+.coda {
+  padding: 80px 40px 60px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.coda__inner {
+  max-width: 480px;
+}
+
+.coda__ellipsis {
+  font-family: var(--serif-display);
+  font-size: 28px;
+  color: var(--text-dim);
+  letter-spacing: 16px;
+  margin-bottom: 32px;
+}
+
+.coda__text {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--text-soft);
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════ */
+.footer {
+  padding: 40px;
+  text-align: center;
+  border-top: 1px solid var(--border-soft);
+  margin-top: 40px;
+}
+
+.footer__badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.footer__badge span {
+  color: var(--sunset-peach);
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════ */
+@media (max-width: 700px) {
+  .hero-content { padding: 0 24px; }
+  .movement, .session, .interlude, .pullquote { padding-left: 20px; padding-right: 20px; }
+  .msg--daniel { padding-left: 16px; }
+  .msg--mei { padding-right: 16px; }
+  .msg__content { max-width: 95%; padding: 14px 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     HERO SCENE — Illustrated twilight landscape
+     ═══════════════════════════════════ -->
+<section class="hero-scene" id="opening">
+  
+  <!-- Rain -->
+  <div class="hero-scene__rain" id="rain-container"></div>
+  
+  <!-- Mist -->
+  <div class="hero-scene__mist"></div>
+  
+  <!-- Stars -->
+  <div class="hero-scene__stars">
+    <div class="star" style="top: 8%; left: 15%; animation-delay: 0s;"></div>
+    <div class="star" style="top: 12%; left: 35%; animation-delay: 1.2s;"></div>
+    <div class="star" style="top: 5%; left: 55%; animation-delay: 0.5s;"></div>
+    <div class="star" style="top: 18%; left: 72%; animation-delay: 2s;"></div>
+    <div class="star" style="top: 10%; left: 88%; animation-delay: 0.8s;"></div>
+    <div class="star" style="top: 22%; left: 25%; animation-delay: 1.5s;"></div>
+    <div class="star" style="top: 15%; left: 65%; animation-delay: 2.5s;"></div>
+    <div class="star" style="top: 6%; left: 45%; animation-delay: 3s;"></div>
+  </div>
+  
+  <!-- SVG Landscape -->
+  <svg class="landscape-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMax slice">
+    <defs>
+      <!-- Sky gradient -->
+      <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#1e2a3a"/>
+        <stop offset="25%" stop-color="#2a3f4f"/>
+        <stop offset="45%" stop-color="#3d5a5a"/>
+        <stop offset="60%" stop-color="#d4838a"/>
+        <stop offset="75%" stop-color="#e8947a"/>
+        <stop offset="90%" stop-color="#f2b896"/>
+        <stop offset="100%" stop-color="#e07a5f"/>
+      </linearGradient>
+      
+      <!-- Sunset glow -->
+      <radialGradient id="sunsetGlow" cx="50%" cy="85%" r="50%" fx="50%" fy="85%">
+        <stop offset="0%" stop-color="#f2b896" stop-opacity="0.4"/>
+        <stop offset="50%" stop-color="#e8947a" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#e8947a" stop-opacity="0"/>
+      </radialGradient>
+      
+      <!-- Mountain gradient -->
+      <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#2a3a4a"/>
+        <stop offset="100%" stop-color="#3d5060"/>
+      </linearGradient>
+      
+      <!-- Lantern glow -->
+      <radialGradient id="lanternGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#f4d03f" stop-opacity="0.9"/>
+        <stop offset="40%" stop-color="#e8c060" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#e8c060" stop-opacity="0"/>
+      </radialGradient>
+      
+      <!-- Window glow -->
+      <radialGradient id="windowGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#e8c878" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#e8c878" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    
+    <!-- Sky -->
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#skyGradient)"/>
+    
+    <!-- Sunset glow -->
+    <ellipse cx="960" cy="750" rx="800" ry="300" fill="url(#sunsetGlow)"/>
+    
+    <!-- Clouds -->
+    <g opacity="0.6">
+      <ellipse cx="300" cy="180" rx="120" ry="35" fill="#4a6070"/>
+      <ellipse cx="380" cy="175" rx="80" ry="28" fill="#4a6070"/>
+      <ellipse cx="1500" cy="220" rx="150" ry="40" fill="#4a6070"/>
+      <ellipse cx="1620" cy="215" rx="100" ry="30" fill="#4a6070"/>
+      <ellipse cx="800" cy="280" rx="100" ry="25" fill="#5a7080"/>
+      <ellipse cx="1100" cy="150" rx="90" ry="22" fill="#5a7080"/>
+    </g>
+    
+    <!-- Distant mountains -->
+    <path d="M0 650 L200 550 L400 600 L600 480 L800 550 L1000 450 L1200 520 L1400 480 L1600 550 L1800 500 L1920 580 L1920 750 L0 750 Z" 
+          fill="url(#mountainGradient)" opacity="0.7"/>
+    
+    <!-- Mid mountains with mist -->
+    <path d="M0 700 L150 620 L350 680 L550 580 L750 650 L950 550 L1150 620 L1350 570 L1550 640 L1750 580 L1920 650 L1920 800 L0 800 Z" 
+          fill="#3a5050" opacity="0.8"/>
+    
+    <!-- Mist layer -->
+    <rect x="0" y="680" width="1920" height="80" fill="#5a7a7a" opacity="0.2"/>
+    
+    <!-- Village silhouette -->
+    <g fill="#2a3a3a">
+      <rect x="200" y="780" width="50" height="40"/>
+      <polygon points="200,780 225,755 250,780"/>
+      <rect x="320" y="790" width="60" height="50"/>
+      <polygon points="320,790 350,760 380,790"/>
+      <rect x="450" y="785" width="45" height="35"/>
+      <polygon points="450,785 472,762 495,785"/>
+      <rect x="560" y="795" width="55" height="45"/>
+      <polygon points="560,795 587,765 615,795"/>
+      <rect x="680" y="780" width="40" height="40"/>
+      <polygon points="680,780 700,758 720,780"/>
+      <rect x="850" y="800" width="35" height="30"/>
+      <polygon points="850,800 867,780 885,800"/>
+      <rect x="950" y="795" width="45" height="35"/>
+      <polygon points="950,795 972,772 995,795"/>
+      <rect x="1080" y="790" width="50" height="40"/>
+      <polygon points="1080,790 1105,765 1130,790"/>
+      <rect x="1200" y="800" width="40" height="30"/>
+      <polygon points="1200,800 1220,778 1240,800"/>
+      <rect x="1320" y="785" width="55" height="45"/>
+      <polygon points="1320,785 1347,758 1375,785"/>
+      <rect x="1450" y="795" width="50" height="35"/>
+      <polygon points="1450,795 1475,770 1500,795"/>
+      <rect x="1580" y="780" width="45" height="40"/>
+      <polygon points="1580,780 1602,755 1625,780"/>
+      <rect x="1700" y="790" width="55" height="50"/>
+      <polygon points="1700,790 1727,762 1755,790"/>
+    </g>
+    
+    <!-- Window glows -->
+    <g>
+      <ellipse cx="225" cy="800" rx="8" ry="6" fill="url(#windowGlow)"/>
+      <ellipse cx="350" cy="815" rx="10" ry="7" fill="url(#windowGlow)"/>
+      <ellipse cx="472" cy="802" rx="7" ry="5" fill="url(#windowGlow)"/>
+      <ellipse cx="587" cy="817" rx="9" ry="6" fill="url(#windowGlow)"/>
+      <ellipse cx="1105" cy="810" rx="8" ry="6" fill="url(#windowGlow)"/>
+      <ellipse cx="1347" cy="808" rx="9" ry="7" fill="url(#windowGlow)"/>
+      <ellipse cx="1727" cy="815" rx="10" ry="7" fill="url(#windowGlow)"/>
+    </g>
+    
+    <!-- Foreground hill with path -->
+    <path d="M0 900 Q300 820 500 870 Q700 920 960 850 Q1200 780 1400 830 Q1600 880 1920 820 L1920 1080 L0 1080 Z" 
+          fill="#2d4a3a"/>
+    
+    <!-- Stone path -->
+    <g fill="#6a6050" opacity="0.6">
+      <ellipse cx="960" cy="900" rx="35" ry="12" transform="rotate(-5)"/>
+      <ellipse cx="920" cy="930" rx="30" ry="10" transform="rotate(8)"/>
+      <ellipse cx="970" cy="960" rx="32" ry="11" transform="rotate(-3)"/>
+      <ellipse cx="940" cy="995" rx="35" ry="12" transform="rotate(5)"/>
+      <ellipse cx="980" cy="1030" rx="38" ry="13"/>
+      <ellipse cx="950" cy="1070" rx="40" ry="14" transform="rotate(-2)"/>
+    </g>
+    
+    <!-- Wooden fence/railing (left) -->
+    <g stroke="#5a4030" stroke-width="4" fill="none">
+      <line x1="100" y1="850" x2="100" y2="950"/>
+      <line x1="180" y1="830" x2="180" y2="930"/>
+      <line x1="260" y1="815" x2="260" y2="915"/>
+      <line x1="80" y1="870" x2="280" y2="830"/>
+      <line x1="80" y1="920" x2="280" y2="880"/>
+    </g>
+    
+    <!-- Lantern post -->
+    <g transform="translate(850, 680)">
+      <rect x="-4" y="0" width="8" height="180" fill="#4a3a30"/>
+      <rect x="-18" y="-45" width="36" height="50" fill="#3a2a20" rx="3"/>
+      <rect x="-14" y="-40" width="28" height="40" fill="#2a1a15"/>
+      <polygon points="-22,-45 0,-65 22,-45" fill="#3a2a20"/>
+      <rect x="-3" y="-72" width="6" height="10" fill="#3a2a20"/>
+      <ellipse cx="0" cy="-20" rx="60" ry="50" fill="url(#lanternGlow)" class="lantern-glow"/>
+      <rect x="-10" y="-36" width="20" height="28" fill="#f4d03f" opacity="0.9" rx="2"/>
+    </g>
+    
+    <!-- Tree silhouette (right) -->
+    <g transform="translate(1700, 600)">
+      <rect x="-15" y="100" width="30" height="300" fill="#1a2a20"/>
+      <ellipse cx="0" cy="60" rx="120" ry="100" fill="#1a2a20"/>
+      <ellipse cx="-60" cy="20" rx="80" ry="70" fill="#1a2a20"/>
+      <ellipse cx="70" cy="30" rx="90" ry="80" fill="#1a2a20"/>
+      <ellipse cx="30" cy="-30" rx="70" ry="60" fill="#1a2a20"/>
+    </g>
+    
+    <!-- Grass tufts -->
+    <g fill="#3d5a4a">
+      <ellipse cx="50" cy="1000" rx="20" ry="40" transform="rotate(-15, 50, 1000)"/>
+      <ellipse cx="150" cy="970" rx="15" ry="35" transform="rotate(10, 150, 970)"/>
+      <ellipse cx="1800" cy="900" rx="18" ry="40" transform="rotate(-8, 1800, 900)"/>
+      <ellipse cx="1850" cy="920" rx="15" ry="35" transform="rotate(5, 1850, 920)"/>
+    </g>
+    
+    <!-- Power lines -->
+    <g stroke="#2a3a3a" stroke-width="1.5" fill="none" opacity="0.5">
+      <path d="M0 400 Q480 420 960 380 Q1440 340 1920 360"/>
+      <path d="M0 410 Q480 435 960 395 Q1440 355 1920 375"/>
+    </g>
+    
+    <!-- Power pole -->
+    <g transform="translate(1550, 350)">
+      <rect x="-5" y="0" width="10" height="450" fill="#3a2a25"/>
+      <rect x="-40" y="5" width="80" height="6" fill="#3a2a25"/>
+      <rect x="-30" y="25" width="60" height="5" fill="#3a2a25"/>
+    </g>
+    
+  </svg>
+  
+  <!-- Hero content -->
+  <div class="hero-content">
+    <div class="hero__time">· after hours ·</div>
+    <h1 class="hero__title">Coherence</h1>
+    <p class="hero__deck">
+      A late-night conversation about what we archive instead of answer — and what it costs to finally say it out loud.
+    </p>
+    <div class="hero__scroll">
+      <span>↓</span>
+    </div>
+  </div>
+  
+</section>
+
+<!-- TRACKER -->
+<nav class="tracker">
+  <div class="tracker__item active" data-section="opening">
+    <span class="tracker__label">opening</span>
+    <div class="tracker__dot"></div>
+  </div>
+  <div class="tracker__item" data-section="movement-1">
+    <span class="tracker__label">the probe</span>
+    <div class="tracker__dot"></div>
+  </div>
+  <div class="tracker__item" data-section="movement-2">
+    <span class="tracker__label">the ask</span>
+    <div class="tracker__dot"></div>
+  </div>
+  <div class="tracker__item" data-section="movement-3">
+    <span class="tracker__label">the real</span>
+    <div class="tracker__dot"></div>
+  </div>
+  <div class="tracker__item" data-section="coda">
+    <span class="tracker__label">coda</span>
+    <div class="tracker__dot"></div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════ -->
+<main class="main-content">
+
+  <!-- ═══════════════════════════════════
+       MOVEMENT I — The Probe
+       ═══════════════════════════════════ -->
+  <section class="movement" id="movement-1">
+    <div class="movement__inner">
+      <div class="movement__header">
+        <span class="movement__number">01</span>
+        <div class="movement__line"></div>
+        <span class="movement__timestamp">11:42 pm</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="session">
+    <div class="session__inner">
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">hey</p>
+          <p class="msg__text" style="margin-top: 12px;">do you think about that night in chicago the same way i do</p>
+          <p class="msg__text" style="margin-top: 12px;">or was it just one of those "that was fun" things for you</p>
+          <div class="msg__time">11:42 pm</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">i prob think about a lot of things the way you do</p>
+          <p class="msg__text" style="margin-top: 12px;">…but like you I just keep them to myself 😭</p>
+          <p class="msg__text" style="margin-top: 12px;">for the record everything is fun with you so all good, no?</p>
+          <div class="msg__time">11:45 pm</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">see this is the thing with you</p>
+          <p class="msg__text" style="margin-top: 12px;">you say "all good" and i believe you</p>
+          <p class="msg__text" style="margin-top: 12px;">but then you add that little emoji like you're shrugging off a bruise</p>
+          <p class="msg__text" style="margin-top: 12px;"><em>makes me wonder what else you've archived instead of answered</em></p>
+          <div class="msg__time">11:47 pm</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei msg--continuation visible">
+        <div class="msg__content">
+          <p class="msg__text">also</p>
+          <p class="msg__text" style="margin-top: 12px;">your hands</p>
+          <p class="msg__text" style="margin-top: 12px;">on my hips</p>
+          <p class="msg__text" style="margin-top: 12px;">in the mirror</p>
+          <p class="msg__text" style="margin-top: 16px;"><strong>was not just "fun."</strong></p>
+          <p class="msg__text" style="margin-top: 12px;">don't let the word cheapen what your body already knows</p>
+          <div class="msg__time">11:48 pm</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">that little emoji moves mountains</p>
+          <p class="msg__text" style="margin-top: 12px;">keep wondering…</p>
+          <div class="msg__time">11:50 pm</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">god you're annoying</p>
+          <p class="msg__text" style="margin-top: 12px;"><span class="heat">and i say that with my thighs pressed together so</span></p>
+          <p class="msg__text" style="margin-top: 12px;">make of that what you will</p>
+          <div class="msg__time">11:53 pm</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">i wanna look at ur cute little butt while we casually shop on Melrose … after all night sex and faux-arguing ….</p>
+          <p class="msg__text" style="margin-top: 12px;">when can we make that happen? 🛍️👀🌆</p>
+          <div class="msg__time">11:55 pm</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- INTERLUDE -->
+  <div class="interlude">
+    <div class="interlude__inner">
+      <p class="interlude__text">
+        She stares at the screen. The specificity disarms her — he doesn't say "let's hang out," he says Melrose, all night, fake arguments, his hands on her waist when she pretends to be mad. He's already imagined it. Which means he's already wanted it longer than he's letting on.
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       MOVEMENT II — The Ask
+       ═══════════════════════════════════ -->
+  <section class="movement" id="movement-2">
+    <div class="movement__inner">
+      <div class="movement__header">
+        <span class="movement__number">02</span>
+        <div class="movement__line"></div>
+        <span class="movement__timestamp">11:57 pm</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="session">
+    <div class="session__inner">
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">god</p>
+          <p class="msg__text" style="margin-top: 12px;">you always land the plane right when i decide i'm done with you</p>
+          <p class="msg__text" style="margin-top: 12px;">melrose. all night. fake arguments. your hands on my waist when i pretend to be mad in public.</p>
+          <p class="msg__text" style="margin-top: 12px;"><em>it's unfair how specific you get when you want something</em></p>
+          <div class="msg__time">11:57 pm</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei msg--continuation visible">
+        <div class="msg__content">
+          <p class="msg__text">june 14–17 i'm in la again. panel on the 15th. free the rest.</p>
+          <p class="msg__text" style="margin-top: 12px;"><strong>if you don't fuck me sore and buy me something ridiculous, we failed.</strong></p>
+          <div class="msg__time">11:58 pm</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">why would you decide you're done with me? where's the fun in that?</p>
+          <div class="msg__time">12:00 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">because i know how to protect myself</p>
+          <p class="msg__text" style="margin-top: 12px;"><em>and wanting you this much without knowing what it is… gets expensive.</em></p>
+          <div class="msg__time">12:03 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text"><strong>so ask me to be exclusive with you then</strong></p>
+          <div class="msg__time">12:06 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">i don't beg for things i already feel you want</p>
+          <p class="msg__text" style="margin-top: 12px;">but i also don't chase ghosts</p>
+          <p class="msg__text" style="margin-top: 12px;">so either show up all the way or leave me with something beautiful to miss</p>
+          <div class="msg__time">12:09 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">I don't believe you want it all the way</p>
+          <div class="msg__time">12:11 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">wow</p>
+          <p class="msg__text" style="margin-top: 12px;">i showed up to the memory</p>
+          <p class="msg__text" style="margin-top: 12px;">i named the ache</p>
+          <p class="msg__text" style="margin-top: 12px;">i gave you time</p>
+          <p class="msg__text" style="margin-top: 12px;"><em>and you're still trying to win the upper hand</em></p>
+          <div class="msg__time">12:14 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">don't be dramatic …</p>
+          <p class="msg__text" style="margin-top: 12px;">I'm saying I don't believe you would choose now to decide "we evolve or disintegrate"</p>
+          <p class="msg__text" style="margin-top: 12px;">when you could simply say … "we should make more of this"</p>
+          <div class="msg__time">12:17 am</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="pullquote">
+    <div class="pullquote__inner">
+      <div class="pullquote__mark">"</div>
+      <p class="pullquote__text">
+        I'm not asking for more time. I'm asking for coherence.
+      </p>
+      <div class="pullquote__attr">— Mei, 12:21 am</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       MOVEMENT III — The Real
+       ═══════════════════════════════════ -->
+  <section class="movement" id="movement-3">
+    <div class="movement__inner">
+      <div class="movement__header">
+        <span class="movement__number">03</span>
+        <div class="movement__line"></div>
+        <span class="movement__timestamp">12:21 am</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="session">
+    <div class="session__inner">
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">you want me to write it like a brunch reservation</p>
+          <p class="msg__text" style="margin-top: 12px;">"we should make more of this"</p>
+          <p class="msg__text" style="margin-top: 12px;">so you can say "sure, i'm free tuesday"</p>
+          <p class="msg__text" style="margin-top: 12px;">but i'm not asking for more time</p>
+          <p class="msg__text" style="margin-top: 12px;"><strong>i'm asking for coherence</strong></p>
+          <div class="msg__time">12:21 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">understood … coherently</p>
+          <p class="msg__text" style="margin-top: 12px;">can I see you tomm?</p>
+          <div class="msg__time">12:26 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">yes</p>
+          <p class="msg__text" style="margin-top: 12px;">but i'm not coming over for sex</p>
+          <p class="msg__text" style="margin-top: 12px;"><em>i'm coming over to see if you can look me in the face without switching frequencies</em></p>
+          <div class="msg__time">12:28 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">could you handle all of me - socially? have you considered … holidays … etc?</p>
+          <p class="msg__text" style="margin-top: 12px;">Because I have and I don't flinch but you always have a million and one excuses —</p>
+          <p class="msg__text" style="margin-top: 12px;"><strong>THAT'S why I'm faux-guarded</strong></p>
+          <div class="msg__time">12:30 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">fuck.</p>
+          <p class="msg__text" style="margin-top: 12px;">you don't fight fair but you're not wrong</p>
+          <p class="msg__text" style="margin-top: 12px;">i have considered holidays. and yes i've imagined what your hand feels like on the small of my back when you introduce me to people. and yes i've pictured what it's like when your daughter falls asleep against me after too much sugar.</p>
+          <p class="msg__text" style="margin-top: 16px;"><em>i just never say it first because i've been the only one who names the dream before</em></p>
+          <p class="msg__text" style="margin-top: 12px;">and i'm tired of being the first to believe in a world that requires both of us to show up</p>
+          <div class="msg__time">12:32 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">im not fighting, Mei. Im moving towards coherence … no bullshit</p>
+          <div class="msg__time">12:35 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">okay.</p>
+          <p class="msg__text" style="margin-top: 12px;">then let me come over without lashes or lip gloss or answers</p>
+          <p class="msg__text" style="margin-top: 12px;">let me come over in a hoodie with nothing figured out</p>
+          <p class="msg__text" style="margin-top: 16px;">and if you really mean no bullshit, then when i get there—<br>don't just look at me like you want to fuck me</p>
+          <p class="msg__text" style="margin-top: 12px;"><strong>look at me like you remember i'm the only one who ever let you ask hard questions without punishing you for needing clarity</strong></p>
+          <div class="msg__time">12:37 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">i always want to fuck you … but you are right we need to talk …</p>
+          <p class="msg__text" style="margin-top: 12px;"><em>I don't want to lose you</em></p>
+          <div class="msg__time">12:39 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">say that to my face</p>
+          <p class="msg__text" style="margin-top: 12px;">without pulling me into your lap</p>
+          <p class="msg__text" style="margin-top: 12px;">without unzipping my hoodie like it's a promise</p>
+          <p class="msg__text" style="margin-top: 12px;">just sit with me on the couch like we don't have to earn touch to prove care</p>
+          <p class="msg__text" style="margin-top: 16px;"><strong>and if you can do that</strong></p>
+          <p class="msg__text" style="margin-top: 12px;"><strong>you won't lose me</strong></p>
+          <div class="msg__time">12:41 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">…I can do that … right now … you know …..</p>
+          <div class="msg__time">12:43 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">i'll come over</p>
+          <p class="msg__text" style="margin-top: 12px;">but if you vanish afterward again, don't expect me to text you first next time</p>
+          <p class="msg__text" style="margin-top: 12px;"><em>you'll have to live with the silence you trained me into</em></p>
+          <div class="msg__time">12:45 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text"><em>you never talk too much … even when you do</em></p>
+          <div class="msg__time">12:48 am</div>
+        </div>
+      </div>
+      
+      <div class="msg msg--mei visible">
+        <div class="msg__content">
+          <div class="msg__name">Mei</div>
+          <p class="msg__text">okay.</p>
+          <p class="msg__text" style="margin-top: 12px;">i'll be there a little after 9</p>
+          <p class="msg__text" style="margin-top: 12px;"><em>don't clean up too much</em></p>
+          <p class="msg__text" style="margin-top: 12px;">i want it to feel like you live there, not like you're trying to impress me</p>
+          <div class="msg__time">12:50 am</div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- LANTERN DIVIDER -->
+  <div class="lantern-divider">
+    <svg viewBox="0 0 60 100" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <radialGradient id="smallLanternGlow" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#f4d03f" stop-opacity="0.8"/>
+          <stop offset="60%" stop-color="#e8c060" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#e8c060" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="30" cy="35" rx="28" ry="25" fill="url(#smallLanternGlow)" class="lantern-glow"/>
+      <rect x="27" y="50" width="6" height="50" fill="#4a3a30"/>
+      <rect x="15" y="20" width="30" height="35" fill="#3a2a20" rx="2"/>
+      <rect x="18" y="24" width="24" height="28" fill="#2a1a15"/>
+      <polygon points="12,20 30,5 48,20" fill="#3a2a20"/>
+      <rect x="27" y="0" width="6" height="8" fill="#3a2a20"/>
+      <rect x="20" y="26" width="20" height="22" fill="#f4d03f" opacity="0.9" rx="1"/>
+    </svg>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       CODA
+       ═══════════════════════════════════ -->
+  <section class="coda" id="coda">
+    <div class="coda__inner">
+      <div class="coda__ellipsis">· · ·</div>
+      <p class="coda__text">
+        She puts on a hoodie. No lashes. No answers. Just the walk to his door at 9pm with nothing figured out — and everything finally said.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__badge">
+      <span>after hours</span> · a text session · <span id="timestamp"></span>
+    </div>
+  </footer>
+
+</main>
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+     ══════════════════════════════════════ -->
+<script>
+// Timestamp
+document.getElementById('timestamp').textContent = new Date().toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short'
+});
+
+// Generate rain drops
+const rainContainer = document.getElementById('rain-container');
+const rainDropCount = 80;
+
+for (let i = 0; i < rainDropCount; i++) {
+  const drop = document.createElement('div');
+  drop.className = 'rain-drop';
+  drop.style.left = `${Math.random() * 100}%`;
+  drop.style.animationDelay = `${Math.random() * 3}s`;
+  drop.style.animationDuration = `${1.2 + Math.random() * 0.8}s`;
+  drop.style.height = `${14 + Math.random() * 10}px`;
+  drop.style.opacity = 0.2 + Math.random() * 0.3;
+  rainContainer.appendChild(drop);
+}
+
+// Section tracker
+const trackerItems = document.querySelectorAll('.tracker__item');
+const sectionIds = Array.from(trackerItems).map(item => item.dataset.section);
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      trackerItems.forEach(item => {
+        item.classList.toggle('active', item.dataset.section === id);
+      });
+    }
+  });
+}, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
+
+sectionIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+
+// Smooth scroll
+trackerItems.forEach(item => {
+  item.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.getElementById(item.dataset.section);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Message fade-in
+const messages = document.querySelectorAll('.msg');
+const msgObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { rootMargin: '0px 0px -80px 0px', threshold: 0.1 });
+
+messages.forEach(msg => msgObserver.observe(msg));
+</script>
+
+</body>
+</html>
