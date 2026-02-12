@@ -243,7 +243,24 @@
 
     #intimacy-chart {
       width: 100%;
+    }
+
+    #intimacy-chart.desktop-mode {
       min-height: 560px;
+    }
+
+    #intimacy-chart.mobile-mode {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mobile-chart-panel {
+      width: 100%;
+      min-height: 230px;
+    }
+
+    .mobile-chart-top {
+      min-height: 340px;
     }
 
     .chart-caption {
@@ -433,8 +450,16 @@
       }
     };
 
+    const PLOT_CONFIG = {
+      responsive: true,
+      displayModeBar: false,
+      showTips: false,
+      scrollZoom: false
+    };
+
+    let chartMode = null;
+
     function getChartHeight() {
-      if (window.innerWidth < 520) return 630;
       if (window.innerWidth < 860) return 760;
       return 940;
     }
@@ -452,6 +477,21 @@
         x1: 2022.6,
         y0,
         y1,
+        line: { width: 0 },
+        fillcolor: "rgba(124, 92, 191, 0.07)",
+        layer: "below"
+      };
+    }
+
+    function mobileEventBand() {
+      return {
+        type: "rect",
+        xref: "x",
+        yref: "paper",
+        x0: 2020,
+        x1: 2022.6,
+        y0: 0,
+        y1: 1,
         line: { width: 0 },
         fillcolor: "rgba(124, 92, 191, 0.07)",
         layer: "below"
@@ -789,14 +829,245 @@
       };
     }
 
-    function renderIntimacyChart() {
+    function buildMobileTopLayout() {
+      return {
+        paper_bgcolor: "#ffffff",
+        plot_bgcolor: "#ffffff",
+        height: 340,
+        margin: { l: 42, r: 40, t: 52, b: 42 },
+        font: { family: "Libre Franklin, sans-serif", size: 10, color: "#2a2a2a" },
+        hovermode: "x",
+        hoverlabel: {
+          bgcolor: "#ffffff",
+          bordercolor: "#d8d4cd",
+          font: { family: "JetBrains Mono, monospace", size: 10, color: "#2a2a2a" }
+        },
+        legend: {
+          orientation: "h",
+          x: 0,
+          xanchor: "left",
+          y: 1.18,
+          yanchor: "bottom",
+          bgcolor: "rgba(255,255,255,0.9)",
+          bordercolor: "#e8e6e1",
+          borderwidth: 1,
+          font: { size: 10 }
+        },
+        xaxis: {
+          range: [1999.3, 2024.5],
+          dtick: 4,
+          tickangle: -35,
+          showgrid: true,
+          gridcolor: "#eceae5",
+          gridwidth: 1,
+          showline: true,
+          linecolor: "#d9d5ce",
+          linewidth: 1,
+          ticks: "outside",
+          ticklen: 3,
+          tickfont: { size: 10, color: "#6a6761" },
+          zeroline: false
+        },
+        yaxis: {
+          range: [40, 85],
+          nticks: 5,
+          showgrid: true,
+          gridcolor: "#eceae5",
+          gridwidth: 1,
+          zeroline: false,
+          tickfont: { color: SEX_COLOR, size: 10 }
+        },
+        yaxis2: {
+          overlaying: "y",
+          side: "right",
+          range: [150, 430],
+          nticks: 5,
+          showgrid: false,
+          zeroline: false,
+          tickfont: { color: SSRI_COLOR, size: 10 }
+        },
+        shapes: [mobileEventBand()],
+        annotations: [
+          {
+            xref: "paper",
+            yref: "paper",
+            x: 0,
+            y: 1.03,
+            xanchor: "left",
+            yanchor: "bottom",
+            showarrow: false,
+            text: "<b>Sexual frequency trend vs SSRI prescription growth</b>",
+            font: { family: "Libre Franklin, sans-serif", size: 10, color: "#1f1f1f" }
+          },
+          {
+            xref: "paper",
+            yref: "paper",
+            x: 0.985,
+            y: 1.03,
+            xanchor: "right",
+            yanchor: "bottom",
+            showarrow: false,
+            text: "2020–22",
+            font: { family: "JetBrains Mono, monospace", size: 8, color: "#7c5cbf" },
+            bgcolor: "rgba(124,92,191,0.12)",
+            bordercolor: "rgba(124,92,191,0.34)",
+            borderwidth: 1,
+            borderpad: 2
+          }
+        ]
+      };
+    }
+
+    function buildMobilePanelLayout(title, axisColor, yRange) {
+      return {
+        paper_bgcolor: "#ffffff",
+        plot_bgcolor: "#ffffff",
+        height: 230,
+        margin: { l: 42, r: 16, t: 34, b: 38 },
+        font: { family: "Libre Franklin, sans-serif", size: 10, color: "#2a2a2a" },
+        hovermode: "x",
+        hoverlabel: {
+          bgcolor: "#ffffff",
+          bordercolor: "#d8d4cd",
+          font: { family: "JetBrains Mono, monospace", size: 10, color: "#2a2a2a" }
+        },
+        xaxis: {
+          range: [2009.5, 2022.6],
+          dtick: 4,
+          tickangle: -35,
+          showgrid: true,
+          gridcolor: "#eceae5",
+          gridwidth: 1,
+          showline: true,
+          linecolor: "#d9d5ce",
+          linewidth: 1,
+          ticks: "outside",
+          ticklen: 3,
+          tickfont: { size: 10, color: "#6a6761" },
+          zeroline: false
+        },
+        yaxis: {
+          range: yRange,
+          nticks: 4,
+          showgrid: true,
+          gridcolor: "#eceae5",
+          gridwidth: 1,
+          zeroline: false,
+          tickfont: { color: axisColor, size: 10 }
+        },
+        shapes: [mobileEventBand()],
+        annotations: [
+          {
+            xref: "paper",
+            yref: "paper",
+            x: 0,
+            y: 1.06,
+            xanchor: "left",
+            yanchor: "bottom",
+            showarrow: false,
+            text: `<b>${title}</b>`,
+            font: { family: "Libre Franklin, sans-serif", size: 10, color: "#1f1f1f" }
+          }
+        ]
+      };
+    }
+
+    function renderDesktopIntimacyChart() {
       if (!window.Plotly) return;
-      Plotly.react("intimacy-chart", buildTraces(), buildLayout(), {
-        responsive: true,
-        displayModeBar: false,
-        showTips: false,
-        scrollZoom: false
-      });
+      const container = document.getElementById("intimacy-chart");
+
+      if (chartMode !== "desktop") {
+        container.classList.remove("mobile-mode");
+        container.classList.add("desktop-mode");
+        container.innerHTML = '<div id="intimacy-chart-desktop"></div>';
+        chartMode = "desktop";
+      }
+
+      Plotly.react("intimacy-chart-desktop", buildTraces(), buildLayout(), PLOT_CONFIG);
+    }
+
+    function renderMobileIntimacyChart() {
+      if (!window.Plotly) return;
+      const container = document.getElementById("intimacy-chart");
+
+      if (chartMode !== "mobile") {
+        container.classList.remove("desktop-mode");
+        container.classList.add("mobile-mode");
+        container.innerHTML = [
+          '<div id="intimacy-mobile-top" class="mobile-chart-panel mobile-chart-top"></div>',
+          '<div id="intimacy-mobile-middle" class="mobile-chart-panel"></div>',
+          '<div id="intimacy-mobile-bottom" class="mobile-chart-panel"></div>'
+        ].join("");
+        chartMode = "mobile";
+      }
+
+      const topTraces = [
+        {
+          name: "Sexual frequency",
+          type: "scatter",
+          mode: "lines+markers",
+          x: dataSeries.sexual.x,
+          y: dataSeries.sexual.y,
+          line: { color: SEX_COLOR, width: 3, shape: "spline", smoothing: 0.45 },
+          marker: { color: SEX_COLOR, size: 5, line: { color: "#ffffff", width: 1 } },
+          hovertemplate: "%{x}: %{y:.1f} times/year<extra></extra>"
+        },
+        {
+          name: "SSRI prescriptions",
+          type: "scatter",
+          mode: "lines+markers",
+          x: dataSeries.ssri.x,
+          y: dataSeries.ssri.y,
+          yaxis: "y2",
+          line: { color: SSRI_COLOR, width: 3, shape: "spline", smoothing: 0.35 },
+          marker: { color: SSRI_COLOR, size: 5, symbol: "diamond", line: { color: "#ffffff", width: 1 } },
+          hovertemplate: "%{x}: %{y:.0f}M prescriptions<extra></extra>"
+        }
+      ];
+
+      const marriageTrace = [
+        {
+          name: "Marriage rate",
+          type: "scatter",
+          mode: "lines+markers",
+          x: dataSeries.marriage.x,
+          y: dataSeries.marriage.y,
+          line: { color: MARRIAGE_COLOR, width: 2.8, shape: "spline", smoothing: 0.4 },
+          fill: "tozeroy",
+          fillcolor: "rgba(124, 92, 191, 0.10)",
+          marker: { color: MARRIAGE_COLOR, size: 4.5, line: { color: "#ffffff", width: 1 } },
+          hovertemplate: "%{x}: %{y:.2f}% married<extra></extra>",
+          showlegend: false
+        }
+      ];
+
+      const screenTrace = [
+        {
+          name: "Screen time",
+          type: "scatter",
+          mode: "lines+markers",
+          x: dataSeries.screen.x,
+          y: dataSeries.screen.y,
+          line: { color: SCREEN_COLOR, width: 2.8, shape: "spline", smoothing: 0.32 },
+          fill: "tozeroy",
+          fillcolor: "rgba(184, 134, 11, 0.10)",
+          marker: { color: SCREEN_COLOR, size: 4.5, line: { color: "#ffffff", width: 1 } },
+          hovertemplate: "%{x}: %{y:.1f} hours/day<extra></extra>",
+          showlegend: false
+        }
+      ];
+
+      Plotly.react("intimacy-mobile-top", topTraces, buildMobileTopLayout(), PLOT_CONFIG);
+      Plotly.react("intimacy-mobile-middle", marriageTrace, buildMobilePanelLayout("Marriage rates: low-variance channel", MARRIAGE_COLOR, [47.2, 49.05]), PLOT_CONFIG);
+      Plotly.react("intimacy-mobile-bottom", screenTrace, buildMobilePanelLayout("Screen-time acceleration since 2010", SCREEN_COLOR, [0, 12.2]), PLOT_CONFIG);
+    }
+
+    function renderIntimacyChart() {
+      if (window.innerWidth < 520) {
+        renderMobileIntimacyChart();
+        return;
+      }
+      renderDesktopIntimacyChart();
     }
 
     let resizeTimer = null;
