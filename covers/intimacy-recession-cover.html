@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Intimacy Recession Cover</title>
+  <style>
+    :root {
+      --paper: #f7f6f3;
+      --ink: #1c1c1c;
+      --ink-soft: #4d4d4d;
+      --border: #e4e1db;
+      --grid: #ece8e2;
+      --accent-purple: #7c5cbf;
+      --accent-red: #c74040;
+      --accent-blue: #3b6cb5;
+      --accent-amber: #b8860b;
+      --wash-red: rgba(199, 64, 64, 0.10);
+      --wash-blue: rgba(59, 108, 181, 0.10);
+      --wash-purple: rgba(124, 92, 191, 0.08);
+      --glass: rgba(255, 255, 255, 0.76);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: radial-gradient(1000px 520px at 90% -8%, #eef3f8, transparent 58%),
+                  radial-gradient(820px 460px at -5% 105%, #efece6, transparent 52%),
+                  var(--paper);
+      font-family: "Georgia", "Times New Roman", serif;
+      color: var(--ink);
+    }
+
+    .scene {
+      position: relative;
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      padding: 40px;
+    }
+
+    .chart-board {
+      position: absolute;
+      inset: 34px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%);
+      box-shadow: 0 18px 46px rgba(35, 32, 28, 0.08);
+      overflow: hidden;
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, transparent 0, transparent 62px, var(--grid) 63px),
+        linear-gradient(to right, transparent 0, transparent 94px, var(--grid) 95px);
+      background-size: 100% 64px, 96px 100%;
+      opacity: 0.95;
+    }
+
+    .panel-divider {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      height: 1px;
+      background: var(--border);
+      opacity: 0.8;
+    }
+
+    .panel-divider.p1 { top: 220px; }
+    .panel-divider.p2 { top: 370px; }
+
+    .viz {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .band {
+      fill: var(--wash-purple);
+    }
+
+    .line-red {
+      fill: none;
+      stroke: var(--accent-red);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.5));
+    }
+
+    .line-blue {
+      fill: none;
+      stroke: var(--accent-blue);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 3 8;
+    }
+
+    .line-purple {
+      fill: none;
+      stroke: #6e57a7;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .line-amber {
+      fill: none;
+      stroke: var(--accent-amber);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .area-purple {
+      fill: rgba(124, 92, 191, 0.12);
+    }
+
+    .area-amber {
+      fill: rgba(184, 134, 11, 0.11);
+    }
+
+    .dot-red { fill: var(--accent-red); }
+    .dot-blue { fill: var(--accent-blue); }
+
+    .axis-note {
+      font-family: "Courier New", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      fill: #847f76;
+    }
+
+    .chart-tag {
+      position: absolute;
+      padding: 7px 10px 6px;
+      border-radius: 999px;
+      border: 1px solid #ddd7cf;
+      background: rgba(255, 255, 255, 0.94);
+      color: #6c665d;
+      font: 600 11px "Courier New", ui-monospace, monospace;
+      letter-spacing: 0.4px;
+      z-index: 3;
+    }
+
+    .tag-a { top: 88px; right: 108px; }
+    .tag-b { top: 240px; right: 98px; }
+
+    .overlay {
+      position: absolute;
+      left: 78px;
+      right: 78px;
+      bottom: 84px;
+      border-radius: 16px;
+      border: 1px solid rgba(214, 209, 201, 0.95);
+      background: linear-gradient(135deg, var(--glass), rgba(255, 255, 255, 0.6));
+      backdrop-filter: blur(2.5px);
+      box-shadow: 0 16px 38px rgba(31, 28, 23, 0.15);
+      padding: 20px 28px 18px;
+      z-index: 4;
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      font-family: "Courier New", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 2.6px;
+      text-transform: uppercase;
+      color: #6f6961;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 62px;
+      line-height: 0.92;
+      letter-spacing: -1px;
+      font-weight: 600;
+      font-style: italic;
+      color: #1b1b1b;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.8);
+    }
+
+    .deck {
+      margin-top: 10px;
+      max-width: 780px;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-size: 22px;
+      line-height: 1.2;
+      color: #34302c;
+      letter-spacing: -0.2px;
+    }
+
+    .rule {
+      margin-top: 12px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(59,108,181,0.45), rgba(124,92,191,0.28), rgba(199,64,64,0.22));
+    }
+
+    .legend {
+      margin-top: 9px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      row-gap: 6px;
+      flex-wrap: wrap;
+      font-family: "Courier New", ui-monospace, monospace;
+      font-size: 10px;
+      line-height: 1.1;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #746d63;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 3px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .sw-red { background: var(--accent-red); }
+    .sw-blue { background: var(--accent-blue); }
+    .sw-purple { background: #6e57a7; }
+    .sw-amber { background: var(--accent-amber); }
+  </style>
+</head>
+<body>
+  <main class="scene" role="img" aria-label="Cover art for The Intimacy Recession with data as the backdrop">
+    <div class="chart-board">
+      <div class="grid"></div>
+      <div class="panel-divider p1"></div>
+      <div class="panel-divider p2"></div>
+
+      <svg class="viz" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+        <rect x="925" y="0" width="145" height="220" class="band"/>
+        <rect x="925" y="220" width="145" height="150" class="band"/>
+        <rect x="925" y="370" width="145" height="260" class="band"/>
+
+        <path class="line-red" d="M90 135 C170 127, 220 126, 290 140 C360 154, 435 175, 490 142 C560 98, 630 170, 690 184 C765 203, 833 188, 902 222 C960 248, 1038 267, 1106 278"/>
+        <path class="line-blue" d="M90 194 C180 184, 244 175, 315 162 C402 146, 487 131, 568 117 C651 102, 736 88, 814 74 C896 61, 999 42, 1110 28"/>
+        <circle class="dot-red" cx="1106" cy="278" r="7"/>
+        <circle class="dot-blue" cx="1110" cy="28" r="7"/>
+
+        <path class="area-purple" d="M120 322 C260 312, 450 328, 650 339 C840 351, 980 328, 1100 334 L1100 368 L120 368 Z"/>
+        <path class="line-purple" d="M120 322 C260 312, 450 328, 650 339 C840 351, 980 328, 1100 334"/>
+
+        <path class="area-amber" d="M120 524 C230 510, 350 488, 520 459 C690 428, 800 390, 912 334 C1003 284, 1070 258, 1100 241 L1100 370 L120 370 Z"/>
+        <path class="line-amber" d="M120 524 C230 510, 350 488, 520 459 C690 428, 800 390, 912 334 C1003 284, 1070 258, 1100 241"/>
+
+        <text x="84" y="52" class="axis-note">sexual frequency vs ssri prescriptions</text>
+        <text x="84" y="252" class="axis-note">marriage rate</text>
+        <text x="84" y="401" class="axis-note">daily screen time</text>
+      </svg>
+
+      <div class="chart-tag tag-a">+149% prescriptions</div>
+      <div class="chart-tag tag-b">~4x screen time</div>
+    </div>
+
+    <article class="overlay">
+      <p class="kicker">Data Dabs</p>
+      <h1>The Intimacy Recession</h1>
+      <p class="deck">Sex down. Meds up. Screen time up.</p>
+      <div class="rule"></div>
+      <div class="legend">
+        <span class="legend-item"><span class="legend-swatch sw-red"></span>Sexual frequency</span>
+        <span class="legend-item"><span class="legend-swatch sw-blue"></span>SSRI prescriptions</span>
+        <span class="legend-item"><span class="legend-swatch sw-purple"></span>Marriage rate</span>
+        <span class="legend-item"><span class="legend-swatch sw-amber"></span>Screen time</span>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
