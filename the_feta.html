@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>the feta — A Text Session</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night-deep: #0d1117;
+  --night-mid: #161b22;
+  --night-soft: #21262d;
+  --sky-cold: #1a2634;
+  --sky-winter: #2d3a4a;
+  --city-amber: #e8a855;
+  --city-warm: #d4956a;
+  --city-orange: #cc7843;
+  --window-glow: #f4d58d;
+  --headlight: #ffeebb;
+  --interior-warm: #c9a66b;
+  --cream: #f5f0e6;
+  --wool: #8a7d6a;
+  --surface-dark: rgba(13, 17, 23, 0.95);
+  --surface-glass: rgba(33, 38, 45, 0.7);
+  --text-primary: #f0ebe3;
+  --text-soft: #b8b0a5;
+  --text-whisper: #7a756d;
+  --text-dim: #4a4743;
+  --msg-kimberly-bg: rgba(201, 166, 107, 0.1);
+  --msg-kimberly-border: rgba(201, 166, 107, 0.18);
+  --msg-daniel-bg: rgba(100, 130, 160, 0.12);
+  --msg-daniel-border: rgba(100, 130, 160, 0.2);
+  --border-soft: rgba(200, 190, 175, 0.06);
+  --glow-warm: rgba(232, 168, 85, 0.5);
+  --snow-mist: rgba(200, 210, 220, 0.15);
+  --snow-flake: rgba(255, 255, 255, 0.8);
+  --serif-display: 'Fraunces', Georgia, serif;
+  --serif-body: 'DM Serif Display', Georgia, serif;
+  --mono: 'IBM Plex Mono', monospace;
+  
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--night-deep);
+  color: var(--text-primary);
+  font-family: var(--serif-body);
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ══════════════════════════════════════
+   HERO SCENE
+   ══════════════════════════════════════ */
+.hero-scene {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: calc(80px + var(--safe-area-bottom));
+}
+
+.landscape-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-scene__snow {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.64;
+}
+
+.snow-flake {
+  position: absolute;
+  width: 2.4px;
+  height: 2.4px;
+  background: var(--snow-flake);
+  border-radius: 50%;
+  opacity: 0.18;
+  animation: snow-fall linear infinite;
+  animation-delay: var(--snow-delay, 0s);
+  animation-duration: var(--snow-duration, 18s);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.18);
+}
+
+.story-snow {
+  position: fixed;
+  inset: 0;
+  z-index: 26;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 650ms ease;
+}
+
+body.story-snow-visible .story-snow {
+  opacity: 0.2;
+}
+
+.snow-flake--story {
+  width: 1.8px;
+  height: 1.8px;
+  opacity: 0.12;
+  animation-name: snow-fall-soft;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.14);
+}
+
+@keyframes snow-fall {
+  0% { 
+    transform: translateY(-14vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  12% { opacity: 0.52; }
+  88% { opacity: 0.24; }
+  100% { 
+    transform: translateY(108vh) translateX(18px) rotate(320deg);
+    opacity: 0;
+  }
+}
+
+@keyframes snow-fall-soft {
+  0% {
+    transform: translateY(-12vh) translateX(0);
+    opacity: 0;
+  }
+  14% { opacity: 0.34; }
+  86% { opacity: 0.15; }
+  100% {
+    transform: translateY(108vh) translateX(12px);
+    opacity: 0;
+  }
+}
+
+.hero-scene__mist {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(to top, var(--snow-mist), transparent);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 0 32px;
+  max-width: 520px;
+}
+
+.hero__time {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--city-amber);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fade-in 1.2s ease-out 0.6s forwards;
+  text-shadow: 0 0 24px rgba(232, 168, 85, 0.35);
+}
+
+.hero__title {
+  font-family: var(--serif-display);
+  font-size: clamp(38px, 11vw, 80px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.08;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  text-wrap: balance;
+  opacity: 0;
+  animation: rise-in 1s ease-out 0.8s forwards;
+  text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+}
+
+.hero__deck {
+  font-family: var(--serif-body);
+  font-size: clamp(14px, 3.5vw, 17px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--text-soft);
+  margin-bottom: 36px;
+  text-wrap: pretty;
+  opacity: 0;
+  animation: rise-in 1s ease-out 1s forwards;
+}
+
+.hero__scroll {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  opacity: 0;
+  animation: fade-in 1s ease-out 1.8s forwards;
+}
+
+.hero__scroll span {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+/* ══════════════════════════════════════
+   MAIN CONTENT
+   ══════════════════════════════════════ */
+.main-content {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    var(--sky-cold) 0%,
+    var(--night-deep) 8%,
+    var(--night-deep) 100%
+  );
+  z-index: 20;
+}
+
+.main-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, var(--snow-mist), transparent);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   SECTION TRACKER
+   ══════════════════════════════════════ */
+.tracker {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 998;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 8px 0;
+  opacity: 0.38;
+  transition: opacity 0.3s ease;
+}
+
+.tracker:hover,
+.tracker:focus-within {
+  opacity: 1;
+}
+
+.tracker__item {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tracker__item:focus-visible {
+  outline: 1px solid rgba(232, 168, 85, 0.4);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+.tracker__label {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: lowercase;
+  color: var(--text-dim);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(8px);
+  transition: all 0.3s ease;
+}
+
+.tracker__item:hover .tracker__label,
+.tracker__item.active .tracker__label,
+.tracker__item:focus-visible .tracker__label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  color: var(--city-amber);
+}
+
+.tracker__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-dim);
+  background: transparent;
+  transition: all 0.4s ease;
+}
+
+.tracker__item.active .tracker__dot {
+  background: var(--city-amber);
+  border-color: var(--city-amber);
+  box-shadow: 0 0 10px var(--glow-warm), 0 0 20px rgba(232, 168, 85, 0.25);
+}
+
+.tracker__item:focus-visible .tracker__dot {
+  border-color: var(--city-amber);
+}
+
+@media (max-width: 900px), (hover: none) { 
+  .tracker { display: none; } 
+}
+
+/* ══════════════════════════════════════
+   MOVEMENT HEADERS
+   ══════════════════════════════════════ */
+.movement {
+  padding: 70px 24px 36px;
+  display: flex;
+  justify-content: center;
+  scroll-margin-top: 26px;
+}
+
+.movement__inner {
+  max-width: 560px;
+  width: 100%;
+}
+
+.movement__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.movement__number {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--city-amber);
+  letter-spacing: 2px;
+  padding: 5px 11px;
+  border: 1px solid rgba(232, 168, 85, 0.2);
+  border-radius: 20px;
+  background: rgba(232, 168, 85, 0.05);
+  flex-shrink: 0;
+}
+
+.movement__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(232, 168, 85, 0.12), transparent);
+}
+
+.movement__timestamp {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════
+   TEXT SESSION
+   ══════════════════════════════════════ */
+.session {
+  padding: 16px 24px 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.session__inner {
+  max-width: 560px;
+  width: 100%;
+}
+
+.msg {
+  margin-bottom: 22px;
+  opacity: 0;
+  animation: msg-in 0.5s ease-out forwards;
+  animation-play-state: paused;
+}
+
+.msg.visible { animation-play-state: running; }
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.msg--kimberly {
+  text-align: left;
+  padding-right: 48px;
+}
+
+.msg--kimberly .msg__content {
+  background: var(--msg-kimberly-bg);
+  border: 1px solid var(--msg-kimberly-border);
+  border-radius: 16px 16px 16px 4px;
+  display: inline-block;
+}
+
+.msg--daniel {
+  text-align: right;
+  padding-left: 48px;
+}
+
+.msg--daniel .msg__content {
+  background: var(--msg-daniel-bg);
+  border: 1px solid var(--msg-daniel-border);
+  border-radius: 16px 16px 4px 16px;
+  display: inline-block;
+  text-align: left;
+}
+
+.msg__content {
+  padding: 16px 20px;
+  max-width: 100%;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.msg__name {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+  opacity: 0.55;
+}
+
+.msg--kimberly .msg__name { color: var(--interior-warm); }
+.msg--daniel .msg__name { color: #6482a0; }
+
+.msg__text {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.72;
+  color: var(--text-primary);
+}
+
+.msg__text em {
+  font-style: italic;
+  color: var(--city-warm);
+}
+
+.msg__text strong {
+  font-weight: 400;
+  color: var(--window-glow);
+}
+
+.msg__text .heat {
+  color: var(--city-orange);
+}
+
+.msg__text .thought {
+  color: var(--city-amber);
+  font-style: italic;
+}
+
+.msg__time {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  margin-top: 9px;
+  letter-spacing: 0.3px;
+}
+
+.msg--continuation {
+  margin-top: -12px;
+}
+
+.msg--continuation .msg__name {
+  display: none;
+}
+
+/* ══════════════════════════════════════
+   LIGHT DIVIDER
+   ══════════════════════════════════════ */
+.light-divider {
+  padding: 40px 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.light-divider svg {
+  width: 48px;
+  height: auto;
+  opacity: 0.5;
+}
+
+.light-glow {
+  animation: light-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes light-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
+}
+
+/* ══════════════════════════════════════
+   CODA
+   ══════════════════════════════════════ */
+.coda {
+  padding: 70px 24px 60px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  scroll-margin-top: 26px;
+}
+
+.coda__inner {
+  max-width: 420px;
+}
+
+.coda__ellipsis {
+  font-family: var(--serif-display);
+  font-size: 24px;
+  color: var(--text-dim);
+  letter-spacing: 14px;
+  margin-bottom: 28px;
+  opacity: 0.7;
+}
+
+.coda__text {
+  font-family: var(--serif-display);
+  font-size: clamp(13px, 3.2vw, 15px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.85;
+  color: var(--text-soft);
+  text-wrap: pretty;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════ */
+.footer {
+  padding: 32px 24px calc(32px + var(--safe-area-bottom));
+  text-align: center;
+  border-top: 1px solid var(--border-soft);
+  margin-top: 30px;
+}
+
+.footer__badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.footer__badge span {
+  color: var(--city-amber);
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — iPhone 16E & Mobile
+   ══════════════════════════════════════ */
+@media (max-width: 420px) {
+  .hero-content { 
+    padding: 0 20px; 
+  }
+  
+  .hero__title {
+    font-size: clamp(34px, 10.5vw, 38px);
+    letter-spacing: -0.3px;
+  }
+  
+  .hero__deck {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  
+  .movement { 
+    padding: 56px 20px 28px; 
+  }
+  
+  .movement__number {
+    font-size: 8px;
+    padding: 4px 9px;
+  }
+  
+  .movement__timestamp {
+    font-size: 8px;
+  }
+  
+  .session { 
+    padding: 12px 20px 40px; 
+  }
+  
+  .msg--kimberly { padding-right: 32px; }
+  .msg--daniel { padding-left: 32px; }
+  
+  .msg__content { 
+    padding: 14px 16px; 
+  }
+  
+  .msg__text { 
+    font-size: 14px; 
+    line-height: 1.68;
+  }
+  
+  .msg__time {
+    font-size: 8px;
+  }
+  
+  .coda { 
+    padding: 56px 20px 50px; 
+  }
+  
+  .coda__ellipsis {
+    font-size: 20px;
+    letter-spacing: 10px;
+  }
+  
+  .coda__text {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  body.story-snow-visible .story-snow {
+    opacity: 0.16;
+  }
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — Large Screens
+   ══════════════════════════════════════ */
+@media (min-width: 1200px) {
+  .hero__title {
+    font-size: 88px;
+  }
+  
+  .hero__deck {
+    font-size: 18px;
+  }
+  
+  .movement__inner,
+  .session__inner {
+    max-width: 620px;
+  }
+  
+  .msg__text {
+    font-size: 16px;
+  }
+  
+  .coda__inner {
+    max-width: 480px;
+  }
+  
+  .coda__text {
+    font-size: 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     HERO SCENE
+     ═══════════════════════════════════ -->
+<section class="hero-scene" id="opening">
+  
+  <div class="hero-scene__snow" id="snow-container" aria-hidden="true"></div>
+  <div class="hero-scene__mist" aria-hidden="true"></div>
+  
+  <svg class="landscape-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Manhattan skyline at night">
+    <defs>
+      <linearGradient id="nightGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#0a0e14"/>
+        <stop offset="40%" stop-color="#141c24"/>
+        <stop offset="70%" stop-color="#1a2634"/>
+        <stop offset="100%" stop-color="#2d3a4a"/>
+      </linearGradient>
+      
+      <radialGradient id="cityGlow" cx="50%" cy="100%" r="60%" fx="50%" fy="100%">
+        <stop offset="0%" stop-color="#e8a855" stop-opacity="0.12"/>
+        <stop offset="50%" stop-color="#d4956a" stop-opacity="0.06"/>
+        <stop offset="100%" stop-color="#d4956a" stop-opacity="0"/>
+      </radialGradient>
+      
+      <radialGradient id="windowGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#f4d58d" stop-opacity="0.85"/>
+        <stop offset="60%" stop-color="#e8c878" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#e8c878" stop-opacity="0"/>
+      </radialGradient>
+      
+      <radialGradient id="streetGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffeebb" stop-opacity="0.65"/>
+        <stop offset="50%" stop-color="#e8c878" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#e8c878" stop-opacity="0"/>
+      </radialGradient>
+      
+      <linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#1a2838"/>
+        <stop offset="100%" stop-color="#0f1820"/>
+      </linearGradient>
+    </defs>
+    
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#nightGradient)"/>
+    <ellipse cx="960" cy="1080" rx="1200" ry="400" fill="url(#cityGlow)"/>
+    
+    <g fill="#ffffff" opacity="0.55">
+      <circle cx="150" cy="80" r="1"/>
+      <circle cx="380" cy="120" r="1.2"/>
+      <circle cx="620" cy="60" r="0.8"/>
+      <circle cx="850" cy="150" r="1"/>
+      <circle cx="1100" cy="90" r="1.1"/>
+      <circle cx="1350" cy="130" r="0.9"/>
+      <circle cx="1580" cy="70" r="1"/>
+      <circle cx="1780" cy="110" r="1.2"/>
+      <circle cx="480" cy="200" r="0.7"/>
+      <circle cx="1280" cy="180" r="0.8"/>
+    </g>
+    
+    <g fill="#1a2028" opacity="0.8">
+      <rect x="50" y="480" width="30" height="200"/>
+      <rect x="90" y="520" width="25" height="160"/>
+      <rect x="130" y="460" width="35" height="220"/>
+      <rect x="175" y="500" width="28" height="180"/>
+      <rect x="220" y="490" width="32" height="190"/>
+      <rect x="1700" y="470" width="35" height="210"/>
+      <rect x="1750" y="510" width="30" height="170"/>
+      <rect x="1800" y="480" width="40" height="200"/>
+      <rect x="1860" y="530" width="25" height="150"/>
+    </g>
+    
+    <rect x="0" y="680" width="1920" height="150" fill="url(#riverGradient)"/>
+    
+    <g opacity="0.28">
+      <ellipse cx="300" cy="750" rx="60" ry="3" fill="#e8a855"/>
+      <ellipse cx="600" cy="760" rx="80" ry="4" fill="#d4956a"/>
+      <ellipse cx="960" cy="740" rx="100" ry="5" fill="#e8a855"/>
+      <ellipse cx="1300" cy="755" rx="70" ry="3" fill="#d4956a"/>
+      <ellipse cx="1600" cy="745" rx="90" ry="4" fill="#e8a855"/>
+    </g>
+    
+    <g fill="#12161c">
+      <rect x="50" y="400" width="60" height="280"/>
+      <rect x="130" y="350" width="50" height="330"/>
+      <rect x="200" y="420" width="70" height="260"/>
+      <rect x="290" y="380" width="45" height="300"/>
+      <rect x="355" y="320" width="55" height="360"/>
+      <rect x="430" y="390" width="40" height="290"/>
+      <rect x="500" y="280" width="70" height="400"/>
+      <rect x="590" y="250" width="60" height="430"/>
+      <rect x="670" y="300" width="80" height="380"/>
+      <rect x="770" y="320" width="50" height="360"/>
+      <rect x="840" y="260" width="65" height="420"/>
+      <rect x="920" y="200" width="80" height="480"/>
+      <rect x="1020" y="240" width="55" height="440"/>
+      <rect x="1095" y="290" width="70" height="390"/>
+      <rect x="1190" y="350" width="60" height="330"/>
+      <rect x="1270" y="310" width="50" height="370"/>
+      <rect x="1340" y="280" width="75" height="400"/>
+      <rect x="1440" y="340" width="45" height="340"/>
+      <rect x="1510" y="300" width="60" height="380"/>
+      <rect x="1590" y="360" width="55" height="320"/>
+      <rect x="1670" y="320" width="70" height="360"/>
+      <rect x="1760" y="380" width="50" height="300"/>
+      <rect x="1830" y="350" width="60" height="330"/>
+    </g>
+    
+    <g>
+      <ellipse cx="160" cy="380" rx="15" ry="8" fill="url(#windowGlow)"/>
+      <ellipse cx="180" cy="400" rx="12" ry="6" fill="url(#windowGlow)"/>
+      <ellipse cx="380" cy="340" rx="18" ry="9" fill="url(#windowGlow)"/>
+      <ellipse cx="400" cy="360" rx="14" ry="7" fill="url(#windowGlow)"/>
+      <ellipse cx="610" cy="280" rx="20" ry="10" fill="url(#windowGlow)"/>
+      <ellipse cx="640" cy="300" rx="16" ry="8" fill="url(#windowGlow)"/>
+      <ellipse cx="700" cy="340" rx="22" ry="11" fill="url(#windowGlow)"/>
+      <ellipse cx="960" cy="240" rx="25" ry="12" fill="url(#windowGlow)"/>
+      <ellipse cx="960" cy="280" rx="20" ry="10" fill="url(#windowGlow)"/>
+      <ellipse cx="1370" cy="320" rx="18" ry="9" fill="url(#windowGlow)"/>
+      <ellipse cx="1530" cy="340" rx="15" ry="7" fill="url(#windowGlow)"/>
+      <ellipse cx="1700" cy="360" rx="20" ry="10" fill="url(#windowGlow)"/>
+    </g>
+    
+    <g>
+      <ellipse cx="250" cy="660" rx="40" ry="25" fill="url(#streetGlow)"/>
+      <ellipse cx="500" cy="650" rx="45" ry="28" fill="url(#streetGlow)"/>
+      <ellipse cx="750" cy="655" rx="40" ry="25" fill="url(#streetGlow)"/>
+      <ellipse cx="1000" cy="660" rx="50" ry="30" fill="url(#streetGlow)"/>
+      <ellipse cx="1250" cy="650" rx="42" ry="26" fill="url(#streetGlow)"/>
+      <ellipse cx="1500" cy="655" rx="45" ry="28" fill="url(#streetGlow)"/>
+      <ellipse cx="1700" cy="660" rx="40" ry="25" fill="url(#streetGlow)"/>
+    </g>
+    
+    <g stroke="#1a1e24" stroke-width="8" fill="none">
+      <path d="M100 700 Q400 600 700 700"/>
+      <path d="M700 700 Q1000 620 1300 700"/>
+      <path d="M1300 700 Q1600 620 1900 700"/>
+    </g>
+    
+    <g fill="#181c22">
+      <rect x="380" y="580" width="20" height="120"/>
+      <rect x="520" y="600" width="18" height="100"/>
+      <rect x="980" y="560" width="22" height="140"/>
+      <rect x="1120" y="590" width="18" height="110"/>
+      <rect x="1480" y="580" width="20" height="120"/>
+    </g>
+    
+    <g stroke="#1a1e24" stroke-width="2" fill="none" opacity="0.75">
+      <path d="M390 580 Q450 650 530 600"/>
+      <path d="M530 600 Q600 650 700 700"/>
+      <path d="M990 560 Q1050 630 1130 590"/>
+      <path d="M1130 590 Q1200 640 1300 700"/>
+      <path d="M1490 580 Q1550 650 1700 700"/>
+    </g>
+    
+    <g>
+      <ellipse cx="200" cy="695" rx="8" ry="3" fill="#ffeebb" opacity="0.65"/>
+      <ellipse cx="195" cy="695" rx="6" ry="2" fill="#d4644a" opacity="0.55"/>
+      <ellipse cx="800" cy="685" rx="8" ry="3" fill="#ffeebb" opacity="0.65"/>
+      <ellipse cx="795" cy="685" rx="6" ry="2" fill="#d4644a" opacity="0.55"/>
+      <ellipse cx="1400" cy="690" rx="8" ry="3" fill="#ffeebb" opacity="0.65"/>
+      <ellipse cx="1395" cy="690" rx="6" ry="2" fill="#d4644a" opacity="0.55"/>
+    </g>
+    
+    <ellipse cx="100" cy="850" rx="150" ry="30" fill="#1a2430"/>
+    <ellipse cx="400" cy="870" rx="200" ry="40" fill="#1e2835"/>
+    <ellipse cx="800" cy="860" rx="180" ry="35" fill="#1a2430"/>
+    <ellipse cx="1200" cy="880" rx="220" ry="45" fill="#1e2835"/>
+    <ellipse cx="1600" cy="855" rx="190" ry="32" fill="#1a2430"/>
+    <ellipse cx="1850" cy="875" rx="150" ry="38" fill="#1e2835"/>
+    
+    <g transform="translate(1800, 650)">
+      <rect x="-4" y="0" width="8" height="200" fill="#2a2520"/>
+      <ellipse cx="0" cy="0" rx="50" ry="35" fill="url(#streetGlow)" class="light-glow"/>
+      <rect x="-15" y="-25" width="30" height="30" fill="#2a2520" rx="2"/>
+      <rect x="-10" y="-20" width="20" height="20" fill="#ffeebb" opacity="0.75" rx="1"/>
+    </g>
+    
+    <g transform="translate(100, 680)">
+      <rect x="-4" y="0" width="8" height="170" fill="#2a2520"/>
+      <ellipse cx="0" cy="0" rx="45" ry="30" fill="url(#streetGlow)" class="light-glow"/>
+      <rect x="-12" y="-20" width="24" height="24" fill="#2a2520" rx="2"/>
+      <rect x="-8" y="-16" width="16" height="16" fill="#ffeebb" opacity="0.7" rx="1"/>
+    </g>
+  </svg>
+  
+  <div class="hero-content">
+    <p class="hero__time">january · saturday · 6pm</p>
+    <h1 class="hero__title">the feta</h1>
+    <p class="hero__deck">
+      She lands at JFK in cream cashmere and Celine sunglasses pushed up on her head. He has feta in his fridge. It's 19 degrees. This is how it starts.
+    </p>
+    <p class="hero__scroll"><span>↓</span></p>
+  </div>
+  
+</section>
+
+<div class="story-snow" id="story-snow" aria-hidden="true"></div>
+
+<!-- TRACKER -->
+<nav class="tracker" aria-label="Section navigation">
+  <button class="tracker__item active" data-section="opening" aria-label="Opening">
+    <span class="tracker__label">opening</span>
+    <div class="tracker__dot"></div>
+  </button>
+  <button class="tracker__item" data-section="movement-1" aria-label="Landing">
+    <span class="tracker__label">landing</span>
+    <div class="tracker__dot"></div>
+  </button>
+  <button class="tracker__item" data-section="movement-2" aria-label="The feta">
+    <span class="tracker__label">the feta</span>
+    <div class="tracker__dot"></div>
+  </button>
+  <button class="tracker__item" data-section="movement-3" aria-label="Tonight">
+    <span class="tracker__label">tonight</span>
+    <div class="tracker__dot"></div>
+  </button>
+  <button class="tracker__item" data-section="coda" aria-label="Coda">
+    <span class="tracker__label">coda</span>
+    <div class="tracker__dot"></div>
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════ -->
+<main class="main-content">
+
+  <!-- MOVEMENT I -->
+  <section class="movement" id="movement-1">
+    <div class="movement__inner">
+      <div class="movement__header">
+        <span class="movement__number">01</span>
+        <div class="movement__line"></div>
+        <span class="movement__timestamp">6:02 pm</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="session">
+    <div class="session__inner">
+      
+      <article class="msg msg--kimberly visible">
+        <div class="msg__content">
+          <div class="msg__name">Kimberly</div>
+          <p class="msg__text"><span class="thought">I thought about you on the flight.</span></p>
+          <p class="msg__text" style="margin-top: 10px;">Not in a useful way. Just... thought about you.</p>
+          <p class="msg__time">6:02 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">Ahh there she is...</p>
+          <p class="msg__text" style="margin-top: 10px;">good thoughts or bad?</p>
+          <p class="msg__text" style="margin-top: 10px;">My project is done - thankfully...</p>
+          <p class="msg__text" style="margin-top: 10px;">how did the event go? What did you wear?</p>
+          <p class="msg__text" style="margin-top: 10px;">i bought you a present so clearly i thought about you too <em>wink wink</em></p>
+          <p class="msg__time">6:09 pm</p>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+
+  <!-- MOVEMENT II -->
+  <section class="movement" id="movement-2">
+    <div class="movement__inner">
+      <div class="movement__header">
+        <span class="movement__number">02</span>
+        <div class="movement__line"></div>
+        <span class="movement__timestamp">6:17 pm</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="session">
+    <div class="session__inner">
+      
+      <article class="msg msg--kimberly visible">
+        <div class="msg__content">
+          <div class="msg__name">Kimberly</div>
+          <p class="msg__text">There she is?</p>
+          <p class="msg__text" style="margin-top: 10px;">I wasn't aware I'd gone anywhere.</p>
+          <p class="msg__time">6:09 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--kimberly msg--continuation visible">
+        <div class="msg__content">
+          <p class="msg__text">Good thoughts. Mostly.</p>
+          <p class="msg__text" style="margin-top: 10px;"><span class="heat">One mildly inappropriate thought somewhere over Phoenix but I'm not admitting to anything without counsel present.</span></p>
+          <p class="msg__time">6:11 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--kimberly msg--continuation visible">
+        <div class="msg__content">
+          <p class="msg__text">Event was fine. Standing ovation. Two people cried. I think one of them was having a personal crisis unrelated to anything I said but I'm taking credit anyway.</p>
+          <p class="msg__text" style="margin-top: 10px;">I wore the navy thing. <em>You know the one.</em></p>
+          <p class="msg__text" style="margin-top: 10px;">A present?</p>
+          <p class="msg__text" style="margin-top: 10px;">You know I'm suspicious of gifts.</p>
+          <p class="msg__text" style="margin-top: 10px;">What kind of present?</p>
+          <p class="msg__time">6:14 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text">Suspicious ... more like New York and jaded ... i can relate</p>
+          <p class="msg__text" style="margin-top: 10px;">relax ... its the <strong>feta in the brine</strong> you always hijack when you're over ... not a 4 carat princess cut platinum band from Tiffanys or anything ...</p>
+          <p class="msg__text" style="margin-top: 10px;">I like the navy thing ...</p>
+          <p class="msg__text" style="margin-top: 10px;"><strong>when can I see you?</strong></p>
+          <p class="msg__time">6:17 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--kimberly visible">
+        <div class="msg__content">
+          <div class="msg__name">Kimberly</div>
+          <p class="msg__text">The feta.</p>
+          <p class="msg__text" style="margin-top: 10px;">You bought me the feta.</p>
+          <p class="msg__text" style="margin-top: 10px;">That's...</p>
+          <p class="msg__text" style="margin-top: 10px;"><em>That's annoyingly thoughtful.</em></p>
+          <p class="msg__time">6:18 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--kimberly msg--continuation visible">
+        <div class="msg__content">
+          <p class="msg__text">And I don't HIJACK. I sample. There's a difference. Hijacking implies I take more than my share.</p>
+          <p class="msg__text" style="margin-top: 10px;">...</p>
+          <p class="msg__text" style="margin-top: 10px;">I take more than my share.</p>
+          <p class="msg__time">6:19 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--kimberly msg--continuation visible">
+        <div class="msg__content">
+          <p class="msg__text">I just got home. My apartment smells like it missed me. That's not a real thing but I stand by it.</p>
+          <p class="msg__text" style="margin-top: 10px;">I need to shower. Airports make me feel like a public surface.</p>
+          <p class="msg__text" style="margin-top: 10px;"><em>You could come over.</em></p>
+          <p class="msg__text" style="margin-top: 10px;">If you wanted.</p>
+          <p class="msg__time">6:21 pm</p>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+
+  <!-- MOVEMENT III -->
+  <section class="movement" id="movement-3">
+    <div class="movement__inner">
+      <div class="movement__header">
+        <span class="movement__number">03</span>
+        <div class="movement__line"></div>
+        <span class="movement__timestamp">6:24 pm</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="session">
+    <div class="session__inner">
+      
+      <article class="msg msg--kimberly visible">
+        <div class="msg__content">
+          <div class="msg__name">Kimberly</div>
+          <p class="msg__text">Or we could do tomorrow. I'm not going anywhere for a while.</p>
+          <p class="msg__text" style="margin-top: 10px;">But tonight's fine too.</p>
+          <p class="msg__text" style="margin-top: 10px;"><strong>Tonight's good actually.</strong></p>
+          <p class="msg__time">6:22 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--daniel visible">
+        <div class="msg__content">
+          <div class="msg__name">Daniel</div>
+          <p class="msg__text"><span class="heat">It's sampling when you are in those high cut panties that make me want to cry</span> ... its hijacking when you are not ...</p>
+          <p class="msg__text" style="margin-top: 10px;">let me finish this football game and ill shower and call an uber ... with the Feta ... and light bites ... and wine .. and weed ...</p>
+          <p class="msg__text" style="margin-top: 10px;"><strong>9ish im thinking ...</strong></p>
+          <p class="msg__time">6:24 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--kimberly visible">
+        <div class="msg__content">
+          <div class="msg__name">Kimberly</div>
+          <p class="msg__text">I'm going to let the panties comment sit there and pretend I didn't read it four times.</p>
+          <p class="msg__text" style="margin-top: 10px;">9ish works.</p>
+          <p class="msg__text" style="margin-top: 10px;">I might be half asleep on the couch by then.</p>
+          <p class="msg__text" style="margin-top: 10px;">LA time zone. Three days of being perceived. I'm running on spite and Aesop hand cream.</p>
+          <p class="msg__text" style="margin-top: 10px;">But I'll leave the door unlocked after 8:45 in case I fall asleep.</p>
+          <p class="msg__text" style="margin-top: 10px;"><em>You know where everything is.</em></p>
+          <p class="msg__text" style="margin-top: 10px;">Bring the feta.</p>
+          <p class="msg__text" style="margin-top: 10px;">And yourself I guess.</p>
+          <p class="msg__time">6:24 pm</p>
+        </div>
+      </article>
+      
+      <article class="msg msg--kimberly msg--continuation visible">
+        <div class="msg__content">
+          <p class="msg__text"><span class="heat">The high cuts are in the laundry.</span></p>
+          <p class="msg__text" style="margin-top: 10px;">Just so you know.</p>
+          <p class="msg__text" style="margin-top: 10px;"><strong>Expect hijacking.</strong></p>
+          <p class="msg__time">6:25 pm</p>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+
+  <!-- LIGHT DIVIDER -->
+  <div class="light-divider" aria-hidden="true">
+    <svg viewBox="0 0 60 90" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <radialGradient id="smallLightGlow" cx="50%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#ffeebb" stop-opacity="0.75"/>
+          <stop offset="60%" stop-color="#e8c878" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#e8c878" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="30" cy="25" rx="35" ry="28" fill="url(#smallLightGlow)" class="light-glow"/>
+      <rect x="27" y="45" width="6" height="45" fill="#2a2520"/>
+      <rect x="18" y="10" width="24" height="24" fill="#2a2520" rx="2"/>
+      <rect x="21" y="13" width="18" height="18" fill="#ffeebb" opacity="0.8" rx="1"/>
+    </svg>
+  </div>
+
+  <!-- CODA -->
+  <section class="coda" id="coda">
+    <div class="coda__inner">
+      <p class="coda__ellipsis" aria-hidden="true">· · ·</p>
+      <p class="coda__text">
+        That's the text session. That's the 6pm to 6:25pm of a Saturday in January when it's 19 degrees outside and two people who have TIME and don't need titles but know what's coming have just made a plan. He has feta. She has a door unlocked. The night hasn't started yet, but it already has a shape.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer__badge">
+      <span>the feta</span> · a text session · <span id="timestamp"></span>
+    </p>
+  </footer>
+
+</main>
+
+<script>
+(function() {
+  'use strict';
+  
+  // Timestamp
+  var timestampEl = document.getElementById('timestamp');
+  if (timestampEl) {
+    timestampEl.textContent = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short'
+    });
+  }
+  
+  // Snow layers: hero + subtle story snowfall while reading.
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var compactViewport = window.matchMedia('(max-width: 900px)').matches;
+  var snowContainer = document.getElementById('snow-container');
+  var storySnow = document.getElementById('story-snow');
+
+  function populateSnowLayer(container, config) {
+    if (!container) return;
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < config.count; i++) {
+      var flake = document.createElement('span');
+      flake.className = 'snow-flake' + (config.variant ? (' ' + config.variant) : '');
+      flake.style.left = (Math.random() * 100) + '%';
+
+      var size = config.minSize + Math.random() * (config.maxSize - config.minSize);
+      flake.style.width = size.toFixed(2) + 'px';
+      flake.style.height = size.toFixed(2) + 'px';
+      var duration = config.minDuration + Math.random() * (config.maxDuration - config.minDuration);
+      var delay = -Math.random() * duration; // negative delay starts flakes mid-fall for immediate motion
+      flake.style.setProperty('--snow-duration', duration.toFixed(2) + 's');
+      flake.style.setProperty('--snow-delay', delay.toFixed(2) + 's');
+      flake.style.setProperty('animation-duration', duration.toFixed(2) + 's', 'important');
+      flake.style.setProperty('animation-delay', delay.toFixed(2) + 's', 'important');
+      flake.style.setProperty('animation-iteration-count', 'infinite', 'important');
+      flake.style.opacity = (config.opacityMin + Math.random() * (config.opacityMax - config.opacityMin)).toFixed(2);
+
+      fragment.appendChild(flake);
+    }
+    container.appendChild(fragment);
+  }
+
+  var heroCount = compactViewport ? 34 : 52;
+  var storyCount = compactViewport ? 18 : 30;
+  if (prefersReducedMotion) {
+    heroCount = compactViewport ? 20 : 28;
+    storyCount = compactViewport ? 10 : 14;
+  }
+
+  populateSnowLayer(snowContainer, {
+    count: heroCount,
+    minSize: 1.7,
+    maxSize: 3.6,
+    minDuration: 12,
+    maxDuration: 22,
+    opacityMin: 0.22,
+    opacityMax: 0.55,
+    variant: ''
+  });
+
+  populateSnowLayer(storySnow, {
+    count: storyCount,
+    minSize: 1.2,
+    maxSize: 2.5,
+    minDuration: 16,
+    maxDuration: 26,
+    opacityMin: 0.14,
+    opacityMax: 0.34,
+    variant: 'snow-flake--story'
+  });
+
+  if (storySnow) {
+    var storySnowThreshold = Math.max(window.innerHeight * 0.35, 180);
+    var snowTicking = false;
+
+    function setStorySnowVisibility() {
+      document.body.classList.toggle('story-snow-visible', window.scrollY > storySnowThreshold);
+      snowTicking = false;
+    }
+
+    function onSnowScroll() {
+      if (snowTicking) return;
+      snowTicking = true;
+      window.requestAnimationFrame(setStorySnowVisibility);
+    }
+
+    window.addEventListener('scroll', onSnowScroll, { passive: true });
+    window.addEventListener('resize', function() {
+      storySnowThreshold = Math.max(window.innerHeight * 0.35, 180);
+      setStorySnowVisibility();
+    });
+    setStorySnowVisibility();
+  }
+  
+  // Section tracker
+  var trackerItems = document.querySelectorAll('.tracker__item');
+  var sectionIds = [];
+  
+  trackerItems.forEach(function(item) {
+    var sectionId = item.getAttribute('data-section');
+    if (sectionId) sectionIds.push(sectionId);
+  });
+  
+  var observerOptions = {
+    rootMargin: '-35% 0px -35% 0px',
+    threshold: 0
+  };
+  
+  var sectionObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        trackerItems.forEach(function(item) {
+          var itemId = item.getAttribute('data-section');
+          item.classList.toggle('active', itemId === id);
+        });
+      }
+    });
+  }, observerOptions);
+  
+  sectionIds.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+  
+  // Smooth scroll for tracker
+  trackerItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      var targetId = item.getAttribute('data-section');
+      var target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  // Message fade-in
+  var messages = document.querySelectorAll('.msg');
+  var msgObserverOptions = {
+    rootMargin: '0px 0px -60px 0px',
+    threshold: 0.1
+  };
+  
+  var msgObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, msgObserverOptions);
+  
+  messages.forEach(function(msg) {
+    msgObserver.observe(msg);
+  });
+  
+})();
+</script>
+
+</body>
+</html>
