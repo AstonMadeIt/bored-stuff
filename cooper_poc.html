@@ -1,0 +1,2874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agency White-Label Executive Brief POC</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Serif+4:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --line: #dce6f2;
+      --ink: #111827;
+      --ink-soft: #6b7280;
+      --brand-primary: #0f172a;
+      --brand-secondary: #3b82f6;
+      --accent: #1d4ed8;
+      --ok: #15803d;
+      --warn: #b45309;
+      --risk: #b91c1c;
+      --mono: "JetBrains Mono", monospace;
+      --ui: "Libre Franklin", sans-serif;
+      --serif: "Source Serif 4", serif;
+      --display: "Playfair Display", serif;
+      --shadow: 0 18px 36px rgba(15, 23, 42, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--serif);
+      line-height: 1.56;
+      color: var(--ink);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 90% 8%, color-mix(in oklab, var(--brand-secondary) 18%, white 82%) 0%, transparent 36%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased;
+      text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .wrap {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 32px 24px 70px;
+    }
+
+    @supports (padding: max(0px)) {
+      .wrap {
+        padding-left: max(24px, env(safe-area-inset-left));
+        padding-right: max(24px, env(safe-area-inset-right));
+      }
+    }
+
+    .mast {
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      position: relative;
+    }
+
+    .mast-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .mast::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 190px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-family: var(--ui);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 11px;
+      color: var(--brand-secondary);
+      font-weight: 700;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid color-mix(in oklab, var(--brand-secondary) 35%, #c8d7ea 65%);
+      background:
+        linear-gradient(165deg, #ffffff 0%, color-mix(in oklab, var(--brand-secondary) 6%, #ffffff 94%) 100%);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    .brand-logo {
+      display: block;
+      width: auto;
+      height: clamp(42px, 4.3vw, 62px);
+      object-fit: contain;
+      image-rendering: auto;
+    }
+
+    h1 {
+      margin: 8px 0 0;
+      font-family: var(--display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.8px;
+    }
+
+    .deck {
+      margin: 10px 0 0;
+      max-width: 860px;
+      color: #374151;
+      font-size: 18px;
+    }
+
+    .meta-row {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      padding: 6px 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-soft);
+    }
+
+    .btn {
+      border: 1px solid color-mix(in oklab, var(--brand-secondary) 60%, white 40%);
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--brand-secondary) 14%, white 86%);
+      color: var(--brand-primary);
+      padding: 6px 11px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .grid-kpi {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin: 15px 0 12px;
+    }
+
+    .kpi {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      min-height: 104px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--brand-secondary), color-mix(in oklab, var(--brand-secondary) 35%, #67e8f9 65%));
+    }
+
+    .kpi-label {
+      margin: 0;
+      font-family: var(--ui);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--ink-soft);
+    }
+
+    .kpi-value {
+      margin: 8px 0 0;
+      font-family: var(--mono);
+      font-size: 26px;
+      letter-spacing: -0.6px;
+      font-weight: 600;
+    }
+
+    .kpi-delta {
+      margin: 7px 0 0;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #166534;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      margin-bottom: 11px;
+      overflow: hidden;
+    }
+
+    .head { padding: 14px 18px 6px; }
+
+    .tag {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--brand-secondary);
+    }
+
+    .card h2 {
+      margin: 4px 0 0;
+      font-family: var(--display);
+      font-size: clamp(1.45rem, 2vw, 2rem);
+      letter-spacing: -0.25px;
+    }
+
+    .sub {
+      margin: 5px 0 0;
+      color: #4b5563;
+      max-width: 900px;
+      font-size: 14px;
+    }
+
+    .pad { padding: 8px 18px 18px; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 0.46fr 0.54fr;
+      gap: 11px;
+      margin-bottom: 11px;
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 0.58fr 0.42fr;
+      gap: 11px;
+      margin-bottom: 11px;
+    }
+
+    .exec-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .exec-hero {
+      border: 1px solid color-mix(in oklab, var(--brand-secondary) 38%, #d0def3 62%);
+      border-radius: 10px;
+      background: linear-gradient(165deg, #ffffff 0%, color-mix(in oklab, var(--brand-secondary) 8%, #ffffff 92%) 100%);
+      padding: 11px;
+    }
+
+    .exec-kicker {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--brand-secondary);
+    }
+
+    .exec-hero h3 {
+      margin: 4px 0 0;
+      font-family: var(--display);
+      font-size: 1.35rem;
+      line-height: 1.15;
+      letter-spacing: -0.2px;
+    }
+
+    .exec-hero p {
+      margin: 7px 0 0;
+      font-family: var(--ui);
+      font-size: 12px;
+      line-height: 1.45;
+      color: #465264;
+    }
+
+    .exec-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .exec-stat {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 8px 9px;
+      background: #fbfdff;
+    }
+
+    .exec-stat .l {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: #718094;
+    }
+
+    .exec-stat .v {
+      margin: 5px 0 0;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: #182233;
+      line-height: 1.35;
+    }
+
+    .exec-actions {
+      display: grid;
+      gap: 7px;
+    }
+
+    .exec-action {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #ffffff;
+      padding: 8px 9px;
+    }
+
+    .exec-action strong {
+      display: block;
+      font-family: var(--ui);
+      font-size: 12px;
+      line-height: 1.35;
+      color: #1d2736;
+    }
+
+    .exec-action p {
+      margin: 4px 0 0;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: #707d8f;
+      line-height: 1.4;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .account-table,
+    .sku-table {
+      min-width: 760px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--ui);
+      font-size: 12.5px;
+    }
+
+    .leaderboard-card .head {
+      padding-bottom: 4px;
+    }
+
+    .leaderboard-card .sub {
+      max-width: 56ch;
+    }
+
+    .leaderboard-card .pad {
+      padding-top: 2px;
+      padding-right: 14px;
+      padding-left: 14px;
+    }
+
+    .leaderboard-card {
+      border: 1px solid color-mix(in oklab, var(--brand-secondary) 24%, #d4e2f5 76%);
+      background: linear-gradient(180deg, #ffffff 0%, #fcfeff 100%);
+    }
+
+    .leaderboard-shell {
+      display: grid;
+      gap: 8px;
+    }
+
+    .leaderboard-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .leaderboard-pill {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 7px 8px;
+      background: #fbfdff;
+    }
+
+    .leaderboard-pill .l {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: #6f8198;
+    }
+
+    .leaderboard-pill .v {
+      margin: 4px 0 0;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: #17202f;
+    }
+
+    .leaderboard-scroll {
+      max-height: 436px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+      scrollbar-width: thin;
+      scrollbar-color: #9db4d7 #eef4fb;
+    }
+
+    .leaderboard-scroll::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .leaderboard-scroll::-webkit-scrollbar-track {
+      background: #eef4fb;
+      border-radius: 999px;
+    }
+
+    .leaderboard-scroll::-webkit-scrollbar-thumb {
+      background: #9db4d7;
+      border-radius: 999px;
+    }
+
+    .account-table {
+      table-layout: fixed;
+      min-width: 620px;
+    }
+
+    th, td {
+      padding: 8px 7px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+
+    .account-table th,
+    .account-table td {
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+
+    .account-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #f5f9ff;
+      box-shadow: inset 0 -1px 0 #d3deef;
+    }
+
+    .account-table tbody tr:nth-child(even) td {
+      background: #fafcff;
+    }
+
+    .account-table tbody tr:hover td {
+      background: #eef5ff;
+    }
+
+    .account-table th:nth-child(1),
+    .account-table td:nth-child(1) {
+      width: 34%;
+      white-space: normal;
+    }
+
+    .account-table th:nth-child(2),
+    .account-table td:nth-child(2) {
+      width: 12%;
+    }
+
+    .account-table th:nth-child(3),
+    .account-table td:nth-child(3) {
+      width: 12%;
+    }
+
+    .account-table th:nth-child(4),
+    .account-table td:nth-child(4) {
+      width: 10%;
+    }
+
+    .account-table th:nth-child(5),
+    .account-table td:nth-child(5) {
+      width: 12%;
+    }
+
+    .account-table th:nth-child(6),
+    .account-table td:nth-child(6) {
+      width: 20%;
+    }
+
+    th {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--ink-soft);
+      font-family: var(--mono);
+    }
+
+    .risk-chip {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 3px 6px;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .risk-low { background: #dcfce7; color: #166534; }
+    .risk-medium { background: #fef3c7; color: #92400e; }
+    .risk-high { background: #fee2e2; color: #991b1b; }
+
+    #sankey {
+      width: 100%;
+      min-height: 420px;
+      position: relative;
+    }
+
+    .tip {
+      position: absolute;
+      pointer-events: none;
+      transform: translate(-9999px, -9999px);
+      opacity: 0;
+      background: rgba(15, 23, 42, 0.94);
+      color: #f8fafc;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      border-radius: 10px;
+      padding: 10px;
+      min-width: 220px;
+      z-index: 40;
+      font-family: var(--ui);
+      font-size: 12px;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.25);
+    }
+
+    .tip-title {
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #93c5fd;
+    }
+
+    .h-list { display: grid; gap: 8px; }
+
+    .h-row {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfdff;
+      padding: 9px 10px;
+    }
+
+    .h-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+      font-family: var(--ui);
+      font-size: 12px;
+    }
+
+    .h-name { font-weight: 700; }
+    .h-owner { color: var(--ink-soft); }
+
+    .track {
+      height: 8px;
+      border-radius: 999px;
+      background: #e8edf6;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--brand-secondary), #38bdf8);
+    }
+
+    .h-meta {
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-soft);
+    }
+
+    .commerce-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+    }
+
+    .commerce-cell {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfcff;
+      padding: 12px;
+    }
+
+    .commerce-cell h3 {
+      margin: 4px 0 0;
+      font-family: var(--display);
+      font-size: clamp(1.25rem, 1.7vw, 1.65rem);
+      letter-spacing: -0.2px;
+    }
+
+    .commerce-cell p {
+      margin: 4px 0 0;
+      color: #5b6470;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .commerce-tag {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--ink-soft);
+    }
+
+    #commerceDonut, #commerceWeek, #brandShare {
+      width: 100%;
+      min-height: 250px;
+    }
+
+    #brandShare { min-height: 180px; }
+
+    .sku-table td {
+      font-size: 12px;
+    }
+
+    .sku-rank {
+      font-family: var(--mono);
+      color: #ef4444;
+      font-weight: 700;
+    }
+
+    .trend-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 7px;
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .trend-hot { background: #fee2e2; color: #b91c1c; }
+    .trend-warm { background: #ffedd5; color: #c2410c; }
+    .trend-stable { background: #dcfce7; color: #166534; }
+    .trend-cool { background: #dbeafe; color: #1e40af; }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .action-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 10px;
+    }
+
+    .action-card h4 {
+      margin: 0;
+      font-family: var(--ui);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .action-card p {
+      margin: 5px 0 0;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+
+    .commerce-note {
+      margin-top: 10px;
+      border: 1px solid #fecaca;
+      border-radius: 10px;
+      background: #fff4f2;
+      color: #7f1d1d;
+      font-family: var(--ui);
+      font-size: 13px;
+      line-height: 1.45;
+      padding: 10px;
+    }
+
+    .commerce-note strong {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-right: 7px;
+      color: #b91c1c;
+    }
+
+    .mini-tip {
+      position: fixed;
+      pointer-events: none;
+      transform: translate(-9999px, -9999px);
+      opacity: 0;
+      background: rgba(15, 23, 42, 0.94);
+      color: #f8fafc;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      border-radius: 9px;
+      padding: 8px 9px;
+      min-width: 160px;
+      z-index: 60;
+      font-family: var(--ui);
+      font-size: 11px;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .mini-tip .t-title {
+      margin-bottom: 4px;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: #93c5fd;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+      margin-bottom: 11px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fcfdff;
+      padding: 11px;
+    }
+
+    .panel h3 {
+      margin: 0 0 8px;
+      font-family: var(--ui);
+      font-size: 14px;
+      letter-spacing: 0.1px;
+    }
+
+    .panel .item {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 9px;
+      background: #ffffff;
+      margin-bottom: 7px;
+    }
+
+    .item strong { font-family: var(--ui); font-size: 13px; }
+
+    .item p {
+      margin: 4px 0 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+
+    .callout {
+      border: 1px solid color-mix(in oklab, var(--brand-secondary) 32%, white 68%);
+      border-radius: 12px;
+      background: color-mix(in oklab, var(--brand-secondary) 10%, white 90%);
+      padding: 12px;
+    }
+
+    .callout p {
+      margin: 0;
+      color: color-mix(in oklab, var(--brand-primary) 88%, black 12%);
+      font-family: var(--ui);
+      font-size: 14px;
+    }
+
+    .callout strong {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-right: 8px;
+      color: var(--brand-secondary);
+    }
+
+    .error {
+      margin-top: 10px;
+      border: 1px solid color-mix(in oklab, var(--brand-secondary) 28%, #c7d8ef 72%);
+      border-radius: 10px;
+      background: color-mix(in oklab, var(--brand-secondary) 10%, #ffffff 90%);
+      color: color-mix(in oklab, var(--brand-primary) 84%, black 16%);
+      padding: 8px 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2px;
+      display: none;
+    }
+
+    .studio {
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid #1d2842;
+      background:
+        radial-gradient(circle at 16% 0%, rgba(55, 112, 255, 0.28) 0%, transparent 34%),
+        radial-gradient(circle at 100% 100%, rgba(91, 72, 255, 0.21) 0%, transparent 38%),
+        #050a17;
+      color: #e8ecff;
+      box-shadow: 0 24px 54px rgba(1, 6, 24, 0.46);
+      overflow: hidden;
+    }
+
+    .studio-head {
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(106, 137, 207, 0.24);
+    }
+
+    .studio-tag {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.7px;
+      color: #6eb6ff;
+    }
+
+    .studio-head h2 {
+      margin: 6px 0 0;
+      font-family: var(--display);
+      font-size: clamp(1.55rem, 2.2vw, 2.1rem);
+      letter-spacing: -0.3px;
+      color: #f5f8ff;
+    }
+
+    .studio-head p {
+      margin: 6px 0 0;
+      color: #b8c3df;
+      font-family: var(--ui);
+      font-size: 13px;
+      max-width: 900px;
+      line-height: 1.45;
+    }
+
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+      margin-bottom: 11px;
+    }
+
+    .studio-card {
+      border: 1px solid rgba(116, 142, 214, 0.22);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(15, 24, 48, 0.93) 0%, rgba(10, 16, 34, 0.98) 100%);
+      padding: 12px;
+    }
+
+    .studio-card--wide {
+      grid-column: 1 / span 2;
+    }
+
+    .studio-card h3 {
+      margin: 2px 0 0;
+      font-family: var(--display);
+      font-size: 1.38rem;
+      letter-spacing: -0.2px;
+      color: #f2f6ff;
+    }
+
+    .studio-card p {
+      margin: 5px 0 0;
+      color: #aab8d9;
+      font-family: var(--ui);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .studio-chip {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: #69b2ff;
+    }
+
+    .studio-metric-row {
+      display: grid;
+      grid-template-columns: 126px 1fr;
+      gap: 10px;
+      margin-top: 9px;
+      align-items: center;
+    }
+
+    .studio-stat {
+      border: 1px solid rgba(110, 136, 198, 0.28);
+      border-radius: 10px;
+      padding: 9px;
+      background: rgba(16, 28, 56, 0.7);
+    }
+
+    .studio-stat .l {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #8bb8ff;
+    }
+
+    .studio-stat .v {
+      margin: 5px 0 0;
+      font-family: var(--mono);
+      font-size: 30px;
+      font-weight: 700;
+      color: #f4f8ff;
+      letter-spacing: -0.8px;
+      line-height: 1;
+    }
+
+    .studio-stat .d {
+      margin: 5px 0 0;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #84d9c1;
+    }
+
+    #studioMetricSpark,
+    #studioAutoViz,
+    #studioCostShift {
+      width: 100%;
+      min-height: 124px;
+    }
+
+    .studio-split {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 0.92fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .studio-dim-table {
+      border: 1px solid rgba(120, 145, 203, 0.24);
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(7, 13, 28, 0.62);
+    }
+
+    .studio-dim-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(113, 136, 189, 0.22);
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: #91a7d9;
+    }
+
+    .studio-dim-rows {
+      display: grid;
+      gap: 0;
+    }
+
+    .studio-dim-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(91, 112, 163, 0.2);
+      font-family: var(--ui);
+      font-size: 11px;
+      color: #d4def7;
+    }
+
+    .studio-dim-row:last-child {
+      border-bottom: none;
+    }
+
+    .studio-dim-row span:last-child {
+      font-family: var(--mono);
+      color: #9fb5ea;
+      font-size: 10px;
+    }
+
+    .studio-profile-table {
+      margin-top: 9px;
+      border: 1px solid rgba(115, 140, 204, 0.24);
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(8, 14, 30, 0.64);
+    }
+
+    .studio-profile-head,
+    .studio-profile-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.65fr 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 10px;
+    }
+
+    .studio-profile-head {
+      border-bottom: 1px solid rgba(106, 130, 187, 0.22);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #8ea9de;
+    }
+
+    .studio-profile-row {
+      border-bottom: 1px solid rgba(84, 104, 152, 0.18);
+      font-family: var(--ui);
+      font-size: 11px;
+      color: #dce6ff;
+    }
+
+    .studio-profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .studio-bar {
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(100, 124, 179, 0.35);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .studio-bar > i {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #5db1ff 0%, #7f89ff 100%);
+    }
+
+    .studio-impact {
+      display: grid;
+      grid-template-columns: 0.54fr 0.46fr;
+      gap: 11px;
+      margin-top: 11px;
+    }
+
+    .studio-impact-copy {
+      border: 1px solid rgba(120, 148, 208, 0.2);
+      border-radius: 14px;
+      background: rgba(8, 14, 30, 0.55);
+      padding: 12px;
+    }
+
+    .studio-impact-copy h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: 1.74rem;
+      letter-spacing: -0.3px;
+      color: #f4f7ff;
+    }
+
+    .studio-impact-copy > p {
+      margin: 6px 0 0;
+      color: #b8c5e6;
+      font-family: var(--ui);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .studio-steps {
+      margin: 12px 0 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .studio-step {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 9px;
+      align-items: start;
+    }
+
+    .studio-step .n {
+      font-family: var(--display);
+      font-size: 46px;
+      line-height: 0.82;
+      color: #3f6fff;
+      letter-spacing: -1px;
+    }
+
+    .studio-step .b {
+      font-family: var(--ui);
+      font-size: 13px;
+      color: #ecf2ff;
+      font-weight: 700;
+    }
+
+    .studio-step .s {
+      display: block;
+      margin-top: 2px;
+      color: #b3c0e0;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .studio-impact-viz {
+      border: 1px solid rgba(122, 149, 210, 0.24);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(10, 17, 37, 0.9) 0%, rgba(8, 14, 30, 0.96) 100%);
+      padding: 12px;
+    }
+
+    .studio-kpi-strip {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .studio-kpi {
+      border: 1px solid rgba(115, 139, 194, 0.26);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(6, 12, 27, 0.78);
+      text-align: center;
+    }
+
+    .studio-kpi .v {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+      line-height: 1;
+      letter-spacing: -0.8px;
+      font-weight: 700;
+      color: #f5f9ff;
+    }
+
+    .studio-kpi .l {
+      margin: 6px 0 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #5ee5ff;
+    }
+
+    .studio-live {
+      margin-top: 9px;
+      display: grid;
+      grid-template-columns: 0.52fr 0.48fr;
+      gap: 11px;
+      align-items: stretch;
+    }
+
+    .studio-mock {
+      border: 1px solid rgba(122, 148, 203, 0.24);
+      border-radius: 10px;
+      background: rgba(7, 12, 26, 0.72);
+      overflow: hidden;
+      position: relative;
+      min-height: 230px;
+    }
+
+    .studio-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(117, 137, 191, 0.24);
+      background: rgba(11, 19, 38, 0.94);
+    }
+
+    .studio-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid rgba(127, 158, 222, 0.38);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-family: var(--mono);
+      font-size: 9px;
+      color: #bfd2ff;
+      white-space: nowrap;
+    }
+
+    #studioFilterChart {
+      width: 100%;
+      min-height: 170px;
+      position: relative;
+    }
+
+    .studio-drop {
+      position: absolute;
+      top: 62px;
+      right: 12px;
+      width: min(220px, calc(100% - 24px));
+      border: 1px solid rgba(124, 149, 206, 0.34);
+      border-radius: 10px;
+      background: rgba(244, 247, 255, 0.97);
+      color: #0f172a;
+      overflow: hidden;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .studio-drop .hd {
+      padding: 8px 10px;
+      border-bottom: 1px solid #dce5f8;
+      font-family: var(--ui);
+      font-size: 12px;
+      color: #3b4555;
+    }
+
+    .studio-drop .rw {
+      padding: 7px 10px;
+      border-bottom: 1px solid #e8edf9;
+      font-family: var(--ui);
+      font-size: 12px;
+      color: #1f2937;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .studio-drop .rw:last-child {
+      border-bottom: none;
+    }
+
+    .studio-value {
+      border: 1px solid rgba(124, 147, 206, 0.22);
+      border-radius: 10px;
+      background: rgba(8, 14, 30, 0.65);
+      padding: 12px;
+    }
+
+    .studio-value h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(1.45rem, 1.9vw, 2rem);
+      letter-spacing: -0.2px;
+      color: #f6f9ff;
+    }
+
+    .studio-value p {
+      margin: 6px 0 0;
+      color: #bfd0f0;
+      font-family: var(--ui);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .studio-list {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    .studio-list li {
+      position: relative;
+      padding-left: 26px;
+      color: #e9f2ff;
+      font-family: var(--ui);
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .studio-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-family: var(--mono);
+      font-size: 16px;
+      color: #4ff2ff;
+    }
+
+    .studio-code {
+      margin-top: 9px;
+      border: 1px solid rgba(120, 145, 206, 0.25);
+      border-radius: 10px;
+      background: rgba(8, 14, 32, 0.72);
+      padding: 8px 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: #9bb8f0;
+      line-height: 1.58;
+      max-height: 152px;
+      overflow: auto;
+      white-space: pre;
+    }
+
+    .cockpit .card.cockpit-card {
+      border: 1px solid rgba(116, 142, 214, 0.22);
+      background: linear-gradient(180deg, rgba(15, 24, 48, 0.93) 0%, rgba(10, 16, 34, 0.98) 100%);
+      box-shadow: none;
+    }
+
+    .cockpit .card.cockpit-card .tag {
+      color: #69b2ff;
+    }
+
+    .cockpit .card.cockpit-card h2 {
+      color: #f2f6ff;
+    }
+
+    .cockpit .card.cockpit-card .sub {
+      color: #aab8d9;
+      max-width: 96%;
+    }
+
+    .cockpit .card.cockpit-card .panel {
+      border-color: rgba(116, 142, 214, 0.22);
+      background: rgba(9, 16, 34, 0.72);
+    }
+
+    .cockpit .card.cockpit-card .panel h3 {
+      color: #f2f6ff;
+    }
+
+    .cockpit .card.cockpit-card .item {
+      border-color: rgba(114, 140, 208, 0.24);
+      background: rgba(10, 18, 38, 0.68);
+    }
+
+    .cockpit .card.cockpit-card .item strong {
+      color: #ebf3ff;
+    }
+
+    .cockpit .card.cockpit-card .item p {
+      color: #9fb3da;
+    }
+
+    .cockpit .card.cockpit-card .callout {
+      border-color: rgba(114, 148, 219, 0.26);
+      background: rgba(10, 17, 37, 0.74);
+    }
+
+    .cockpit .card.cockpit-card .callout p {
+      color: #d7e6ff;
+    }
+
+    .cockpit .card.cockpit-card .callout strong {
+      color: #66b3ff;
+    }
+
+    .cockpit .card.cockpit-card .h-row {
+      border-color: rgba(114, 140, 208, 0.24);
+      background: rgba(10, 18, 38, 0.68);
+    }
+
+    .cockpit .card.cockpit-card .h-name {
+      color: #eaf2ff;
+    }
+
+    .cockpit .card.cockpit-card .h-owner {
+      color: #93a8cf;
+    }
+
+    .cockpit .card.cockpit-card .track {
+      background: rgba(87, 108, 160, 0.32);
+    }
+
+    .cockpit .card.cockpit-card .h-meta {
+      color: #96abcf;
+    }
+
+    .cockpit .card.cockpit-card .commerce-cell {
+      border-color: rgba(116, 142, 214, 0.22);
+      background: rgba(9, 16, 34, 0.72);
+    }
+
+    .cockpit .card.cockpit-card .commerce-tag {
+      color: #8ea9de;
+    }
+
+    .cockpit .card.cockpit-card .commerce-cell h3 {
+      color: #f2f6ff;
+    }
+
+    .cockpit .card.cockpit-card .commerce-cell p {
+      color: #aab8d9;
+    }
+
+    .cockpit .card.cockpit-card th {
+      color: #8ea9de;
+      border-bottom-color: rgba(118, 142, 201, 0.25);
+    }
+
+    .cockpit .card.cockpit-card td {
+      color: #d8e5ff;
+      border-bottom-color: rgba(99, 122, 177, 0.24);
+    }
+
+    .cockpit .card.cockpit-card .sku-rank {
+      color: #84b8ff;
+    }
+
+    .cockpit .card.cockpit-card .action-card {
+      border-color: rgba(116, 142, 214, 0.22);
+      background: rgba(9, 16, 34, 0.72);
+    }
+
+    .cockpit .card.cockpit-card .action-card h4 {
+      color: #eef4ff;
+    }
+
+    .cockpit .card.cockpit-card .action-card p {
+      color: #95a9ce;
+    }
+
+    .cockpit .card.cockpit-card .commerce-note {
+      border-color: rgba(116, 142, 214, 0.22);
+      background: rgba(10, 19, 40, 0.76);
+      color: #c8d8f7;
+    }
+
+    .cockpit .card.cockpit-card .commerce-note strong {
+      color: #73b9ff;
+    }
+
+    .cockpit #sankey svg text,
+    .cockpit #commerceDonut svg text,
+    .cockpit #commerceWeek svg text,
+    .cockpit #brandShare svg text {
+      fill: #c8d8f6 !important;
+    }
+
+    @media (max-width: 1100px) {
+      .grid-kpi { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+      .analysis-grid { grid-template-columns: 1fr; }
+      .commerce-grid { grid-template-columns: 1fr; }
+      .actions-grid { grid-template-columns: 1fr; }
+      .board { grid-template-columns: 1fr; }
+      .studio-grid { grid-template-columns: 1fr; }
+      .studio-card--wide { grid-column: auto; }
+      .studio-impact { grid-template-columns: 1fr; }
+      .studio-split { grid-template-columns: 1fr; }
+      .studio-metric-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 860px) {
+      h1 { font-size: clamp(1.9rem, 6vw, 2.45rem); }
+      .deck { font-size: 16px; line-height: 1.45; }
+      .head { padding: 13px 14px 6px; }
+      .pad { padding: 8px 14px 14px; }
+      .kpi-value { font-size: 23px; }
+      #sankey { min-height: 360px; }
+    }
+
+    @media (max-width: 700px) {
+      .wrap { padding: 20px 12px 48px; }
+      .deck { font-size: 15px; }
+      .mast-top { flex-direction: column; align-items: flex-start; }
+      .brand-logo { height: clamp(36px, 9vw, 48px); }
+      .meta-row {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+      .chip, .btn { white-space: nowrap; }
+      .exec-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .leaderboard-summary { grid-template-columns: 1fr; }
+      .account-table th:nth-child(4), .account-table td:nth-child(4) { display: none; }
+      .leaderboard-scroll { max-height: 412px; }
+      .studio { padding: 14px; border-radius: 14px; }
+      .studio-head h2 { font-size: 1.45rem; }
+      .studio-step { grid-template-columns: 24px 1fr; }
+      .studio-step .n { font-size: 30px; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { padding: 16px 10px 44px; }
+      .grid-kpi { grid-template-columns: 1fr; }
+      .kpi { min-height: 92px; padding: 12px; }
+      .kpi-value { font-size: 22px; }
+      .card { border-radius: 12px; }
+      .card h2 { font-size: 1.3rem; }
+      .exec-hero h3 { font-size: 1.22rem; }
+      .exec-stat-grid { grid-template-columns: 1fr; }
+      .h-top { flex-wrap: wrap; }
+      .h-meta { flex-wrap: wrap; row-gap: 4px; }
+      .action-card { padding: 9px; }
+      #sankey { min-height: 340px; }
+      .studio-toolbar { gap: 5px; }
+      .studio-pill { font-size: 8px; padding: 3px 7px; }
+      .studio-list li { font-size: 13px; }
+      .studio-code { font-size: 9px; }
+
+      @supports (padding: max(0px)) {
+        .wrap {
+          padding-left: max(10px, env(safe-area-inset-left));
+          padding-right: max(10px, env(safe-area-inset-right));
+        }
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="mast">
+      <div class="mast-top">
+        <div>
+          <p class="eyebrow">Premier Sales Intelligence System</p>
+          <h1 id="title">Executive Reporting Platform</h1>
+        </div>
+        <div class="brand-lockup">
+          <img class="brand-logo" src="./cooper_logo.jpg" alt="Cooper logo" loading="eager" decoding="async" />
+        </div>
+      </div>
+      <p class="deck" id="deck"></p>
+      <div class="meta-row" id="meta"></div>
+      <div id="error" class="error"></div>
+    </header>
+
+    <section id="kpiRow" class="grid-kpi"></section>
+
+    <div class="two-col">
+      <section class="card leaderboard-card">
+        <div class="head">
+          <p class="tag">Portfolio Health</p>
+          <h2>Client Account Leaderboard</h2>
+          <p class="sub">Standardized cross-account triage so account managers can focus only where intervention is needed.</p>
+        </div>
+        <div class="pad">
+          <div class="leaderboard-shell">
+            <div class="leaderboard-summary" id="accountMeta"></div>
+            <div class="table-wrap leaderboard-scroll">
+              <table class="account-table">
+                <thead>
+                  <tr>
+                    <th>Account</th>
+                    <th>Risk</th>
+                    <th>MRR</th>
+                    <th>Health</th>
+                    <th>QoQ Growth</th>
+                    <th>Owner</th>
+                  </tr>
+                </thead>
+                <tbody id="accountRows"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="head">
+          <p class="tag">Exec Brief</p>
+          <h2>Executive Action Brief</h2>
+          <p class="sub">Board-ready synthesis of where to intervene now, why it matters, and what to execute in the next 14 days.</p>
+        </div>
+        <div class="pad exec-wrap">
+          <div id="execHero" class="exec-hero"></div>
+          <div id="execStatGrid" class="exec-stat-grid"></div>
+          <div id="execActionList" class="exec-actions"></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="studio cockpit">
+      <header class="studio-head">
+        <p class="studio-tag">Cooper Cockpit</p>
+        <h2>Dark-mode operations cockpit for live decision making</h2>
+        <p>Scroll from the board brief into a command layer where flow, diagnostics, mix, and next actions stay in one continuous operating view.</p>
+      </header>
+
+      <section class="analysis-grid">
+      <article class="studio-card">
+        <p class="studio-chip">Signal Cockpit</p>
+        <h3>Signal density without setup drag</h3>
+        <p>Critical revenue risk, dimensional skew, and trend context in one scan.</p>
+        <div class="studio-metric-row">
+          <div class="studio-stat">
+            <p class="l">At-risk revenue</p>
+            <p class="v" id="studioRiskRevenue">$402K</p>
+            <p class="d" id="studioRiskDelta">-4.3% vs prior period</p>
+          </div>
+          <div id="studioMetricSpark"></div>
+        </div>
+        <div class="studio-split">
+          <div class="studio-dim-table">
+            <div class="studio-dim-head"><span>Top dimensions</span><span>Contribution</span></div>
+            <div class="studio-dim-rows" id="studioDimRows"></div>
+          </div>
+          <div class="studio-profile-table">
+            <div class="studio-profile-head"><span>Measure</span><span>Value</span><span>Trend</span></div>
+            <div id="studioProfileRows"></div>
+          </div>
+        </div>
+      </article>
+      <article class="card cockpit-card">
+        <div class="head">
+          <p class="tag">Handoff Friction</p>
+          <h2>Operational Diagnostics</h2>
+          <p class="sub">Execution friction by stage, SLA pressure, and exception load in one compact pane.</p>
+        </div>
+        <div class="pad h-list" id="handoffList"></div>
+      </article>
+      </section>
+
+    <section class="card cockpit-card">
+      <div class="head">
+        <p class="tag">Demand Timing + Mix</p>
+        <h2>A Layer Deeper</h2>
+        <p class="sub">Distribution and conversion timing modules adapted for agency portfolio reporting.</p>
+      </div>
+      <div class="pad commerce-grid">
+        <article class="commerce-cell">
+          <p class="commerce-tag">Channel Mix</p>
+          <h3>Current Revenue Geography</h3>
+          <p>Distribution of contribution by channel in the current period.</p>
+          <div id="commerceDonut"></div>
+        </article>
+        <article class="commerce-cell">
+          <p class="commerce-tag">Demand Timing</p>
+          <h3>Weekly Conversion Intensity</h3>
+          <p>Normalized index where 100 marks the strongest day.</p>
+          <div id="commerceWeek"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="card cockpit-card">
+      <div class="head">
+        <p class="tag">SKU Economics</p>
+        <h2>Margin and Volume Leaderboard</h2>
+      </div>
+      <div class="pad table-wrap">
+        <table class="sku-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>SKU</th>
+              <th>Brand</th>
+              <th>Revenue</th>
+              <th>Margin</th>
+              <th>Units</th>
+              <th>Trend</th>
+            </tr>
+          </thead>
+          <tbody id="skuRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card cockpit-card">
+      <div class="head">
+        <p class="tag">Portfolio Mix + Actions</p>
+        <h2>Brand Share and Next Moves</h2>
+      </div>
+      <div class="pad">
+        <div id="brandShare"></div>
+        <div class="actions-grid" id="commerceActions"></div>
+        <div class="commerce-note" id="strategyNote"></div>
+      </div>
+    </section>
+
+    <section class="card cockpit-card">
+      <div class="head">
+        <p class="tag">Execution Board</p>
+        <h2>Risks and Initiatives</h2>
+      </div>
+      <div class="pad board">
+        <div class="panel">
+          <h3>Risk Register</h3>
+          <div id="riskList"></div>
+        </div>
+        <div class="panel">
+          <h3>Initiative Queue</h3>
+          <div id="initiativeList"></div>
+        </div>
+      </div>
+      <div class="pad" style="padding-top:0;">
+        <div class="callout"><p id="summaryText"></p></div>
+      </div>
+    </section>
+
+      <div class="studio-grid">
+        <article class="studio-card">
+          <p class="studio-chip">Automatic visualizations</p>
+          <h3>Auto-viz that stays readable under pressure</h3>
+          <p>Cooper maps activity, bid floor, and request pressure into compact multi-series insight.</p>
+          <div id="studioAutoViz"></div>
+          <div class="studio-toolbar">
+            <span class="studio-pill">Last 24h</span>
+            <span class="studio-pill">UTC</span>
+            <span class="studio-pill">No comparison</span>
+            <span class="studio-pill">Trended by day</span>
+          </div>
+        </article>
+
+        <article class="studio-card">
+          <p class="studio-chip">Conversion Flow</p>
+          <h3>Pipeline Waterfall by Stage</h3>
+          <p>A reusable narrative module that captures stage leakage, win path, and confidence in one visual.</p>
+          <div id="sankey"></div>
+        </article>
+
+        <article class="studio-card">
+          <p class="studio-chip">Dashboards you'll actually use</p>
+          <h3>Filter, drill, and export without training</h3>
+          <p>Fast filter interactions with persistent context across pivots and slices.</p>
+          <div class="studio-live">
+            <div class="studio-toolbar">
+              <span class="studio-pill">Creative type: Video</span>
+              <span class="studio-pill">Device OS: Android</span>
+              <span class="studio-pill">+1 other</span>
+            </div>
+            <div id="studioFilterChart"></div>
+          </div>
+        </article>
+
+        <article class="studio-card">
+          <p class="studio-chip">Action extraction</p>
+          <h3>From metrics to a concrete operating plan</h3>
+          <p>Each brief resolves to accountable actions instead of passive dashboard watching.</p>
+          <div class="studio-value">
+            <h3 id="studioActionValue">$0</h3>
+            <p id="studioActionCopy">Action summary placeholder.</p>
+            <ul class="studio-list" id="studioActionList"></ul>
+          </div>
+          <div class="studio-code" id="studioCode"></div>
+        </article>
+      </div>
+    </section>
+  </div>
+  <div id="miniTip" class="mini-tip"></div>
+
+  <script>
+    const fallbackData = {
+      report_meta: {
+        report_id: "AWL-2026-02-W2-ACME",
+        generated_at: "2026-02-14T16:15:00Z",
+        period_start: "2026-02-01",
+        period_end: "2026-02-14",
+        currency: "USD",
+        timezone: "America/New_York",
+        template_version: "v1.0.0"
+      },
+      agency: {
+        name: "Arima Investments",
+        logo_text: "NGP",
+        primary_color: "#0f172a",
+        secondary_color: "#3b82f6"
+      },
+      client: {
+        client_id: "CL-4471",
+        client_name: "Atlas Home Lending",
+        vertical: "Real Estate Services",
+        contract_tier: "Enterprise"
+      },
+      portfolio_rollup: {
+        active_clients: 34,
+        agency_mrr: 612000,
+        avg_health_score: 81.4,
+        at_risk_accounts: 5
+      },
+      kpi_strip: [
+        { id: "pipeline", label: "Pipeline", value: 1340000, delta: "+9.8% vs prior", trend: "up" },
+        { id: "win_rate", label: "Win Rate", value: "29.4%", delta: "+2.1 pts", trend: "up" },
+        { id: "cycle", label: "Sales Cycle", value: "38d", delta: "-3d", trend: "up" },
+        { id: "leakage", label: "Leakage", value: 402000, delta: "-4.3%", trend: "up" }
+      ],
+      client_accounts: [
+        { account: "Atlas Home Lending", owner: "S. Patel", mrr: 42000, health_score: 87, qoq_growth: 0.16, risk_level: "low" },
+        { account: "Oakline Property Group", owner: "R. Diaz", mrr: 36000, health_score: 79, qoq_growth: 0.09, risk_level: "medium" },
+        { account: "Summit Realty Team", owner: "M. Chen", mrr: 31000, health_score: 74, qoq_growth: 0.05, risk_level: "medium" },
+        { account: "Lumen Mortgage", owner: "T. Bell", mrr: 29000, health_score: 68, qoq_growth: -0.03, risk_level: "high" },
+        { account: "Pioneer Lending Group", owner: "A. Brooks", mrr: 27000, health_score: 83, qoq_growth: 0.12, risk_level: "low" },
+        { account: "Harborpoint Realty Advisors", owner: "N. Kim", mrr: 25500, health_score: 77, qoq_growth: 0.04, risk_level: "medium" },
+        { account: "Silverline Capital Homes", owner: "J. Ortega", mrr: 24800, health_score: 72, qoq_growth: -0.01, risk_level: "medium" },
+        { account: "Northbridge Lending Co.", owner: "D. Wallace", mrr: 23800, health_score: 66, qoq_growth: -0.06, risk_level: "high" },
+        { account: "Redwood Mortgage Network", owner: "E. Foster", mrr: 22600, health_score: 81, qoq_growth: 0.08, risk_level: "low" },
+        { account: "Meridian Property Finance", owner: "L. Graham", mrr: 21400, health_score: 73, qoq_growth: 0.02, risk_level: "medium" },
+        { account: "Stonegate Residential", owner: "K. Singh", mrr: 20500, health_score: 69, qoq_growth: -0.02, risk_level: "medium" },
+        { account: "Bluecrest Home Partners", owner: "C. Novak", mrr: 19800, health_score: 64, qoq_growth: -0.07, risk_level: "high" }
+      ],
+      funnel: {
+        total_value: 1340,
+        nodes: [
+          { id: "s1", label: "Discovery", short: "S1", value: 1340 },
+          { id: "s2", label: "Value", short: "S2", value: 1080 },
+          { id: "s3", label: "Proposal", short: "S3", value: 760 },
+          { id: "s4", label: "Negotiation", short: "S4", value: 510 },
+          { id: "won", label: "Closed Won", short: "WON", value: 394 },
+          { id: "lost", label: "Closed Lost", short: "LOST", value: 710 },
+          { id: "stall", label: "Stalled", short: "STL", value: 236 }
+        ],
+        links: [
+          { source: "s1", target: "s2", value: 1080 },
+          { source: "s1", target: "lost", value: 160 },
+          { source: "s1", target: "stall", value: 100 },
+          { source: "s2", target: "s3", value: 760 },
+          { source: "s2", target: "lost", value: 210 },
+          { source: "s2", target: "stall", value: 110 },
+          { source: "s3", target: "s4", value: 510 },
+          { source: "s3", target: "lost", value: 170 },
+          { source: "s3", target: "stall", value: 80 },
+          { source: "s4", target: "won", value: 394 },
+          { source: "s4", target: "lost", value: 116 }
+        ],
+        critical_gates: [
+          { from: "S1", to: "S2", conversion_rate: 0.81, status: "healthy" },
+          { from: "S2", to: "S3", conversion_rate: 0.7, status: "watch" },
+          { from: "S3", to: "S4", conversion_rate: 0.67, status: "critical" },
+          { from: "S4", to: "WON", conversion_rate: 0.77, status: "healthy" }
+        ]
+      },
+      handoff: [
+        { stage: "MQL -> SQL", owner: "Demand Gen", volume: 422, conversion: 0.62, sla_hours: 8, exceptions: 19 },
+        { stage: "SQL -> Opportunity", owner: "Sales Dev", volume: 264, conversion: 0.58, sla_hours: 12, exceptions: 24 },
+        { stage: "Opportunity -> Proposal", owner: "AE Team", volume: 153, conversion: 0.67, sla_hours: 18, exceptions: 11 },
+        { stage: "Proposal -> Negotiation", owner: "AE + RevOps", volume: 102, conversion: 0.66, sla_hours: 20, exceptions: 13 }
+      ],
+      initiatives: [
+        {
+          initiative: "Negotiation prep kit for enterprise deals",
+          owner: "RevOps Lead",
+          status: "in_progress",
+          due_date: "2026-02-27",
+          expected_impact: "+4 pts win rate at S4"
+        },
+        {
+          initiative: "24-hour proposal SLA automation",
+          owner: "Solutions Team",
+          status: "planned",
+          due_date: "2026-03-03",
+          expected_impact: "-2 days sales cycle"
+        },
+        {
+          initiative: "Client health exception alerts",
+          owner: "Data Ops",
+          status: "in_progress",
+          due_date: "2026-02-21",
+          expected_impact: "-30% unowned handoff exceptions"
+        }
+      ],
+      risks: [
+        {
+          risk_id: "R-101",
+          level: "high",
+          summary: "Proposal quality variance across AE pods",
+          owner: "Sales Director",
+          mitigation: "Standardized proposal QA checklist and weekly calibration",
+          next_review: "2026-02-20"
+        },
+        {
+          risk_id: "R-104",
+          level: "medium",
+          summary: "Lead routing delays during high-volume windows",
+          owner: "Ops Manager",
+          mitigation: "Capacity-based round robin and overflow queue",
+          next_review: "2026-02-22"
+        }
+      ],
+      narrative: {
+        executive_summary: "Growth is healthy, but S3-to-S4 conversion is the main margin leak. The account is still expansion-ready if handoff quality is stabilized this month.",
+        key_insight: "cooper turns pipeline chaos into daily action: a Salesforce-first sidecar and board-ready brief, with optional Focus Mode, AI coaching, and workflow add-ons across Slack, Teams, Sheets, and Outlook.",
+        next_14_days: [
+          "Launch negotiation prep kit for top 20 active opportunities",
+          "Enforce proposal QA gate before customer send",
+          "Run handoff exception war room every Tuesday"
+        ]
+      }
+    };
+
+    const altBrand = {
+      name: "Crestline Strategy",
+      logo_text: "CLS",
+      primary_color: "#211f4b",
+      secondary_color: "#7c3aed"
+    };
+
+    const commerceDefaults = {
+      channel_mix: [
+        { name: "DTC", value: 39, color: "#f87171" },
+        { name: "Wholesale", value: 21, color: "#4ea1df" },
+        { name: "Marketplace", value: 18, color: "#eca056" },
+        { name: "Subscription", value: 14, color: "#55b987" },
+        { name: "Retail", value: 8, color: "#9d6ade" }
+      ],
+      weekly_intensity: [
+        { day: "Monday", value: 74 },
+        { day: "Tuesday", value: 96 },
+        { day: "Wednesday", value: 100 },
+        { day: "Thursday", value: 89 },
+        { day: "Friday", value: 70 },
+        { day: "Saturday", value: 58 },
+        { day: "Sunday", value: 44 }
+      ],
+      sku_performance: [
+        { rank: 1, sku: "Aster Weekender Bundle", brand: "Aster", revenue: 740000, margin_pct: 68, units: 6100, trend: "hot" },
+        { rank: 2, sku: "Northline Utility Set", brand: "Northline", revenue: 655000, margin_pct: 64, units: 4900, trend: "hot" },
+        { rank: 3, sku: "Harbor Core Essentials", brand: "Harbor", revenue: 920000, margin_pct: 43, units: 17800, trend: "stable" },
+        { rank: 4, sku: "Kite Seasonal Capsule", brand: "Kite", revenue: 510000, margin_pct: 71, units: 2900, trend: "warm" },
+        { rank: 5, sku: "Aster Signature Tote", brand: "Aster", revenue: 420000, margin_pct: 62, units: 7200, trend: "warm" },
+        { rank: 6, sku: "Northline Travel Kit", brand: "Northline", revenue: 360000, margin_pct: 58, units: 4100, trend: "stable" }
+      ],
+      brand_split: [
+        { brand: "Harbor", share: 34.5, color: "#f87171" },
+        { brand: "Aster", share: 27.2, color: "#4ea1df" },
+        { brand: "Northline", share: 22.1, color: "#eca056" },
+        { brand: "Kite", share: 16.2, color: "#55b987" }
+      ],
+      actions: [
+        {
+          action: "Shift paid budget to Tue-Wed 10am-2pm conversion window",
+          owner: "Performance Marketing",
+          window: "Next 14 days",
+          expected_impact: "-12% CAC"
+        },
+        {
+          action: "Expand high-margin capsule run by 18%",
+          owner: "Merchandising",
+          window: "Next 30 days",
+          expected_impact: "+2.5 pts gross margin"
+        },
+        {
+          action: "Bundle low-margin core SKUs with high-margin accessories",
+          owner: "Ecom Ops",
+          window: "Next 21 days",
+          expected_impact: "+9% AOV"
+        }
+      ],
+      strategy_note: "Revenue concentration midweek creates a precise timing edge for paid and email orchestration."
+    };
+
+    let usingAlt = false;
+    let currentData = null;
+    let resizeTimer = null;
+
+    async function loadData() {
+      try {
+        const res = await fetch("./dummy_data.sample.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("Fetch failed");
+        return await res.json();
+      } catch (err) {
+        const error = document.getElementById("error");
+        error.style.display = "block";
+        error.textContent = "Demo mode active: showing curated sample data.";
+        return fallbackData;
+      }
+    }
+
+    function money(v) {
+      if (typeof v === "string") return v;
+      if (Math.abs(v) >= 1000000) return `$${d3.format(",.1f")(v / 1000000)}M`;
+      if (Math.abs(v) >= 1000) return `$${d3.format(",.0f")(v / 1000)}K`;
+      return `$${d3.format(",.0f")(v)}`;
+    }
+
+    function pct(v) {
+      return d3.format(".1%")(v);
+    }
+
+    function showMiniTip(html, x, y) {
+      const tip = document.getElementById("miniTip");
+      tip.innerHTML = html;
+      tip.style.opacity = "1";
+      tip.style.transform = `translate(${x + 14}px, ${y + 10}px)`;
+    }
+
+    function hideMiniTip() {
+      const tip = document.getElementById("miniTip");
+      tip.style.opacity = "0";
+      tip.style.transform = "translate(-9999px,-9999px)";
+    }
+
+    function getCommerceData(data) {
+      return {
+        channel_mix: Array.isArray(data.channel_mix) && data.channel_mix.length ? data.channel_mix : commerceDefaults.channel_mix,
+        weekly_intensity: Array.isArray(data.weekly_intensity) && data.weekly_intensity.length ? data.weekly_intensity : commerceDefaults.weekly_intensity,
+        sku_performance: Array.isArray(data.sku_performance) && data.sku_performance.length ? data.sku_performance : commerceDefaults.sku_performance,
+        brand_split: Array.isArray(data.brand_split) && data.brand_split.length ? data.brand_split : commerceDefaults.brand_split,
+        actions: Array.isArray(data.actions) && data.actions.length ? data.actions : commerceDefaults.actions,
+        strategy_note: data.strategy_note || data.narrative?.strategy_note || commerceDefaults.strategy_note
+      };
+    }
+
+    function applyBrand(agency) {
+      const root = document.documentElement;
+      root.style.setProperty("--brand-primary", agency.primary_color);
+      root.style.setProperty("--brand-secondary", agency.secondary_color);
+      root.style.setProperty("--accent", agency.secondary_color);
+    }
+
+    function renderHeader(data) {
+      const cooperSubheader = "cooper turns pipeline chaos into daily action: a Salesforce-first sidecar and board-ready brief, with optional Focus Mode, AI coaching, and workflow add-ons across Slack, Teams, Sheets, and Outlook.";
+      document.getElementById("title").textContent = data.agency.name;
+      document.getElementById("deck").textContent = data.narrative?.marketing_subheader || cooperSubheader;
+      const meta = document.getElementById("meta");
+      meta.innerHTML = "";
+
+      [
+        `${data.client.vertical} | ${data.client.contract_tier}`,
+        `Period ${data.report_meta.period_start} to ${data.report_meta.period_end}`,
+        `${data.portfolio_rollup.active_clients} active clients`,
+        `Avg health ${data.portfolio_rollup.avg_health_score}`,
+        `Template ${data.report_meta.template_version}`
+      ].forEach((m) => {
+        const c = document.createElement("div");
+        c.className = "chip";
+        c.textContent = m;
+        meta.appendChild(c);
+      });
+
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.textContent = "Swap Brand Skin";
+      btn.addEventListener("click", () => {
+        usingAlt = !usingAlt;
+        applyBrand(usingAlt ? altBrand : data.agency);
+        const name = usingAlt ? altBrand.name : data.agency.name;
+        document.getElementById("title").textContent = name;
+      });
+      meta.appendChild(btn);
+    }
+
+    function renderKpis(items) {
+      const root = document.getElementById("kpiRow");
+      root.innerHTML = "";
+      items.forEach((k) => {
+        const el = document.createElement("article");
+        el.className = "kpi";
+        el.innerHTML = `
+          <p class="kpi-label">${k.label}</p>
+          <p class="kpi-value">${typeof k.value === "number" ? money(k.value) : k.value}</p>
+          <p class="kpi-delta">${k.delta}</p>
+        `;
+        root.appendChild(el);
+      });
+    }
+
+    function renderAccounts(rows) {
+      const root = document.getElementById("accountRows");
+      const meta = document.getElementById("accountMeta");
+      root.innerHTML = "";
+      const ordered = rows.slice().sort((a, b) => b.health_score - a.health_score);
+      const totalMrr = ordered.reduce((sum, r) => sum + (r.mrr || 0), 0);
+      const avgHealth = ordered.length ? ordered.reduce((sum, r) => sum + (r.health_score || 0), 0) / ordered.length : 0;
+      const atRiskMrr = ordered
+        .filter((r) => r.risk_level !== "low")
+        .reduce((sum, r) => sum + (r.mrr || 0), 0);
+      const highRiskCount = ordered.filter((r) => r.risk_level === "high").length;
+
+      if (meta) {
+        meta.innerHTML = `
+          <article class="leaderboard-pill">
+            <p class="l">Accounts tracked</p>
+            <p class="v">${ordered.length}</p>
+          </article>
+          <article class="leaderboard-pill">
+            <p class="l">Portfolio MRR</p>
+            <p class="v">${money(totalMrr)}</p>
+          </article>
+          <article class="leaderboard-pill">
+            <p class="l">Health / Risk</p>
+            <p class="v">${d3.format(".1f")(avgHealth)} avg | ${highRiskCount} high</p>
+          </article>
+        `;
+      }
+
+      ordered.forEach((r) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${r.account}</strong></td>
+          <td><span class='risk-chip risk-${r.risk_level}'>${r.risk_level}</span></td>
+          <td>${money(r.mrr)}</td>
+          <td>${r.health_score}</td>
+          <td>${d3.format("+.0%")((r.qoq_growth || 0))}</td>
+          <td>${r.owner}</td>
+        `;
+        root.appendChild(tr);
+      });
+
+      if (meta && ordered.length && atRiskMrr > 0) {
+        meta.lastElementChild.querySelector(".v").textContent = `${d3.format(".1f")(avgHealth)} avg | ${money(atRiskMrr)} at risk`;
+      }
+    }
+
+    function renderHandoffs(rows) {
+      const root = document.getElementById("handoffList");
+      root.innerHTML = "";
+      rows.forEach((r) => {
+        const el = document.createElement("article");
+        el.className = "h-row";
+        el.innerHTML = `
+          <div class='h-top'><span class='h-name'>${r.stage}</span><span class='h-owner'>${r.owner}</span></div>
+          <div class='track'><div class='fill' style='width:${Math.round(r.conversion * 100)}%'></div></div>
+          <div class='h-meta'><span>Conv ${pct(r.conversion)}</span><span>SLA ${r.sla_hours}h</span><span>Exceptions ${r.exceptions}</span></div>
+        `;
+        root.appendChild(el);
+      });
+    }
+
+    function renderExecBrief(data) {
+      const hero = document.getElementById("execHero");
+      const statGrid = document.getElementById("execStatGrid");
+      const actionList = document.getElementById("execActionList");
+      if (!hero || !statGrid || !actionList) return;
+
+      const accounts = Array.isArray(data.client_accounts) ? data.client_accounts : [];
+      const priorityAccount =
+        accounts
+          .filter((a) => a.risk_level !== "low")
+          .sort((a, b) => (b.mrr || 0) - (a.mrr || 0))[0] || accounts[0];
+
+      const gates = Array.isArray(data.funnel?.critical_gates) ? data.funnel.critical_gates : [];
+      const weakestGate = gates.slice().sort((a, b) => (a.conversion_rate || 0) - (b.conversion_rate || 0))[0];
+      const highRiskCount = accounts.filter((a) => a.risk_level === "high").length;
+      const focusAccountCount = accounts.filter((a) => a.risk_level !== "low").length;
+      const atRiskMrr = accounts
+        .filter((a) => a.risk_level !== "low")
+        .reduce((sum, a) => sum + (a.mrr || 0), 0);
+      const openRiskCount = (Array.isArray(data.risks) ? data.risks : []).length;
+      const handoffs = Array.isArray(data.handoff) ? data.handoff : [];
+      const exceptionLoad = handoffs.reduce((sum, h) => sum + (h.exceptions || 0), 0);
+      const slaBottleneck = handoffs.slice().sort((a, b) => (b.sla_hours || 0) - (a.sla_hours || 0))[0];
+
+      const priorityHeadline = priorityAccount
+        ? `Intervene on ${priorityAccount.account} this cycle`
+        : "Intervene on high-risk pipeline this cycle";
+
+      const priorityReason = weakestGate
+        ? `${weakestGate.from} to ${weakestGate.to} is the weakest gate at ${d3.format(".0%")(weakestGate.conversion_rate || 0)} conversion.`
+        : "Conversion friction is concentrated in late-stage handoffs.";
+
+      hero.innerHTML = `
+        <p class="exec-kicker">Priority Move</p>
+        <h3>${priorityHeadline}</h3>
+        <p>${priorityReason} Focus intervention before adding top-of-funnel spend.</p>
+      `;
+
+      const statCards = [
+        {
+          label: "Weakest Gate",
+          value: weakestGate ? `${weakestGate.from} -> ${weakestGate.to} ${d3.format(".0%")(weakestGate.conversion_rate || 0)}` : "--"
+        },
+        {
+          label: "Exception Load",
+          value: `${exceptionLoad} open`
+        },
+        {
+          label: "At-Risk MRR",
+          value: money(atRiskMrr)
+        },
+        {
+          label: "Priority Owner",
+          value: priorityAccount ? priorityAccount.owner : "--"
+        },
+        {
+          label: "SLA Bottleneck",
+          value: slaBottleneck ? `${slaBottleneck.stage} ${slaBottleneck.sla_hours}h` : "--"
+        },
+        {
+          label: "Focus Accounts",
+          value: `${focusAccountCount} tracked | ${highRiskCount} high | ${openRiskCount} risks`
+        }
+      ];
+
+      statGrid.innerHTML = "";
+      statCards.forEach((s) => {
+        const card = document.createElement("article");
+        card.className = "exec-stat";
+        card.innerHTML = `<p class="l">${s.label}</p><p class="v">${s.value}</p>`;
+        statGrid.appendChild(card);
+      });
+
+      const actions = (data.narrative?.next_14_days || []).slice(0, 3);
+      actionList.innerHTML = "";
+      actions.forEach((a, i) => {
+        const sourceInitiative = (data.initiatives || [])[i];
+        const item = document.createElement("article");
+        item.className = "exec-action";
+        item.innerHTML = `
+          <strong>${a}</strong>
+          <p>${sourceInitiative ? `Owner: ${sourceInitiative.owner} | Due: ${sourceInitiative.due_date}` : "Owner alignment required in this cycle."}</p>
+        `;
+        actionList.appendChild(item);
+      });
+    }
+
+    function renderSankey(funnel) {
+      const host = d3.select("#sankey");
+      host.selectAll("*").remove();
+      const width = host.node().clientWidth || 1100;
+      const compact = width < 760;
+      const height = compact ? 370 : 420;
+      const margin = compact
+        ? { top: 10, right: 16, bottom: 12, left: 16 }
+        : { top: 14, right: 170, bottom: 16, left: 170 };
+      const iw = width - margin.left - margin.right;
+      const ih = height - margin.top - margin.bottom;
+
+      const svg = host.append("svg").attr("viewBox", `0 0 ${width} ${height}`).style("width", "100%");
+      const tip = host.append("div").attr("class", "tip");
+      const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+      const defs = svg.append("defs");
+
+      const colorById = {
+        won: "#15803d",
+        lost: "#b91c1c",
+        stall: "#b45309"
+      };
+
+      const sankey = d3.sankey()
+        .nodeId((d) => d.id)
+        .nodeWidth(compact ? 16 : 22)
+        .nodePadding(compact ? 18 : 26)
+        .extent([[0, 0], [iw, ih]]);
+
+      const graph = sankey({
+        nodes: funnel.nodes.map((n) => ({ ...n })),
+        links: funnel.links.map((l) => ({ ...l }))
+      });
+
+      graph.links.forEach((l, i) => {
+        const grad = defs
+          .append("linearGradient")
+          .attr("id", `agrad-${i}`)
+          .attr("gradientUnits", "userSpaceOnUse")
+          .attr("x1", l.source.x1 + margin.left)
+          .attr("x2", l.target.x0 + margin.left)
+          .attr("y1", 0)
+          .attr("y2", 0);
+
+        grad.append("stop").attr("offset", "0%").attr("stop-color", colorById[l.source.id] || "#3b82f6").attr("stop-opacity", 0.5);
+        grad.append("stop").attr("offset", "100%").attr("stop-color", colorById[l.target.id] || "#2563eb").attr("stop-opacity", 0.35);
+      });
+
+      g.append("g")
+        .selectAll("path")
+        .data(graph.links)
+        .join("path")
+        .attr("d", d3.sankeyLinkHorizontal())
+        .attr("fill", "none")
+        .attr("stroke", (_, i) => `url(#agrad-${i})`)
+        .attr("stroke-width", (d) => Math.max(1, d.width))
+        .attr("stroke-opacity", 0.5)
+        .on("mousemove", function(event, d) {
+          d3.select(this).attr("stroke-opacity", 0.85);
+          tip
+            .style("opacity", 1)
+            .style("transform", `translate(${event.offsetX + 14}px, ${event.offsetY + 12}px)`)
+            .html(`<div class='tip-title'>${d.source.label} -> ${d.target.label}</div><div>Value ${money(d.value * 1000)}</div><div>${d3.format(".0%")(d.value / d.source.value)} of source</div>`);
+        })
+        .on("mouseleave", function() {
+          d3.select(this).attr("stroke-opacity", 0.5);
+          tip.style("opacity", 0).style("transform", "translate(-9999px,-9999px)");
+        });
+
+      const node = g.append("g").selectAll("g").data(graph.nodes).join("g");
+
+      node
+        .append("rect")
+        .attr("x", (d) => d.x0)
+        .attr("y", (d) => d.y0)
+        .attr("width", (d) => d.x1 - d.x0)
+        .attr("height", (d) => Math.max(3, d.y1 - d.y0))
+        .attr("rx", 4)
+        .attr("fill", (d) => colorById[d.id] || "#3b82f6")
+        .attr("opacity", 0.92)
+        .on("mousemove", function(event, d) {
+          tip
+            .style("opacity", 1)
+            .style("transform", `translate(${event.offsetX + 14}px, ${event.offsetY + 12}px)`)
+            .html(`<div class='tip-title'>${d.label}</div><div>${money(d.value * 1000)}</div><div>${d3.format(".0%")(d.value / funnel.total_value)} of total</div>`);
+        })
+        .on("mouseleave", function() {
+          tip.style("opacity", 0).style("transform", "translate(-9999px,-9999px)");
+        });
+
+      if (compact) {
+        node
+          .append("text")
+          .filter((d) => d.y1 - d.y0 > 14)
+          .attr("x", (d) => d.x0 + (d.x1 - d.x0) / 2)
+          .attr("y", (d) => (d.y0 + d.y1) / 2)
+          .attr("dy", "0.35em")
+          .attr("text-anchor", "middle")
+          .attr("font-family", "var(--mono)")
+          .attr("font-size", 8)
+          .attr("font-weight", 700)
+          .attr("fill", "#f8fafc")
+          .text((d) => d.short || d.label);
+      } else {
+        node
+          .append("text")
+          .attr("x", (d) => (d.x0 < iw / 2 ? d.x1 + 7 : d.x0 - 7))
+          .attr("y", (d) => (d.y0 + d.y1) / 2 - 6)
+          .attr("text-anchor", (d) => (d.x0 < iw / 2 ? "start" : "end"))
+          .attr("font-family", "var(--ui)")
+          .attr("font-size", 11)
+          .attr("font-weight", 700)
+          .attr("fill", "#1f2937")
+          .text((d) => d.label);
+
+        node
+          .append("text")
+          .attr("x", (d) => (d.x0 < iw / 2 ? d.x1 + 7 : d.x0 - 7))
+          .attr("y", (d) => (d.y0 + d.y1) / 2 + 9)
+          .attr("text-anchor", (d) => (d.x0 < iw / 2 ? "start" : "end"))
+          .attr("font-family", "var(--mono)")
+          .attr("font-size", 10)
+          .attr("fill", "#64748b")
+          .text((d) => money(d.value * 1000));
+      }
+    }
+
+    function renderCommerceDonut(rows) {
+      const host = d3.select("#commerceDonut");
+      host.selectAll("*").remove();
+      const width = host.node().clientWidth || 540;
+      const compact = width < 620;
+      const height = compact ? 318 : 250;
+      const svg = host.append("svg").attr("viewBox", `0 0 ${width} ${height}`).style("width", "100%");
+
+      const outerR = compact ? Math.max(52, Math.min(66, width * 0.18)) : 74;
+      const innerR = Math.round(outerR * 0.57);
+      const cx = compact ? width / 2 : width / 2 - 72;
+      const cy = compact ? 96 : height / 2 + 6;
+
+      const g = svg.append("g").attr("transform", `translate(${cx},${cy})`);
+      const pie = d3.pie().value((d) => d.value).sort(null).padAngle(0.02);
+      const arc = d3.arc().innerRadius(innerR).outerRadius(outerR).cornerRadius(3);
+      const arcHover = d3.arc().innerRadius(innerR - 3).outerRadius(outerR + 6).cornerRadius(3);
+
+      g.selectAll("path")
+        .data(pie(rows))
+        .join("path")
+        .attr("d", arc)
+        .attr("fill", (d) => d.data.color)
+        .attr("opacity", 0.92)
+        .on("mouseenter", function(event, d) {
+          d3.select(this).transition().duration(170).attr("d", arcHover).attr("opacity", 1);
+          showMiniTip(`<div class='t-title'>${d.data.name}</div><div>Share: <strong>${d.data.value}%</strong></div>`, event.pageX, event.pageY);
+        })
+        .on("mouseleave", function() {
+          d3.select(this).transition().duration(170).attr("d", arc).attr("opacity", 0.92);
+          hideMiniTip();
+        });
+
+      g.append("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", "-6")
+        .attr("font-family", "var(--display)")
+        .attr("font-size", compact ? 24 : 28)
+        .attr("fill", "#2b3440")
+        .text(rows.length);
+
+      g.append("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", "12")
+        .attr("font-family", "var(--mono)")
+        .attr("font-size", compact ? 7 : 8)
+        .attr("letter-spacing", "1.4px")
+        .attr("fill", "#7a8592")
+        .text("CHANNELS");
+
+      rows.forEach((r, i) => {
+        const col = compact ? i % 2 : 0;
+        const row = compact ? Math.floor(i / 2) : i;
+        const legendX = compact ? 26 + col * ((width - 52) / 2) : width - 150;
+        const ly = compact ? cy + outerR + 20 + row * 26 : 56 + row * 26;
+        svg.append("circle").attr("cx", legendX).attr("cy", ly).attr("r", 4).attr("fill", r.color);
+        svg.append("text")
+          .attr("x", legendX + 10)
+          .attr("y", ly + 1)
+          .attr("font-family", "var(--ui)")
+          .attr("font-size", compact ? 10 : 11)
+          .attr("fill", "#4b5563")
+          .text(`${r.name}`);
+        svg.append("text")
+          .attr("x", legendX + 10)
+          .attr("y", ly + 12)
+          .attr("font-family", "var(--mono)")
+          .attr("font-size", compact ? 8 : 9)
+          .attr("fill", "#8b95a3")
+          .text(`${r.value}%`);
+      });
+    }
+
+    function renderCommerceWeek(rows) {
+      const host = d3.select("#commerceWeek");
+      host.selectAll("*").remove();
+      const width = host.node().clientWidth || 540;
+      const compact = width < 620;
+      const height = compact ? 280 : 250;
+      const margin = compact ? { top: 10, right: 14, bottom: 10, left: 68 } : { top: 10, right: 18, bottom: 8, left: 80 };
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
+
+      const svg = host.append("svg").attr("viewBox", `0 0 ${width} ${height}`).style("width", "100%");
+      const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+      const x = d3.scaleLinear().domain([0, 100]).range([0, w]);
+      const y = d3.scaleBand().domain(rows.map((d) => d.day)).range([0, h]).padding(compact ? 0.24 : 0.28);
+      const color = d3.scaleLinear().domain([40, 70, 100]).range(["#f4c892", "#f29e51", "#ef5b49"]);
+
+      g.selectAll("text.day")
+        .data(rows)
+        .join("text")
+        .attr("x", -9)
+        .attr("y", (d) => y(d.day) + y.bandwidth() / 2)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "end")
+        .attr("font-family", "var(--ui)")
+        .attr("font-size", compact ? 9 : 10)
+        .attr("fill", "#5e6977")
+        .text((d) => d.day);
+
+      g.selectAll("rect")
+        .data(rows)
+        .join("rect")
+        .attr("x", 0)
+        .attr("y", (d) => y(d.day))
+        .attr("height", y.bandwidth())
+        .attr("rx", 3)
+        .attr("fill", (d) => color(d.value))
+        .attr("width", 0)
+        .on("mousemove", (event, d) => showMiniTip(`<div class='t-title'>${d.day}</div><div>Index: <strong>${d.value}</strong></div>`, event.pageX, event.pageY))
+        .on("mouseleave", hideMiniTip)
+        .transition()
+        .duration(650)
+        .delay((_, i) => i * 60)
+        .attr("width", (d) => x(d.value));
+
+      g.selectAll("text.val")
+        .data(rows)
+        .join("text")
+        .attr("x", (d) => x(d.value) + 8)
+        .attr("y", (d) => y(d.day) + y.bandwidth() / 2)
+        .attr("dy", "0.35em")
+        .attr("font-family", "var(--mono)")
+        .attr("font-size", compact ? 8 : 9)
+        .attr("fill", "#7a8593")
+        .text((d) => d.value);
+    }
+
+    function renderSkuTable(rows) {
+      const root = document.getElementById("skuRows");
+      root.innerHTML = "";
+      rows
+        .slice()
+        .sort((a, b) => a.rank - b.rank)
+        .forEach((r) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td class="sku-rank">${String(r.rank).padStart(2, "0")}</td>
+            <td><strong>${r.sku}</strong></td>
+            <td>${r.brand}</td>
+            <td>${money(r.revenue)}</td>
+            <td>${r.margin_pct}%</td>
+            <td>${d3.format(",")(r.units)}</td>
+            <td><span class="trend-pill trend-${r.trend}">${r.trend}</span></td>
+          `;
+          root.appendChild(tr);
+        });
+    }
+
+    function renderBrandShare(rows) {
+      const host = d3.select("#brandShare");
+      host.selectAll("*").remove();
+      const width = host.node().clientWidth || 980;
+      const compact = width < 620;
+      const height = compact ? 200 : 170;
+      const margin = compact ? { top: 8, right: 18, bottom: 10, left: 66 } : { top: 6, right: 40, bottom: 8, left: 90 };
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
+      const svg = host.append("svg").attr("viewBox", `0 0 ${width} ${height}`).style("width", "100%");
+      const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+      const x = d3.scaleLinear().domain([0, Math.max(45, d3.max(rows, (d) => d.share) + 5)]).range([0, w]);
+      const y = d3.scaleBand().domain(rows.map((d) => d.brand)).range([0, h]).padding(compact ? 0.3 : 0.35);
+
+      g.selectAll("text.brand")
+        .data(rows)
+        .join("text")
+        .attr("x", -10)
+        .attr("y", (d) => y(d.brand) + y.bandwidth() / 2)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "end")
+        .attr("font-family", "var(--ui)")
+        .attr("font-size", compact ? 10 : 11)
+        .attr("fill", "#566171")
+        .text((d) => d.brand);
+
+      g.selectAll("rect.bar")
+        .data(rows)
+        .join("rect")
+        .attr("x", 0)
+        .attr("y", (d) => y(d.brand))
+        .attr("height", y.bandwidth())
+        .attr("rx", 3)
+        .attr("fill", (d) => d.color)
+        .attr("opacity", 0.92)
+        .attr("width", 0)
+        .transition()
+        .duration(700)
+        .delay((_, i) => i * 70)
+        .attr("width", (d) => x(d.share));
+
+      g.selectAll("text.share")
+        .data(rows)
+        .join("text")
+        .attr("x", (d) => {
+          const pos = x(d.share) + 7;
+          return pos > w - 4 ? w - 2 : pos;
+        })
+        .attr("y", (d) => y(d.brand) + y.bandwidth() / 2)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", (d) => (x(d.share) + 7 > w - 4 ? "end" : "start"))
+        .attr("font-family", "var(--mono)")
+        .attr("font-size", compact ? 8 : 9)
+        .attr("fill", "#7b8693")
+        .text((d) => `${d.share}%`);
+    }
+
+    function renderCommerceActions(actions, note) {
+      const root = document.getElementById("commerceActions");
+      root.innerHTML = "";
+      actions.forEach((a) => {
+        const card = document.createElement("article");
+        card.className = "action-card";
+        card.innerHTML = `
+          <h4>${a.action}</h4>
+          <p>Owner: ${a.owner}</p>
+          <p>Window: ${a.window}</p>
+          <p>Expected: ${a.expected_impact}</p>
+        `;
+        root.appendChild(card);
+      });
+
+      document.getElementById("strategyNote").innerHTML = `<strong>Strategy Note</strong>${note}`;
+    }
+
+    function renderStudioMetricSpark(series) {
+      const host = d3.select("#studioMetricSpark");
+      if (!host.node()) return;
+      host.selectAll("*").remove();
+      const width = host.node().clientWidth || 420;
+      const height = 126;
+      const margin = { top: 10, right: 8, bottom: 12, left: 8 };
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
+      const svg = host.append("svg").attr("viewBox", `0 0 ${width} ${height}`).style("width", "100%");
+      const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+      const x = d3.scaleLinear().domain([0, series.length - 1]).range([0, w]);
+      const y = d3.scaleLinear().domain([d3.min(series) - 4, d3.max(series) + 4]).range([h, 0]);
+      const defs = svg.append("defs");
+      const grad = defs.append("linearGradient").attr("id", "studio-spark-fill").attr("x1", "0%").attr("x2", "0%").attr("y1", "0%").attr("y2", "100%");
+      grad.append("stop").attr("offset", "0%").attr("stop-color", "#60a5fa").attr("stop-opacity", 0.5);
+      grad.append("stop").attr("offset", "100%").attr("stop-color", "#1e293b").attr("stop-opacity", 0.04);
+
+      g.append("path")
+        .datum(series)
+        .attr("fill", "url(#studio-spark-fill)")
+        .attr("d", d3.area().x((_, i) => x(i)).y0(h).y1((d) => y(d)).curve(d3.curveMonotoneX));
+
+      g.append("path")
+        .datum(series)
+        .attr("fill", "none")
+        .attr("stroke", "#7dd3fc")
+        .attr("stroke-width", 2.1)
+        .attr("d", d3.line().x((_, i) => x(i)).y((d) => y(d)).curve(d3.curveMonotoneX));
+
+      const last = series[series.length - 1];
+      g.append("circle").attr("cx", x(series.length - 1)).attr("cy", y(last)).attr("r", 3.5).attr("fill", "#67e8f9");
+      g.append("text")
+        .attr("x", x(series.length - 1) - 2)
+        .attr("y", y(last) - 8)
+        .attr("text-anchor", "end")
+        .attr("font-family", "var(--mono)")
+        .attr("font-size", 9)
+        .attr("fill", "#9fd6ff")
+        .text(`idx ${Math.round(last)}`);
+    }
+
+    function renderStudioAutoViz(rows) {
+      const host = d3.select("#studioAutoViz");
+      if (!host.node()) return;
+      host.selectAll("*").remove();
+      const width = host.node().clientWidth || 520;
+      const height = 168;
+      const margin = { top: 12, right: 16, bottom: 20, left: 30 };
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
+      const svg = host.append("svg").attr("viewBox", `0 0 ${width} ${height}`).style("width", "100%");
+      const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+      const keys = ["requests", "bid_floor", "qps"];
+      const labels = { requests: "Requests", bid_floor: "Avg Bid Floor", qps: "QPS" };
+      const colors = { requests: "#93c5fd", bid_floor: "#a78bfa", qps: "#34d399" };
+      const x = d3.scaleLinear().domain([0, rows.length - 1]).range([0, w]);
+      const y = d3.scaleLinear()
+        .domain([0, d3.max(rows.flatMap((r) => keys.map((k) => r[k]))) * 1.12])
+        .range([h, 0]);
+
+      g.selectAll("line.grid")
+        .data(y.ticks(4))
+        .join("line")
+        .attr("class", "grid")
+        .attr("x1", 0)
+        .attr("x2", w)
+        .attr("y1", (d) => y(d))
+        .attr("y2", (d) => y(d))
+        .attr("stroke", "rgba(142, 172, 237, 0.2)")
+        .attr("stroke-width", 1);
+
+      keys.forEach((k) => {
+        g.append("path")
+          .datum(rows)
+          .attr("fill", "none")
+          .attr("stroke", colors[k])
+          .attr("stroke-width", 1.9)
+          .attr("d", d3.line().x((_, i) => x(i)).y((d) => y(d[k])).curve(d3.curveMonotoneX));
+      });
+
+      keys.forEach((k, i) => {
+        g.append("text")
+          .attr("x", 0)
+          .attr("y", 12 + i * 13)
+          .attr("font-family", "var(--mono)")
+          .attr("font-size", 8.5)
+          .attr("fill", colors[k])
+          .text(labels[k]);
+      });
+    }
+
+    function renderStudioFilterChart(series) {
+      const host = d3.select("#studioFilterChart");
+      if (!host.node()) return;
+      host.selectAll("*").remove();
+      const width = host.node().clientWidth || 520;
+      const height = 118;
+      const margin = { top: 10, right: 12, bottom: 10, left: 8 };
+      const w = width - margin.left - margin.right;
+      const h = height - margin.top - margin.bottom;
+      const svg = host.append("svg").attr("viewBox", `0 0 ${width} ${height}`).style("width", "100%");
+      const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+      const x = d3.scaleLinear().domain([0, series.length - 1]).range([0, w]);
+      const y = d3.scaleLinear().domain([d3.min(series) - 6, d3.max(series) + 6]).range([h, 0]);
+
+      g.append("path")
+        .datum(series)
+        .attr("fill", "rgba(147, 197, 253, 0.16)")
+        .attr("d", d3.area().x((_, i) => x(i)).y0(h).y1((d) => y(d)).curve(d3.curveMonotoneX));
+
+      g.append("path")
+        .datum(series)
+        .attr("fill", "none")
+        .attr("stroke", "#9fc7ff")
+        .attr("stroke-width", 1.9)
+        .attr("d", d3.line().x((_, i) => x(i)).y((d) => y(d)).curve(d3.curveMonotoneX));
+
+      const cursorIndex = Math.max(1, Math.round(series.length * 0.72));
+      g.append("line")
+        .attr("x1", x(cursorIndex))
+        .attr("x2", x(cursorIndex))
+        .attr("y1", 0)
+        .attr("y2", h)
+        .attr("stroke", "rgba(137, 190, 255, 0.46)")
+        .attr("stroke-dasharray", "3 3");
+    }
+
+    function renderStudio(data) {
+      if (!document.getElementById("studioMetricSpark")) return;
+      const kpis = Array.isArray(data.kpi_strip) ? data.kpi_strip : [];
+      const leakage = kpis.find((k) => k.id === "leakage");
+      const pipeline = kpis.find((k) => k.id === "pipeline");
+      const winRate = kpis.find((k) => k.id === "win_rate");
+      const salesCycle = kpis.find((k) => k.id === "cycle");
+      const accounts = Array.isArray(data.client_accounts) ? data.client_accounts : [];
+      const totalMrr = accounts.reduce((sum, a) => sum + (a.mrr || 0), 0);
+      const atRiskMrr = accounts.filter((a) => a.risk_level !== "low").reduce((sum, a) => sum + (a.mrr || 0), 0);
+      const weakestGate = (data.funnel?.critical_gates || []).slice().sort((a, b) => (a.conversion_rate || 0) - (b.conversion_rate || 0))[0];
+
+      const riskEl = document.getElementById("studioRiskRevenue");
+      const riskDeltaEl = document.getElementById("studioRiskDelta");
+      if (riskEl) riskEl.textContent = leakage ? money(leakage.value) : money(atRiskMrr);
+      if (riskDeltaEl) riskDeltaEl.textContent = leakage?.delta || "Watchlist stabilized this cycle";
+
+      const dimRows = document.getElementById("studioDimRows");
+      if (dimRows) {
+        dimRows.innerHTML = accounts
+          .slice()
+          .sort((a, b) => (b.mrr || 0) - (a.mrr || 0))
+          .slice(0, 6)
+          .map((a) => `<div class="studio-dim-row"><span>${a.account}</span><span>${totalMrr ? d3.format(".0%")(a.mrr / totalMrr) : "0%"}</span></div>`)
+          .join("");
+      }
+
+      const profileRows = document.getElementById("studioProfileRows");
+      if (profileRows) {
+        const rows = [
+          { label: "Pipeline", value: pipeline ? money(pipeline.value) : "--", score: 74 },
+          { label: "Leakage", value: leakage ? money(leakage.value) : "--", score: 58 },
+          { label: "Win Rate", value: winRate?.value || "--", score: 66 },
+          { label: "Sales Cycle", value: salesCycle?.value || "--", score: 62 }
+        ];
+        profileRows.innerHTML = rows
+          .map((r) => `<div class="studio-profile-row"><span>${r.label}</span><span>${r.value}</span><span><span class="studio-bar"><i style="width:${r.score}%"></i></span></span></div>`)
+          .join("");
+      }
+
+      const actionValue = document.getElementById("studioActionValue");
+      const actionCopy = document.getElementById("studioActionCopy");
+      const actionList = document.getElementById("studioActionList");
+      const code = document.getElementById("studioCode");
+      if (actionValue) actionValue.textContent = money(atRiskMrr);
+      if (actionCopy) {
+        const gateText = weakestGate
+          ? `${weakestGate.from} -> ${weakestGate.to} is weak at ${d3.format(".0%")(weakestGate.conversion_rate || 0)} conversion.`
+          : "Late-stage conversion quality needs intervention.";
+        actionCopy.textContent = `${gateText} This is the revenue pool requiring immediate rep-level focus.`;
+      }
+      if (actionList) {
+        actionList.innerHTML = (data.narrative?.next_14_days || [])
+          .slice(0, 3)
+          .map((a) => `<li>${a}</li>`)
+          .join("");
+      }
+      if (code) {
+        code.textContent =
+`select
+  owner,
+  sum(case when risk_level <> 'low' then mrr else 0 end) as at_risk_mrr,
+  avg(health_score) as avg_health
+from client_accounts
+group by owner
+order by at_risk_mrr desc;`;
+      }
+
+      const weekly = getCommerceData(data).weekly_intensity.map((d) => d.value);
+      const sparkSeries = weekly
+        .concat(weekly.map((v, i) => Math.max(38, Math.min(100, v + ((i % 3) - 1) * 6))))
+        .slice(0, 14);
+
+      const autoRows = sparkSeries.slice(0, 12).map((v, i) => ({
+        requests: 78 + v * 1.45 + i * 2.1,
+        bid_floor: 56 + v * 0.94 + ((i + 2) % 4) * 3.2,
+        qps: 44 + v * 0.8 + (i % 5) * 2
+      }));
+
+      const filterSeries = sparkSeries.map((v, i) => v + (i % 2 ? 5 : -3));
+      renderStudioMetricSpark(sparkSeries);
+      renderStudioAutoViz(autoRows);
+      renderStudioFilterChart(filterSeries);
+    }
+
+    function renderVisualModules(data) {
+      renderSankey(data.funnel);
+      const commerceData = getCommerceData(data);
+      renderCommerceDonut(commerceData.channel_mix);
+      renderCommerceWeek(commerceData.weekly_intensity);
+      renderSkuTable(commerceData.sku_performance);
+      renderBrandShare(commerceData.brand_split);
+      renderCommerceActions(commerceData.actions, commerceData.strategy_note);
+      renderStudio(data);
+    }
+
+    function rerenderForViewport() {
+      if (!currentData) return;
+      renderVisualModules(currentData);
+    }
+
+    function renderBoard(data) {
+      const risks = document.getElementById("riskList");
+      risks.innerHTML = "";
+      data.risks.forEach((r) => {
+        const el = document.createElement("article");
+        el.className = "item";
+        el.innerHTML = `
+          <strong>${r.summary}</strong>
+          <p>Owner: ${r.owner}</p>
+          <p>Mitigation: ${r.mitigation}</p>
+          <p>Next review: ${r.next_review} | Level: ${r.level}</p>
+        `;
+        risks.appendChild(el);
+      });
+
+      const init = document.getElementById("initiativeList");
+      init.innerHTML = "";
+      data.initiatives.forEach((i) => {
+        const el = document.createElement("article");
+        el.className = "item";
+        el.innerHTML = `
+          <strong>${i.initiative}</strong>
+          <p>Owner: ${i.owner}</p>
+          <p>Status: ${i.status.replace("_", " ")} | Due: ${i.due_date}</p>
+          <p>Impact: ${i.expected_impact}</p>
+        `;
+        init.appendChild(el);
+      });
+
+      const next = data.narrative.next_14_days.map((n) => `- ${n}`).join(" ");
+      document.getElementById("summaryText").innerHTML = `<strong>Executive Summary</strong>${data.narrative.executive_summary} Next 14 days: ${next}`;
+    }
+
+    async function init() {
+      const data = await loadData();
+      currentData = data;
+      applyBrand(data.agency);
+      renderHeader(data);
+      renderKpis(data.kpi_strip || []);
+      renderAccounts(data.client_accounts || []);
+      renderExecBrief(data);
+      renderHandoffs(data.handoff || []);
+      renderVisualModules(data);
+      renderBoard(data);
+    }
+
+    init();
+
+    window.addEventListener("resize", () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        rerenderForViewport();
+      }, 140);
+    });
+  </script>
+</body>
+</html>
