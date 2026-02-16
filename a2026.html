@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Strategic Roadmap — Unified Field Theory</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+:root {
+    /* ══ STRATEGIC PALETTE ══ */
+    --midnight: #0B1221;
+    --slate: #1C2738;
+    --slate-soft: #2A3847;
+    --sage: #3D5A4F;
+    --sage-soft: #4A6B5F;
+    
+    --copper: #B87333;
+    --copper-bright: #D4956A;
+    --gold: #C9A66B;
+    --teal: #0EA5B7;
+    --teal-soft: #3DB8C7;
+    
+    --cream: #FBF9F5;
+    --cream-soft: #F6F3EC;
+    --rule: #E8E3D8;
+    
+    --text-primary: #F5EFE8;
+    --text-soft: #C8BFB5;
+    --text-muted: #8A7D6A;
+    --text-dim: #5A5550;
+    
+    /* ══ TYPOGRAPHY ══ */
+    --display: 'Playfair Display', Georgia, serif;
+    --body: 'Source Serif 4', Georgia, serif;
+    --ui: 'Libre Franklin', -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', monospace;
+    
+    /* ══ EFFECTS ══ */
+    --shadow-soft: 0 4px 24px rgba(11, 18, 33, 0.12);
+    --shadow-elevated: 0 8px 48px rgba(11, 18, 33, 0.18);
+    --glow-copper: 0 0 32px rgba(184, 115, 51, 0.4);
+    --glow-teal: 0 0 32px rgba(14, 165, 183, 0.3);
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--midnight);
+    background-image: 
+        radial-gradient(ellipse at 20% 10%, rgba(184, 115, 51, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 30%, rgba(14, 165, 183, 0.06) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 80%, rgba(61, 90, 79, 0.05) 0%, transparent 45%);
+    color: var(--text-primary);
+    font-family: var(--body);
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════
+   HERO SECTION
+   ══════════════════════════════════════ */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 40px;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(184, 115, 51, 0.12) 0%,
+        transparent 60%
+    );
+    opacity: 0;
+    animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.hero__content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 1200px;
+}
+
+.hero__kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--copper-bright);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+    text-shadow: var(--glow-copper);
+}
+
+.hero__title {
+    font-family: var(--display);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.5s forwards;
+    text-shadow: 0 4px 48px rgba(0, 0, 0, 0.5);
+}
+
+.hero__title em {
+    color: var(--copper-bright);
+    font-style: italic;
+}
+
+.hero__deck {
+    font-family: var(--body);
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-soft);
+    max-width: 800px;
+    margin: 0 auto 48px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.7s forwards;
+}
+
+.hero__principles {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.9s forwards;
+}
+
+.principle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 24px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.3s ease;
+    min-width: 180px;
+}
+
+.principle:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--copper);
+    transform: translateY(-4px);
+    box-shadow: var(--glow-copper);
+}
+
+.principle__icon {
+    font-size: 32px;
+    filter: drop-shadow(0 0 12px currentColor);
+}
+
+.principle__label {
+    font-family: var(--ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-soft);
+}
+
+.hero__scroll {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 1.5s forwards;
+}
+
+.hero__scroll span {
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+}
+
+/* ══════════════════════════════════════
+   MAIN CONTENT
+   ══════════════════════════════════════ */
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 60px 120px;
+}
+
+/* ══ SECTION STYLING ══ */
+.section {
+    margin-bottom: 120px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+}
+
+.section__header {
+    margin-bottom: 48px;
+    text-align: center;
+}
+
+.section__eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--copper-bright);
+    margin-bottom: 16px;
+}
+
+.section__title {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 600;
+    letter-spacing: -1px;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.section__deck {
+    font-family: var(--body);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-soft);
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ══ UNIFIED FIELD THEORY VISUALIZATION ══ */
+.unified-field {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.01) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 60px;
+    box-shadow: var(--shadow-elevated);
+    position: relative;
+    overflow: hidden;
+}
+
+.unified-field::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--copper) 0%,
+        var(--teal) 50%,
+        var(--sage) 100%
+    );
+    border-radius: 24px 24px 0 0;
+}
+
+#sankey-container {
+    width: 100%;
+    height: 600px;
+    margin: 40px 0;
+}
+
+/* ══ TIMELINE ══ */
+.timeline-container {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.02) 0%,
+        rgba(255, 255, 255, 0.01) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--copper));
+}
+
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 48px;
+}
+
+.quarter {
+    position: relative;
+    padding: 32px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.quarter:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--copper);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-elevated);
+}
+
+.quarter__label {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--copper-bright);
+    margin-bottom: 16px;
+}
+
+.quarter__title {
+    font-family: var(--display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+.quarter__items {
+    list-style: none;
+}
+
+.quarter__item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    font-family: var(--body);
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.quarter__item::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--copper);
+    font-weight: 600;
+}
+
+.quarter__deliverable {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal-soft);
+    font-weight: 500;
+}
+
+/* ══ PRIORITY CARDS ══ */
+.priorities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+}
+
+.priority-card {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(255, 255, 255, 0.01) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.priority-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent, var(--copper));
+}
+
+.priority-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-elevated);
+}
+
+.priority-card--health { --accent: #2F7D61; }
+.priority-card--work { --accent: var(--copper); }
+.priority-card--cooper { --accent: var(--teal); }
+.priority-card--skills { --accent: var(--gold); }
+.priority-card--life { --accent: var(--sage); }
+.priority-card--substack { --accent: var(--copper-bright); }
+
+.priority__number {
+    font-family: var(--mono);
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--accent);
+    opacity: 0.2;
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.priority__title {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.priority__status {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 100px;
+    display: inline-block;
+}
+
+.priority__desc {
+    font-family: var(--body);
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.priority__metrics {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.metric {
+    flex: 1;
+}
+
+.metric__label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.metric__value {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.priority__integration {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 20px;
+    font-family: var(--body);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* ══ NETWORK VISUALIZATION ══ */
+#network-container {
+    width: 100%;
+    height: 500px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.2);
+    margin-top: 48px;
+}
+
+/* ══ ANTI-SCATTER PROTOCOL ══ */
+.protocol {
+    background: linear-gradient(
+        135deg,
+        rgba(184, 115, 51, 0.08) 0%,
+        rgba(184, 115, 51, 0.02) 100%
+    );
+    border: 2px solid rgba(184, 115, 51, 0.3);
+    border-radius: 20px;
+    padding: 48px;
+    margin-top: 48px;
+}
+
+.protocol__title {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--copper-bright);
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.protocol__rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.rule {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.rule__question {
+    font-family: var(--ui);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.rule__action {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--copper-bright);
+}
+
+/* ══ FOOTER ══ */
+.footer {
+    margin-top: 120px;
+    padding: 48px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+.footer__quote {
+    font-family: var(--display);
+    font-size: 24px;
+    font-style: italic;
+    color: var(--text-soft);
+    margin-bottom: 24px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer__author {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+}
+
+.footer__timestamp {
+    margin-top: 32px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 1200px) {
+    .timeline {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 32px 80px;
+    }
+    
+    .timeline {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero__principles {
+        flex-direction: column;
+    }
+    
+    .unified-field,
+    .timeline-container,
+    .protocol {
+        padding: 32px;
+    }
+}
+
+/* ══ TOOLTIP ══ */
+.tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(11, 18, 33, 0.95);
+    border: 1px solid rgba(184, 115, 51, 0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 1000;
+    box-shadow: var(--shadow-elevated);
+    max-width: 300px;
+}
+
+.tooltip.active {
+    opacity: 1;
+}
+
+.tooltip__title {
+    font-family: var(--ui);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--copper-bright);
+    margin-bottom: 8px;
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     HERO SECTION
+     ══════════════════════════════════════ -->
+<section class="hero">
+    <div class="hero__content">
+        <div class="hero__kicker">2026 Strategic Roadmap</div>
+        <h1 class="hero__title">
+            One System,<br>
+            <em>Five Outcomes</em>
+        </h1>
+        <p class="hero__deck">
+            Building production-grade ML systems, scaling food business intelligence, and earning Google ML certification—not through study, but through building what already works at enterprise scale.
+        </p>
+        
+        <div class="hero__principles">
+            <div class="principle">
+                <div class="principle__icon">🎯</div>
+                <div class="principle__label">Foundation</div>
+            </div>
+            <div class="principle">
+                <div class="principle__icon">⚡</div>
+                <div class="principle__label">Integration</div>
+            </div>
+            <div class="principle">
+                <div class="principle__icon">🔄</div>
+                <div class="principle__label">Compounding</div>
+            </div>
+            <div class="principle">
+                <div class="principle__icon">📈</div>
+                <div class="principle__label">Scalability</div>
+            </div>
+        </div>
+        
+        <div class="hero__scroll">
+            <span>↓</span> SCROLL TO EXPLORE
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     MAIN CONTENT
+     ══════════════════════════════════════ -->
+<main class="container">
+
+    <!-- UNIFIED FIELD THEORY -->
+    <section class="section">
+        <div class="section__header">
+            <div class="section__eyebrow">The Core Insight</div>
+            <h2 class="section__title">Cooper IS Your Food Business Intelligence</h2>
+            <p class="section__deck">
+                You're not building three separate things. You're building one foundation that deploys across three contexts: work forecasting, Amy's food business, and client deployments.
+            </p>
+        </div>
+        
+        <div class="unified-field">
+            <div id="sankey-container"></div>
+        </div>
+    </section>
+
+    <!-- PRIORITY BREAKDOWN -->
+    <section class="section">
+        <div class="section__header">
+            <div class="section__eyebrow">The Five Priorities</div>
+            <h2 class="section__title">Integrated, Not Competing</h2>
+            <p class="section__deck">
+                Each priority serves and strengthens the others. This is how top 0.01% operators think: one system, compounding returns.
+            </p>
+        </div>
+        
+        <div class="priorities-grid">
+            <!-- PRIORITY 1: HEALTH -->
+            <div class="priority-card priority-card--health">
+                <div class="priority__number">01</div>
+                <h3 class="priority__title">Health</h3>
+                <div class="priority__status">Non-Negotiable Foundation</div>
+                <p class="priority__desc">
+                    Keto approach working: 278 → 265-268 lbs in 6 weeks. No counting, just <30g carbs, sardines/salmon rotation, electrolytes, BHB salts. Target: <220 lbs by December 2026.
+                </p>
+                <div class="priority__metrics">
+                    <div class="metric">
+                        <div class="metric__label">Current</div>
+                        <div class="metric__value">265 lbs</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric__label">Target</div>
+                        <div class="metric__value">220 lbs</div>
+                    </div>
+                </div>
+                <div class="priority__integration">
+                    Keto = mental clarity = better coding sessions. Morning fasted state = prime deep work time for Cooper/forecast development.
+                </div>
+            </div>
+
+            <!-- PRIORITY 2: WORK FORECAST -->
+            <div class="priority-card priority-card--work">
+                <div class="priority__number">02</div>
+                <h3 class="priority__title">Work Forecast v4</h3>
+                <div class="priority__status">Primary Revenue Source</div>
+                <p class="priority__desc">
+                    Production ensemble forecasting (4.3% MAPE), VP-level escalation achieved. DarcyIQ integration in progress: deal scoring + touchpoint intelligence.
+                </p>
+                <div class="priority__metrics">
+                    <div class="metric">
+                        <div class="metric__label">Accuracy</div>
+                        <div class="metric__value">4.3%</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric__label">Pipeline</div>
+                        <div class="metric__value">$2.15M</div>
+                    </div>
+                </div>
+                <div class="priority__integration">
+                    Every pattern learned at work applies to Cooper. Deal scoring → Customer LTV scoring. Stage analysis → Order funnel analysis. Your work is your laboratory.
+                </div>
+            </div>
+
+            <!-- PRIORITY 3: COOPER -->
+            <div class="priority-card priority-card--cooper">
+                <div class="priority__number">03</div>
+                <h3 class="priority__title">Cooper Foundation</h3>
+                <div class="priority__status">Future Revenue + Self-Service</div>
+                <p class="priority__desc">
+                    Mac Mini v1 → Google Cloud proof → Mac Mini v2. Same ML stack, export-first architecture. Amy's business = stress test. Client deployments follow.
+                </p>
+                <div class="priority__metrics">
+                    <div class="metric">
+                        <div class="metric__label">Timeline</div>
+                        <div class="metric__value">Q1-Q2</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric__label">Target ARR</div>
+                        <div class="metric__value">$50K</div>
+                    </div>
+                </div>
+                <div class="priority__integration">
+                    Use work patterns (Salesforce → Square exports). Same ensemble models. Eat your own dog food with Amy's business before client deployments.
+                </div>
+            </div>
+
+            <!-- PRIORITY 4: SKILLS -->
+            <div class="priority-card priority-card--skills">
+                <div class="priority__number">04</div>
+                <h3 class="priority__title">Skills Architecture</h3>
+                <div class="priority__status">Force Multiplier</div>
+                <p class="priority__desc">
+                    Nested, weighted, context-aware skills for Claude/Cursor/Codex. System documents itself for AI assistants to maintain and troubleshoot.
+                </p>
+                <div class="priority__metrics">
+                    <div class="metric">
+                        <div class="metric__label">Skills</div>
+                        <div class="metric__value">4 Core</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric__label">Efficiency</div>
+                        <div class="metric__value">10x</div>
+                    </div>
+                </div>
+                <div class="priority__integration">
+                    Skills reduce debugging time, enable faster iteration, create documentation asset for clients. The META layer making both tracks more efficient.
+                </div>
+            </div>
+
+            <!-- PRIORITY 5: FAMILY & SPIRITUALITY -->
+            <div class="priority-card priority-card--life">
+                <div class="priority__number">05</div>
+                <h3 class="priority__title">Family & Spirituality</h3>
+                <div class="priority__status">Stability Foundation</div>
+                <p class="priority__desc">
+                    2BR → 1BR transition saving $1,200/month. EFT tapping, pink noise, crystals on desk. NYC exit funded by Cooper revenue within 1-2 years.
+                </p>
+                <div class="priority__metrics">
+                    <div class="metric">
+                        <div class="metric__label">Monthly Savings</div>
+                        <div class="metric__value">$1,200</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric__label">Exit Timeline</div>
+                        <div class="metric__value">2027</div>
+                    </div>
+                </div>
+                <div class="priority__integration">
+                    Use saved funds to accelerate NYC exit. AirPods Max for noise isolation during transition. Maintain practices during apartment adjustment.
+                </div>
+            </div>
+
+            <!-- PRIORITY 6: SUBSTACK -->
+            <div class="priority-card priority-card--substack">
+                <div class="priority__number">06</div>
+                <h3 class="priority__title">Substack</h3>
+                <div class="priority__status">Therapeutic Outlet</div>
+                <p class="priority__desc">
+                    No pressure, no goals, no commitment to frequency. Just a creative escape from dense technical work and politics. Write when it feels right.
+                </p>
+                <div class="priority__metrics">
+                    <div class="metric">
+                        <div class="metric__label">Frequency</div>
+                        <div class="metric__value">Ad Hoc</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric__label">Goal</div>
+                        <div class="metric__value">Joy</div>
+                    </div>
+                </div>
+                <div class="priority__integration">
+                    Welcomed break from forecasting/Cooper work. Leverages existing writing. No metrics, no optimization—pure creative expression.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section">
+        <div class="section__header">
+            <div class="section__eyebrow">Quarterly Execution</div>
+            <h2 class="section__title">2026 Roadmap</h2>
+            <p class="section__deck">
+                Parallel tracks with clear milestones, compounding outcomes, and certification by year-end.
+            </p>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline">
+                <!-- Q1 -->
+                <div class="quarter">
+                    <div class="quarter__label">Q1 2026</div>
+                    <h3 class="quarter__title">Parallel Execution</h3>
+                    <ul class="quarter__items">
+                        <li class="quarter__item">Finish DarcyIQ integration (work)</li>
+                        <li class="quarter__item">Square data extraction (Amy's business)</li>
+                        <li class="quarter__item">Mac Mini Cooper v1 build</li>
+                        <li class="quarter__item">First food business forecast</li>
+                        <li class="quarter__item">Draft baseline Skills architecture</li>
+                        <li class="quarter__item">Health: Coast toward 255 lbs</li>
+                    </ul>
+                    <div class="quarter__deliverable">
+                        Deliverable: Work forecast refined + Cooper v1 running locally
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="quarter">
+                    <div class="quarter__label">Q2 2026</div>
+                    <h3 class="quarter__title">Prove & Scale</h3>
+                    <ul class="quarter__items">
+                        <li class="quarter__item">Google Cloud lift (Cooper)</li>
+                        <li class="quarter__item">First client deployment</li>
+                        <li class="quarter__item">Amy's business = stress test</li>
+                        <li class="quarter__item">Collect feedback, refine action engine</li>
+                        <li class="quarter__item">GitHub documentation (portfolio)</li>
+                        <li class="quarter__item">Family transition stabilizes</li>
+                    </ul>
+                    <div class="quarter__deliverable">
+                        Deliverable: Cooper in production with real client, measurable ROI
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="quarter">
+                    <div class="quarter__label">Q3 2026</div>
+                    <h3 class="quarter__title">Expand</h3>
+                    <ul class="quarter__items">
+                        <li class="quarter__item">Package Cooper for verticals</li>
+                        <li class="quarter__item">Target 3-5 clients (ghost kitchens, meal prep)</li>
+                        <li class="quarter__item">$30-50K ARR target</li>
+                        <li class="quarter__item">Mac Mini v2 with cloud learnings</li>
+                        <li class="quarter__item">Skills fully operational</li>
+                        <li class="quarter__item">Health: Break 240 lbs</li>
+                    </ul>
+                    <div class="quarter__deliverable">
+                        Deliverable: Client pipeline established, revenue flowing
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="quarter">
+                    <div class="quarter__label">Q4 2026</div>
+                    <h3 class="quarter__title">Certify</h3>
+                    <ul class="quarter__items">
+                        <li class="quarter__item">Google ML Cert study (Oct)</li>
+                        <li class="quarter__item">Take exam (Nov)</li>
+                        <li class="quarter__item">9 months production ML experience</li>
+                        <li class="quarter__item">Multi-tenant systems proven</li>
+                        <li class="quarter__item">Model monitoring in place</li>
+                        <li class="quarter__item">Health: Achieve <220 lbs, maintain</li>
+                    </ul>
+                    <div class="quarter__deliverable">
+                        Deliverable: Certification documenting what you've already built
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NETWORK VISUALIZATION -->
+    <section class="section">
+        <div class="section__header">
+            <div class="section__eyebrow">System Interconnections</div>
+            <h2 class="section__title">Everything Serves Everything Else</h2>
+            <p class="section__deck">
+                This network shows how each priority strengthens the others. No isolated efforts—only compounding returns.
+            </p>
+        </div>
+        <div id="network-container"></div>
+    </section>
+
+    <!-- ANTI-SCATTER PROTOCOL -->
+    <section class="section">
+        <div class="section__header">
+            <div class="section__eyebrow">Fighting ADHD</div>
+            <h2 class="section__title">The Anti-Scatter Protocol</h2>
+            <p class="section__deck">
+                When your brain says "Let's also build XYZ!", run it through this filter.
+            </p>
+        </div>
+        
+        <div class="protocol">
+            <div class="protocol__title">Decision Framework</div>
+            <div class="protocol__rules">
+                <div class="rule">
+                    <div class="rule__question">1. Does this fit into Cooper foundation?</div>
+                    <div class="rule__action">If yes → Add to roadmap. If no → Defer.</div>
+                </div>
+                <div class="rule">
+                    <div class="rule__question">2. Does this serve work forecast v4?</div>
+                    <div class="rule__action">If yes → Prioritize. If no → Defer.</div>
+                </div>
+                <div class="rule">
+                    <div class="rule__question">3. Does this support Skills architecture?</div>
+                    <div class="rule__action">If yes → Document. If no → Defer.</div>
+                </div>
+                <div class="rule">
+                    <div class="rule__question">4. Does this help health/family stability?</div>
+                    <div class="rule__action">If yes → Integrate. If no → Defer.</div>
+                </div>
+                <div class="rule">
+                    <div class="rule__question">5. All answers are "no"?</div>
+                    <div class="rule__action">Write it in "Future Ideas" and MOVE ON.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════ -->
+<footer class="footer">
+    <blockquote class="footer__quote">
+        "You're not juggling five balls. You're building one machine with five outputs."
+    </blockquote>
+    <div class="footer__author">— Strategic Synthesis, 2026</div>
+    <div class="footer__timestamp" id="timestamp"></div>
+</footer>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip">
+    <div class="tooltip__title"></div>
+    <div class="tooltip__content"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+     ══════════════════════════════════════ -->
+<script>
+// Timestamp
+document.getElementById('timestamp').textContent = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
+
+// Tooltip helper
+const tooltip = d3.select('#tooltip');
+function showTooltip(event, title, content) {
+    tooltip.select('.tooltip__title').text(title);
+    tooltip.select('.tooltip__content').text(content);
+    tooltip.classed('active', true)
+        .style('left', (event.pageX + 16) + 'px')
+        .style('top', (event.pageY - 16) + 'px');
+}
+function hideTooltip() {
+    tooltip.classed('active', false);
+}
+
+// ══════════════════════════════════════
+// SANKEY DIAGRAM - Unified Field Theory
+// ══════════════════════════════════════
+(function() {
+    const container = d3.select('#sankey-container');
+    const width = container.node().getBoundingClientRect().width;
+    const height = 600;
+    
+    const svg = container.append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    
+    // Define nodes
+    const nodes = [
+        // Source
+        { id: 0, name: 'Cooper Foundation', x: 50, y: height/2, color: '#B87333' },
+        
+        // Intermediate layers
+        { id: 1, name: 'Data Ingestion', x: 250, y: 100, color: '#C9A66B' },
+        { id: 2, name: 'ML Engine', x: 250, y: 250, color: '#0EA5B7' },
+        { id: 3, name: 'Action Engine', x: 250, y: 400, color: '#3D5A4F' },
+        { id: 4, name: 'Output Layer', x: 450, y: height/2, color: '#D4956A' },
+        
+        // Outcomes
+        { id: 5, name: 'Work Forecast', x: 650, y: 80, color: '#B87333' },
+        { id: 6, name: 'Food Business', x: 650, y: 200, color: '#0EA5B7' },
+        { id: 7, name: 'Client Deployments', x: 650, y: 320, color: '#2F7D61' },
+        { id: 8, name: 'Skills Architecture', x: 650, y: 440, color: '#C9A66B' },
+        { id: 9, name: 'Google ML Cert', x: 650, y: 560, color: '#3DB8C7' }
+    ];
+    
+    // Define links
+    const links = [
+        // Foundation to layers
+        { source: 0, target: 1, value: 30 },
+        { source: 0, target: 2, value: 40 },
+        { source: 0, target: 3, value: 30 },
+        
+        // Layers to output
+        { source: 1, target: 4, value: 30 },
+        { source: 2, target: 4, value: 40 },
+        { source: 3, target: 4, value: 30 },
+        
+        // Output to outcomes
+        { source: 4, target: 5, value: 20 },
+        { source: 4, target: 6, value: 20 },
+        { source: 4, target: 7, value: 20 },
+        { source: 4, target: 8, value: 20 },
+        { source: 4, target: 9, value: 20 }
+    ];
+    
+    // Draw links
+    links.forEach(link => {
+        const sourceNode = nodes[link.source];
+        const targetNode = nodes[link.target];
+        
+        const path = svg.append('path')
+            .attr('d', `M${sourceNode.x + 80},${sourceNode.y}
+                       C${(sourceNode.x + targetNode.x)/2},${sourceNode.y}
+                        ${(sourceNode.x + targetNode.x)/2},${targetNode.y}
+                        ${targetNode.x - 80},${targetNode.y}`)
+            .attr('fill', 'none')
+            .attr('stroke', sourceNode.color)
+            .attr('stroke-width', link.value / 2)
+            .attr('opacity', 0.3)
+            .attr('stroke-linecap', 'round');
+    });
+    
+    // Draw nodes
+    const nodeGroups = svg.selectAll('.node')
+        .data(nodes)
+        .join('g')
+        .attr('class', 'node')
+        .attr('transform', d => `translate(${d.x},${d.y})`);
+    
+    nodeGroups.append('rect')
+        .attr('x', -80)
+        .attr('y', -20)
+        .attr('width', 160)
+        .attr('height', 40)
+        .attr('fill', d => d.color)
+        .attr('opacity', 0.2)
+        .attr('rx', 8)
+        .attr('stroke', d => d.color)
+        .attr('stroke-width', 2);
+    
+    nodeGroups.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'central')
+        .attr('fill', 'var(--text-primary)')
+        .attr('font-family', 'var(--ui)')
+        .attr('font-size', '12px')
+        .attr('font-weight', '600')
+        .text(d => d.name);
+})();
+
+// ══════════════════════════════════════
+// NETWORK DIAGRAM - Interconnections
+// ══════════════════════════════════════
+(function() {
+    const container = d3.select('#network-container');
+    const width = container.node().getBoundingClientRect().width;
+    const height = 500;
+    
+    const svg = container.append('svg')
+        .attr('width', width)
+        .attr('height', height);
+    
+    // Define nodes
+    const nodes = [
+        { id: 'health', label: 'Health', color: '#2F7D61', x: width/2, y: 100 },
+        { id: 'work', label: 'Work Forecast', color: '#B87333', x: width/4, y: height/2 },
+        { id: 'cooper', label: 'Cooper', color: '#0EA5B7', x: width/2, y: height/2 },
+        { id: 'skills', label: 'Skills', color: '#C9A66B', x: 3*width/4, y: height/2 },
+        { id: 'family', label: 'Family', color: '#3D5A4F', x: width/3, y: 3*height/4 },
+        { id: 'substack', label: 'Substack', color: '#D4956A', x: 2*width/3, y: 3*height/4 }
+    ];
+    
+    // Define connections with descriptions
+    const links = [
+        { source: 'health', target: 'work', desc: 'Mental clarity → Better code' },
+        { source: 'health', target: 'cooper', desc: 'Sustained energy → Iteration speed' },
+        { source: 'work', target: 'cooper', desc: 'Patterns learned → Features built' },
+        { source: 'work', target: 'skills', desc: 'Production learnings → Documentation' },
+        { source: 'cooper', target: 'skills', desc: 'Architecture → Self-documentation' },
+        { source: 'cooper', target: 'family', desc: 'Revenue → NYC exit funding' },
+        { source: 'skills', target: 'work', desc: 'Force multiplier → Faster iteration' },
+        { source: 'skills', target: 'cooper', desc: 'AI assistance → Reduced debugging' },
+        { source: 'family', target: 'health', desc: 'Stability → Consistent practices' },
+        { source: 'substack', target: 'health', desc: 'Creative outlet → Mental health' }
+    ];
+    
+    // Draw links
+    links.forEach(link => {
+        const source = nodes.find(n => n.id === link.source);
+        const target = nodes.find(n => n.id === link.target);
+        
+        svg.append('line')
+            .attr('x1', source.x)
+            .attr('y1', source.y)
+            .attr('x2', target.x)
+            .attr('y2', target.y)
+            .attr('stroke', source.color)
+            .attr('stroke-width', 2)
+            .attr('opacity', 0.3)
+            .attr('stroke-dasharray', '5,5');
+    });
+    
+    // Draw nodes
+    const nodeGroups = svg.selectAll('.network-node')
+        .data(nodes)
+        .join('g')
+        .attr('class', 'network-node')
+        .attr('transform', d => `translate(${d.x},${d.y})`)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function(event, d) {
+            d3.select(this).select('circle')
+                .transition()
+                .duration(200)
+                .attr('r', 65);
+            
+            // Highlight connected links
+            const relatedLinks = links.filter(l => l.source === d.id || l.target === d.id);
+            showTooltip(event, d.label, `${relatedLinks.length} connections`);
+        })
+        .on('mousemove', event => {
+            tooltip.style('left', (event.pageX + 16) + 'px')
+                   .style('top', (event.pageY - 16) + 'px');
+        })
+        .on('mouseleave', function() {
+            d3.select(this).select('circle')
+                .transition()
+                .duration(200)
+                .attr('r', 60);
+            hideTooltip();
+        });
+    
+    nodeGroups.append('circle')
+        .attr('r', 60)
+        .attr('fill', d => d.color)
+        .attr('opacity', 0.2)
+        .attr('stroke', d => d.color)
+        .attr('stroke-width', 3);
+    
+    nodeGroups.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'central')
+        .attr('fill', 'var(--text-primary)')
+        .attr('font-family', 'var(--ui)')
+        .attr('font-size', '13px')
+        .attr('font-weight', '600')
+        .text(d => d.label);
+})();
+
+// Smooth scroll for internal links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+</script>
+
+</body>
+</html>
