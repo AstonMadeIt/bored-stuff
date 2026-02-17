@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Moleskine History</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #121a2f;
+      --text: #e7ecff;
+      --muted: #9aa6d1;
+      --accent: #78d1ff;
+      --line: #243256;
+    }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #152347, var(--bg));
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 32px 18px 56px;
+    }
+    h1 { margin: 0 0 8px; font-size: 1.9rem; }
+    p { color: var(--muted); }
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 22px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--card) 86%, transparent);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: #1a2444;
+      padding: 0.15rem 0.35rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    ul { margin: 8px 0 0; padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Moleskine Forensic History</h1>
+    <p>Single-pane timeline for baseline, changes, and implementation evidence.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Overview</h3>
+        <ul>
+          <li><a href="README.md">README</a></li>
+          <li><a href="docs/ENGINEERING_PLAYBOOK.md">Engineering Playbook</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Baseline</h3>
+        <ul>
+          <li><a href="baseline/baseline_manifest.json">Baseline Manifest</a></li>
+          <li><a href="baseline/subs_files.tsv">Subs File Hashes</a></li>
+          <li><a href="baseline/cooper_files.tsv">Cooper File Hashes</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Timeline</h3>
+        <ul>
+          <li><a href="timeline/events.jsonl">Event Stream (JSONL)</a></li>
+          <li><a href="timeline/CHANGELOG.md">Human Changelog</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Thread Ingestion</h3>
+        <ul>
+          <li>Drop exports in <code>threads/</code></li>
+          <li>Run ingestion scripts in <code>tools/</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
