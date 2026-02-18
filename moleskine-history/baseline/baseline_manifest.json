@@ -1,0 +1,30 @@
+{
+  "generated_at_utc": "2026-02-17T16:00:12.547827+00:00",
+  "sources": [
+    {
+      "dataset": "subs_moleskine",
+      "root": "/Users/a.fleming/Projects/Subs/MOLESKINE",
+      "file_count": 65,
+      "total_bytes": 1864968
+    },
+    {
+      "dataset": "cooper_moleskine",
+      "root": "/Users/a.fleming/Projects/cooper/MOLESKINE",
+      "file_count": 22,
+      "total_bytes": 343391
+    }
+  ],
+  "excluded_dirs": [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "venv"
+  ],
+  "excluded_suffixes": [
+    ".pyc",
+    ".pyo"
+  ],
+  "excluded_files": [
+    ".DS_Store"
+  ]
+}
