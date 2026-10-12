@@ -1,19 +1,251 @@
-
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Recent Results - Pro Sports Intel AI™</title>
-            <style>
-                body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Arial, sans-serif; 
-                       max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-                .empty-state { text-align: center; padding: 60px 20px; color: #86868b; }
-            </style>
-        </head>
-        <body>
-            <h1>Recent Results</h1>
-            <div class="empty-state">
-                <p>No results available yet. Check back after games complete!</p>
-            </div>
-        </body>
-        </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Results - Pro Sports Intel AI™</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -2px;
+        }
+        
+        .subtitle {
+            color: #86868b;
+            margin-bottom: 40px;
+        }
+        
+        .stats-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .big-stat {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #34c759;
+            margin-bottom: 8px;
+        }
+        
+        .game-card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid #e5e5e7;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .game-card.correct {
+            border-left-color: #34c759;
+        }
+        
+        .game-card.incorrect {
+            border-left-color: #ff3b30;
+        }
+        
+        .game-card.high-confidence {
+            background: #f0f9ff;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .game-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .result-badge {
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .result-badge.correct {
+            background: #34c759;
+            color: white;
+        }
+        
+        .result-badge.incorrect {
+            background: #ff3b30;
+            color: white;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 12px 0;
+        }
+        
+        .prediction-info {
+            color: #86868b;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+        
+        .divergence {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recent Results</h1>
+        <div class="subtitle">Last 7 Days Performance</div>
+        
+        <div class="stats-card">
+            <div class="big-stat">50.0%</div>
+            <p>Win Rate (3/6 predictions)</p>
+        </div>
+
+        <div class="game-card correct high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2026-10-11</div>
+                    <div class="score">
+                        Denver Nuggets 133 - 128 Chicago Bulls
+                    </div>
+                </div>
+                <div class="result-badge correct">✓ CORRECT</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Denver Nuggets</strong> by 5.1 pts
+                <span class="divergence">vs Vegas: nan pts</span>
+                <br>
+                Confidence: 79% | 
+                Spread Error: 0.1 pts
+            </div>
+        </div>
+
+        <div class="game-card correct high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2026-10-11</div>
+                    <div class="score">
+                        Cleveland Cavaliers 119 - 105 Orlando Magic
+                    </div>
+                </div>
+                <div class="result-badge correct">✓ CORRECT</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Cleveland Cavaliers</strong> by 4.9 pts
+                <span class="divergence">vs Vegas: nan pts</span>
+                <br>
+                Confidence: 79% | 
+                Spread Error: 9.1 pts
+            </div>
+        </div>
+
+        <div class="game-card correct high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2026-10-11</div>
+                    <div class="score">
+                        Charlotte Hornets 105 - 90 Milwaukee Bucks
+                    </div>
+                </div>
+                <div class="result-badge correct">✓ CORRECT</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Charlotte Hornets</strong> by 5.4 pts
+                <span class="divergence">vs Vegas: nan pts</span>
+                <br>
+                Confidence: 79% | 
+                Spread Error: 9.6 pts
+            </div>
+        </div>
+
+        <div class="game-card incorrect">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NFL - 2026-10-11</div>
+                    <div class="score">
+                        Seattle Seahawks 29 - 32 San Francisco 49ers
+                    </div>
+                </div>
+                <div class="result-badge incorrect">✗ WRONG</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Seattle Seahawks</strong> by 0.1 pts
+                <span class="divergence">vs Vegas: 4.6 pts</span>
+                <br>
+                Confidence: 65% | 
+                Spread Error: 3.1 pts
+            </div>
+        </div>
+
+        <div class="game-card incorrect">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NFL - 2026-10-11</div>
+                    <div class="score">
+                        Los Angeles Chargers 17 - 23 Denver Broncos
+                    </div>
+                </div>
+                <div class="result-badge incorrect">✗ WRONG</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Los Angeles Chargers</strong> by 2.4 pts
+                <span class="divergence">vs Vegas: 4.9 pts</span>
+                <br>
+                Confidence: 66% | 
+                Spread Error: 8.4 pts
+            </div>
+        </div>
+
+        <div class="game-card incorrect high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NFL - 2026-10-11</div>
+                    <div class="score">
+                        Arizona Cardinals 21 - 45 Detroit Lions
+                    </div>
+                </div>
+                <div class="result-badge incorrect">✗ WRONG</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Arizona Cardinals</strong> by 7.2 pts
+                <span class="divergence">vs Vegas: 10.3 pts</span>
+                <br>
+                Confidence: 70% | 
+                Spread Error: 31.2 pts
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
