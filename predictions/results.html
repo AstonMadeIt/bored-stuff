@@ -1,19 +1,213 @@
-
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Recent Results - Pro Sports Intel AI™</title>
-            <style>
-                body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Arial, sans-serif; 
-                       max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-                .empty-state { text-align: center; padding: 60px 20px; color: #86868b; }
-            </style>
-        </head>
-        <body>
-            <h1>Recent Results</h1>
-            <div class="empty-state">
-                <p>No results available yet. Check back after games complete!</p>
-            </div>
-        </body>
-        </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Results - Pro Sports Intel AI™</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -2px;
+        }
+        
+        .subtitle {
+            color: #86868b;
+            margin-bottom: 40px;
+        }
+        
+        .stats-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .big-stat {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #34c759;
+            margin-bottom: 8px;
+        }
+        
+        .game-card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid #e5e5e7;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .game-card.correct {
+            border-left-color: #34c759;
+        }
+        
+        .game-card.incorrect {
+            border-left-color: #ff3b30;
+        }
+        
+        .game-card.high-confidence {
+            background: #f0f9ff;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .game-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .result-badge {
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .result-badge.correct {
+            background: #34c759;
+            color: white;
+        }
+        
+        .result-badge.incorrect {
+            background: #ff3b30;
+            color: white;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 12px 0;
+        }
+        
+        .prediction-info {
+            color: #86868b;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+        
+        .divergence {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recent Results</h1>
+        <div class="subtitle">Last 7 Days Performance</div>
+        
+        <div class="stats-card">
+            <div class="big-stat">75.0%</div>
+            <p>Win Rate (3/4 predictions)</p>
+        </div>
+
+        <div class="game-card incorrect high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2026-11-12</div>
+                    <div class="score">
+                        Washington Wizards 140 - 144 Detroit Pistons
+                    </div>
+                </div>
+                <div class="result-badge incorrect">✗ WRONG</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Washington Wizards</strong> by 4.3 pts
+                <span class="divergence">vs Vegas: 14.8 pts</span>
+                <br>
+                Confidence: 80% | 
+                Spread Error: 8.3 pts
+            </div>
+        </div>
+
+        <div class="game-card correct high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2026-11-12</div>
+                    <div class="score">
+                        Phoenix Suns 101 - 96 Charlotte Hornets
+                    </div>
+                </div>
+                <div class="result-badge correct">✓ CORRECT</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Phoenix Suns</strong> by 3.8 pts
+                <span class="divergence">vs Vegas: 2.7 pts</span>
+                <br>
+                Confidence: 79% | 
+                Spread Error: 1.2 pts
+            </div>
+        </div>
+
+        <div class="game-card correct high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2026-11-12</div>
+                    <div class="score">
+                        Philadelphia 76ers 123 - 112 Toronto Raptors
+                    </div>
+                </div>
+                <div class="result-badge correct">✓ CORRECT</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Philadelphia 76ers</strong> by 3.2 pts
+                <span class="divergence">vs Vegas: 5.3 pts</span>
+                <br>
+                Confidence: 78% | 
+                Spread Error: 7.8 pts
+            </div>
+        </div>
+
+        <div class="game-card correct high-confidence">
+            <div class="game-header">
+                <div>
+                    <div class="game-title">NBA - 2026-11-12</div>
+                    <div class="score">
+                        Minnesota Timberwolves 133 - 94 Dallas Mavericks
+                    </div>
+                </div>
+                <div class="result-badge correct">✓ CORRECT</div>
+            </div>
+            <div class="prediction-info">
+                Model predicted: <strong>Minnesota Timberwolves</strong> by 5.3 pts
+                <span class="divergence">vs Vegas: 0.2 pts</span>
+                <br>
+                Confidence: 80% | 
+                Spread Error: 33.7 pts
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
